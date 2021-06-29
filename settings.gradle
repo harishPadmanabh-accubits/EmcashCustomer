@@ -1,0 +1,3 @@
+include ':emcash'
+include ':app'
+rootProject.name = "EmcashCustomer"
