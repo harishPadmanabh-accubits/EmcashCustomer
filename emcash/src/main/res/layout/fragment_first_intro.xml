@@ -21,8 +21,8 @@
         android:id="@+id/btn_next"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:buttonText="Next"
         android:layout_marginBottom="@dimen/dp40"
+        app:buttonText="Next"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -87,19 +87,98 @@
             android:text="Lorem ipsum dolor sit amet,elit, sed do eiusmod tempor incididunt ." />
     </LinearLayout>
 
-    <androidx.appcompat.widget.AppCompatImageView
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_intro_art"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:scaleType="centerCrop"
-        android:paddingTop="@dimen/dp12"
         android:layout_marginBottom="@dimen/dp12"
-        android:src="@drawable/intro_image_man"
+        android:paddingTop="@dimen/dp12"
+        android:scaleType="centerCrop"
         app:layout_constraintBottom_toTopOf="@+id/ll_info"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/i_gradient" />
+        app:layout_constraintTop_toTopOf="@+id/i_gradient">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline11"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.47" />
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.57" />
+
+        <ImageView
+            android:id="@+id/iv_intro_art_man"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:elevation="@dimen/dp4"
+            android:src="@drawable/arabian_man"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.69" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.52" />
+
+        <ImageView
+            android:id="@+id/iv_intro_msg_1"
+            android:layout_width="165dp"
+            android:layout_height="72dp"
+            android:elevation="@dimen/dp8"
+            android:scaleType="centerCrop"
+            android:src="@drawable/intro_msg_1"
+            app:layout_constraintEnd_toStartOf="@+id/guideline11"
+            app:layout_constraintTop_toTopOf="@+id/guideline9" />
+
+        <ImageView
+            android:id="@+id/iv_intro_msg_2"
+            android:layout_width="165dp"
+            android:layout_height="72dp"
+            android:scaleType="centerCrop"
+            android:elevation="@dimen/dp8"
+            android:src="@drawable/intro_msg_2"
+            app:layout_constraintStart_toStartOf="@+id/guideline12"
+            app:layout_constraintTop_toTopOf="@+id/guideline10" />
 
 
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/intro_gradient_white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/iv_intro_art_man"
+            app:layout_constraintStart_toStartOf="@+id/iv_intro_art_man" />
+
+        <ImageView
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:padding="@dimen/dp32"
+            android:elevation="@dimen/dp1"
+            android:src="@drawable/intro_quotes"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/iv_intro_art_man" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

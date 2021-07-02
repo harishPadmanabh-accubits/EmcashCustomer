@@ -28,6 +28,7 @@
             android:id="@+id/iv_user_image"
             android:layout_width="47dp"
             android:layout_height="47dp"
+            android:background="@color/dark_grey"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/fl_user_level"
             app:layout_constraintStart_toStartOf="parent"

@@ -25,6 +25,8 @@
             android:name=".ui.terms.TermsAndConditionsActivity"
             android:theme="@style/Theme.EmcashWhiteStatusBar" />
         <activity android:name=".ui.intro.IntroActivity"
+            android:hardwareAccelerated="false"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.Emcash"
             >
 

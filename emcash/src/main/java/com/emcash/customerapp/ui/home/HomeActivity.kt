@@ -19,7 +19,7 @@ class HomeActivity : AppCompatActivity() {
             DummyUserData(
                 "Mary ",
                 R.drawable.sample_dp,
-                LevelProfileImageView.UserProfileLevel.RED
+                LevelProfileImageView.UserProfileLevel.GREEN
             ),
             DummyUserData(
                 "Alan",
@@ -29,7 +29,7 @@ class HomeActivity : AppCompatActivity() {
             DummyUserData(
                 "Milan",
                 R.drawable.sample_dp,
-                LevelProfileImageView.UserProfileLevel.RED
+                LevelProfileImageView.UserProfileLevel.NONE
             ),
             DummyUserData(
                 "Anise",
@@ -39,21 +39,21 @@ class HomeActivity : AppCompatActivity() {
             DummyUserData(
                 "Fijui",
                 R.drawable.sample_dp,
-                LevelProfileImageView.UserProfileLevel.RED
+                LevelProfileImageView.UserProfileLevel.NONE
             ),
             DummyUserData(
                 "Lewis",
                 R.drawable.sample_img,
-                LevelProfileImageView.UserProfileLevel.RED
+                LevelProfileImageView.UserProfileLevel.YELLOW
             ),
             DummyUserData(
                 "Kamal",
                null,
-                LevelProfileImageView.UserProfileLevel.RED
+                LevelProfileImageView.UserProfileLevel.GREEN
             ), DummyUserData(
                 "Michel",
                 R.drawable.sample_img,
-                LevelProfileImageView.UserProfileLevel.RED
+                LevelProfileImageView.UserProfileLevel.YELLOW
             ))
 
     rv_recent_transactions.apply {

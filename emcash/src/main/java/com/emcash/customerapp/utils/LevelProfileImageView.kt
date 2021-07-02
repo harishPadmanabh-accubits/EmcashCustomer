@@ -31,7 +31,7 @@ class LevelProfileImageView(context: Context, attrs: AttributeSet) :
                 fl_user_level.setBackgroundResource((R.drawable.yellow_round))
             }
             UserProfileLevel.NONE->{
-                fl_user_level.hide()
+                fl_user_level.makeInvisible()
             }
         }
     }
@@ -52,7 +52,7 @@ class LevelProfileImageView(context: Context, attrs: AttributeSet) :
             iv_user_image.loadImageWithResId(resId)
             tv_user_name_letter.hide()
         }else{
-            iv_user_image.setBackgroundColor(ContextCompat.getColor(context,R.color.black))
+            iv_user_image.setBackgroundColor(ContextCompat.getColor(context,R.color.app_sky_blue))
         }
     }
 

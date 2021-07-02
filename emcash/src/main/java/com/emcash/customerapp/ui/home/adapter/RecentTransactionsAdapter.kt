@@ -52,7 +52,7 @@ class RecentTransactionsAdapter(val users : List<DummyUserData>) : RecyclerView.
         fun bind(user:DummyUserData){
 
             itemView.level_image.setProfileName(user.name)
-
+            itemView.level_image.setLevel(user.level)
             if(user.image!==null){
                 itemView.level_image.setProfileImage(user.image)
             }else{

@@ -86,17 +86,44 @@
             android:text="Lorem ipsum dolor sit amet,elit, sed do eiusmod tempor incididunt ." />
     </LinearLayout>
 
-    <androidx.appcompat.widget.AppCompatImageView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginBottom="@dimen/dp12"
-        android:src="@drawable/intro_image_cup"
+        android:id="@+id/cl_intro_art"
         app:layout_constraintBottom_toTopOf="@+id/ll_info"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/i_gradient" />
+        app:layout_constraintTop_toTopOf="@+id/i_gradient" >
 
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_intro_cup"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:alpha=".4"
+        android:src="@drawable/intro_image_cup"
+        android:elevation="@dimen/dp2"
+        app:layout_constraintBottom_toBottomOf="@+id/cl_intro_art"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_intro_gold_toppings"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:elevation="@dimen/dp12"
+        android:alpha=".4"
+        android:translationZ="@dimen/dp12"
+        android:layout_marginBottom="@dimen/dp48"
+        android:src="@drawable/intro_gold_toppings"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 
