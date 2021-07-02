@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cl_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.home.HomeActivity">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_main"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_menu_handle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/menu_handle"
+                app:layout_constraintBottom_toTopOf="@+id/guideline7"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.9" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/menu_arrow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/menu_arrow"
+                app:layout_constraintBottom_toBottomOf="@+id/iv_menu_handle"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/iv_menu_handle"
+                app:layout_constraintTop_toTopOf="@+id/iv_menu_handle" />
+
+            <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+                android:id="@+id/fab_new_payment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                android:fontFamily="@font/biennale_book"
+                android:paddingLeft="@dimen/dp32"
+                android:paddingRight="@dimen/dp32"
+                android:text="@string/new_payment"
+                android:textAlignment="center"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                app:backgroundTint="@color/black"
+                app:icon="@drawable/ic_baseline_add_24"
+                app:iconTint="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_qr_scanner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp26"
+                android:layout_marginTop="@dimen/dp40"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_qr_scanner" />
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/iv_user_image"
+                android:layout_width="34dp"
+                android:layout_height="34dp"
+                android:layout_marginEnd="@dimen/dp20"
+                android:src="@drawable/sample_dp"
+                android:transitionName="shop_image_transition"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/iv_qr_scanner"
+                app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.RoundImageStyle" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/dp20"
+                app:layout_constraintBottom_toBottomOf="@+id/iv_user_image"
+                app:layout_constraintEnd_toStartOf="@+id/iv_user_image"
+                app:layout_constraintTop_toTopOf="@+id/iv_user_image"
+                app:srcCompat="@drawable/ic_bell" />
+
+            <TextView
+                android:id="@+id/tv_score_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp40"
+                android:fontFamily="@font/biennale_bold"
+                android:text="657+"
+                android:textColor="@color/black"
+                android:textSize="@dimen/dp24"
+                app:layout_constraintStart_toStartOf="@+id/iv_qr_scanner"
+                app:layout_constraintTop_toBottomOf="@+id/iv_qr_scanner" />
+
+            <TextView
+                android:id="@+id/tv_info_my_emscore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp12"
+                android:alpha=".5"
+                android:fontFamily="@font/roboto"
+                android:text="@string/my_emscore"
+                android:textColor="@color/black"
+                android:textFontWeight="700"
+                android:textSize="@dimen/sp14"
+                app:layout_constraintStart_toStartOf="@+id/tv_score_count"
+                app:layout_constraintTop_toBottomOf="@+id/tv_score_count" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_level_shower"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/sample_level_round"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_level"
+                app:layout_constraintEnd_toEndOf="@+id/iv_user_image"
+                app:layout_constraintTop_toTopOf="@+id/tv_level" />
+
+            <TextView
+                android:id="@+id/tv_level"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/dp8"
+                android:fontFamily="@font/biennale_bold"
+                android:text="Medium"
+                android:textColor="@color/black"
+                android:textSize="@dimen/dp24"
+                app:layout_constraintEnd_toStartOf="@+id/iv_level_shower"
+                app:layout_constraintTop_toTopOf="@+id/tv_score_count" />
+
+            <TextView
+                android:id="@+id/tv_info_level"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp12"
+                android:alpha=".5"
+                android:fontFamily="@font/roboto"
+                android:text="My Reward Level"
+                android:textColor="@color/black"
+                android:textFontWeight="700"
+                android:textSize="@dimen/sp14"
+                app:layout_constraintStart_toStartOf="@+id/tv_level"
+                app:layout_constraintTop_toBottomOf="@+id/tv_level" />
+
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cv_balance"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp24"
+                android:layout_marginTop="@dimen/dp24"
+                android:layout_marginEnd="@dimen/dp24"
+                app:cardBackgroundColor="@color/app_blue"
+                app:cardCornerRadius="@dimen/dp12"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_info_my_emscore">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/iv_curve"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_marginTop="@dimen/dp12"
+                        android:layout_marginBottom="6dp"
+                        android:alpha=".4"
+                        android:elevation="@dimen/dp1"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/blue_curve_card"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="@+id/guideline8"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/guideline8"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:layout_constraintGuide_percent="0.5" />
+
+                    <com.emcash.customerapp.utils.CoinProfileImageView
+                        android:id="@+id/coinProfileImageView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dp24"
+                        android:layout_marginTop="@dimen/dp24"
+                        android:layout_marginBottom="@dimen/dp24"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tv_tv_info_balance"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dp12"
+                        android:fontFamily="@font/biennale_book"
+                        android:text="@string/your_emcash_balance"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/dp12"
+                        app:layout_constraintStart_toEndOf="@+id/coinProfileImageView"
+                        app:layout_constraintTop_toTopOf="@+id/coinProfileImageView" />
+
+                    <TextView
+                        android:id="@+id/tv_tv_balance"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/dp12"
+                        android:fontFamily="@font/biennale_bold"
+                        android:text="35"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/dp26"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="@+id/tv_tv_info_balance"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_tv_info_balance" />
+
+                    <TextView
+                        style="@style/WhiteRoundedTextSamllStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/dp8"
+                        android:layout_marginBottom="@dimen/dp12"
+                        android:text="@string/add_emcash"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <TextView
+                android:id="@+id/tv_info_recent_transactions"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp24"
+                android:fontFamily="@font/roboto"
+                android:text="@string/recent_transactions"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp14"
+                app:layout_constraintStart_toStartOf="@+id/cv_balance"
+                app:layout_constraintTop_toBottomOf="@+id/cv_balance" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_recent_transactions"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp12"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_info_recent_transactions" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_rewards_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp30"
+                android:layout_marginTop="@dimen/dp24"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rv_recent_transactions"
+                app:srcCompat="@drawable/ic_rewards" />
+
+            <TextView
+                android:id="@+id/tv_info_rewards"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp12"
+                android:fontFamily="@font/roboto_medium"
+                android:text="@string/my_rewards"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp14"
+                app:layout_constraintBottom_toBottomOf="@+id/iv_rewards_icon"
+                app:layout_constraintStart_toEndOf="@+id/iv_rewards_icon"
+                app:layout_constraintTop_toTopOf="@+id/iv_rewards_icon" />
+
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_history_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp30"
+                android:layout_marginTop="@dimen/dp30"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/iv_rewards_icon"
+                app:srcCompat="@drawable/ic_clock" />
+
+            <TextView
+                android:id="@+id/tv_info_history"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp12"
+                android:fontFamily="@font/roboto_medium"
+                android:text="@string/my_transaction_history"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp14"
+                app:layout_constraintBottom_toBottomOf="@+id/iv_history_icon"
+                app:layout_constraintStart_toEndOf="@+id/iv_history_icon"
+                app:layout_constraintTop_toTopOf="@+id/iv_history_icon" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

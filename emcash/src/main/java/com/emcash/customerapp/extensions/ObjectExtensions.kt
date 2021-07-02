@@ -24,13 +24,15 @@ import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
+import com.emcash.customerapp.BuildConfig
 import com.google.gson.Gson
-import com.hbb20.BuildConfig
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.regex.Pattern
-
 
 private const val TIME_STAMP_FORMAT = "EEEE, MMMM d, yyyy - hh:mm:ss a"
 private const val DATE_FORMAT = "yyyy-MM-dd"
@@ -79,7 +81,7 @@ fun SharedPreferences.putAny(key: String, value: Any) {
         is Boolean -> edit().putBoolean(key,value).apply()
         is Long -> edit().putLong(key,value).apply()
         else ->
-            edit().putString(key, Gson().toJson(value)).apply()
+            edit().putString(key,Gson().toJson(value)).apply()
     }
 }
 
@@ -241,7 +243,7 @@ fun EditText.afterTextChanged(afterTextChanged: (String) -> Unit) {
     })
 }
 
-fun EditText.onDeletePressed(changeFocusTo: EditText){
+fun EditText.onDeletePressed(changeFocusTo:EditText){
     this.setOnKeyListener { view, i, keyEvent ->
         if(i == KeyEvent.KEYCODE_DEL)
             changeFocusTo.requestFocus()
@@ -259,12 +261,12 @@ fun <T : Any?> MutableLiveData<T>.default(initialValue:T) = apply {
 }
 
 //TOAST-short
-fun Context.showShortToast(message:String?) = message?.let { message->
+fun Context.showShortToast(message:String?) = message?.let {message->
     Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
 }
 
 //Toast-long
-fun Context.showLongToast(message:String?) = message?.let { message->
+fun Context.showLongToast(message:String?) = message?.let {message->
     Toast.makeText(this, message, Toast.LENGTH_LONG).show()
 }
 
@@ -289,7 +291,7 @@ fun ImageView.loadImageWithUrl(imageUrl : String?){
 }
 
 //load imageView with image url
-fun ImageView.loadImageWithUrl(imageUrl : String?, onError:(status:Boolean)->Unit){
+fun ImageView.loadImageWithUrl(imageUrl : String?,onError:(status:Boolean)->Unit){
     try{
         imageUrl?.let{imageUrl->
             if (context!=null){
@@ -377,8 +379,33 @@ fun View.show() {
 fun View.invible(){
     visibility = View.INVISIBLE
 }
-
-
+//
+//fun <T : Any> Call<T>.awaitResponse(
+//    onSuccess: (T?) -> Unit = {},
+//    onFailure: (String?) -> Unit = {}
+//) {
+//
+//    this.enqueue(object : Callback<T> {
+//        override fun onResponse(call: Call<T>, response: Response<T>) {
+//            val r = response
+//            if (response.isSuccessful) {
+//                onSuccess.invoke(response.body())
+//            } else {
+//                val gson = Gson()
+//                val (error, message, status) = gson.fromJson(
+//                    response.errorBody()!!.charStream(),
+//                    BaseResponse::class.java
+//                ).also {
+//                    onFailure.invoke(it.message)
+//                }
+//            }
+//        }
+//
+//        override fun onFailure(call: Call<T>, t: Throwable) {
+//            onFailure.invoke( t.message)
+//        }
+//    })
+//}
 
 
 

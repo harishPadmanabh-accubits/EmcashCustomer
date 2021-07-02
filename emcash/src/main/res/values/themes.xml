@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.EmcashCustomer" parent="Theme.MaterialComponents.Light.NoActionBar">
+    <style name="Theme.Emcash" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="colorPrimary">@color/purple_500</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>
         <item name="colorOnPrimary">@color/white</item>
@@ -15,20 +15,6 @@
         <item name="android:windowTranslucentNavigation">false</item>
     </style>
 
-    <style name="Theme.EmcashCustomer." parent="Theme.MaterialComponents.Light.NoActionBar">
-        <item name="colorPrimary">@color/purple_500</item>
-        <item name="colorPrimaryVariant">@color/purple_700</item>
-        <item name="colorOnPrimary">@color/white</item>
-        <item name="colorSecondary">@color/teal_200</item>
-        <item name="colorSecondaryVariant">@color/teal_700</item>
-        <item name="colorOnSecondary">@color/black</item>
-        <item name="android:windowDisablePreview">true</item>
-        <item name="android:forceDarkAllowed" tools:targetApi="q">false</item>
-        <item name="android:statusBarColor">@color/white</item>
-        <item name="android:windowLightStatusBar">true</item>
-        <item name="android:windowTranslucentStatus">false</item>
-        <item name="android:windowTranslucentNavigation">false</item>
-    </style>
 
 
 
@@ -59,49 +45,40 @@
         <item name="android:foreground">?selectableItemBackground</item>
     </style>
 
-    <style name="HeadingText" parent="Widget.AppCompat.TextView">
-        <item name="android:textColor">@color/white</item>
-        <item name="android:textSize">18sp</item>
-        <item name="fontFamily">@font/biennale_regular</item>
+    <style name="GreyRoundedButton"  parent="Widget.MaterialComponents.Button">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="backgroundTint">@color/grey</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="cornerRadius">22dp</item>
         <item name="lineHeight">20dp</item>
+        <item name="fontFamily">@font/biennale_regular</item>
+        <item name="android:foreground">?selectableItemBackground</item>
     </style>
 
-    <style name="BlackHeadingText" parent="Widget.AppCompat.TextView">
+
+    <style name="SubHeadingText" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">@dimen/sp14</item>
+        <item name="android:fontFamily">@font/roboto</item>
+        <item name="lineHeight">20dp</item>
+        <item name="android:textAlignment">center</item>
+    </style>
+
+<style name="HeadingText" parent="Widget.AppCompat.TextView">
         <item name="android:textColor">@color/black</item>
         <item name="android:textSize">18sp</item>
         <item name="fontFamily">@font/biennale_bold</item>
         <item name="lineHeight">20dp</item>
     </style>
 
-    <style name="SubHeadingText" parent="Widget.AppCompat.TextView">
-        <item name="android:textColor">@color/black</item>
-        <item name="android:textSize">@dimen/sp14</item>
-        <item name="fontFamily">@font/biennale_book</item>
-        <item name="lineHeight">20dp</item>
-    </style>
-
-    <style name="LowerTextStyle" parent="Widget.AppCompat.TextView">
-        <item name="android:textColor">@color/black</item>
-        <item name="android:textSize">@dimen/sp16</item>
-        <item name="fontFamily">@font/biennale_book</item>
-        <item name="lineHeight">20dp</item>
-    </style>
-
-
-    <style name="LowerTextStyle2" parent="Widget.AppCompat.TextView">
-        <item name="android:textColor">@color/black</item>
-        <item name="android:textSize">@dimen/sp12</item>
-        <item name="fontFamily">@font/biennale_book</item>
-    </style>
-
-
-
-
     <style name="ShapeAppearanceOverlay.App.RoundImageStyle" parent="">
         <item name="cornerSize">50%</item>
     </style>
 
-    <style name="Theme.EmcashMerchantWhiteStatusBar" parent="Theme.MaterialComponents.Light.NoActionBar">
+    <style name="Theme.EmcashWhiteStatusBar" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="colorPrimary">@color/purple_500</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>
         <item name="colorOnPrimary">@color/white</item>
@@ -115,11 +92,48 @@
         <item name="android:windowTranslucentStatus">false</item>
         <item name="android:windowTranslucentNavigation">false</item>
     </style>
-
+    <style name="Theme.EmcashBlueStatusBar" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="colorPrimary">@color/purple_500</item>
+        <item name="colorPrimaryVariant">@color/purple_700</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorSecondary">@color/teal_200</item>
+        <item name="colorSecondaryVariant">@color/teal_700</item>
+        <item name="colorOnSecondary">@color/black</item>
+        <item name="android:windowDisablePreview">true</item>
+        <item name="android:forceDarkAllowed" tools:targetApi="q">false</item>
+        <item name="android:statusBarColor">@color/app_blue</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowTranslucentStatus">false</item>
+        <item name="android:windowTranslucentNavigation">false</item>
+    </style>
     <style name="TabItemTextAppearence" parent="@android:style/TextAppearance.Widget.TabWidget">
         <item name="android:textSize">14sp</item>
         <item name="android:textAllCaps">false</item>
         <item name="fontFamily">@font/biennale_book</item>
+    </style>
+    <style name="WhiteRoundedTextStyle" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">14sp</item>
+        <item name="fontFamily">@font/biennale_book</item>
+        <item name="lineHeight">20dp</item>
+        <item name="android:background">@drawable/white_stroke_rounded</item>
+        <item name="android:paddingTop">@dimen/dp12</item>
+        <item name="android:paddingBottom">@dimen/dp12</item>
+        <item name="android:paddingStart">@dimen/dp48</item>
+        <item name="android:paddingEnd">@dimen/dp48</item>
+
+    </style>
+    <style name="WhiteRoundedTextSamllStyle" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/sp12</item>
+        <item name="fontFamily">@font/biennale_book</item>
+        <item name="lineHeight">20dp</item>
+        <item name="android:background">@drawable/white_stroke_rounded</item>
+        <item name="android:paddingTop">@dimen/dp8</item>
+        <item name="android:paddingBottom">@dimen/dp8</item>
+        <item name="android:paddingStart">@dimen/dp8</item>
+        <item name="android:paddingEnd">@dimen/dp8</item>
+
     </style>
 
 

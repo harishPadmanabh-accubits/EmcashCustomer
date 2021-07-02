@@ -3,15 +3,20 @@ package com.emcash.emcashcustomer
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.emcash.customerapp.user_interface.IntroActivity
-import com.emcash.customerapp.user_interface.WelcomePageActivity
+import android.view.View
+import com.emcash.customerapp.ui.intro.IntroActivity
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val intent=   Intent(applicationContext,WelcomePageActivity::class.java)
+
+
+    }
+
+    fun onClick(view: View) {
+        val intent=   Intent(applicationContext,IntroActivity::class.java)
         startActivity(intent)
     }
 }

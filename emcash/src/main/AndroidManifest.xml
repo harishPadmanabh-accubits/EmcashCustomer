@@ -1,27 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.emcash.customerapp">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
-        android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:name=".base.BaseApplication"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
-        android:supportsRtl="true"
-        android:theme="@style/Theme.EmcashCustomer">
-        <activity android:name=".user_interface.StartActivity"></activity>
-        <activity android:name=".user_interface.WelcomePageActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+        tools:replace="android:theme"
+        android:theme="@style/Theme.Emcash">
+        <activity
+            android:name=".ui.home.HomeActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.EmcashWhiteStatusBar" >
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
-        <activity android:name=".user_interface.TermsAndConditionsActivity" />
-        <activity android:name=".user_interface.IntroActivity"></activity>
+        <activity
+            android:name=".ui.prepare.PrepareEmCashActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.EmcashBlueStatusBar" />
+        <activity
+            android:name=".ui.terms.TermsAndConditionsActivity"
+            android:theme="@style/Theme.EmcashWhiteStatusBar" />
+        <activity android:name=".ui.intro.IntroActivity"
+            android:theme="@style/Theme.Emcash"
+            >
+
+        </activity>
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>
