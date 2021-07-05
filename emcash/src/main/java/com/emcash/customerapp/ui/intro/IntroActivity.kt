@@ -22,13 +22,9 @@ class IntroActivity : AppCompatActivity() {
         setContentView(R.layout.activity_intro)
         initViewModel()
         setupObservers()
-      //  setupViewPager()
     }
 
-//    private fun setupViewPager() {
-//        vp_intro_pager.isUserInputEnabled = false
-//        vp_intro_pager.adapter = IntroPagerAdapter(this)
-//    }
+
 
     private fun setupObservers() {
         viewModel.apply {
