@@ -30,4 +30,6 @@ Payment cards saved to your separate  Payments account are distinct from any Vir
     <string name="view_all">View All</string>
     <string name="analysing_your_score">Analysing your Score ...</string>
     <string name="preparing_tokens_based_on_identity">Preparing tokens based on identity</string>
+    <string name="convert_to_cash">Convert to Cash</string>
+    <string name="load_emcash">Load EmCash</string>
 </resources>

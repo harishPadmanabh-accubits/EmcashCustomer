@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/motion_base"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layoutDescription="@xml/activity_wallet2_scene"
+    tools:context=".ui.wallet.WalletActivity">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_bg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/app_blue"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_mid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.4" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_info"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline_mid"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/iv_bg">
+
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:padding="@dimen/dp12"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_back_arrow" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_coin_image"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:src="@drawable/coin_with_grad"
+            app:layout_constraintBottom_toTopOf="@+id/guideline16"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_info_my_safe_box" />
+
+        <TextView
+            android:id="@+id/tv_balance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/biennale_bold"
+            android:text="60"
+            android:textColor="@color/white"
+            android:textSize="28dp"
+            android:layout_marginBottom="@dimen/dp24"
+            app:layout_constraintBottom_toTopOf="@+id/tv_info_balance"
+            app:layout_constraintEnd_toEndOf="@+id/tv_info_balance"
+            app:layout_constraintStart_toStartOf="@+id/tv_info_balance" />
+        <TextView
+            android:id="@+id/tv_info_balance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/biennale_regular"
+            android:text="EmCashBalance"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp14"
+            android:layout_marginBottom="@dimen/dp24"
+            app:layout_constraintBottom_toTopOf="@+id/tv_safe_box_id"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_info_my_safe_box"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/biennale_regular"
+            android:text="My Safe Box"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp18"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_back"
+            app:layout_constraintEnd_toStartOf="@+id/guideline18"
+            app:layout_constraintStart_toStartOf="@+id/guideline18"
+            app:layout_constraintTop_toTopOf="@+id/iv_back" />
+
+        <TextView
+            android:id="@+id/tv_safe_box_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:alpha=".6"
+            android:layout_marginBottom="@dimen/dp12"
+            android:fontFamily="@font/biennale_regular"
+            android:text="Safebox ID :  1145T56"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp12"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline16"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.62" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_curve"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="18dp"
+            android:layout_marginEnd="-25dp"
+            android:alpha=".34"
+            android:scaleType="centerCrop"
+            android:scaleX="1.2"
+            android:scaleY="1.1"
+            android:src="@drawable/blue_curve_card"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/guideline16" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline18"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent=".5" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.motion.widget.MotionLayout
+        android:id="@+id/cl_activities"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/white_upper_cut"
+        app:layoutDescription="@xml/activity_wallet2_xml_cl_activities_scene"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline_mid">
+
+        <Button
+            android:id="@+id/btn_convert"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp12"
+            android:layout_marginEnd="@dimen/dp12"
+            android:layout_marginBottom="44dp"
+            android:background="@drawable/blue_round_bg"
+            android:fontFamily="@font/biennale_book"
+            android:text="@string/convert_to_cash"
+            android:textAllCaps="false"
+            android:textColor="@color/app_blue"
+            android:textSize="@dimen/sp14"
+            app:backgroundTint="@null"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/guideline17"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <Button
+            android:id="@+id/btn_load_emcash"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp12"
+            android:layout_marginEnd="@dimen/dp12"
+            android:layout_marginBottom="44dp"
+            android:background="@drawable/blue_round_bg"
+            android:backgroundTint="@color/app_blue"
+            android:text="@string/load_emcash"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp14"
+            app:backgroundTint="@null"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/guideline17" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline17"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent=".5" />
+
+
+    </androidx.constraintlayout.motion.widget.MotionLayout>
+
+
+</androidx.constraintlayout.motion.widget.MotionLayout>
