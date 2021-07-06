@@ -25,91 +25,61 @@ class PrepareEmCashActivity : AppCompatActivity() {
         setContentView(R.layout.activity_prepare_em_cash)
         openAnalyseFragment()
 
-
-
-        Handler(Looper.getMainLooper()).postDelayed({
-            val pushDown = TranslateAnimation(
-                0F, 500F, 0F, 1300F
-            )
-            pushDown.duration = 1200
-            pushDown.fillAfter = true
-          //  pushDown.isFillEnabled =false
-            pushDown.setAnimationListener(object : Animation.AnimationListener {
-                override fun onAnimationRepeat(p0: Animation?) {
-
-                }
-
-                override fun onAnimationEnd(p0: Animation?) {
-
-
-                }
-
-                override fun onAnimationStart(p0: Animation?) {
-                    // iv_curve.startAnimation(flip)
-                    ObjectAnimator.ofFloat(iv_curve, "scaleX", -1f).apply {
-                        duration = 1200
-                        start()
-                    }.addListener(onEnd = {
-                        Timber.e("Anim end")
-
-                    }
-
-                    )
-                    ObjectAnimator.ofFloat(iv_curve, "translationX", 400f).apply {
-                        duration = 1000
-                        start()
-                    }.addListener(onEnd = {
-                        Timber.e("Anim end")
-                        //openPreparedFragment()
-
-                         iv_curve.hide()
-
-//                        ObjectAnimator.ofFloat(iv_curve_small, "alpha", .4f).apply {
-//                            duration = 400
-//                            start()
-//                        }
-
-
-
-                        openPreparedFragment()
-
-                    }
-
-                    )
-                }
-            })
-            iv_curve.startAnimation(pushDown)
-            //     iv_curve.startAnimation(flip)
-
-
-
-
-
-        }, 1000)
-
-
     }
 
     fun openAnalyseFragment(){
         supportFragmentManager.commit {
-            this.setCustomAnimations(android.R.anim.fade_in,android.R.anim.fade_out)
+            //this.setCustomAnimations(android.R.anim.fade_in,android.R.anim.fade_out)
             setReorderingAllowed(true)
-           // this.addSharedElement(iv_curve,"curve")
             replace<AnalyseFragment>(R.id.container)
         }
     }
 
     fun openPreparedFragment(){
         supportFragmentManager.commit {
-            this.setCustomAnimations(android.R.anim.fade_in,android.R.anim.fade_out)
+            this.setCustomAnimations(android.R.anim.fade_out,android.R.anim.fade_out)
             setReorderingAllowed(true)
-        //    this.addSharedElement(appCompatImageView,"curve")
             replace<PreparedFragment>(R.id.container)
         }
     }
 
-    fun animateCurve(){
+    fun animateCurve(onEnd:()->Unit){
+        val pushDown = TranslateAnimation(
+            0F, 500F, 0F, 1300F
+        )
+        pushDown.duration = 1000
+        pushDown.fillAfter = true
+        pushDown.setAnimationListener(object : Animation.AnimationListener {
+            override fun onAnimationRepeat(p0: Animation?) {
 
+            }
+
+            override fun onAnimationEnd(p0: Animation?) {
+
+            }
+
+            override fun onAnimationStart(p0: Animation?) {
+                ObjectAnimator.ofFloat(iv_curve, "scaleX", -1f).apply {
+                    duration = 1000
+                    start()
+                }.addListener(onEnd = {
+                    Timber.e("Anim end")
+
+                }
+
+                )
+                ObjectAnimator.ofFloat(iv_curve, "translationX", 400f).apply {
+                    duration = 800
+                    start()
+                }.addListener(onEnd = {
+                    Timber.e("Anim end")
+                    iv_curve.hide()
+                    onEnd.invoke()
+                }
+                )
+            }
+        })
+        iv_curve.startAnimation(pushDown)
     }
 
 

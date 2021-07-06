@@ -1,9 +1,13 @@
 package com.emcash.customerapp.ui.home
 
-import androidx.appcompat.app.AppCompatActivity
+import android.os.Build
 import android.os.Bundle
+import android.transition.Transition
+import android.view.Window
+import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import androidx.transition.Explode
 import com.emcash.customerapp.R
 import com.emcash.customerapp.model.DummyUserData
 import com.emcash.customerapp.ui.home.adapter.RecentTransactionsAdapter
@@ -12,6 +16,7 @@ import kotlinx.android.synthetic.main.activity_home.*
 
 class HomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
 

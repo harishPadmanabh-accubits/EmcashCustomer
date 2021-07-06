@@ -8,18 +8,12 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.View
-import android.view.animation.Animation
-import android.view.animation.ScaleAnimation
-import android.view.animation.TranslateAnimation
-import androidx.core.animation.addListener
+
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
 import com.emcash.customerapp.R
-import com.emcash.customerapp.extensions.hide
-import kotlinx.android.synthetic.main.fragment_first_intro.*
-import kotlinx.android.synthetic.main.frame_analyse_score.*
-import timber.log.Timber
+
 
 class AnalyseFragment:Fragment(R.layout.frame_analyse_score) {
 
@@ -28,15 +22,22 @@ class AnalyseFragment:Fragment(R.layout.frame_analyse_score) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        Handler(Looper.getMainLooper()).postDelayed({
+
+            (requireActivity() as PrepareEmCashActivity).animateCurve(onEnd = {
+                openPreparedFragment()
+            })
+
+        }, 1000)
+
 
     }
 
 
     fun openPreparedFragment(){
         requireActivity().  supportFragmentManager.commit {
-            this.setCustomAnimations(android.R.anim.fade_in,android.R.anim.fade_out)
+       //     this.setCustomAnimations(android.R.anim.fade_out,android.R.anim.fade_out)
             setReorderingAllowed(true)
-           // this.addSharedElement(iv_curve,"curve")
             replace<PreparedFragment>(R.id.container)
         }
     }

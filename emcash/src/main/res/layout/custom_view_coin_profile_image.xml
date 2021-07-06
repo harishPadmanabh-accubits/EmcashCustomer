@@ -9,6 +9,7 @@
         android:id="@+id/iv_border_coin"
         android:layout_width="52dp"
         android:layout_height="52dp"
+        android:transitionName="dp"
         android:src="@drawable/coin_border_bg"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

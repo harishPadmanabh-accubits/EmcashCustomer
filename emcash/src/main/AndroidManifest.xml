@@ -14,7 +14,7 @@
         <activity
             android:name=".ui.home.HomeActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.EmcashWhiteStatusBar" >
+            android:theme="@style/Theme.EmcashBlueStatusBar" >
 
         </activity>
         <activity
