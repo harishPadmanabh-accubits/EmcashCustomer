@@ -10,6 +10,7 @@ import android.view.animation.Animation
 import android.view.animation.ScaleAnimation
 import androidx.core.animation.addListener
 import com.emcash.customerapp.R
+import com.emcash.customerapp.extensions.isNougatOrAbove
 import com.emcash.customerapp.extensions.obtainViewModel
 import kotlinx.android.synthetic.main.fragment_first_intro.*
 import kotlinx.android.synthetic.main.fragment_first_intro.btn_next
@@ -27,10 +28,14 @@ class FourthIntroFragment : Fragment() {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_fourth_intro, container, false)
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initViewModel()
-        performEnterTransition()
+
+        if (isNougatOrAbove())
+            performEnterTransition()
+
         btn_next.setOnClickListener {
             viewModel._screenPosition.value = 4
         }
@@ -41,7 +46,7 @@ class FourthIntroFragment : Fragment() {
         viewModel = requireActivity().obtainViewModel(IntroViewModel::class.java)
     }
 
-    fun performEnterTransition(){
+    fun performEnterTransition() {
         val fade = ScaleAnimation(
             .8f,
             1f,
@@ -54,7 +59,7 @@ class FourthIntroFragment : Fragment() {
         )
         fade.duration = 300
         fade.fillAfter = false
-        fade.isFillEnabled =false
+        fade.isFillEnabled = false
         fade.setAnimationListener(object : Animation.AnimationListener {
             override fun onAnimationRepeat(p0: Animation?) {
 
@@ -70,7 +75,7 @@ class FourthIntroFragment : Fragment() {
                     start()
                 }.addListener(onEnd = {
                     Timber.e("Anim end")
-                  //  viewModel._screenPosition.value =2
+                    //  viewModel._screenPosition.value =2
 
                 }
 
@@ -93,7 +98,7 @@ class FourthIntroFragment : Fragment() {
         )
         scale.duration = 500
         scale.fillAfter = false
-        scale.isFillEnabled =false
+        scale.isFillEnabled = false
         scale.setAnimationListener(object : Animation.AnimationListener {
             override fun onAnimationRepeat(p0: Animation?) {
 
@@ -108,7 +113,6 @@ class FourthIntroFragment : Fragment() {
                     duration = 500
                     start()
                 }
-
 
 
             }

@@ -17,11 +17,11 @@ class CoinProfileImageView(context: Context, attrs: AttributeSet) :
     }
 
     fun setImage(url:String){
-        iv_dp.loadImageWithUrl(url)
+        //iv_dp.loadImageWithUrl(url)
     }
 
     fun setImage(resID:Int){
-        iv_dp.loadImageWithResId(resID)
+        //iv_dp.loadImageWithResId(resID)
     }
 
 }

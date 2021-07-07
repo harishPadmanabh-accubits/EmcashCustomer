@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_type_indicator_load_emcash"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:background="@drawable/tbd_green_round"
+        android:padding="@dimen/dp8"
+        android:layout_marginTop="@dimen/dp12"
+        android:src="@drawable/tbd_ic_green_arrow"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_type_indicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/biennale_regular"
+        android:text="Loaded"
+        android:layout_marginStart="@dimen/dp16"
+        android:textColor="@color/black"
+        android:textSize="@dimen/dp12"
+        app:layout_constraintStart_toEndOf="@+id/iv_type_indicator_load_emcash"
+        app:layout_constraintTop_toTopOf="@+id/iv_type_indicator_load_emcash" />
+
+    <TextView
+        android:id="@+id/tv_value_emcash"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/biennale_bold"
+        android:text="30"
+        android:layout_marginStart="7dp"
+        android:textColor="@color/black"
+        android:textSize="@dimen/dp12"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_type_indicator"
+        app:layout_constraintStart_toEndOf="@+id/tv_type_indicator"
+        app:layout_constraintTop_toTopOf="@+id/tv_type_indicator" />
+
+    <TextView
+        android:id="@+id/tv_info_emcash"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/biennale_regular"
+        android:text="@string/emcash"
+        android:textColor="@color/black"
+        android:textSize="@dimen/dp12"
+        android:layout_marginStart="7dp"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_value_emcash"
+        app:layout_constraintStart_toEndOf="@+id/tv_value_emcash"
+        app:layout_constraintTop_toTopOf="@+id/tv_value_emcash" />
+
+    <TextView
+        android:id="@+id/tv_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="7dp"
+        android:fontFamily="@font/biennale_regular"
+        android:text="09:00 PM"
+        android:textColor="@color/ash"
+        android:textSize="@dimen/sp12"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/tv_type_indicator"
+        app:layout_constraintTop_toBottomOf="@+id/tv_type_indicator" />
+
+    <TextView
+        android:id="@+id/tv_value_changed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/biennale_bold"
+        android:text="+30"
+        android:layout_marginEnd="@dimen/dp30"
+        android:textColor="@color/black"
+        android:textSize="@dimen/dp12"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tv_info_emcash" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/sp12"
+        android:id="@+id/iv_coin_image"
+        android:src="@drawable/tbd_coin_profile_activity_list_item"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_value_changed"
+        app:layout_constraintEnd_toStartOf="@+id/tv_value_changed"
+        app:layout_constraintTop_toTopOf="@+id/tv_value_changed" />
+
+    <LinearLayout
+        android:id="@+id/ll_balance"
+        android:layout_marginTop="7dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="@+id/tv_value_changed"
+        app:layout_constraintTop_toBottomOf="@+id/tv_value_changed">
+
+        <TextView
+            android:id="@+id/tv_info_balance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/biennale_regular"
+            android:text="@string/balance"
+            android:textColor="@color/ash"
+            tools:layout_editor_absoluteX="76dp"
+            tools:layout_editor_absoluteY="184dp" />
+
+        <TextView
+            android:id="@+id/tv_balance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="7dp"
+            android:fontFamily="@font/biennale_regular"
+            android:text="40"
+            android:textColor="@color/green" />
+    </LinearLayout>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -9,8 +9,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.transition.Explode
 import com.emcash.customerapp.R
+import com.emcash.customerapp.extensions.openActivity
 import com.emcash.customerapp.model.DummyUserData
 import com.emcash.customerapp.ui.home.adapter.RecentTransactionsAdapter
+import com.emcash.customerapp.ui.wallet.WalletActivity
 import com.emcash.customerapp.utils.LevelProfileImageView
 import kotlinx.android.synthetic.main.activity_home.*
 
@@ -19,6 +21,10 @@ class HomeActivity : AppCompatActivity() {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
+
+        cv_balance.setOnClickListener {
+            openActivity(WalletActivity::class.java)
+        }
 
         val users = listOf<DummyUserData>(
             DummyUserData(

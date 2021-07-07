@@ -13,6 +13,7 @@ import androidx.core.animation.addListener
 import androidx.core.animation.doOnEnd
 import androidx.fragment.app.Fragment
 import com.emcash.customerapp.R
+import com.emcash.customerapp.extensions.isNougatOrAbove
 import com.emcash.customerapp.extensions.obtainViewModel
 import kotlinx.android.synthetic.main.fragment_first_intro.*
 import timber.log.Timber
@@ -34,8 +35,10 @@ class FirstIntroFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         initViewModel()
         btn_next.setOnClickListener {
-            // viewModel._screenPosition.value = 1
-            performExitTransitionAndNavigate(iv_intro_art_man)
+            if (isNougatOrAbove())
+                performExitTransitionAndNavigate(iv_intro_art_man)
+            else
+                viewModel._screenPosition.value = 1
 
 
         }
@@ -54,7 +57,7 @@ class FirstIntroFragment : Fragment() {
         )
         fade_in.duration = 500
         fade_in.fillAfter = false
-        fade_in.isFillEnabled =false
+        fade_in.isFillEnabled = false
         fade_in.setAnimationListener(object : Animation.AnimationListener {
             override fun onAnimationRepeat(p0: Animation?) {
 
@@ -70,7 +73,7 @@ class FirstIntroFragment : Fragment() {
                     start()
                 }.addListener(onEnd = {
                     Timber.e("Anim end")
-                    viewModel._screenPosition.value =1
+                    viewModel._screenPosition.value = 1
 
                 }
 

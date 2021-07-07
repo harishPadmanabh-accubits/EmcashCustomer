@@ -11,23 +11,24 @@
         android:label="@string/app_name"
         android:theme="@style/Theme.Emcash"
         tools:replace="android:theme">
-        <activity android:name=".ui.wallet.WalletActivity"></activity>
+        <activity android:name=".ui.wallet.WalletActivity" />
         <activity
             android:name=".ui.home.HomeActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.EmcashBlueStatusBar"></activity>
+            android:theme="@style/Theme.EmcashWhiteStatusBar" />
         <activity
             android:name=".ui.prepare.PrepareEmCashActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.EmcashBlueStatusBar" />
         <activity
             android:name=".ui.terms.TermsAndConditionsActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.EmcashWhiteStatusBar" />
         <activity
             android:name=".ui.intro.IntroActivity"
             android:hardwareAccelerated="false"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.Emcash"></activity>
+            android:theme="@style/Theme.Emcash" />
 
         <meta-data
             android:name="preloaded_fonts"

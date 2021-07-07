@@ -13,6 +13,7 @@ import androidx.core.animation.addListener
 import androidx.core.view.doOnLayout
 import androidx.core.view.doOnPreDraw
 import com.emcash.customerapp.R
+import com.emcash.customerapp.extensions.isNougatOrAbove
 import com.emcash.customerapp.extensions.obtainViewModel
 import kotlinx.android.synthetic.main.fragment_first_intro.*
 import kotlinx.android.synthetic.main.fragment_first_intro.btn_next
@@ -42,12 +43,15 @@ class SecondIntroFragment : Fragment() {
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        view.doOnPreDraw {
-         //   performEnterTransition(iv_intro_coin)
-        }
+
         initViewModel()
         btn_next.setOnClickListener {
-            perFormExitTransitionAndNavigate(iv_intro_coin)
+            if(isNougatOrAbove())
+                perFormExitTransitionAndNavigate(iv_intro_coin)
+            else
+                viewModel._screenPosition.value = 2
+
+
         }
 
     }

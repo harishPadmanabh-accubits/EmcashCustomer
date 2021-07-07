@@ -32,4 +32,7 @@ Payment cards saved to your separate  Payments account are distinct from any Vir
     <string name="preparing_tokens_based_on_identity">Preparing tokens based on identity</string>
     <string name="convert_to_cash">Convert to Cash</string>
     <string name="load_emcash">Load EmCash</string>
+    <string name="my_activities">My Activities</string>
+    <string name="emcash">emCash</string>
+    <string name="balance">Balance</string>
 </resources>

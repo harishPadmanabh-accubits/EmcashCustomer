@@ -45,7 +45,6 @@ class IntroActivity : AppCompatActivity() {
 
     private fun openFirstIntroFragment(){
         supportFragmentManager.commit {
-            //this.setCustomAnimations(android.R.anim.fade_in,android.R.anim.fade_out)
             setReorderingAllowed(true)
             replace<FirstIntroFragment>(R.id.container)
         }
