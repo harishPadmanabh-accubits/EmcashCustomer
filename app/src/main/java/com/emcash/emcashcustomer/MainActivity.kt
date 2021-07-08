@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun onClick(view: View) {
-        val intent=   Intent(applicationContext,WalletActivity::class.java)
+        val intent=   Intent(applicationContext,PrepareEmCashActivity::class.java)
         startActivity(intent)
     }
 }

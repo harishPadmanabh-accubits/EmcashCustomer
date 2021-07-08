@@ -1,23 +1,19 @@
 package com.emcash.customerapp.ui.prepare
 
 import android.animation.ObjectAnimator
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
+import android.util.DisplayMetrics
 import android.view.animation.Animation
 import android.view.animation.TranslateAnimation
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.animation.addListener
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
 import com.emcash.customerapp.R
 import com.emcash.customerapp.extensions.hide
-import com.emcash.customerapp.extensions.openActivity
-import com.emcash.customerapp.ui.home.HomeActivity
-import com.emcash.customerapp.ui.intro.FirstIntroFragment
 import kotlinx.android.synthetic.main.activity_prepare_em_cash.*
-
 import timber.log.Timber
+
 
 class PrepareEmCashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,8 +40,13 @@ class PrepareEmCashActivity : AppCompatActivity() {
     }
 
     fun animateCurve(onEnd:()->Unit){
+        val displayMetrics = DisplayMetrics()
+        windowManager.defaultDisplay.getMetrics(displayMetrics)
+        val screenHeight = displayMetrics.heightPixels
+        val screenWidth = displayMetrics.widthPixels
+
         val pushDown = TranslateAnimation(
-            0F, 500F, 0F, 1300F
+            0F, screenWidth.toFloat()/3, 0F, screenHeight.toFloat()/2
         )
         pushDown.duration = 1000
         pushDown.fillAfter = true
@@ -68,7 +69,7 @@ class PrepareEmCashActivity : AppCompatActivity() {
                 }
 
                 )
-                ObjectAnimator.ofFloat(iv_curve, "translationX", 400f).apply {
+                ObjectAnimator.ofFloat(iv_curve, "translationX", screenWidth.toFloat()/3).apply {
                     duration = 800
                     start()
                 }.addListener(onEnd = {

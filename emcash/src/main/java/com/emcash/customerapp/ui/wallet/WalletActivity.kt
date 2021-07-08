@@ -13,6 +13,10 @@ class WalletActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.wallet_screen_v2)
 
+        iv_back.setOnClickListener {
+            onBackPressed()
+        }
+
 
         rv_activities.apply {
             layoutManager = LinearLayoutManager(this@WalletActivity,RecyclerView.VERTICAL,false)
