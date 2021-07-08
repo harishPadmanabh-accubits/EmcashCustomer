@@ -163,6 +163,7 @@
         <ImageView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:scaleType="centerCrop"
             android:src="@drawable/intro_gradient_white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/iv_intro_art_man"
