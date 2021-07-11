@@ -48,7 +48,9 @@ class PreparedFragment:Fragment() {
 //            startActivity(Intent(requireActivity(),HomeActivity::class.java),options.toBundle())
 //            requireActivity().finish()
 
-            startActivity(Intent(requireContext(),HomeActivity::class.java))
+            startActivity(Intent(requireContext(),HomeActivity::class.java).also {
+                it.putExtra("shouldAnimate",true)
+            })
         }
 
     }

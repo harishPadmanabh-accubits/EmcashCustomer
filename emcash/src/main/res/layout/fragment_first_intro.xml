@@ -143,7 +143,8 @@
             android:id="@+id/iv_intro_msg_1"
             android:layout_width="165dp"
             android:layout_height="72dp"
-            android:elevation="@dimen/dp8"
+            android:elevation="@dimen/dp16"
+
             android:scaleType="centerCrop"
             android:src="@drawable/intro_msg_1"
             app:layout_constraintEnd_toStartOf="@+id/guideline11"
@@ -160,11 +161,12 @@
             app:layout_constraintTop_toTopOf="@+id/guideline10" />
 
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:scaleType="centerCrop"
-            android:src="@drawable/intro_gradient_white"
+            android:elevation="@dimen/dp12"
+            app:srcCompat="@drawable/intro_gradient_white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/iv_intro_art_man"
             app:layout_constraintStart_toStartOf="@+id/iv_intro_art_man" />

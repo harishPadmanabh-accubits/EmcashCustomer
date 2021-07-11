@@ -4,6 +4,8 @@ import android.os.Build
 import android.os.Bundle
 import android.transition.Transition
 import android.view.Window
+import android.view.animation.Animation
+import android.view.animation.ScaleAnimation
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
@@ -17,6 +19,9 @@ import com.emcash.customerapp.utils.LevelProfileImageView
 import kotlinx.android.synthetic.main.activity_home.*
 
 class HomeActivity : AppCompatActivity() {
+
+    var shouldAnimateCoin = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
@@ -71,6 +76,12 @@ class HomeActivity : AppCompatActivity() {
         layoutManager = GridLayoutManager(this@HomeActivity,5)
         adapter = RecentTransactionsAdapter(users)
     }
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+        shouldAnimateCoin = intent.getBooleanExtra("shouldAnimate",false)
 
     }
 

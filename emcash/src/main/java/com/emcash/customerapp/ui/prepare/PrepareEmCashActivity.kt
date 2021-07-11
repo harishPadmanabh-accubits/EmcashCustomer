@@ -46,9 +46,9 @@ class PrepareEmCashActivity : AppCompatActivity() {
         val screenWidth = displayMetrics.widthPixels
 
         val pushDown = TranslateAnimation(
-            0F, screenWidth.toFloat()/3, 0F, screenHeight.toFloat()/2
+            0F, screenWidth.toFloat()/4, 0F, screenHeight.toFloat()/2
         )
-        pushDown.duration = 1000
+        pushDown.duration = 750
         pushDown.fillAfter = true
         pushDown.setAnimationListener(object : Animation.AnimationListener {
             override fun onAnimationRepeat(p0: Animation?) {

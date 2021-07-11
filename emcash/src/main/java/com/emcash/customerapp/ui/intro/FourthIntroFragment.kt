@@ -33,8 +33,7 @@ class FourthIntroFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         initViewModel()
 
-        if (isNougatOrAbove())
-            performEnterTransition()
+        performEnterTransition()
 
         btn_next.setOnClickListener {
             viewModel._screenPosition.value = 4

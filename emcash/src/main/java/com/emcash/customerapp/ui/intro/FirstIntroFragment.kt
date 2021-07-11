@@ -35,11 +35,7 @@ class FirstIntroFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         initViewModel()
         btn_next.setOnClickListener {
-            if (isNougatOrAbove())
                 performExitTransitionAndNavigate(iv_intro_art_man)
-            else
-                viewModel._screenPosition.value = 1
-
 
         }
     }
