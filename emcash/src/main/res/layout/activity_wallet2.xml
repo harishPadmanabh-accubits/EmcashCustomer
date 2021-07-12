@@ -179,6 +179,7 @@
             android:backgroundTint="@color/app_blue"
             android:text="@string/load_emcash"
             android:textAllCaps="false"
+            android:fontFamily="@font/biennale_book"
             android:textColor="@color/white"
             android:textSize="@dimen/sp14"
             app:backgroundTint="@null"

@@ -45,7 +45,7 @@ class FourthIntroFragment : Fragment() {
         viewModel = requireActivity().obtainViewModel(IntroViewModel::class.java)
     }
 
-    fun performEnterTransition() {
+    private fun performEnterTransition() {
         val fade = ScaleAnimation(
             .8f,
             1f,
@@ -112,11 +112,15 @@ class FourthIntroFragment : Fragment() {
                     duration = 500
                     start()
                 }
+                ObjectAnimator.ofFloat(iv_intro_gold_toppings_left, "alpha", 1f).apply {
+                    duration = 500
+                    start()
+                }
 
 
             }
         })
-        iv_intro_gold_toppings?.startAnimation(scale)
+        fl_toppings?.startAnimation(scale)
 
     }
 
