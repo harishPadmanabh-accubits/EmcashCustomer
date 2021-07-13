@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import com.emcash.customerapp.ui.intro.IntroActivity
+import com.emcash.customerapp.ui.loademcash.TransactionActivity
 import com.emcash.customerapp.ui.prepare.PrepareEmCashActivity
 import com.emcash.customerapp.ui.wallet.WalletActivity
 
@@ -18,7 +19,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun onClick(view: View) {
-        val intent=   Intent(applicationContext,IntroActivity::class.java)
+        val intent=   Intent(applicationContext,TransactionActivity::class.java)
         startActivity(intent)
     }
 }

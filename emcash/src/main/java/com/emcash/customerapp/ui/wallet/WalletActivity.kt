@@ -5,7 +5,9 @@ import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.emcash.customerapp.R
+import com.emcash.customerapp.extensions.openActivity
 import com.emcash.customerapp.model.dummyActivityData
+import com.emcash.customerapp.ui.loademcash.LoadEmcashActivity
 import kotlinx.android.synthetic.main.wallet_screen_v2.*
 
 class WalletActivity : AppCompatActivity() {
@@ -15,6 +17,10 @@ class WalletActivity : AppCompatActivity() {
 
         iv_back.setOnClickListener {
             onBackPressed()
+        }
+
+        btn_load_emcash.setOnClickListener {
+            openActivity(LoadEmcashActivity::class.java)
         }
 
 
