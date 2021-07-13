@@ -10,6 +10,7 @@ import com.emcash.customerapp.extensions.openActivity
 import com.emcash.customerapp.model.DummyUserData
 import com.emcash.customerapp.ui.home.adapter.RecentTransactionsAdapter
 import com.emcash.customerapp.ui.loademcash.LoadEmcashActivity
+import com.emcash.customerapp.ui.settings.SettingsActivity
 import com.emcash.customerapp.ui.wallet.WalletActivity
 import com.emcash.customerapp.utils.LevelProfileImageView
 import kotlinx.android.synthetic.main.activity_home.*
@@ -80,13 +81,20 @@ class HomeActivity : AppCompatActivity() {
             openActivity(LoadEmcashActivity::class.java)
         }
 
+        iv_user_image.setOnClickListener {
+            openActivity(SettingsActivity::class.java)
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+        }
 
     }
 
     override fun onResume() {
         super.onResume()
-        shouldAnimateCoin = intent.getBooleanExtra("shouldAnimate",false)
+    }
 
+    override fun onBackPressed() {
+        finish()
+        super.onBackPressed()
     }
 
 

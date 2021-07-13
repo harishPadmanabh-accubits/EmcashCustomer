@@ -46,11 +46,9 @@ class PreparedFragment:Fragment() {
                 "coin_image"
             )
             startActivity(Intent(requireActivity(),HomeActivity::class.java),options.toBundle())
+           // requireActivity().overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
             requireActivity().finish()
 
-//            startActivity(Intent(requireContext(),HomeActivity::class.java).also {
-//                it.putExtra("shouldAnimate",true)
-//            })
         }
 
     }

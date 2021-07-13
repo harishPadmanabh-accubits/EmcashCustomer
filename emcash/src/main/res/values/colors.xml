@@ -23,6 +23,7 @@
     <color name="blue_transparent">#F2F4FF</color>
     <color name="blue_42">#425CEC</color>
     <color name="grey_unselected">#59595C</color>
+    <color name="blue_bright">#0054FE</color>
 
 
 </resources>
