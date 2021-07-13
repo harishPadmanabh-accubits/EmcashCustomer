@@ -10,17 +10,39 @@ import com.emcash.customerapp.extensions.loadImageWithUrl
 import kotlinx.android.synthetic.main.custom_view_coin_profile_image.view.*
 
 class CoinProfileImageView(context: Context, attrs: AttributeSet) :
-    RelativeLayout(context, attrs)  {
+    RelativeLayout(context, attrs) {
 
-    init{
-        inflate(context, R.layout.custom_view_coin_profile_image, this)
+    enum class CoinSize {
+        DP_112, //semi_large
+        DP_157, //large
+        DP_52, //small
+        DP_15, //tiny
+        DP_57  //normal
     }
 
-    fun setImage(url:String){
+    var coinSize: CoinSize
+
+    init {
+        val coinSizeArray = context.obtainStyledAttributes(attrs, R.styleable.CoinProfileImageView)
+        coinSize =
+            CoinSize.values()[coinSizeArray.getInt(R.styleable.CoinProfileImageView_coin_size, 0)]
+        when (coinSize) {
+            CoinSize.DP_112 -> inflate(context, R.layout.custom_view_coin_image_112, this)
+            CoinSize.DP_157 -> inflate(context, R.layout.custom_view_coiin_profile_dp_157, this)
+            CoinSize.DP_52 -> inflate(context, R.layout.custom_view_coin_profile_image, this)
+            CoinSize.DP_57 -> inflate(context, R.layout.custom_view_coin_profile_57, this)
+            CoinSize.DP_15 -> inflate(context, R.layout.custom_view_coin_profile_15, this)
+        }
+
+
+        //inflate(context, R.layout.custom_view_coin_profile_image, this)
+    }
+
+    fun setImage(url: String) {
         //iv_dp.loadImageWithUrl(url)
     }
 
-    fun setImage(resID:Int){
+    fun setImage(resID: Int) {
         //iv_dp.loadImageWithResId(resID)
     }
 

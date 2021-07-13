@@ -43,14 +43,14 @@ class PreparedFragment:Fragment() {
             val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
                 requireActivity(),
                 (iv_dp as View),
-                "dp"
+                "coin_image"
             )
-//            startActivity(Intent(requireActivity(),HomeActivity::class.java),options.toBundle())
-//            requireActivity().finish()
+            startActivity(Intent(requireActivity(),HomeActivity::class.java),options.toBundle())
+            requireActivity().finish()
 
-            startActivity(Intent(requireContext(),HomeActivity::class.java).also {
-                it.putExtra("shouldAnimate",true)
-            })
+//            startActivity(Intent(requireContext(),HomeActivity::class.java).also {
+//                it.putExtra("shouldAnimate",true)
+//            })
         }
 
     }

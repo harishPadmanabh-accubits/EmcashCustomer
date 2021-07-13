@@ -11,4 +11,14 @@
     <declare-styleable name="OnboardingNextButton">
         <attr name="buttonText" format="string"/>
     </declare-styleable>
+
+    <declare-styleable name="CoinProfileImageView">
+        <attr name="coin_size" format="enum">
+            <enum name="semi_large" value="0"/>
+            <enum name="large" value="1"/>
+            <enum name="small" value="2"/>
+            <enum name="tiny" value="3"/>
+            <enum name="normal" value="4"/>
+        </attr>
+    </declare-styleable>
 </resources>

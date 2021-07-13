@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="52dp"
+    android:layout_width="112dp"
     android:transitionGroup="true"
     android:transitionName="coin_image"
-    android:layout_height="52dp">
+    android:layout_height="112dp">
     <androidx.appcompat.widget.AppCompatImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:src="@drawable/coin_ring"/>
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/iv_profile_image"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
         android:layout_centerInParent="true"
         android:src="@drawable/sample_round_dp"
-        />
+/>
 
 
 </RelativeLayout>

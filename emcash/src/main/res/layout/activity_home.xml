@@ -85,7 +85,7 @@
                 android:layout_width="34dp"
                 android:layout_height="34dp"
                 android:layout_marginEnd="@dimen/dp20"
-                android:src="@drawable/sample_dp"
+                android:src="@drawable/sample_round_dp"
                 android:transitionName="shop_image_transition"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/iv_qr_scanner"
@@ -204,6 +204,8 @@
                     <com.emcash.customerapp.utils.CoinProfileImageView
                         android:id="@+id/coinProfileImageView"
                         android:layout_width="wrap_content"
+                        app:coin_size="small"
+                        android:transitionName="coin_image"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/dp24"
                         android:layout_marginTop="@dimen/dp24"

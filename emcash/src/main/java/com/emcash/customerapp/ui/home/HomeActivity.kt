@@ -1,15 +1,10 @@
 package com.emcash.customerapp.ui.home
 
-import android.os.Build
 import android.os.Bundle
 import android.transition.Transition
-import android.view.Window
-import android.view.animation.Animation
-import android.view.animation.ScaleAnimation
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.transition.Explode
+import androidx.transition.ChangeBounds
 import com.emcash.customerapp.R
 import com.emcash.customerapp.extensions.openActivity
 import com.emcash.customerapp.model.DummyUserData
@@ -27,6 +22,7 @@ class HomeActivity : AppCompatActivity() {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
+        window.sharedElementEnterTransition.duration=500
 
         cv_balance.setOnClickListener {
             openActivity(WalletActivity::class.java)
