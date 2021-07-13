@@ -28,6 +28,7 @@ class TermsAndConditionsActivity : AppCompatActivity() {
         btn_accept.setOnClickListener {
             openActivity(PrepareEmCashActivity::class.java)
         }
+
     }
 
     private fun initViewmodel() {

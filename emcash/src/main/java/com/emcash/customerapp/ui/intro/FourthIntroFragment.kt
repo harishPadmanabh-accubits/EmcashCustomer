@@ -56,7 +56,7 @@ class FourthIntroFragment : Fragment() {
             Animation.RELATIVE_TO_SELF,
             0.5f
         )
-        fade.duration = 300
+        fade.duration = 500
         fade.fillAfter = false
         fade.isFillEnabled = false
         fade.setAnimationListener(object : Animation.AnimationListener {
@@ -70,7 +70,7 @@ class FourthIntroFragment : Fragment() {
 
             override fun onAnimationStart(p0: Animation?) {
                 ObjectAnimator.ofFloat(iv_intro_cup, "alpha", 1f).apply {
-                    duration = 300
+                    duration = 500
                     start()
                 }.addListener(onEnd = {
                     Timber.e("Anim end")
@@ -88,14 +88,14 @@ class FourthIntroFragment : Fragment() {
         val scale = ScaleAnimation(
             2f,
             1f,
-            .2f,
+            2f,
             1f,
             Animation.RELATIVE_TO_SELF,
-            0.2f,
+            -1f,
             Animation.RELATIVE_TO_SELF,
-            0.2f
+            -1f
         )
-        scale.duration = 500
+        scale.duration = 600
         scale.fillAfter = false
         scale.isFillEnabled = false
         scale.setAnimationListener(object : Animation.AnimationListener {
@@ -108,15 +108,6 @@ class FourthIntroFragment : Fragment() {
             }
 
             override fun onAnimationStart(p0: Animation?) {
-                ObjectAnimator.ofFloat(iv_intro_cup, "alpha", 1f).apply {
-                    duration = 500
-                    start()
-                }
-                ObjectAnimator.ofFloat(iv_intro_gold_toppings_left, "alpha", 1f).apply {
-                    duration = 500
-                    start()
-                }
-
 
             }
         })

@@ -123,7 +123,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:elevation="@dimen/dp12"
-                android:alpha=".4"
+                android:scaleType="centerCrop"
                 android:translationZ="@dimen/dp12"
                 android:layout_marginBottom="@dimen/dp48"
                 android:src="@drawable/intro_gold_toppings"
@@ -134,10 +134,10 @@
                 app:layout_constraintVertical_bias="0.0" />
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/iv_intro_gold_toppings_left"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:elevation="@dimen/dp12"
-                android:alpha="0"
+                android:scaleType="centerCrop"
                 android:translationZ="@dimen/dp12"
                 android:layout_marginBottom="@dimen/dp48"
                 android:src="@drawable/intro_gold_toppings_left"
