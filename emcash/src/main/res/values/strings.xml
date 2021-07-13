@@ -35,4 +35,7 @@ Payment cards saved to your separate  Payments account are distinct from any Vir
     <string name="my_activities">My Activities</string>
     <string name="emcash">emCash</string>
     <string name="balance">Balance</string>
+    <string name="load_my_safebox">Load My SafeBox</string>
+    <string name="description">Description...</string>
+    <string name="empay">EmPay</string>
 </resources>

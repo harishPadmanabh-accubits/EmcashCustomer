@@ -11,10 +11,16 @@
         android:label="@string/app_name"
         android:theme="@style/Theme.Emcash"
         tools:replace="android:theme">
-        <activity android:name=".ui.wallet.WalletActivity"
-            android:hardwareAccelerated="true"
+        <activity android:name=".ui.loademcash.TransactionActivity"></activity>
+        <activity
+            android:name=".ui.loademcash.LoadEmcashActivity"
             android:screenOrientation="portrait"
-            />
+            android:theme="@style/Theme.EmcashWhiteStatusBar"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".ui.wallet.WalletActivity"
+            android:hardwareAccelerated="true"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.home.HomeActivity"
             android:screenOrientation="portrait"
@@ -29,8 +35,8 @@
             android:theme="@style/Theme.EmcashWhiteStatusBar" />
         <activity
             android:name=".ui.intro.IntroActivity"
-            android:screenOrientation="portrait"
             android:hardwareAccelerated="true"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.Emcash" />
 
         <meta-data

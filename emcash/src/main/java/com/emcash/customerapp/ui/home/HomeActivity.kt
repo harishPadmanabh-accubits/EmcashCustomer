@@ -14,6 +14,7 @@ import com.emcash.customerapp.R
 import com.emcash.customerapp.extensions.openActivity
 import com.emcash.customerapp.model.DummyUserData
 import com.emcash.customerapp.ui.home.adapter.RecentTransactionsAdapter
+import com.emcash.customerapp.ui.loademcash.LoadEmcashActivity
 import com.emcash.customerapp.ui.wallet.WalletActivity
 import com.emcash.customerapp.utils.LevelProfileImageView
 import kotlinx.android.synthetic.main.activity_home.*
@@ -76,6 +77,13 @@ class HomeActivity : AppCompatActivity() {
         layoutManager = GridLayoutManager(this@HomeActivity,5)
         adapter = RecentTransactionsAdapter(users)
     }
+
+
+
+        tv_load_emcash.setOnClickListener {
+            openActivity(LoadEmcashActivity::class.java)
+        }
+
 
     }
 

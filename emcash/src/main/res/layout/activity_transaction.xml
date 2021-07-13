@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.loademcash.TransactionActivity">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp16"
+        android:layout_marginTop="@dimen/dp24"
+        android:padding="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_back_arrow"
+        app:tint="@color/black" />
+
+    <TextView
+        android:id="@+id/tv_info_load"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/biennale_regular"
+        android:text="@string/load_my_safebox"
+        android:textColor="@color/black"
+        android:textSize="@dimen/sp18"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_back"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/iv_back" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline22"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.25" />
+
+    <com.emcash.customerapp.utils.OnboardingNextButton
+        android:id="@+id/btn_continue"
+        android:layout_width="170dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dp24"
+        app:buttonText="Continue"
+        android:elevation="@dimen/dp24"
+        android:translationZ="@dimen/dp24"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/ll_input"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/guideline22"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline22">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="57dp"
+            android:layout_height="57dp"
+            android:src="@drawable/sample_coin" />
+
+        <TextView
+            android:id="@+id/tv_info_currency"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp8"
+            android:fontFamily="@font/biennale_bold"
+            android:text="100"
+            android:textColor="@color/black"
+            android:textSize="50sp"
+
+            />
+    </LinearLayout>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline23"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent=".5" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/blue_stroke_light_blue_fill_round_bg"
+        android:gravity="center"
+        android:layout_marginTop="@dimen/dp40"
+        android:text="@string/empay"
+        android:paddingStart="34dp"
+        android:paddingEnd="34dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:textColor="@color/grey_unselected"
+        android:textSize="@dimen/sp14"
+        android:id="@+id/tab_empay"
+        android:fontFamily="@font/biennale_book"
+        android:layout_marginEnd="@dimen/dp12"
+        app:layout_constraintEnd_toStartOf="@+id/guideline23"
+        app:layout_constraintTop_toBottomOf="@+id/ll_input" />
+
+    <TextView
+        android:id="@+id/tab_bank_card"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp40"
+        android:background="@drawable/grey_rounded_bg"
+        android:gravity="center"
+        android:paddingStart="24dp"
+        android:paddingEnd="24dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:fontFamily="@font/biennale_book"
+        android:text="Bank Card"
+        android:textColor="@color/grey_unselected"
+        android:textSize="@dimen/sp14"
+        android:layout_marginStart="@dimen/dp12"
+        app:layout_constraintStart_toStartOf="@+id/guideline23"
+        app:layout_constraintTop_toBottomOf="@+id/ll_input" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/iv_empay_selected"
+        app:layout_constraintBottom_toTopOf="@+id/tab_empay"
+        app:layout_constraintEnd_toEndOf="@+id/tab_empay"
+        app:layout_constraintStart_toEndOf="@+id/tab_empay"
+        app:layout_constraintTop_toTopOf="@+id/tab_empay"
+        app:srcCompat="@drawable/ic_blue_tick_small" />
+
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/iv_bank_selected"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/tab_bank_card"
+        app:layout_constraintEnd_toEndOf="@+id/tab_bank_card"
+        app:layout_constraintStart_toEndOf="@+id/tab_bank_card"
+        app:layout_constraintTop_toTopOf="@+id/tab_bank_card"
+        app:srcCompat="@drawable/ic_blue_tick_small" />
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="@dimen/dp24"
+        android:elevation="@dimen/dp12"
+        app:layout_constraintBottom_toTopOf="@+id/btn_continue"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tab_empay" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

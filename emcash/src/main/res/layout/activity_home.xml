@@ -238,6 +238,7 @@
                         app:layout_constraintTop_toBottomOf="@+id/tv_tv_info_balance" />
 
                     <TextView
+                        android:id="@+id/tv_load_emcash"
                         style="@style/WhiteRoundedTextSamllStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

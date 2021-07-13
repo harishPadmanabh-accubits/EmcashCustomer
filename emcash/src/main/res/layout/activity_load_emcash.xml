@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.loademcash.LoadEmcashActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_main"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp16"
+                android:layout_marginTop="@dimen/dp24"
+                android:padding="10dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_back_arrow"
+                app:tint="@color/black" />
+
+            <TextView
+                android:id="@+id/tv_info_load"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/biennale_regular"
+                android:text="@string/load_my_safebox"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp18"
+                app:layout_constraintBottom_toBottomOf="@+id/iv_back"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/iv_back" />
+
+
+            <LinearLayout
+                android:id="@+id/ll_input"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toTopOf="@+id/guideline22"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/guideline22">
+
+                <TextView
+                    android:id="@+id/tv_info_currency"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/biennale_bold"
+                    android:text="AED"
+                    android:textColor="@color/black"
+                    android:textSize="50sp"
+
+                    />
+
+                <EditText
+                    android:id="@+id/et_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp8"
+                    android:background="@null"
+                    android:focusable="true"
+                    android:fontFamily="@font/biennale_bold"
+                    android:hint="00"
+                    android:maxLength="5"
+                    android:maxLines="1"
+                    android:inputType="number"
+                    android:textColor="@color/black"
+                    android:textSize="50sp" />
+
+            </LinearLayout>
+
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline22"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.29" />
+
+            <EditText
+                android:id="@+id/et_description"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/grey_rounded_bg"
+                android:fontFamily="@font/biennale_regular"
+                android:gravity="center"
+                android:hint="@string/description"
+                android:padding="10dp"
+                android:maxLines="1"
+                android:imeOptions="actionDone"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp14"
+                app:layout_constraintEnd_toEndOf="@+id/ll_input"
+                app:layout_constraintHorizontal_bias="0.923"
+                app:layout_constraintStart_toStartOf="@+id/ll_input"
+                app:layout_constraintTop_toBottomOf="@+id/ll_input"
+                android:inputType="text" />
+
+            <TextView
+                android:id="@+id/tv_equals"
+                android:layout_width="@dimen/dp200"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp40"
+                android:background="@drawable/light_blue_rounded_bg"
+                android:fontFamily="@font/biennale_regular"
+                android:gravity="center"
+                android:paddingStart="@dimen/dp32"
+                android:paddingTop="@dimen/dp12"
+                android:paddingEnd="@dimen/dp32"
+                android:paddingBottom="@dimen/dp12"
+                android:text="1 AED = 1 EmCash"
+                android:textAlignment="center"
+                android:textColor="@color/blue_42"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/et_description" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>
