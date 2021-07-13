@@ -11,8 +11,12 @@
         android:label="@string/app_name"
         android:theme="@style/Theme.Emcash"
         tools:replace="android:theme">
-        <activity android:name=".ui.settings.SettingsActivity"></activity>
-        <activity android:name=".ui.loademcash.TransactionActivity" />
+        <activity
+            android:name=".ui.settings.SettingsActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".ui.loademcash.TransactionActivity"
+            android:screenOrientation="portrait"
+            />
         <activity
             android:name=".ui.loademcash.LoadEmcashActivity"
             android:screenOrientation="portrait"

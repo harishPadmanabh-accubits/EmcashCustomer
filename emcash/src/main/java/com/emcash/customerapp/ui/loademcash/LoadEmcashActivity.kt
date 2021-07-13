@@ -15,9 +15,16 @@ class LoadEmcashActivity : AppCompatActivity() {
         et_description.setOnEditorActionListener { textView, action, keyEvent ->
             if (action == EditorInfo.IME_ACTION_DONE) {
                 openActivity(TransactionActivity::class.java)
-              return@setOnEditorActionListener  true
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+
+                return@setOnEditorActionListener  true
             }
             return@setOnEditorActionListener  true
+        }
+        fab_done.setOnClickListener {
+            openActivity(TransactionActivity::class.java)
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+
         }
     }
 }

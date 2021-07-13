@@ -40,7 +40,7 @@
 
     <com.emcash.customerapp.utils.OnboardingNextButton
         android:id="@+id/btn_continue"
-        android:layout_width="170dp"
+        android:layout_width="@dimen/dp150"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/dp24"
         app:buttonText="Continue"
