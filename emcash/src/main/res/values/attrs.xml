@@ -19,6 +19,7 @@
             <enum name="small" value="2"/>
             <enum name="tiny" value="3"/>
             <enum name="normal" value="4"/>
+            <enum name="medium" value="5"/>
         </attr>
     </declare-styleable>
 </resources>

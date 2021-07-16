@@ -17,7 +17,8 @@ class CoinProfileImageView(context: Context, attrs: AttributeSet) :
         DP_157, //large
         DP_52, //small
         DP_15, //tiny
-        DP_57  //normal
+        DP_57,  //normal
+        DP_64 //medium
     }
 
     var coinSize: CoinSize
@@ -32,6 +33,8 @@ class CoinProfileImageView(context: Context, attrs: AttributeSet) :
             CoinSize.DP_52 -> inflate(context, R.layout.custom_view_coin_profile_image, this)
             CoinSize.DP_57 -> inflate(context, R.layout.custom_view_coin_profile_57, this)
             CoinSize.DP_15 -> inflate(context, R.layout.custom_view_coin_profile_15, this)
+            CoinSize.DP_64 -> inflate(context, R.layout.custom_view_coin_profile_64, this)
+
         }
 
 

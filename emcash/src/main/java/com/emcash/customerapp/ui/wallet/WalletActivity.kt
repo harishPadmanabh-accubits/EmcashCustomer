@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.emcash.customerapp.R
 import com.emcash.customerapp.extensions.openActivity
 import com.emcash.customerapp.model.dummyActivityData
+import com.emcash.customerapp.ui.convert_emcash.ConvertEmcashActivity
 import com.emcash.customerapp.ui.loademcash.LoadEmcashActivity
 import kotlinx.android.synthetic.main.wallet_screen_v2.*
 
@@ -21,6 +22,9 @@ class WalletActivity : AppCompatActivity() {
 
         btn_load_emcash.setOnClickListener {
             openActivity(LoadEmcashActivity::class.java)
+        }
+        btn_convert.setOnClickListener {
+            openActivity(ConvertEmcashActivity::class.java)
         }
 
 

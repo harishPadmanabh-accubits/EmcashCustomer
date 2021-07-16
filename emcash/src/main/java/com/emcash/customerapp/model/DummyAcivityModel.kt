@@ -35,3 +35,35 @@ val dummyActivityData = listOf<DummyAcivityModel>(
 
 
 )
+
+data class DummyTransactionModel(
+    val date: String,
+    val transactionList: List<DummyTransactionDetalsModel>
+
+)
+
+data class DummyTransactionDetalsModel(
+    val type: Int,
+    val valueLoaded: String,
+    val time: String,
+    val Balance: String
+)
+
+const val TRANSACTED_INBOUND = 300
+const val TRANSACTED_OUTBOUND = 301
+
+
+val dummyTransactionDetailsList = listOf<DummyTransactionDetalsModel>(
+    DummyTransactionDetalsModel(TRANSACTED_INBOUND, "30", "09:00 PM", "15"),
+    DummyTransactionDetalsModel(TRANSACTED_OUTBOUND, "10", "10:25 AM", "5"),
+    DummyTransactionDetalsModel(TRANSACTED_INBOUND, "30", "09:00 PM", "15"),
+    DummyTransactionDetalsModel(TRANSACTED_OUTBOUND, "30", "09:00 PM", "35"),
+    DummyTransactionDetalsModel(TRANSACTED_OUTBOUND, "30", "10:25 AM", "15"),
+    DummyTransactionDetalsModel(TRANSACTED_OUTBOUND, "30", "09:00 PM", "15")
+  )
+
+val dummyTransactionHistoryData = listOf<DummyTransactionModel>(
+    DummyTransactionModel("19 May 2021", dummyTransactionDetailsList),
+    DummyTransactionModel("20 May 2021", dummyTransactionDetailsList)
+
+)

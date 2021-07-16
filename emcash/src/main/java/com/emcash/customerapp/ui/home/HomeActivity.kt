@@ -8,6 +8,7 @@ import androidx.transition.ChangeBounds
 import com.emcash.customerapp.R
 import com.emcash.customerapp.extensions.openActivity
 import com.emcash.customerapp.model.DummyUserData
+import com.emcash.customerapp.ui.history.TransactionHistory
 import com.emcash.customerapp.ui.home.adapter.RecentTransactionsAdapter
 import com.emcash.customerapp.ui.loademcash.LoadEmcashActivity
 import com.emcash.customerapp.ui.settings.SettingsActivity
@@ -79,10 +80,16 @@ class HomeActivity : AppCompatActivity() {
 
         tv_load_emcash.setOnClickListener {
             openActivity(LoadEmcashActivity::class.java)
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
         }
 
         iv_user_image.setOnClickListener {
             openActivity(SettingsActivity::class.java)
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+        }
+
+        tv_info_history.setOnClickListener {
+            openActivity(TransactionHistory::class.java)
             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
         }
 

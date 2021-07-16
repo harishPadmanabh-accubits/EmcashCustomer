@@ -12,11 +12,27 @@
         android:theme="@style/Theme.Emcash"
         tools:replace="android:theme">
         <activity
+            android:name=".ui.rewards.RewardDetails"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.EmcashBlueStatusBar" />
+        <activity
+            android:name=".ui.rewards.MyRewardsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.EmcashWhiteStatusBar" />
+        <activity
+            android:name=".ui.history.TransactionHistory"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.EmcashWhiteStatusBar" />
+        <activity
+            android:name=".ui.convert_emcash.ConvertEmcashActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
             android:name=".ui.settings.SettingsActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".ui.loademcash.TransactionActivity"
-            android:screenOrientation="portrait"
-            />
+        <activity
+            android:name=".ui.loademcash.TransactionActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.loademcash.LoadEmcashActivity"
             android:screenOrientation="portrait"
@@ -29,10 +45,12 @@
         <activity
             android:name=".ui.home.HomeActivity"
             android:screenOrientation="portrait"
+            android:hardwareAccelerated="true"
             android:theme="@style/Theme.EmcashWhiteStatusBar" />
         <activity
             android:name=".ui.prepare.PrepareEmCashActivity"
             android:screenOrientation="portrait"
+            android:hardwareAccelerated="true"
             android:theme="@style/Theme.EmcashBlueStatusBar" />
         <activity
             android:name=".ui.terms.TermsAndConditionsActivity"

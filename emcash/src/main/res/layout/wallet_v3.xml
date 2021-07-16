@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:layoutDescription="@xml/wallet_screen_v2_scene">
+    app:layoutDescription="@xml/wallet_v3_scene">
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/iv_bg"
@@ -15,46 +15,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline_mid"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.4" />
-
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/iv_back"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:padding="@dimen/dp12"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_back_arrow" />
-
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/iv_curve"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="18dp"
-        android:layout_marginEnd="-25dp"
-        android:alpha=".34"
-        android:scaleType="centerCrop"
-        android:scaleX="1.2"
-        android:scaleY="1.1"
-        android:src="@drawable/blue_curve_card"
-        app:layout_constraintBottom_toTopOf="@+id/guideline15"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline15"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.4153097" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline18"
@@ -77,28 +37,57 @@
         app:layout_constraintTop_toTopOf="@+id/iv_back" />
 
     <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/appCompatImageView"
+        android:id="@+id/iv_back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp16"
-        android:src="@drawable/tbd_wallet_coin"
+        android:layout_marginTop="24dp"
+        android:padding="@dimen/dp12"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_back_arrow" />
+
+    <com.emcash.customerapp.utils.CoinProfileImageView
+        android:id="@+id/iv_user_dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+        app:coin_size="medium"
+        app:layout_constraintBottom_toTopOf="@+id/coin_guide"
         app:layout_constraintEnd_toStartOf="@+id/guideline18"
-        app:layout_constraintHorizontal_bias="0.463"
         app:layout_constraintStart_toStartOf="@+id/guideline18"
-        app:layout_constraintTop_toBottomOf="@+id/tv_info_my_safe_box" />
+        app:layout_constraintTop_toBottomOf="@+id/coin_guide" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_coin_shadow_bottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dp100"
+        android:src="@drawable/shadow_white"
+        app:layout_constraintBottom_toTopOf="@+id/coin_guide"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/coin_guide"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/coin_guide"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.12" />
 
     <TextView
         android:id="@+id/tv_balance"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp12"
+        android:layout_marginTop="12dp"
         android:fontFamily="@font/biennale_bold"
         android:text="60"
         android:textColor="@color/white"
         android:textSize="28dp"
-        app:layout_constraintEnd_toEndOf="@+id/appCompatImageView"
-        app:layout_constraintStart_toStartOf="@+id/appCompatImageView"
-        app:layout_constraintTop_toBottomOf="@+id/appCompatImageView" />
+        app:layout_constraintEnd_toStartOf="@+id/guideline18"
+        app:layout_constraintStart_toStartOf="@+id/guideline18"
+        app:layout_constraintTop_toBottomOf="@+id/iv_user_dp" />
 
     <TextView
         android:id="@+id/tv_info_balance"
@@ -109,33 +98,60 @@
         android:text="EmCashBalance"
         android:textColor="@color/white"
         android:textSize="@dimen/sp14"
-        app:layout_constraintEnd_toEndOf="@+id/appCompatImageView"
-        app:layout_constraintStart_toStartOf="@+id/appCompatImageView"
+        app:layout_constraintEnd_toEndOf="@+id/guideline18"
+        app:layout_constraintStart_toStartOf="@+id/guideline18"
         app:layout_constraintTop_toBottomOf="@+id/tv_balance" />
 
     <TextView
         android:id="@+id/tv_safe_box_id"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
         android:alpha=".6"
         android:fontFamily="@font/biennale_regular"
         android:text="Safebox ID :  1145T56"
         android:textColor="@color/white"
         android:textSize="@dimen/sp12"
-        app:layout_constraintBottom_toTopOf="@+id/guideline_mid"
-        app:layout_constraintEnd_toEndOf="@+id/tv_info_balance"
-        app:layout_constraintStart_toStartOf="@+id/tv_info_balance"
+        app:layout_constraintEnd_toEndOf="@+id/guideline18"
+        app:layout_constraintStart_toStartOf="@+id/guideline18"
         app:layout_constraintTop_toBottomOf="@+id/tv_info_balance" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_curve"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="18dp"
+        android:layout_marginEnd="-25dp"
+        android:alpha=".64"
+        android:scaleType="fitEnd"
+        android:scaleX="1.2"
+        android:scaleY="1.1"
+        android:src="@drawable/blue_curve_card"
+        android:translationX="10dp"
+        android:translationY="85dp"
+        app:layout_constraintBottom_toTopOf="@id/tv_safe_box_id"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+    <androidx.constraintlayout.motion.widget.MotionLayout
         android:id="@+id/cl_activities"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginTop="18dp"
         android:background="@drawable/white_upper_cut"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:elevation="@dimen/dp12"
+        android:translationZ="@dimen/dp24"
+        app:layoutDescription="@xml/wallet_v3_xml_cl_activities_scene"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline_mid">
+        app:layout_constraintTop_toBottomOf="@+id/tv_safe_box_id">
+
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline_mid_vertical"
@@ -152,7 +168,7 @@
             android:layout_marginEnd="@dimen/dp12"
             android:layout_marginBottom="32dp"
             android:background="@drawable/blue_round_bg"
-            android:fontFamily="@font/biennale_book"
+            android:fontFamily="@font/biennale_regular"
             android:text="@string/convert_to_cash"
             android:textAllCaps="false"
             android:textColor="@color/app_blue"
@@ -171,42 +187,64 @@
             android:layout_marginBottom="32dp"
             android:background="@drawable/blue_round_bg"
             android:backgroundTint="@color/app_blue"
+            android:fontFamily="@font/biennale_regular"
             android:text="@string/load_emcash"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="12sp"
-            android:fontFamily="@font/biennale_book"
             app:backgroundTint="@null"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/guideline_mid_vertical" />
 
-        <TextView
-            android:id="@+id/tv_info_my_activities"
+
+        <LinearLayout
+            android:id="@+id/ll_back_info"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/dp26"
-            android:layout_marginTop="@dimen/dp32"
-            android:fontFamily="@font/biennale_regular"
-            android:text="@string/my_activities"
-            android:textColor="@color/black"
-            android:textSize="@dimen/sp16"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="@dimen/dp8"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_back_activity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:tint="@color/black"
+                android:visibility="gone"
+                app:srcCompat="@drawable/ic_back_arrow" />
+
+            <TextView
+                android:id="@+id/tv_info_my_activities"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:fontFamily="@font/biennale_regular"
+                android:text="@string/my_activities"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp16"
+                app:layout_constraintStart_toEndOf="@+id/iv_back_activity"
+                app:layout_constraintTop_toTopOf="parent" />
+        </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_activities"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:nestedScrollingEnabled="false"
-            android:layout_marginTop="@dimen/dp24"
             android:layout_marginBottom="@dimen/dp12"
+            android:nestedScrollingEnabled="false"
+            android:overScrollMode="never"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toTopOf="@+id/btn_load_emcash"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_info_my_activities" />
+            app:layout_constraintTop_toBottomOf="@+id/ll_back_info" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
+    </androidx.constraintlayout.motion.widget.MotionLayout>
 
 </androidx.constraintlayout.motion.widget.MotionLayout>

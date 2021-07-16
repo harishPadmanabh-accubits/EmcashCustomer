@@ -34,7 +34,7 @@ Payment cards saved to your separate  Payments account are distinct from any Vir
     <string name="convert_to_cash">Convert to Cash</string>
     <string name="load_emcash">Load EmCash</string>
     <string name="my_activities">My Activities</string>
-    <string name="emcash">emCash</string>
+    <string name="emcash">EmCash</string>
     <string name="balance">Balance</string>
     <string name="load_my_safebox">Load My SafeBox</string>
     <string name="description">Description...</string>
@@ -45,4 +45,12 @@ Payment cards saved to your separate  Payments account are distinct from any Vir
     <string name="start_your_first_lending">Start your First Lending</string>
     <string name="terms_and_conditions">Terms and Conditions</string>
     <string name="gethelp">Get Help</string>
+    <string name="convert_emcash_to_cash">Convert EmCash to Cash</string>
+    <string name="enter_iban">Enter IBAN</string>
+    <string name="all">All</string>
+    <string name="inbound">Inbound</string>
+    <string name="outbound">Outbound</string>
+    <string name="payment_recieved">Payment Recieved</string>
+    <string name="total_rewards">Total Rewards</string>
+    <string name="redeem">Redeem</string>
 </resources>
