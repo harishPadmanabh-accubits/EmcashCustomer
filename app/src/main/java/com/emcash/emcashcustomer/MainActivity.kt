@@ -14,16 +14,14 @@ import com.emcash.customerapp.ui.rewards.RewardDetails
 import com.emcash.customerapp.ui.wallet.WalletActivity
 
 class MainActivity : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-
-
     }
 
     fun onClick(view: View) {
-        val intent=   Intent(applicationContext,IntroActivity::class.java)
+        val intent=Intent(applicationContext,PrepareEmCashActivity::class.java)
         startActivity(intent)
     }
 }

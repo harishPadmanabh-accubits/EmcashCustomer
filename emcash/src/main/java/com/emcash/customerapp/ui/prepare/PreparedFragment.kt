@@ -9,11 +9,14 @@ import androidx.core.app.ActivityOptionsCompat
 import androidx.fragment.app.Fragment
 import androidx.transition.ChangeBounds
 import com.emcash.customerapp.R
+import com.emcash.customerapp.extensions.obtainViewModel
 import com.emcash.customerapp.ui.home.HomeActivity
 import kotlinx.android.synthetic.main.frame_emcash_prepared.*
 
 
 class PreparedFragment:Fragment() {
+
+    private lateinit var viewModel: PrepareEmcashViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,6 +41,7 @@ class PreparedFragment:Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initViewModel()
 
         tv_lets_start.setOnClickListener {
             val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
@@ -51,5 +55,13 @@ class PreparedFragment:Fragment() {
 
         }
 
+        tv_info_how_it_work.setOnClickListener {
+            viewModel._bottomSheetVisiblity.value = true
+        }
+
+    }
+
+    private fun initViewModel() {
+        viewModel = requireActivity().obtainViewModel(PrepareEmcashViewModel::class.java)
     }
 }

@@ -42,8 +42,14 @@
         <item name="cornerRadius">22dp</item>
         <item name="lineHeight">20dp</item>
         <item name="fontFamily">@font/biennale_regular</item>
-        <item name="android:foreground">?selectableItemBackground</item>
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearanceOverlay.App.RoundButton</item>
     </style>
+    <style name="ShapeAppearanceOverlay.App.RoundButton" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">22dp</item>
+    </style>
+
+
 
     <style name="GreyRoundedButton"  parent="Widget.MaterialComponents.Button">
         <item name="android:textColor">@color/black</item>

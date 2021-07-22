@@ -12,6 +12,14 @@
                motion:motionTarget="@+id/iv_toppings"
                motion:framePosition="20"
                motion:keyPositionType="deltaRelative" />
+           <KeyAttribute
+               motion:motionTarget="@+id/tv_value_rewards"
+               motion:framePosition="18"
+               android:alpha=".2" />
+           <KeyAttribute
+               motion:motionTarget="@+id/tv_info_total_rewards"
+               motion:framePosition="11"
+               android:alpha="0.5" />
        </KeyFrameSet>
         <OnSwipe motion:touchAnchorId="@+id/rv_rewards" />
     </Transition>

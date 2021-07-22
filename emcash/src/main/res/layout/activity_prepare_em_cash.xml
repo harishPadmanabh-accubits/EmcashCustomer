@@ -46,4 +46,30 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.27" />
 
+    <FrameLayout
+        android:id="@+id/fl_bottom_sheet"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        android:elevation="@dimen/dp24"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+        <include layout="@layout/bottom_sheet_how_it_works"/>
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/fl_tint"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#E6131313"
+        android:elevation="@dimen/dp12"
+        android:alpha="0"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

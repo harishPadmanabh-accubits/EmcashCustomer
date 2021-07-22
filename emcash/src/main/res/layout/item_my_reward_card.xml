@@ -24,12 +24,10 @@
                 android:layout_height="match_parent"
                 android:src="@drawable/earn_reward_card" />
            <androidx.appcompat.widget.AppCompatImageView
-               android:layout_width="100dp"
-               android:layout_height="100dp"
-               android:scaleType="centerCrop"
-               android:rotation="90"
+               android:layout_width="match_parent"
+               android:layout_height="match_parent"
                android:id="@+id/iv_overlay_toppings"
-               android:src="@drawable/rewards_toppings"
+               android:src="@drawable/reward_card_overlay"
                android:layout_gravity="bottom"/>
         </FrameLayout>
         <FrameLayout

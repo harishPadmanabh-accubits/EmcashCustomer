@@ -33,7 +33,7 @@
         app:layout_constraintGuide_percent="0.83" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/tv_info_how_it_work"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/dp40"
@@ -101,7 +101,7 @@
         android:textColor="@color/white"
         android:textSize="@dimen/dp24"
         android:layout_marginTop="@dimen/dp24"
-        app:layout_constraintBottom_toTopOf="@+id/textView"
+        app:layout_constraintBottom_toTopOf="@+id/tv_info_how_it_work"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/iv_coin_shadow_bottom"
