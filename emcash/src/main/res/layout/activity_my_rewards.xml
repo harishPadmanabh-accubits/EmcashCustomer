@@ -73,6 +73,20 @@
         app:layout_constraintStart_toStartOf="@+id/tv_value_rewards"
         app:layout_constraintTop_toBottomOf="@+id/tv_value_rewards" />
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_rewards"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        app:spanCount="2"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        tools:listitem="@layout/item_my_reward_card"
+        app:layout_constraintBottom_toTopOf="@+id/cv_more"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_info_total_rewards" />
+
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cv_more"
         android:layout_width="match_parent"
@@ -137,7 +151,7 @@
                 app:layout_constraintBottom_toBottomOf="@+id/tv_info_more"
                 app:layout_constraintStart_toStartOf="@+id/guideline25"
                 app:layout_constraintTop_toTopOf="@+id/tv_info_more" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

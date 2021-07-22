@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun onClick(view: View) {
-        val intent=   Intent(applicationContext,RewardDetails::class.java)
+        val intent=   Intent(applicationContext,IntroActivity::class.java)
         startActivity(intent)
     }
 }
