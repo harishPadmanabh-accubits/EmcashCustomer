@@ -106,6 +106,9 @@ dependencies {
 
     implementation 'de.hdodenhof:circleimageview:3.1.0'
 
+    implementation 'pub.devrel:easypermissions:3.0.0'
+
+
 
 
 

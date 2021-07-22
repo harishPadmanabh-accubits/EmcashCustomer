@@ -1,7 +1,11 @@
 package com.emcash.customerapp.ui.home
 
+import android.Manifest
+import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.transition.Transition
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.transition.ChangeBounds
@@ -16,11 +20,15 @@ import com.emcash.customerapp.ui.rewards.MyRewardsActivity
 import com.emcash.customerapp.ui.settings.SettingsActivity
 import com.emcash.customerapp.ui.wallet.WalletActivity
 import com.emcash.customerapp.utils.LevelProfileImageView
+import com.emcash.customerapp.utils.RC_CAMERA_PERM
 import kotlinx.android.synthetic.main.activity_home.*
+import pub.devrel.easypermissions.AppSettingsDialog
+import pub.devrel.easypermissions.EasyPermissions
+import timber.log.Timber
 
-class HomeActivity : AppCompatActivity() {
+class HomeActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks,
+EasyPermissions.RationaleCallbacks{
 
-    var shouldAnimateCoin = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -59,6 +67,10 @@ class HomeActivity : AppCompatActivity() {
             openRewards()
         }
 
+        iv_qr_scanner.setOnClickListener {
+            openQRScanner()
+        }
+
     }
 
     private fun openRewards() {
@@ -90,5 +102,71 @@ class HomeActivity : AppCompatActivity() {
         super.onBackPressed()
     }
 
+    private fun hasCameraPermission():Boolean {
+        return EasyPermissions.hasPermissions(this, Manifest.permission.CAMERA)
+    }
+
+    private fun hasContactPermission():Boolean {
+        return EasyPermissions.hasPermissions(this, Manifest.permission.READ_CONTACTS)
+    }
+
+    fun openQRScanner() {
+        if (hasCameraPermission())
+        {
+            // Have permission, do the thing!
+            Toast.makeText(this, "Has permission: Camera things", Toast.LENGTH_LONG).show()
+        }
+        else
+        {
+            // Ask for one permission
+            EasyPermissions.requestPermissions(
+                this,
+                getString(R.string.rationale_camera),
+                RC_CAMERA_PERM,
+                Manifest.permission.CAMERA)
+        }
+    }
+
+    override fun onRequestPermissionsResult(requestCode:Int,
+                                            permissions:Array<String>,
+                                            grantResults:IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        // EasyPermissions handles the request result.
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this)
+    }
+
+    override fun onRationaleAccepted(requestCode:Int) {
+        Timber.e("onRationaleAccepted:%s", requestCode)
+
+    }
+    override fun onRationaleDenied(requestCode:Int) {
+        Timber.e("onRationaleDenied:%s", requestCode)
+    }
+    override fun onPermissionsDenied(requestCode: Int, perms: MutableList<String>) {
+       // Log.d(TAG, "onPermissionsDenied:" + requestCode + ":" + perms.size)
+
+        if (EasyPermissions.somePermissionPermanentlyDenied(this, perms))
+        {
+            AppSettingsDialog.Builder(this).build().show()
+        }
+    }
+
+    override fun onPermissionsGranted(requestCode: Int, perms: MutableList<String>) {
+       // Log.d(TAG, "onPermissionsGranted:" + requestCode + ":" + perms.size)
+    }
+
+    @SuppressLint("StringFormatMatches")
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == AppSettingsDialog.DEFAULT_SETTINGS_REQ_CODE)
+        {
+          Timber.e("Camera Permission ${hasCameraPermission()}")
+        }
+    }
+
+
+
 
 }
+
+//https://blog.mindorks.com/implementing-easy-permissions-in-android-android-tutorial
