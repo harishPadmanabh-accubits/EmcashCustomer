@@ -45,7 +45,6 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
 
-
     def lifecycle_version = "2.0.0"
     def work_version = "2.4.0"
     //Kotlin
@@ -108,9 +107,7 @@ dependencies {
 
     implementation 'pub.devrel:easypermissions:3.0.0'
 
-
-
-
+    implementation 'com.budiyev.android:code-scanner:2.1.0'
 
 
 }

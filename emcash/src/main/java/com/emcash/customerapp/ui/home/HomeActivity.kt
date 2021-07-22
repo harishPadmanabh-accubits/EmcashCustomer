@@ -16,6 +16,7 @@ import com.emcash.customerapp.model.users
 import com.emcash.customerapp.ui.history.TransactionHistory
 import com.emcash.customerapp.ui.home.adapter.RecentTransactionsAdapter
 import com.emcash.customerapp.ui.loademcash.LoadEmcashActivity
+import com.emcash.customerapp.ui.qr.QrScannerActivity
 import com.emcash.customerapp.ui.rewards.MyRewardsActivity
 import com.emcash.customerapp.ui.settings.SettingsActivity
 import com.emcash.customerapp.ui.wallet.WalletActivity
@@ -35,7 +36,6 @@ EasyPermissions.RationaleCallbacks{
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
         window.sharedElementEnterTransition.duration = 500
-
         setupViews()
 
 
@@ -113,12 +113,10 @@ EasyPermissions.RationaleCallbacks{
     fun openQRScanner() {
         if (hasCameraPermission())
         {
-            // Have permission, do the thing!
-            Toast.makeText(this, "Has permission: Camera things", Toast.LENGTH_LONG).show()
+            openActivity(QrScannerActivity::class.java)
         }
         else
         {
-            // Ask for one permission
             EasyPermissions.requestPermissions(
                 this,
                 getString(R.string.rationale_camera),
@@ -143,8 +141,6 @@ EasyPermissions.RationaleCallbacks{
         Timber.e("onRationaleDenied:%s", requestCode)
     }
     override fun onPermissionsDenied(requestCode: Int, perms: MutableList<String>) {
-       // Log.d(TAG, "onPermissionsDenied:" + requestCode + ":" + perms.size)
-
         if (EasyPermissions.somePermissionPermanentlyDenied(this, perms))
         {
             AppSettingsDialog.Builder(this).build().show()

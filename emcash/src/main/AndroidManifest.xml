@@ -8,12 +8,12 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
 
-
     <application
         android:name=".base.BaseApplication"
         android:label="@string/app_name"
         android:theme="@style/Theme.Emcash"
         tools:replace="android:theme">
+        <activity android:name=".ui.qr.QrScannerActivity"></activity>
         <activity
             android:name=".ui.rewards.RewardDetails"
             android:screenOrientation="portrait"
@@ -47,13 +47,13 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.home.HomeActivity"
-            android:screenOrientation="portrait"
             android:hardwareAccelerated="true"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.EmcashWhiteStatusBar" />
         <activity
             android:name=".ui.prepare.PrepareEmCashActivity"
-            android:screenOrientation="portrait"
             android:hardwareAccelerated="true"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.EmcashBlueStatusBar" />
         <activity
             android:name=".ui.terms.TermsAndConditionsActivity"
