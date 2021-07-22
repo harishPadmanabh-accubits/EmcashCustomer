@@ -20,10 +20,11 @@ import com.emcash.customerapp.extensions.hide
 import com.emcash.customerapp.extensions.obtainViewModel
 import com.emcash.customerapp.extensions.show
 import kotlinx.android.synthetic.main.activity_prepare_em_cash.*
+import kotlinx.android.synthetic.main.bottom_sheet_how_it_works.*
 import timber.log.Timber
 
 
-class PrepareEmCashActivity : AppCompatActivity() {
+class PrepareEmCashActivity : AppCompatActivity(),BottomSheetListener {
 
     private lateinit var viewModel: PrepareEmcashViewModel
 
@@ -33,7 +34,14 @@ class PrepareEmCashActivity : AppCompatActivity() {
         initViewModel()
         observe()
         openAnalyseFragment()
+        setupBottomSheet()
 
+    }
+
+    private fun setupBottomSheet() {
+        btn_got_it.setOnClickListener {
+            onGotitClicked()
+        }
     }
 
     private fun observe() {
@@ -182,4 +190,12 @@ class PrepareEmCashActivity : AppCompatActivity() {
             start()
         }
     }
+
+    override fun onGotitClicked() {
+        closeBottomSheet()
+    }
+}
+
+interface BottomSheetListener{
+    fun onGotitClicked()
 }

@@ -8,9 +8,11 @@ import androidx.transition.ChangeBounds
 import com.emcash.customerapp.R
 import com.emcash.customerapp.extensions.openActivity
 import com.emcash.customerapp.model.DummyUserData
+import com.emcash.customerapp.model.users
 import com.emcash.customerapp.ui.history.TransactionHistory
 import com.emcash.customerapp.ui.home.adapter.RecentTransactionsAdapter
 import com.emcash.customerapp.ui.loademcash.LoadEmcashActivity
+import com.emcash.customerapp.ui.rewards.MyRewardsActivity
 import com.emcash.customerapp.ui.settings.SettingsActivity
 import com.emcash.customerapp.ui.wallet.WalletActivity
 import com.emcash.customerapp.utils.LevelProfileImageView
@@ -24,75 +26,59 @@ class HomeActivity : AppCompatActivity() {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
-        window.sharedElementEnterTransition.duration=500
+        window.sharedElementEnterTransition.duration = 500
 
+        setupViews()
+
+
+    }
+
+    private fun setupViews() {
         cv_balance.setOnClickListener {
             openActivity(WalletActivity::class.java)
         }
 
-        val users = listOf<DummyUserData>(
-            DummyUserData(
-                "Mary ",
-                R.drawable.sample_dp,
-                LevelProfileImageView.UserProfileLevel.GREEN
-            ),
-            DummyUserData(
-                "Alan",
-                R.drawable.sample_img,
-                LevelProfileImageView.UserProfileLevel.RED
-            ),
-            DummyUserData(
-                "Milan",
-                R.drawable.sample_dp,
-                LevelProfileImageView.UserProfileLevel.NONE
-            ),
-            DummyUserData(
-                "Anise",
-                R.drawable.sample_img,
-                LevelProfileImageView.UserProfileLevel.RED
-            ),
-            DummyUserData(
-                "Fijui",
-                R.drawable.sample_dp,
-                LevelProfileImageView.UserProfileLevel.NONE
-            ),
-            DummyUserData(
-                "Lewis",
-                R.drawable.sample_img,
-                LevelProfileImageView.UserProfileLevel.YELLOW
-            ),
-            DummyUserData(
-                "Kamal",
-               null,
-                LevelProfileImageView.UserProfileLevel.GREEN
-            ), DummyUserData(
-                "Michel",
-                R.drawable.sample_img,
-                LevelProfileImageView.UserProfileLevel.YELLOW
-            ))
-
-    rv_recent_transactions.apply {
-        layoutManager = GridLayoutManager(this@HomeActivity,5)
-        adapter = RecentTransactionsAdapter(users)
-    }
-
-
+        rv_recent_transactions.apply {
+            layoutManager = GridLayoutManager(this@HomeActivity, 5)
+            adapter = RecentTransactionsAdapter(users)
+        }
 
         tv_load_emcash.setOnClickListener {
-            openActivity(LoadEmcashActivity::class.java)
-            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+            openLoadEmcash()
         }
 
         iv_user_image.setOnClickListener {
-            openActivity(SettingsActivity::class.java)
-            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+            openSettings()
         }
 
         tv_info_history.setOnClickListener {
-            openActivity(TransactionHistory::class.java)
-            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+            openHistory()
         }
 
+        tv_info_rewards.setOnClickListener {
+            openRewards()
+        }
+
+    }
+
+    private fun openRewards() {
+        openActivity(MyRewardsActivity::class.java)
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+    }
+
+    private fun openHistory() {
+        openActivity(TransactionHistory::class.java)
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+    }
+
+    private fun openSettings() {
+        openActivity(SettingsActivity::class.java)
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+    }
+
+    private fun openLoadEmcash() {
+        openActivity(LoadEmcashActivity::class.java)
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
     }
 
     override fun onResume() {
