@@ -16,14 +16,11 @@ import kotlinx.android.synthetic.main.activity_transaction.*
 
 class TransactionActivity : AppCompatActivity() {
 
-    private lateinit var viewModel: LoadEmCashViewModel
+    val viewModel: LoadEmCashViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_transaction)
-
-        viewModel = obtainViewModel(LoadEmCashViewModel::class.java)
-
 
         rv_accounts.apply {
             adapter = AccountsAdapter(dummyAccounts)

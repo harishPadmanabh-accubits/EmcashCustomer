@@ -47,7 +47,7 @@ EasyPermissions.RationaleCallbacks{
         }
 
         rv_recent_transactions.apply {
-            layoutManager = GridLayoutManager(this@HomeActivity, 5)
+            //layoutManager = GridLayoutManager(this@HomeActivity, 5)
             adapter = RecentTransactionsAdapter(users)
         }
 

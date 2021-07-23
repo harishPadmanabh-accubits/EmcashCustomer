@@ -12,6 +12,7 @@ import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.animation.addListener
 import androidx.core.animation.doOnEnd
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import com.emcash.customerapp.R
 import com.emcash.customerapp.extensions.isNougatOrAbove
 import com.emcash.customerapp.extensions.obtainViewModel
@@ -21,7 +22,7 @@ import timber.log.Timber
 
 class FirstIntroFragment : Fragment() {
 
-    private lateinit var viewModel: IntroViewModel
+    private val viewModel: IntroViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,9 +34,8 @@ class FirstIntroFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initViewModel()
         btn_next.setOnClickListener {
-                performExitTransitionAndNavigate(iv_intro_art_man)
+            performExitTransitionAndNavigate(iv_intro_art_man)
 
         }
     }
@@ -79,9 +79,7 @@ class FirstIntroFragment : Fragment() {
         ivInroImage?.startAnimation(fade_in)
     }
 
-    private fun initViewModel() {
-        viewModel = requireActivity().obtainViewModel(IntroViewModel::class.java)
-    }
+
 }
 
 

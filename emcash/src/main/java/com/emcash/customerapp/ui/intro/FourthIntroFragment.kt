@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.ScaleAnimation
 import androidx.core.animation.addListener
+import androidx.fragment.app.activityViewModels
 import com.emcash.customerapp.R
 import com.emcash.customerapp.extensions.isNougatOrAbove
 import com.emcash.customerapp.extensions.obtainViewModel
@@ -18,7 +19,7 @@ import kotlinx.android.synthetic.main.fragment_fourth_intro.*
 import timber.log.Timber
 
 class FourthIntroFragment : Fragment() {
-    private lateinit var viewModel: IntroViewModel
+    private val viewModel: IntroViewModel by activityViewModels()
 
 
     override fun onCreateView(
@@ -31,18 +32,12 @@ class FourthIntroFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initViewModel()
-
         performEnterTransition()
 
         btn_next.setOnClickListener {
             viewModel._screenPosition.value = 4
         }
 
-    }
-
-    private fun initViewModel() {
-        viewModel = requireActivity().obtainViewModel(IntroViewModel::class.java)
     }
 
     private fun performEnterTransition() {

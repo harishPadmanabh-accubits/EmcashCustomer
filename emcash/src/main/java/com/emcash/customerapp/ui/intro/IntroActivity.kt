@@ -2,6 +2,7 @@ package com.emcash.customerapp.ui.intro
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.fragment.app.add
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
@@ -15,12 +16,12 @@ import kotlinx.android.synthetic.main.activity_intro.*
 
 class IntroActivity : AppCompatActivity() {
 
-    private lateinit var viewModel: IntroViewModel
+     val viewModel: IntroViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_intro)
-        initViewModel()
+     //   initViewModel()
         setupObservers()
     }
 
@@ -71,7 +72,7 @@ class IntroActivity : AppCompatActivity() {
     }
 
     private fun initViewModel() {
-        viewModel = obtainViewModel(IntroViewModel::class.java)
+       // viewModel = obtainViewModel(IntroViewModel::class.java)
     }
 
 

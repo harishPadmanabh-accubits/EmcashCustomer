@@ -27,6 +27,32 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_menu_handle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/menu_handle"
+        app:layout_constraintBottom_toTopOf="@+id/guideline7"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.9" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/menu_arrow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/menu_arrow"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_menu_handle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/iv_menu_handle"
+        app:layout_constraintTop_toTopOf="@+id/iv_menu_handle" />
+
+
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -42,32 +68,6 @@
             android:id="@+id/cl_main"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/iv_menu_handle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/menu_handle"
-                app:layout_constraintBottom_toTopOf="@+id/guideline7"
-                app:layout_constraintEnd_toEndOf="parent" />
-
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guideline7"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layout_constraintGuide_percent="0.9" />
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/menu_arrow"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/menu_arrow"
-                app:layout_constraintBottom_toBottomOf="@+id/iv_menu_handle"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/iv_menu_handle"
-                app:layout_constraintTop_toTopOf="@+id/iv_menu_handle" />
 
 
             <androidx.appcompat.widget.AppCompatImageView
@@ -273,6 +273,10 @@
                 android:layout_marginTop="@dimen/dp12"
                 android:layout_marginBottom="@dimen/dp12"
                 android:layout_marginEnd="@dimen/dp12"
+                android:overScrollMode="never"
+                app:spanCount="5"
+                tools:listitem="@layout/item_recent_payment"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/tv_info_recent_transactions"
                 app:layout_constraintTop_toBottomOf="@+id/tv_info_recent_transactions" />

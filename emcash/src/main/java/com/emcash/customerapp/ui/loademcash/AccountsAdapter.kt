@@ -45,6 +45,11 @@ class AccountsAdapter(private val accounts: ArrayList<DummyCardResponse>) :
                 accounts[defaultCardPos].default =false
                 notifyDataSetChanged()
             }
+            rb_select.setOnClickListener {
+                selectedId = currentItem.id
+                accounts[defaultCardPos].default =false
+                notifyDataSetChanged()
+            }
 
             if(selectedId == currentItem.id)
                 selectCard(this)

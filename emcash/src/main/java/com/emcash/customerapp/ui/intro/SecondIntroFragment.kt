@@ -12,6 +12,7 @@ import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.animation.addListener
 import androidx.core.view.doOnLayout
 import androidx.core.view.doOnPreDraw
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
 import com.emcash.customerapp.R
@@ -24,18 +25,13 @@ import kotlinx.android.synthetic.main.fragment_second_intro.view.*
 import timber.log.Timber
 
 class SecondIntroFragment : Fragment() {
-    private lateinit var viewModel: IntroViewModel
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
+    val viewModel: IntroViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_second_intro, container, false).also {
             it.doOnLayout {
                 performEnterTransition(it.iv_intro_coin)
@@ -46,18 +42,10 @@ class SecondIntroFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        initViewModel()
         btn_next.setOnClickListener {
-                openThirdIntroFragment()
-
-
+            openThirdIntroFragment()
         }
 
-    }
-
-    private fun initViewModel() {
-        viewModel = requireActivity().obtainViewModel(IntroViewModel::class.java)
     }
 
     private fun performEnterTransition(target: AppCompatImageView) {

@@ -8,6 +8,7 @@ import com.emcash.customerapp.extensions.openActivity
 import kotlinx.android.synthetic.main.activity_load_emcash.*
 
 class LoadEmcashActivity : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_load_emcash)

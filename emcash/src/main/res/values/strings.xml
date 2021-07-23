@@ -57,4 +57,7 @@ Payment cards saved to your separate  Payments account are distinct from any Vir
     <string name="dont_show_this_again">Dont show this again</string>
     <string name="rationale_camera">This app need your permission to use camera for scanning QR codes</string>
     <string name="my_emscore">My EmScore</string>
+    <string name="transfer_emcash">Transfer EmCash</string>
+    <string name="transfer">Transfer</string>
+    <string name="send_emcash_earn_reward"><![CDATA[Send EmCash & Earn Reward]]></string>
 </resources>

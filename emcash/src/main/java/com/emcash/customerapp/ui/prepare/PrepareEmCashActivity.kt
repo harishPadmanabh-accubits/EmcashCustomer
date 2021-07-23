@@ -10,6 +10,7 @@ import android.view.Gravity
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.TranslateAnimation
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.animation.addListener
 import androidx.fragment.app.commit
@@ -26,12 +27,11 @@ import timber.log.Timber
 
 class PrepareEmCashActivity : AppCompatActivity(),BottomSheetListener {
 
-    private lateinit var viewModel: PrepareEmcashViewModel
+    private val viewModel: PrepareEmcashViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_prepare_em_cash)
-        initViewModel()
         observe()
         openAnalyseFragment()
         setupBottomSheet()
@@ -53,10 +53,6 @@ class PrepareEmCashActivity : AppCompatActivity(),BottomSheetListener {
                 }
             })
         }
-    }
-
-    private fun initViewModel() {
-        viewModel = obtainViewModel(PrepareEmcashViewModel::class.java)
     }
 
     fun openAnalyseFragment() {
