@@ -8,6 +8,7 @@ import com.emcash.customerapp.ui.convert_emcash.ConvertEmcashActivity
 import com.emcash.customerapp.ui.history.TransactionHistory
 import com.emcash.customerapp.ui.intro.IntroActivity
 import com.emcash.customerapp.ui.loademcash.TransactionActivity
+import com.emcash.customerapp.ui.newPayment.NewPaymentActivity
 import com.emcash.customerapp.ui.prepare.PrepareEmCashActivity
 import com.emcash.customerapp.ui.rewards.MyRewardsActivity
 import com.emcash.customerapp.ui.rewards.RewardDetails
@@ -21,7 +22,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun onClick(view: View) {
-        val intent=Intent(applicationContext,PrepareEmCashActivity::class.java)
+        val intent=Intent(applicationContext,NewPaymentActivity::class.java)
         startActivity(intent)
     }
 }

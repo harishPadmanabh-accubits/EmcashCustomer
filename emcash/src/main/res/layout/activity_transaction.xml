@@ -60,10 +60,10 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline22">
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:layout_width="57dp"
-            android:layout_height="57dp"
-            android:src="@drawable/sample_coin" />
+      <com.emcash.customerapp.utils.CoinProfileImageView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          app:coin_size="normal"/>
 
         <TextView
             android:id="@+id/tv_info_currency"

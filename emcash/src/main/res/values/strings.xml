@@ -22,7 +22,6 @@ Payment cards saved to your separate  Payments account are distinct from any Vir
     <string name="how_it_works">How it works?</string>
     <string name="emcash_prepared">EmCash Prepared !</string>
     <string name="new_payment">New Payment</string>
-    <string name="my_emscore">My EmScore</string>
     <string name="your_emcash_balance">Your EmCash Balance</string>
     <string name="add_emcash">Add EmCash</string>
     <string name="recent_transactions">Recent Transactions</string>
@@ -57,4 +56,5 @@ Payment cards saved to your separate  Payments account are distinct from any Vir
     <string name="got_it">Got it</string>
     <string name="dont_show_this_again">Dont show this again</string>
     <string name="rationale_camera">This app need your permission to use camera for scanning QR codes</string>
+    <string name="my_emscore">My EmScore</string>
 </resources>

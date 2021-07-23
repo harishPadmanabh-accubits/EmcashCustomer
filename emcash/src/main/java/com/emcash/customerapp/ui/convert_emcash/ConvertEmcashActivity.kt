@@ -17,13 +17,13 @@ class ConvertEmcashActivity : AppCompatActivity(),SuccessDialogListener {
         et_value.requestFocus()
         et_iban.setOnEditorActionListener { textView, action, keyEvent ->
             if (action == EditorInfo.IME_ACTION_DONE) {
-                SuccesDialog().show(supportFragmentManager,"Success")
+                SuccesDialog(this).show(supportFragmentManager,"Success")
                 return@setOnEditorActionListener  true
             }
             return@setOnEditorActionListener  true
         }
     fab_done.setOnClickListener {
-        SuccesDialog().show(supportFragmentManager,"Success")
+        SuccesDialog(this).show(supportFragmentManager,"Success")
     }
     }
 
