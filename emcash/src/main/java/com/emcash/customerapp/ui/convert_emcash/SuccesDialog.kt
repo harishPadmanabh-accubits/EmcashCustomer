@@ -10,7 +10,7 @@ import com.emcash.customerapp.R
 import com.emcash.customerapp.ui.wallet.WalletActivity
 import kotlinx.android.synthetic.main.layout_dialog_emcash_successful.*
 
-class SuccesDialog : DialogFragment() {
+class SuccesDialog : DialogFragment(),SuccessDialogListener {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -28,9 +28,17 @@ class SuccesDialog : DialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         btn_okay.setOnClickListener {
-            startActivity(Intent(context,WalletActivity::class.java))
+            onNavigate()
         }
 
     }
 
+    override fun onNavigate() {
+
+    }
+
+}
+
+interface SuccessDialogListener{
+    fun onNavigate()
 }

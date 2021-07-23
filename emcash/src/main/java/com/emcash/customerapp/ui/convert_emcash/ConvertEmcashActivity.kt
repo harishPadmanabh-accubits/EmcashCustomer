@@ -5,11 +5,12 @@ import android.os.Bundle
 import android.view.inputmethod.EditorInfo
 import com.emcash.customerapp.R
 import com.emcash.customerapp.extensions.openActivity
+import com.emcash.customerapp.ui.home.HomeActivity
 import com.emcash.customerapp.ui.loademcash.TransactionActivity
 import kotlinx.android.synthetic.main.activity_convert_emcash.*
 import kotlinx.android.synthetic.main.activity_convert_emcash.et_value
 
-class ConvertEmcashActivity : AppCompatActivity() {
+class ConvertEmcashActivity : AppCompatActivity(),SuccessDialogListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_convert_emcash)
@@ -23,8 +24,12 @@ class ConvertEmcashActivity : AppCompatActivity() {
         }
     fab_done.setOnClickListener {
         SuccesDialog().show(supportFragmentManager,"Success")
-
     }
+    }
+
+    override fun onNavigate() {
+        openActivity(HomeActivity::class.java)
+        overridePendingTransition(android.R.anim.fade_out,android.R.anim.fade_in)
     }
 
 }
