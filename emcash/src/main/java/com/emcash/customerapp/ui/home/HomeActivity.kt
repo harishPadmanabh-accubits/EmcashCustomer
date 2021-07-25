@@ -16,6 +16,7 @@ import com.emcash.customerapp.model.users
 import com.emcash.customerapp.ui.history.TransactionHistory
 import com.emcash.customerapp.ui.home.adapter.RecentTransactionsAdapter
 import com.emcash.customerapp.ui.loademcash.LoadEmcashActivity
+import com.emcash.customerapp.ui.newPayment.NewPaymentActivity
 import com.emcash.customerapp.ui.qr.QrScannerActivity
 import com.emcash.customerapp.ui.rewards.MyRewardsActivity
 import com.emcash.customerapp.ui.settings.SettingsActivity
@@ -71,6 +72,10 @@ EasyPermissions.RationaleCallbacks{
             openQRScanner()
         }
 
+        fab_new_payment.setOnClickListener {
+            openNewPayment()
+        }
+
     }
 
     private fun openRewards() {
@@ -90,6 +95,11 @@ EasyPermissions.RationaleCallbacks{
 
     private fun openLoadEmcash() {
         openActivity(LoadEmcashActivity::class.java)
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+    }
+
+    private fun openNewPayment(){
+        openActivity(NewPaymentActivity::class.java)
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
     }
 

@@ -60,4 +60,6 @@ Payment cards saved to your separate  Payments account are distinct from any Vir
     <string name="transfer_emcash">Transfer EmCash</string>
     <string name="transfer">Transfer</string>
     <string name="send_emcash_earn_reward"><![CDATA[Send EmCash & Earn Reward]]></string>
+    <string name="transaction_id">Transaction ID</string>
+    <string name="emcash_pin">EmCash Pin</string>
 </resources>

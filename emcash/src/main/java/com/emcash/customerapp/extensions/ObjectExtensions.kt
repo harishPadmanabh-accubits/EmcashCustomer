@@ -26,9 +26,6 @@ import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import com.emcash.customerapp.BuildConfig
 import com.google.gson.Gson
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -243,10 +240,22 @@ fun EditText.afterTextChanged(afterTextChanged: (String) -> Unit) {
     })
 }
 
-fun EditText.onDeletePressed(changeFocusTo:EditText){
+fun EditText.onDeletePressed(changeFocusTo: EditText, function: () -> Unit){
     this.setOnKeyListener { view, i, keyEvent ->
-        if(i == KeyEvent.KEYCODE_DEL)
+        if(i == KeyEvent.KEYCODE_DEL && keyEvent.action==KeyEvent.ACTION_DOWN){
+            function.invoke()
             changeFocusTo.requestFocus()
+            return@setOnKeyListener true
+        }
+        return@setOnKeyListener false
+    }
+}
+fun EditText.onDeletePressed(function: () -> Unit){
+  this.setOnKeyListener { view, i, keyEvent ->
+        if(i == KeyEvent.KEYCODE_DEL && keyEvent.action==KeyEvent.ACTION_DOWN){
+            function.invoke()
+            return@setOnKeyListener true
+        }
         return@setOnKeyListener false
     }
 }

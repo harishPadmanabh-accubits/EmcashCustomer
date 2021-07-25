@@ -22,7 +22,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun onClick(view: View) {
-        val intent=Intent(applicationContext,IntroActivity::class.java)
+        val intent=Intent(applicationContext,NewPaymentActivity::class.java)
         startActivity(intent)
     }
 }
