@@ -20,7 +20,6 @@ import timber.log.Timber
 class EmcashPinFragment : Fragment(R.layout.emcash_pin), TextWatcher {
 
     val viewModel: NewPaymentViewModel by activityViewModels()
-    val pinViewArray = ArrayList<EditText>()
 
     var numTemp = ""
 
