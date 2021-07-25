@@ -23,6 +23,15 @@ class NewPaymentViewModel(val app: Application) : AndroidViewModel(app) {
     var isFromDelete = false
  //   var pin =""
 
+
+    fun addToPin(digit:String){
+        _pin.value = _pin.value.plus(digit)
+    }
+
+    fun removeLastFromPin(){
+        _pin.value = _pin.value?.dropLast(1)
+    }
+
 }
 
 enum class NewPaymentScreens {
