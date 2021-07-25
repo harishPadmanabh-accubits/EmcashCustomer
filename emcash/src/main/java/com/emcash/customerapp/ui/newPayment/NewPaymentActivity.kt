@@ -40,7 +40,7 @@ class NewPaymentActivity : AppCompatActivity() {
 
     private fun openPinScreen() {
         supportFragmentManager.commit {
-            addToBackStack("Pin Screen")
+            //addToBackStack("Pin Screen")
             replace<EmcashPinFragment>(R.id.container)
         }
     }
