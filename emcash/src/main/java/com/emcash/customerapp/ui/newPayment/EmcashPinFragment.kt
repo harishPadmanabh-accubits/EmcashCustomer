@@ -43,7 +43,6 @@ class EmcashPinFragment : Fragment(R.layout.emcash_pin) {
             et_pin_1.requestFocus()
             et_pin_1.afterTextChanged {
                 if (it.length == 1) {
-                    addToPin(it)
                     et_pin_2.requestFocus()
                     et_pin_1.setBackgroundResource(R.drawable.pin_filled)
                 } else if (it.length == 2) {
@@ -60,7 +59,6 @@ class EmcashPinFragment : Fragment(R.layout.emcash_pin) {
             }
             et_pin_2.afterTextChanged {
                 if (it.length == 1) {
-                    addToPin(it)
                     et_pin_3.requestFocus()
                     et_pin_2.setBackgroundResource(R.drawable.pin_filled)
 
@@ -78,7 +76,6 @@ class EmcashPinFragment : Fragment(R.layout.emcash_pin) {
             }
             et_pin_3.afterTextChanged {
                 if (it.length == 1) {
-                    addToPin(it)
                     et_pin_4.requestFocus()
                     et_pin_3.setBackgroundResource(R.drawable.pin_filled)
 
@@ -106,7 +103,6 @@ class EmcashPinFragment : Fragment(R.layout.emcash_pin) {
                 et_pin_4.text.clear()
                 et_pin_4.setBackgroundResource(R.drawable.pin_empty)
 
-                removeLastFromPin()
                 et_pin_3.requestFocus()
                 et_pin_3.setSelection(et_pin_3.text.lastIndex.plus(1))
 
@@ -116,7 +112,6 @@ class EmcashPinFragment : Fragment(R.layout.emcash_pin) {
                 et_pin_3.text.clear()
                 et_pin_3.setBackgroundResource(R.drawable.pin_empty)
 
-                removeLastFromPin()
                 et_pin_2.requestFocus()
                 et_pin_2.setSelection(et_pin_2.text.lastIndex.plus(1))
             }
@@ -124,7 +119,6 @@ class EmcashPinFragment : Fragment(R.layout.emcash_pin) {
                 et_pin_2.text.clear()
                 et_pin_2.setBackgroundResource(R.drawable.pin_empty)
 
-                removeLastFromPin()
                 et_pin_1.requestFocus()
                 et_pin_1.setSelection(et_pin_1.text.lastIndex.plus(1))
             }
@@ -148,10 +142,9 @@ class EmcashPinFragment : Fragment(R.layout.emcash_pin) {
         Timber.e("entered Pin $enteredPin")
         if (enteredPin.length == 4) {
             if (viewModel.validPin == enteredPin) {
-                requireActivity().showShortToast("Valid Pin")
                 onValidPin()
             } else {
-                requireActivity().showShortToast("InvalidPin")
+                requireActivity().showShortToast("You entered an Incorrect Pin")
                 refreshWithShake()
             }
 

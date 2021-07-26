@@ -12,25 +12,14 @@ class NewPaymentViewModel(val app: Application) : AndroidViewModel(app) {
     var _screen = MutableLiveData<NewPaymentScreens>().default(TRANSFER)
     val screens: LiveData<NewPaymentScreens> get() = _screen
 
-    val maxPin = 4
     val validPin = "0000"
-    var _currentPinPosition =MutableLiveData<Int>()
-    val currentPinPosition :LiveData<Int> get() = _currentPinPosition
 
-    var _pin=MutableLiveData<String>()
-    val pin : LiveData<String> get() = _pin
-
-    var isFromDelete = false
- //   var pin =""
-
-
-    fun addToPin(digit:String){
-        _pin.value = _pin.value.plus(digit)
+    fun gotoScreen(screen:NewPaymentScreens){
+        _screen.value = screen
     }
 
-    fun removeLastFromPin(){
-        _pin.value = _pin.value?.dropLast(1)
-    }
+
+
 
 }
 

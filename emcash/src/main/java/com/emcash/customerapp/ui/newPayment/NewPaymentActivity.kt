@@ -40,14 +40,16 @@ class NewPaymentActivity : AppCompatActivity() {
 
     private fun openPinScreen() {
         supportFragmentManager.commit {
-            //addToBackStack("Pin Screen")
+            addToBackStack("Pin Screen")
+           // this.setCustomAnimations(android.R.anim.fade_in,android.R.anim.fade_out)
             replace<EmcashPinFragment>(R.id.container)
         }
     }
 
     fun openTransferScreen(){
         supportFragmentManager.commit {
-     //       addToBackStack("Transfer Screen")
+            addToBackStack("Transfer Screen")
+          //  this.setCustomAnimations(android.R.anim.fade_in,android.R.anim.fade_out)
             replace<TransferFragment>(R.id.container)
         }
     }
@@ -73,7 +75,16 @@ class NewPaymentActivity : AppCompatActivity() {
     fun openPaymentReceipt(){
         supportFragmentManager.commit {
             addToBackStack("Receipt Screen")
+            this.setCustomAnimations(android.R.anim.fade_in,android.R.anim.fade_out)
             replace<PaymentReceiptFragment>(R.id.container)
+        }
+    }
+
+    override fun onBackPressed() {
+        if(viewModel.screens.value == RECEIPT){
+            viewModel.gotoScreen(TRANSFER)
+        }else{
+            super.onBackPressed()
         }
     }
 }
