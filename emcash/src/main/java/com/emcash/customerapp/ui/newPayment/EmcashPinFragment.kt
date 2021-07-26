@@ -159,20 +159,10 @@ class EmcashPinFragment : Fragment(R.layout.emcash_pin) {
         et_pin_1.startAnimation(shake)
         et_pin_2.startAnimation(shake)
         et_pin_3.startAnimation(shake)
-        et_pin_4.startAnimation(shake.also {
-            it.setAnimationListener(object : Animation.AnimationListener {
-                override fun onAnimationRepeat(p0: Animation?) {
-                }
-
-                override fun onAnimationEnd(p0: Animation?) {
-                }
-
-                override fun onAnimationStart(p0: Animation?) {
-                    refresh(pinVIews)
-                }
-
-            })
-        })
+        et_pin_4.startAnimation(shake)
+        et_pin_4.postOnAnimation {
+            refresh(pinVIews)
+        }
 
 
     }

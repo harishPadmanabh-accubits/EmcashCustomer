@@ -147,5 +147,13 @@
 
     </style>
 
+    <style name="PinView" parent="Widget.AppCompat.EditText">
+        <item name="android:background">@drawable/pin_empty</item>
+        <item name="android:cursorVisible">false</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:inputType">numberPassword</item>
+        <item name="android:editable">false</item>
+    </style>
+
 
 </resources>
