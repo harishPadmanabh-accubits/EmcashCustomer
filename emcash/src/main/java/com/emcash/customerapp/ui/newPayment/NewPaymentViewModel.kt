@@ -10,6 +10,7 @@ import com.emcash.customerapp.model.*
 import com.emcash.customerapp.ui.newPayment.NewPaymentScreens.*
 import com.emcash.customerapp.utils.ITEM_ALL_CONTACTS
 import com.emcash.customerapp.utils.ITEM_RECENT_CONTACTS
+import timber.log.Timber
 
 class NewPaymentViewModel(val app: Application) : AndroidViewModel(app) {
 
@@ -30,11 +31,14 @@ class NewPaymentViewModel(val app: Application) : AndroidViewModel(app) {
             it.sortBy {
                 it.name.first()
             }
-        }.distinct().map {
+        }.map {
             it.name.first()
         }
 
-        firstLetters.forEach { letter->
+
+
+        firstLetters.distinct().forEach { letter->
+            Timber.e("Letter $letter")
             val contacts = ArrayList<DummyContactsRawData>()
             val groupedContacts = allContacts.filter {
                 it.name.first() == letter
@@ -88,5 +92,5 @@ class NewPaymentViewModel(val app: Application) : AndroidViewModel(app) {
 }
 
 enum class NewPaymentScreens {
-    CONTACTS, TRANSFER, CHAT, RECEIPT,PIN
+    CONTACTS, TRANSFER, CHAT, RECEIPT,PIN,SCAN
 }

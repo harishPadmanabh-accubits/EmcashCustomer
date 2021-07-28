@@ -179,7 +179,7 @@ class EmcashPinFragment : Fragment(R.layout.emcash_pin) {
     }
 
     private fun onValidPin(){
-        viewModel._screen.value = RECEIPT
+        viewModel.gotoScreen(CHAT)
     }
 
 }

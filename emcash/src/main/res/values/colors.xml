@@ -24,6 +24,8 @@
     <color name="blue_42">#425CEC</color>
     <color name="grey_unselected">#59595C</color>
     <color name="blue_bright">#0054FE</color>
+    <color name="custom_black">#252626</color>
+    <color name="light_black">#4B4B4B</color>
 
 
 </resources>

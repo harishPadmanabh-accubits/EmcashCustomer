@@ -6,14 +6,14 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.emcash.customerapp.R
 import com.emcash.customerapp.model.ContactsPageItems
+import com.emcash.customerapp.model.DummyContactsRawData
 import com.emcash.customerapp.model.DummyUserData
 import com.emcash.customerapp.model.GroupedContacts
-import com.emcash.customerapp.ui.home.adapter.RecentTransactionsAdapter
 import com.emcash.customerapp.utils.ITEM_ALL_CONTACTS
 import com.emcash.customerapp.utils.ITEM_RECENT_CONTACTS
 import java.lang.IllegalArgumentException
 
-class ContactsScreenAdapter(var contactsPageItems: ArrayList<ContactsPageItems>) :
+class ContactsScreenAdapter(var contactsPageItems: ArrayList<ContactsPageItems>,val listener: ContactsListener) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun getItemViewType(position: Int): Int {
@@ -41,15 +41,15 @@ class ContactsScreenAdapter(var contactsPageItems: ArrayList<ContactsPageItems>)
     class RecentContactsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val recentContactsRecyclerView: RecyclerView = itemView.findViewById(R.id.rv_recent_contacts)
 
-        fun bind(recentContactList: ArrayList<DummyUserData>) {
-            recentContactsRecyclerView.adapter = RecentTransactionsAdapter(recentContactList.toList())
+        fun bind(recentContactList: ArrayList<DummyUserData>, listener: ContactsListener) {
+            recentContactsRecyclerView.adapter = RecentContactsAdapter(recentContactList.toList(),listener)
         }
     }
 
     class AllContactsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
        private val allContactsRecyclerView: RecyclerView =itemView.findViewById(R.id.rv_contacts)
-        fun bind(groupedContactList: ArrayList<GroupedContacts>) {
-         allContactsRecyclerView.adapter = AllContactsAdapter(groupedContactList)
+        fun bind(groupedContactList: ArrayList<GroupedContacts>, listener: ContactsListener) {
+         allContactsRecyclerView.adapter = AllContactsAdapter(groupedContactList,listener)
         }
     }
 
@@ -58,16 +58,20 @@ class ContactsScreenAdapter(var contactsPageItems: ArrayList<ContactsPageItems>)
         when(holder){
             is RecentContactsViewHolder ->{
                 currentItem.recentContactList?.let {
-                    holder.bind(it)
+                    holder.bind(it,listener)
                 }
             }
             is AllContactsViewHolder ->{
                 currentItem.allContactList?.let {
-                    holder.bind(it)
+                    holder.bind(it,listener)
                 }
             }
         }
     }
 
     override fun getItemCount(): Int = contactsPageItems.size
+}
+
+interface ContactsListener{
+    fun onContactSelected(contact:DummyContactsRawData?,recentContact:DummyUserData?)
 }

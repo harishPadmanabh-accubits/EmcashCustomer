@@ -16,12 +16,15 @@ class TransferFragment:Fragment(R.layout.transfer_fragment) {
         super.onViewCreated(view, savedInstanceState)
         et_value.requestFocus()
         fab_transfer.setOnClickListener {
-            viewModel._screen.value = NewPaymentScreens.PIN
+            viewModel.gotoScreen(NewPaymentScreens.PIN)
+        }
+        iv_back.setOnClickListener {
+            requireActivity().onBackPressed()
         }
     }
 
     override fun onResume() {
         super.onResume()
-       // requireActivity().showKeyboard(et_value)
+        requireActivity().showKeyboard(et_value)
     }
 }

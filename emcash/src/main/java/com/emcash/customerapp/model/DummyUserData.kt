@@ -12,7 +12,7 @@ data class DummyUserData(
 val users = listOf<DummyUserData>(
     DummyUserData(
         "Mary ",
-        R.drawable.sample_dp,
+        R.drawable.tbd_sample_dp_2,
         LevelProfileImageView.UserProfileLevel.GREEN
     ),
     DummyUserData(
@@ -22,7 +22,7 @@ val users = listOf<DummyUserData>(
     ),
     DummyUserData(
         "Milan",
-        R.drawable.sample_dp,
+        R.drawable.sample_round_dp,
         LevelProfileImageView.UserProfileLevel.NONE
     ),
     DummyUserData(
@@ -32,7 +32,7 @@ val users = listOf<DummyUserData>(
     ),
     DummyUserData(
         "Fijui",
-        R.drawable.sample_dp,
+        R.drawable.tbd_sample_dp_2,
         LevelProfileImageView.UserProfileLevel.NONE
     ),
     DummyUserData(

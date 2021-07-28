@@ -5,6 +5,16 @@ const val RC_LOCATION_PERM = 124
 const val RC_SMS_PERM = 125
 const val RC_CONTACTS_PERM = 126
 
+/**
+ * Intent Keys
+ */
+const val LAUNCH_SOURCE="launch_source"
+
+/**
+ * Screen Keys
+ */
+const val SCREEN_TRANSFER=200
+
 
 /*
     Contacts Page Items
