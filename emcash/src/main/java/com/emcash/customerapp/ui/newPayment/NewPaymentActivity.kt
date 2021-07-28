@@ -91,13 +91,25 @@ EasyPermissions.RationaleCallbacks{
     }
 
     override fun onBackPressed() {
-        if(viewModel.screens.value == RECEIPT){
-            viewModel.gotoScreen(CONTACTS)
-        }else if(viewModel.screens.value == CONTACTS){
-            openActivity(HomeActivity::class.java)
-        }
-        else{
-            super.onBackPressed()
+        when (viewModel.screens.value) {
+            RECEIPT -> {
+                viewModel.gotoScreen(CHAT)
+            }
+            CONTACTS -> {
+                openActivity(HomeActivity::class.java)
+            }
+            CHAT -> {
+                openActivity(HomeActivity::class.java)
+            }
+            PIN -> {
+                viewModel.gotoScreen(TRANSFER)
+            }
+            TRANSFER -> {
+                viewModel.gotoScreen(CONTACTS)
+            }
+            else -> {
+                super.onBackPressed()
+            }
         }
     }
     private fun hasCameraPermission():Boolean {

@@ -120,10 +120,10 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.appcompat.widget.AppCompatImageView
+        <com.emcash.customerapp.utils.CoinProfileImageView
             android:layout_width="56dp"
             android:layout_height="56dp"
-            android:src="@drawable/small_coin"
+            app:coin_size="normal"
             android:id="@+id/iv_small_coin"
             android:transitionName="small_coin"
             app:layout_constraintEnd_toStartOf="@+id/guideline21"
