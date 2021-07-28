@@ -11,6 +11,7 @@ import androidx.fragment.app.replace
 import androidx.lifecycle.Observer
 import com.emcash.customerapp.R
 import com.emcash.customerapp.extensions.openActivity
+import com.emcash.customerapp.ui.home.HomeActivity
 import com.emcash.customerapp.ui.newPayment.NewPaymentScreens.*
 import com.emcash.customerapp.ui.qr.QrScannerActivity
 import com.emcash.customerapp.utils.LAUNCH_SOURCE
@@ -92,7 +93,10 @@ EasyPermissions.RationaleCallbacks{
     override fun onBackPressed() {
         if(viewModel.screens.value == RECEIPT){
             viewModel.gotoScreen(CONTACTS)
-        }else{
+        }else if(viewModel.screens.value == CONTACTS){
+            openActivity(HomeActivity::class.java)
+        }
+        else{
             super.onBackPressed()
         }
     }
