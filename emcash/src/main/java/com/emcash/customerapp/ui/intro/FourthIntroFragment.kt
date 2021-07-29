@@ -88,9 +88,9 @@ class FourthIntroFragment : Fragment() {
             Animation.RELATIVE_TO_SELF,
             -1f,
             Animation.RELATIVE_TO_SELF,
-            -1f
+            1f
         )
-        scale.duration = 600
+        scale.duration = 500
         scale.fillAfter = false
         scale.isFillEnabled = false
         scale.setAnimationListener(object : Animation.AnimationListener {

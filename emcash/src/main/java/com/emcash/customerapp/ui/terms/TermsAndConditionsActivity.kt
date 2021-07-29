@@ -6,6 +6,7 @@ import android.text.method.ScrollingMovementMethod
 import com.emcash.customerapp.R
 import com.emcash.customerapp.extensions.obtainViewModel
 import com.emcash.customerapp.extensions.openActivity
+import com.emcash.customerapp.ui.intro.IntroActivity
 import com.emcash.customerapp.ui.intro.IntroViewModel
 import com.emcash.customerapp.ui.prepare.PrepareEmCashActivity
 import kotlinx.android.synthetic.main.activity_terms_and_conditions.*
@@ -23,10 +24,11 @@ class TermsAndConditionsActivity : AppCompatActivity() {
     private fun setupViews() {
         tv_terms.movementMethod = ScrollingMovementMethod()
         btn_reject.setOnClickListener {
-            onBackPressed()
+            openActivity(IntroActivity::class.java)
         }
         btn_accept.setOnClickListener {
             openActivity(PrepareEmCashActivity::class.java)
+            finish()
         }
 
     }

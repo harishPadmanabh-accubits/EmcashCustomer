@@ -110,7 +110,6 @@ EasyPermissions.RationaleCallbacks{
 
     override fun onBackPressed() {
         finish()
-        super.onBackPressed()
     }
 
     private fun hasCameraPermission():Boolean {
