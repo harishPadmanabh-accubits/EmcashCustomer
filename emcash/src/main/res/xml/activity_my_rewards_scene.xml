@@ -40,7 +40,7 @@
             motion:layout_constraintStart_toStartOf="parent" />
         <Constraint
             android:id="@+id/iv_toppings"
-            android:elevation="@dimen/dp4"
+            android:elevation="4dp"
             motion:layout_constraintEnd_toEndOf="parent"
             android:layout_width="0dp"
             android:layout_height="250dp"
@@ -53,13 +53,13 @@
             android:scaleY="0" />
         <Constraint
             android:id="@+id/tv_value_rewards"
-            android:elevation="@dimen/dp12"
+            android:elevation="12dp"
             motion:layout_constraintEnd_toEndOf="parent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             motion:layout_constraintBottom_toBottomOf="@+id/iv_toppings"
             android:translationY="-30dp"
-            android:translationZ="@dimen/dp12"
+            android:translationZ="12dp"
             motion:layout_constraintStart_toStartOf="parent"
             android:visibility="invisible" />
         <Constraint

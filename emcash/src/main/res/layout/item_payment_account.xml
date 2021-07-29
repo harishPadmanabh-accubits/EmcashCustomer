@@ -3,7 +3,7 @@
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:background="@drawable/grey_rounded_bg"
-    android:layout_margin="@dimen/dp12"
+    android:layout_margin="12dp"
     android:id="@+id/ll_item_main"
     android:layout_height="wrap_content">
 
@@ -12,16 +12,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:buttonTint="@color/app_blue"
-        android:layout_marginLeft="@dimen/dp24"
-        android:layout_marginTop="@dimen/dp16"
-        android:layout_marginBottom="@dimen/dp16"
+        android:layout_marginLeft="24dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
         />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:layout_marginLeft="@dimen/dp20"
+        android:layout_marginLeft="20dp"
         android:gravity="center_vertical"
         >
         <TextView
@@ -30,7 +30,7 @@
             android:layout_height="wrap_content"
             android:text="Empay - Prepaid- XXXXX 145"
             android:textColor="@color/black"
-            android:padding="@dimen/dp2"
+            android:padding="2dp"
             android:fontFamily="@font/biennale_regular"
             />
         <TextView
@@ -38,7 +38,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="AED 234.20"
-            android:padding="@dimen/dp2"
+            android:padding="2dp"
             android:textColor="@color/black"
             android:fontFamily="@font/biennale_semi_bold"
             />

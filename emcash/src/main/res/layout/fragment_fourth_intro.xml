@@ -22,7 +22,7 @@
         android:layout_width="170dp"
         android:layout_height="wrap_content"
         app:buttonText="Next"
-        android:layout_marginBottom="@dimen/dp40"
+        android:layout_marginBottom="40dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -46,7 +46,7 @@
         <androidx.appcompat.widget.AppCompatImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/dp4"
+            android:layout_marginStart="4dp"
             android:src="@drawable/dash" />
     </LinearLayout>
 
@@ -80,8 +80,8 @@
             style="@style/SubHeadingText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/dp30"
-            android:layout_marginBottom="@dimen/dp48"
+            android:layout_margin="30dp"
+            android:layout_marginBottom="48dp"
             android:gravity="center"
             android:text="Lorem ipsum dolor sit amet,elit, sed do eiusmod tempor incididunt ." />
     </LinearLayout>
@@ -89,7 +89,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginBottom="@dimen/dp12"
+        android:layout_marginBottom="12dp"
         android:id="@+id/cl_intro_art"
         app:layout_constraintBottom_toTopOf="@+id/ll_info"
         app:layout_constraintEnd_toEndOf="parent"
@@ -102,7 +102,7 @@
         android:layout_height="0dp"
         android:alpha=".4"
         android:src="@drawable/intro_image_cup"
-        android:elevation="@dimen/dp2"
+        android:elevation="2dp"
         app:layout_constraintBottom_toBottomOf="@+id/cl_intro_art"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -122,10 +122,10 @@
                 android:id="@+id/iv_intro_gold_toppings"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:elevation="@dimen/dp12"
+                android:elevation="12dp"
                 android:scaleType="centerCrop"
-                android:translationZ="@dimen/dp12"
-                android:layout_marginBottom="@dimen/dp48"
+                android:translationZ="12dp"
+                android:layout_marginBottom="48dp"
                 android:src="@drawable/intro_gold_toppings"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -136,10 +136,10 @@
                 android:id="@+id/iv_intro_gold_toppings_left"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:elevation="@dimen/dp12"
+                android:elevation="12dp"
                 android:scaleType="centerCrop"
-                android:translationZ="@dimen/dp12"
-                android:layout_marginBottom="@dimen/dp48"
+                android:translationZ="12dp"
+                android:layout_marginBottom="48dp"
                 android:src="@drawable/intro_gold_toppings_left"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

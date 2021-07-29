@@ -34,7 +34,7 @@
         android:fontFamily="@font/biennale_regular"
         android:text="Loaded"
         android:textColor="@color/black"
-        android:textSize="@dimen/dp12"
+        android:textSize="12dp"
         app:layout_constraintStart_toStartOf="@+id/guideline19"
         app:layout_constraintTop_toTopOf="@+id/iv_inbound_icon" />
 
@@ -47,7 +47,7 @@
         android:fontFamily="@font/biennale_regular"
         android:text="09:00 PM"
         android:textColor="@color/ash"
-        android:textSize="@dimen/sp12"
+        android:textSize="12dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/tv_type_indicator"
         app:layout_constraintTop_toBottomOf="@+id/tv_type_indicator" />
@@ -56,11 +56,11 @@
         android:id="@+id/tv_value_changed"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/dp30"
+        android:layout_marginEnd="30dp"
         android:fontFamily="@font/biennale_bold"
         android:text="+30"
         android:textColor="@color/black"
-        android:textSize="@dimen/dp12"
+        android:textSize="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/tv_info_emcash" />
 

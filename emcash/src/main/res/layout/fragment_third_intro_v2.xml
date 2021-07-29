@@ -27,7 +27,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingTop="@dimen/dp24"
+        android:paddingTop="24dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guide_art_gradient">
@@ -46,8 +46,8 @@
             style="@style/SubHeadingText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/dp30"
-            android:layout_marginBottom="@dimen/dp48"
+            android:layout_margin="30dp"
+            android:layout_marginBottom="48dp"
             android:gravity="center"
             android:text="Lorem ipsum dolor sit amet,elit, sed do eiusmod tempor incididunt ." />
         <LinearLayout
@@ -71,7 +71,7 @@
             <androidx.appcompat.widget.AppCompatImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/dp4"
+                android:layout_marginStart="4dp"
                 android:src="@drawable/dash" />
         </LinearLayout>
 
