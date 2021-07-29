@@ -5,6 +5,7 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.emcash.customerapp.R
+import kotlinx.android.synthetic.main.item_chat.*
 import kotlinx.android.synthetic.main.payment_chats.*
 
 class PaymentChatFragment:Fragment(R.layout.payment_chats) {
@@ -13,7 +14,7 @@ class PaymentChatFragment:Fragment(R.layout.payment_chats) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        fl_chats.setOnClickListener {
+        cl_chats.setOnClickListener {
             viewModel.gotoScreen(NewPaymentScreens.RECEIPT)
         }
     }

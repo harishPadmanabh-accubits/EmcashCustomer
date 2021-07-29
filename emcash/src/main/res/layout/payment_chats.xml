@@ -156,8 +156,8 @@
            <Button
                android:id="@+id/btn_pay"
                style="@style/BlueRoundedButton"
-               android:layout_width="100dp"
-               android:layout_height="wrap_content"
+               android:layout_width="79dp"
+               android:layout_height="41dp"
                android:text="Pay"
                android:layout_marginEnd="16dp"
                app:layout_constraintEnd_toEndOf="parent"
@@ -166,8 +166,8 @@
 
            <Button
                android:id="@+id/btn_request"
-               android:layout_width="100dp"
-               android:layout_height="wrap_content"
+               android:layout_width="85dp"
+               android:layout_height="41dp"
                android:background="@drawable/blue_round_bg"
                android:fontFamily="@font/biennale_book"
                android:text="Request"
@@ -195,7 +195,7 @@
         <FrameLayout
             android:layout_width="match_parent"
             android:id="@+id/fl_chats"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
             <include layout="@layout/item_chat"/>
         </FrameLayout>
 

@@ -24,6 +24,11 @@ class NewPaymentViewModel(val app: Application) : AndroidViewModel(app) {
         _screen.value = screen
     }
 
+
+    var _bottomSheetVisiblity = MutableLiveData<Boolean>()
+    val bottomSheetVisibility : LiveData<Boolean> get() = _bottomSheetVisiblity
+
+
     fun groupContactsByLetters(allContacts:ArrayList<DummyContactsRawData>): ArrayList<GroupedContacts> {
         val groupedContactsList = ArrayList<GroupedContacts>()
         val accessedLetters = ArrayList<String>()

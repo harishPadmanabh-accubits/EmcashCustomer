@@ -91,24 +91,28 @@ EasyPermissions.RationaleCallbacks{
     }
 
     override fun onBackPressed() {
-        when (viewModel.screens.value) {
-            RECEIPT -> {
-                viewModel.gotoScreen(CHAT)
-            }
-            CONTACTS -> {
-                openActivity(HomeActivity::class.java)
-            }
-            CHAT -> {
-                openActivity(HomeActivity::class.java)
-            }
-            PIN -> {
-                viewModel.gotoScreen(TRANSFER)
-            }
-            TRANSFER -> {
-                viewModel.gotoScreen(CONTACTS)
-            }
-            else -> {
-                super.onBackPressed()
+        if (viewModel._bottomSheetVisiblity.value == true)
+            viewModel._bottomSheetVisiblity.value = false
+        else {
+            when (viewModel.screens.value) {
+                RECEIPT -> {
+                    viewModel.gotoScreen(CHAT)
+                }
+                CONTACTS -> {
+                    openActivity(HomeActivity::class.java)
+                }
+                CHAT -> {
+                    openActivity(HomeActivity::class.java)
+                }
+                PIN -> {
+                    viewModel.gotoScreen(TRANSFER)
+                }
+                TRANSFER -> {
+                    viewModel.gotoScreen(CONTACTS)
+                }
+                else -> {
+                    super.onBackPressed()
+                }
             }
         }
     }

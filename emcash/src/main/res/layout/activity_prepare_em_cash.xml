@@ -50,7 +50,7 @@
         android:id="@+id/fl_bottom_sheet"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:visibility="visible"
+        android:visibility="invisible"
         android:elevation="24dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

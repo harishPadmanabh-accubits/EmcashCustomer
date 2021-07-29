@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:id="@+id/cl_chats"
     android:layout_height="wrap_content">
 
     <LinearLayout
@@ -247,6 +248,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
+                        android:visibility="invisible"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.0"
@@ -254,14 +256,18 @@
                         app:layout_constraintTop_toBottomOf="@id/tv_amount_received">
 
                         <com.google.android.material.card.MaterialCardView
-                            android:layout_width="86dp"
-                            android:layout_height="30dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             app:cardBackgroundColor="#F0F0F0"
-                            app:cardCornerRadius="22dp"
+                            app:cardCornerRadius="24dp"
                             app:strokeColor="@color/black"
                             app:strokeWidth="1dp">
 
                             <TextView
+                                android:paddingTop="6dp"
+                                android:paddingBottom="6dp"
+                                android:paddingStart="18dp"
+                                android:paddingEnd="18dp"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:fontFamily="@font/roboto_medium"
@@ -274,13 +280,17 @@
 
 
                         <com.google.android.material.card.MaterialCardView
-                            android:layout_width="86dp"
-                            android:layout_height="30dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
                             app:cardBackgroundColor="@color/black"
-                            app:cardCornerRadius="22dp">
+                            app:cardCornerRadius="24dp">
 
                             <TextView
+                                android:paddingTop="6dp"
+                                android:paddingBottom="6dp"
+                                android:paddingStart="18dp"
+                                android:paddingEnd="18dp"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:fontFamily="@font/roboto_medium"
