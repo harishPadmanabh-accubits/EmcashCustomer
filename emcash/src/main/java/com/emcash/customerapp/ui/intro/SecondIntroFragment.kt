@@ -15,13 +15,12 @@ import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
+import androidx.transition.ChangeBounds
 import com.emcash.customerapp.R
-import com.emcash.customerapp.extensions.isNougatOrAbove
-import com.emcash.customerapp.extensions.obtainViewModel
-import kotlinx.android.synthetic.main.fragment_first_intro.*
-import kotlinx.android.synthetic.main.fragment_first_intro.btn_next
-import kotlinx.android.synthetic.main.fragment_second_intro.*
-import kotlinx.android.synthetic.main.fragment_second_intro.view.*
+import com.emcash.customerapp.utils.CoinProfileImageView
+import kotlinx.android.synthetic.main.fragment_second_intro_v2.*
+import kotlinx.android.synthetic.main.fragment_second_intro_v2.iv_dp
+import kotlinx.android.synthetic.main.frame_emcash_prepared.*
 import timber.log.Timber
 
 class SecondIntroFragment : Fragment() {
@@ -32,23 +31,19 @@ class SecondIntroFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_second_intro, container, false).also {
-            it.doOnLayout {
-                performEnterTransition(it.iv_intro_coin)
-
-            }
-        }
+        return inflater.inflate(R.layout.fragment_second_intro_v2, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        performEnterTransition(iv_dp)
         btn_next.setOnClickListener {
             openThirdIntroFragment()
         }
 
     }
 
-    private fun performEnterTransition(target: AppCompatImageView) {
+    private fun performEnterTransition(target: CoinProfileImageView) {
         val fade = ScaleAnimation(
             .4f,
             1f,
@@ -100,7 +95,6 @@ class SecondIntroFragment : Fragment() {
 
             override fun onAnimationEnd(p0: Animation?) {
                 Timber.e("Anim end")
-                //viewModel._screenPosition.value = 2
 
             }
 
@@ -110,7 +104,6 @@ class SecondIntroFragment : Fragment() {
                     start()
                 }.addListener(onEnd = {
                     Timber.e("Anim end")
-                    // viewModel._screenPosition.value =2
                     openThirdIntroFragment()
 
                 }
@@ -122,12 +115,19 @@ class SecondIntroFragment : Fragment() {
     }
 
     fun openThirdIntroFragment() {
+//        requireActivity().supportFragmentManager.commit {
+//            this.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
+//            this.addSharedElement((iv_dp as View), "coin_image")
+//            replace<ThirdIntroFragment>(R.id.container)
+//        }
+
+
         requireActivity().supportFragmentManager.commit {
-            this.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
-            setReorderingAllowed(true)
-            this.addSharedElement(iv_intro_coin, "small_coin")
-            replace<ThirdIntroFragment>(R.id.container)
+            setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
+            addSharedElement((iv_dp as View), "coin_image")
+            replace(R.id.container, ThirdIntroFragment())
         }
+     //   (requireActivity() as IntroActivity).openFourthIntroFragment()
     }
 
 

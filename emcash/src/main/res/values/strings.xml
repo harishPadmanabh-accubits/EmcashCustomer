@@ -8,7 +8,6 @@ Payment cards saved to your separate  Payments account are distinct from any Vir
 Payment cards saved to your separate  Payments account are distinct from any Virtual Account Numbers you registered with EmCash Payment cards saved to your separate Google Payments account are distinct from any Virtual Account Numbers you registered with EmCash</string>
     <string name="next">Next</string>
     <string name="accept">I Accept</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="create_your_own_identity">Create your own Identity</string>
     <string name="hassle_free_emcash_transfer">Hassle free EmCash transfer</string>
@@ -62,4 +61,5 @@ Payment cards saved to your separate  Payments account are distinct from any Vir
     <string name="send_emcash_earn_reward"><![CDATA[Send EmCash & Earn Reward]]></string>
     <string name="transaction_id">Transaction ID</string>
     <string name="emcash_pin">EmCash Pin</string>
+    <string name="transition_coin">coin_image</string>
 </resources>

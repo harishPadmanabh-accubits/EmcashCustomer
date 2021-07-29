@@ -57,16 +57,17 @@ class IntroActivity : AppCompatActivity() {
             replace<SecondIntroFragment>(R.id.container)
         }
     }
-    private fun openThirdIntroFragment(){
+     fun openThirdIntroFragment(){
         supportFragmentManager.commit {
-            this.setCustomAnimations(android.R.anim.fade_in,android.R.anim.fade_out)
-            setReorderingAllowed(true)
+           // this.setCustomAnimations(android.R.anim.fade_in,android.R.anim.fade_out)
+           // setReorderingAllowed(true)
             replace<ThirdIntroFragment>(R.id.container)
         }
     }
-    private fun openFourthIntroFragment(){
+     fun openFourthIntroFragment(){
         supportFragmentManager.commit {
             setReorderingAllowed(true)
+            this.setCustomAnimations(android.R.anim.fade_in,android.R.anim.fade_out)
             replace<FourthIntroFragment>(R.id.container)
         }
     }
