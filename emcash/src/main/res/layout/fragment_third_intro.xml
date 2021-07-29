@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.intro.FirstIntroFragment">
-
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/i_gradient"
         android:layout_width="match_parent"
@@ -16,7 +15,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_blue_gradient_bg" />
-
     <com.emcash.customerapp.utils.OnboardingNextButton
         android:id="@+id/btn_next"
         android:layout_width="170dp"
@@ -26,7 +24,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
-
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="wrap_content"
@@ -37,26 +34,22 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline2"
         app:layout_constraintVertical_bias="0.0">
-
         <androidx.appcompat.widget.AppCompatImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/dot_blue" />
-
         <androidx.appcompat.widget.AppCompatImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/dp4"
             android:src="@drawable/dash" />
     </LinearLayout>
-
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.75" />
-
     <LinearLayout
         android:id="@+id/ll_info"
         android:layout_width="wrap_content"
@@ -65,7 +58,6 @@
         app:layout_constraintBottom_toTopOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
-
         <TextView
             android:id="@+id/tv_title"
             style="@style/HeadingText"
@@ -74,7 +66,6 @@
             android:layout_gravity="center"
             android:text="@string/hassle_free_emcash_transfer"
             android:textAlignment="center" />
-
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_description"
             style="@style/SubHeadingText"
@@ -85,7 +76,6 @@
             android:gravity="center"
             android:text="Lorem ipsum dolor sit amet,elit, sed do eiusmod tempor incididunt ." />
     </LinearLayout>
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cl_intro_art"
         android:layout_width="0dp"
@@ -94,46 +84,38 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/i_gradient">
-
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline20"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             app:layout_constraintGuide_percent="0.32" />
-
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline21"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             app:layout_constraintGuide_percent="0.5" />
-
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/iv_phones"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="38dp"
-            android:transitionName="@string/transition_coin"
             android:src="@drawable/intro_phones"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
-        <com.emcash.customerapp.utils.CoinProfileImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:coin_size="normal"
-            android:id="@+id/iv_dp"
-            android:transitionName="@string/transition_coin"
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:src="@drawable/small_coin"
+            android:id="@+id/iv_small_coin"
+            android:transitionName="small_coin"
             app:layout_constraintEnd_toStartOf="@+id/guideline21"
             app:layout_constraintStart_toStartOf="@+id/guideline21"
             app:layout_constraintTop_toTopOf="@+id/guideline20" />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
     <!--    <androidx.appcompat.widget.AppCompatImageView-->
     <!--        android:layout_width="0dp"-->
     <!--        android:layout_height="0dp"-->
@@ -142,6 +124,4 @@
     <!--        app:layout_constraintEnd_toEndOf="parent"-->
     <!--        app:layout_constraintStart_toStartOf="parent"-->
     <!--        app:layout_constraintTop_toTopOf="@+id/i_gradient" />-->
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>
