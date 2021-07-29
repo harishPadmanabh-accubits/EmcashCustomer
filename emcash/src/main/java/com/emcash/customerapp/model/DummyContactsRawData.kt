@@ -16,9 +16,9 @@ data class DummyContactsRawData(
 val dummyContactList = arrayListOf<DummyContactsRawData>(
     DummyContactsRawData("Abd al-Rahman", YELLOW,"+62 898 787 78", R.drawable.tbd_sample_dp_2),
     DummyContactsRawData("Abu Abdullah", RED,"+62 898 787 78", null),
-    DummyContactsRawData("Barkatullah", GREEN,"+62 898 787 78", R.drawable.tbd_sample_dp_2),
-    DummyContactsRawData("Barkat", YELLOW,"+62 898 787 78", R.drawable.tbd_sample_dp_2),
-    DummyContactsRawData("Jamid", YELLOW,"+62 898 787 78", null)
+    DummyContactsRawData("Barkatullah", GREEN,"+62 898 787 78", R.drawable.tbd_sample_dp_2)
+//    DummyContactsRawData("Barkat", YELLOW,"+62 898 787 78", R.drawable.tbd_sample_dp_2),
+//    DummyContactsRawData("Jamid", YELLOW,"+62 898 787 78", null)
     )
 
 val dummyRecentContacts = users

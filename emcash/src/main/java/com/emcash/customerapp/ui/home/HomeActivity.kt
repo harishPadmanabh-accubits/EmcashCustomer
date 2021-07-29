@@ -45,6 +45,7 @@ EasyPermissions.RationaleCallbacks{
     private fun setupViews() {
         cv_balance.setOnClickListener {
             openActivity(WalletActivity::class.java)
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
         }
 
         rv_recent_transactions.apply {

@@ -16,7 +16,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="64dp"
             android:fontFamily="@font/biennale_medium"
-            android:text="@string/how_it_works"
+            android:text="@string/how_does_it_work"
             android:textColor="@color/black"
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"

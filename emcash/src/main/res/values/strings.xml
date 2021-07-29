@@ -62,4 +62,5 @@ Payment cards saved to your separate  Payments account are distinct from any Vir
     <string name="transaction_id">Transaction ID</string>
     <string name="emcash_pin">EmCash Pin</string>
     <string name="transition_coin">coin_image</string>
+    <string name="how_does_it_work">How does it work?</string>
 </resources>
