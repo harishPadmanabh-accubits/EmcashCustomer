@@ -69,7 +69,7 @@ EasyPermissions.RationaleCallbacks{
         }
 
         iv_qr_scanner.setOnClickListener {
-            openQRScanner()
+          //  openQRScanner()
         }
 
         fab_new_payment.setOnClickListener {

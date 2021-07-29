@@ -7,6 +7,7 @@ import com.emcash.customerapp.R
 import com.emcash.customerapp.extensions.openActivity
 import com.emcash.customerapp.ui.home.HomeActivity
 import com.emcash.customerapp.ui.loademcash.TransactionActivity
+import com.emcash.customerapp.ui.wallet.WalletActivity
 import kotlinx.android.synthetic.main.activity_convert_emcash.*
 import kotlinx.android.synthetic.main.activity_convert_emcash.et_value
 
@@ -28,7 +29,7 @@ class ConvertEmcashActivity : AppCompatActivity(),SuccessDialogListener {
     }
 
     override fun onNavigate() {
-        openActivity(HomeActivity::class.java)
+        openActivity(WalletActivity::class.java)
         overridePendingTransition(android.R.anim.fade_out,android.R.anim.fade_in)
     }
 

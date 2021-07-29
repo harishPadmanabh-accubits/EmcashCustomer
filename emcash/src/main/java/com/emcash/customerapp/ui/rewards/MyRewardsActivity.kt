@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.recyclerview.widget.RecyclerView
 import com.emcash.customerapp.R
 import com.emcash.customerapp.extensions.openActivity
+import com.emcash.customerapp.ui.home.HomeActivity
 import kotlinx.android.synthetic.main.activity_my_rewards.*
 
 class MyRewardsActivity : AppCompatActivity() {
@@ -14,7 +15,7 @@ class MyRewardsActivity : AppCompatActivity() {
         setContentView(R.layout.activity_my_rewards)
         setupRewardsList()
         iv_back.setOnClickListener {
-            onBackPressed()
+           openActivity(HomeActivity::class.java)
         }
         cv_more.setOnClickListener {
             openActivity(EmscoreActivity::class.java)

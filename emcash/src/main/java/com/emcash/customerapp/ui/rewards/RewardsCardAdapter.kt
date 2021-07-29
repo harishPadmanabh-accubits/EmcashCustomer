@@ -18,11 +18,11 @@ class RewardsCardAdapter:RecyclerView.Adapter<ViewHolder>() {
         LayoutInflater.from(parent.context).inflate(R.layout.item_my_reward_card,parent,false)
     )
 
-    override fun getItemCount(): Int = 10
+    override fun getItemCount(): Int = 4
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.itemView.apply {
-            if(position>5){
+            if(position>2){
                 fl_earn_reward.hide()
                 fl_reward_info.show()
             }else{
