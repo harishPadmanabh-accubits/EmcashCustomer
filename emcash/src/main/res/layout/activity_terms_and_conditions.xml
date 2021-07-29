@@ -27,7 +27,9 @@
         android:layout_marginEnd="40dp"
         android:scrollbars="vertical"
         android:textAlignment="textStart"
-        android:text="@string/dummy_desc"
+        android:text="EmCash allows you to transact using a bank-issued virtual account number representing a credit or debit card you register with EmCash , a transit agency pass you register with EmCash, and a digital wallet or account that you have with a company other than EmPay and link to EmCash in order to enable additional payment functionality . Virtual Account Numbers, Transit Passes, and Linked Third-Party Accounts  may be used: (i) at participating merchant or transit locations, using an eligible NFC mobile device (which may include an eligible Android Wear device) and either the EmCash application
+\n\nPayment cards saved to your separate  Payments account are distinct from any Virtual Account Numbers you registered with EmCash Payment cards saved to your separate Google Payments account are distinct from any Virtual Account Numbers you registered with EmCash
+\n\nPayment cards saved to your separate  Payments account are distinct from any Virtual Account Numbers you registered with EmCash Payment cards saved to your separate Google Payments account are distinct from any Virtual Account Numbers you registered with EmCash"
         android:lineSpacingMultiplier=".2"
         android:scrollbarSize="0dp"
         app:layout_constraintBottom_toTopOf="@+id/btn_reject"
@@ -42,7 +44,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.5" />
+        app:layout_constraintGuide_percent="0.7" />
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/iv_white_gradient"
@@ -57,14 +59,21 @@
         app:layout_constraintTop_toTopOf="@+id/guideline3"
         app:srcCompat="@drawable/ic_white_gradient" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_reject"
-        style="@style/GreyRoundedButton"
         android:layout_width="0dp"
-        android:layout_height="45dp"
+        android:layout_height="44dp"
         android:layout_marginEnd="7dp"
         android:layout_marginBottom="32dp"
         android:text="@string/reject"
+        android:textColor="@color/black"
+        android:textAllCaps="false"
+        android:backgroundTint="@color/grey"
+        android:fontFamily="@font/biennale_book"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
+        app:cornerRadius="24dp"
+        android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/guideline4"
         app:layout_constraintStart_toStartOf="@+id/tv_terms" />
@@ -79,12 +88,15 @@
     <com.emcash.customerapp.utils.OnboardingNextButton
         android:id="@+id/btn_accept"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="45dp"
         android:layout_marginStart="7dp"
+        android:layout_marginEnd="40dp"
         app:buttonText="I Accept"
         app:layout_constraintBottom_toBottomOf="@+id/btn_reject"
-        app:layout_constraintEnd_toEndOf="@+id/tv_terms"
-        app:layout_constraintStart_toStartOf="@+id/guideline4" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/guideline4"
+        app:layout_constraintTop_toTopOf="@+id/btn_reject" />
 
 
 

@@ -145,7 +145,6 @@
             android:layout_width="165dp"
             android:layout_height="72dp"
             android:elevation="16dp"
-
             android:scaleType="centerCrop"
             android:src="@drawable/intro_msg_1"
             app:layout_constraintEnd_toStartOf="@+id/guideline11"
@@ -153,11 +152,12 @@
 
         <ImageView
             android:id="@+id/iv_intro_msg_2"
-            android:layout_width="165dp"
+            android:layout_width="0dp"
             android:layout_height="72dp"
-            android:scaleType="centerCrop"
             android:elevation="8dp"
+            android:scaleType="centerCrop"
             android:src="@drawable/intro_msg_2"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/guideline12"
             app:layout_constraintTop_toTopOf="@+id/guideline10" />
 

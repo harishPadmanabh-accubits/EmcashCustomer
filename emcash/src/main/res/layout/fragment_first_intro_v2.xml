@@ -9,7 +9,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:elevation="12dp"
-        android:alpha=".8"
+        app:tint="#E9ECEF"
         android:scaleType="centerCrop"
         app:layout_constraintBottom_toTopOf="@+id/guide_art_gradient"
         app:layout_constraintEnd_toEndOf="parent"
@@ -32,7 +32,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.51" />
+        app:layout_constraintGuide_percent="0.53" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guide_art_gradient"
@@ -70,6 +70,7 @@
             android:layout_height="0dp"
             android:elevation="4dp"
             android:padding="12dp"
+            android:translationY="4dp"
             android:src="@drawable/arabian_man"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/guideline37"
@@ -123,6 +124,8 @@
             android:layout_height="0dp"
             android:layout_marginTop="24dp"
             android:elevation="16dp"
+            android:padding="1.2dp"
+            android:scaleType="fitEnd"
             android:src="@drawable/intro_msg_1"
             app:layout_constraintBottom_toTopOf="@+id/guideline40"
             app:layout_constraintEnd_toStartOf="@+id/guideline11"
