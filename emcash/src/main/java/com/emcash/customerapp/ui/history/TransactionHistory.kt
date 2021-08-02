@@ -4,7 +4,9 @@ import android.os.Bundle
 import androidx.fragment.app.FragmentActivity
 import com.emcash.customerapp.R
 import com.emcash.customerapp.extensions.obtainViewModel
+import com.emcash.customerapp.extensions.openActivity
 import com.emcash.customerapp.ui.history.adapters.TransactionsTabAdapter
+import com.emcash.customerapp.ui.home.HomeActivity
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.activity_transaction_history.*
 
@@ -39,5 +41,12 @@ class TransactionHistory : FragmentActivity() {
             }
         }.attach()
 
+    }
+
+    override fun onBackPressed() {
+        openActivity(HomeActivity::class.java)
+        openActivity(HomeActivity::class.java)
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+        finish()
     }
 }

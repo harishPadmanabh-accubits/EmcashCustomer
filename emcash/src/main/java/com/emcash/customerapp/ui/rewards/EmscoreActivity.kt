@@ -10,5 +10,13 @@ class EmscoreActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_emscore)
         pb_emscore.setPercentWithAnimation(50)
+        iv_back.setOnClickListener {
+            onBackPressed()
+        }
+
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
     }
 }

@@ -35,7 +35,7 @@ class TransactionDetailsAdapter(val transactionList: List<DummyTransactionDetals
             }else if(currentItem.type == TRANSACTED_OUTBOUND){
                 iv_inbound_icon.hide()
                 iv_outbound_icon.show()
-                tv_type_indicator.text = context.getString(R.string.payment_recieved)
+                tv_type_indicator.text = context.getString(R.string.paymen_made)
                 tv_time.text = currentItem.time
                 tv_value_changed.text = currentItem.valueLoaded.plus(" EmCash")
                 tv_balance.text = currentItem.Balance

@@ -15,7 +15,7 @@ class MyRewardsActivity : AppCompatActivity() {
         setContentView(R.layout.activity_my_rewards)
         setupRewardsList()
         iv_back.setOnClickListener {
-           openActivity(HomeActivity::class.java)
+           onBackPressed()
         }
         cv_more.setOnClickListener {
             openActivity(EmscoreActivity::class.java)
@@ -25,6 +25,12 @@ class MyRewardsActivity : AppCompatActivity() {
     private fun setupRewardsList() {
         rv_rewards.overScrollMode = RecyclerView.OVER_SCROLL_NEVER
         rv_rewards.adapter = RewardsCardAdapter()
+    }
+
+    override fun onBackPressed() {
+        openActivity(HomeActivity::class.java)
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+        finish()
     }
 
 }

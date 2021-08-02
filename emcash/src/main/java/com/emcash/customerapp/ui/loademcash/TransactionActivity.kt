@@ -36,6 +36,7 @@ class TransactionActivity : AppCompatActivity() {
         btn_continue.setOnClickListener {
             openActivity(WalletActivity::class.java)
             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+            finish()
         }
 
         iv_back.setOnClickListener {

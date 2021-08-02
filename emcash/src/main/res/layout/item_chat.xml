@@ -99,7 +99,7 @@
                     android:layout_marginTop="6dp"
                     android:alpha=".6"
                     android:fontFamily="@font/biennale_regular"
-                    android:text="09:00 Am"
+                    android:text="09:00 AM"
                     android:textColor="@color/black"
                     android:textSize="12sp"
                     app:layout_constraintStart_toStartOf="@id/tv_head"
@@ -187,6 +187,7 @@
                 android:layout_width="235dp"
                 android:layout_height="180dp"
                 android:layout_gravity="start"
+                android:visibility="gone"
                 android:layout_marginStart="16dp"
                 app:cardBackgroundColor="#F0F0F0"
                 app:cardCornerRadius="8dp">

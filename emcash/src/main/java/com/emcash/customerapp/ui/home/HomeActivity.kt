@@ -11,25 +11,26 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.transition.ChangeBounds
 import com.emcash.customerapp.R
 import com.emcash.customerapp.extensions.openActivity
+import com.emcash.customerapp.model.DummyContactsRawData
 import com.emcash.customerapp.model.DummyUserData
 import com.emcash.customerapp.model.users
 import com.emcash.customerapp.ui.history.TransactionHistory
 import com.emcash.customerapp.ui.home.adapter.RecentTransactionsAdapter
 import com.emcash.customerapp.ui.loademcash.LoadEmcashActivity
 import com.emcash.customerapp.ui.newPayment.NewPaymentActivity
+import com.emcash.customerapp.ui.newPayment.adapters.ContactsListener
 import com.emcash.customerapp.ui.qr.QrScannerActivity
 import com.emcash.customerapp.ui.rewards.MyRewardsActivity
 import com.emcash.customerapp.ui.settings.SettingsActivity
 import com.emcash.customerapp.ui.wallet.WalletActivity
-import com.emcash.customerapp.utils.LevelProfileImageView
-import com.emcash.customerapp.utils.RC_CAMERA_PERM
+import com.emcash.customerapp.utils.*
 import kotlinx.android.synthetic.main.activity_home.*
 import pub.devrel.easypermissions.AppSettingsDialog
 import pub.devrel.easypermissions.EasyPermissions
 import timber.log.Timber
 
 class HomeActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks,
-EasyPermissions.RationaleCallbacks{
+EasyPermissions.RationaleCallbacks,ContactsListener{
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,11 +47,12 @@ EasyPermissions.RationaleCallbacks{
         cv_balance.setOnClickListener {
             openActivity(WalletActivity::class.java)
             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+            finish()
         }
 
         rv_recent_transactions.apply {
             //layoutManager = GridLayoutManager(this@HomeActivity, 5)
-            adapter = RecentTransactionsAdapter(users)
+            adapter = RecentTransactionsAdapter(users,this@HomeActivity)
         }
 
         tv_load_emcash.setOnClickListener {
@@ -82,11 +84,15 @@ EasyPermissions.RationaleCallbacks{
     private fun openRewards() {
         openActivity(MyRewardsActivity::class.java)
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+        finish()
+
     }
 
     private fun openHistory() {
         openActivity(TransactionHistory::class.java)
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+        finish()
+
     }
 
     private fun openSettings() {
@@ -95,7 +101,9 @@ EasyPermissions.RationaleCallbacks{
     }
 
     private fun openLoadEmcash() {
-        openActivity(LoadEmcashActivity::class.java)
+        openActivity(LoadEmcashActivity::class.java){
+            this.putInt(LAUNCH_SOURCE, SCREEN_HOME)
+        }
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
     }
 
@@ -109,7 +117,7 @@ EasyPermissions.RationaleCallbacks{
     }
 
     override fun onBackPressed() {
-        finish()
+        finishAffinity()
     }
 
     private fun hasCameraPermission():Boolean {
@@ -170,7 +178,11 @@ EasyPermissions.RationaleCallbacks{
         }
     }
 
-
+    override fun onContactSelected(contact: DummyContactsRawData?, recentContact: DummyUserData?) {
+        openActivity(NewPaymentActivity::class.java){
+            this.putInt(LAUNCH_SOURCE, SCREEN_HOME_RECENT_CONTACTS)
+        }
+    }
 
 
 }

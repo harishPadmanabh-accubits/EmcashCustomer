@@ -16,6 +16,7 @@ import com.emcash.customerapp.ui.newPayment.NewPaymentScreens.*
 import com.emcash.customerapp.ui.qr.QrScannerActivity
 import com.emcash.customerapp.utils.LAUNCH_SOURCE
 import com.emcash.customerapp.utils.RC_CAMERA_PERM
+import com.emcash.customerapp.utils.SCREEN_HOME_RECENT_CONTACTS
 import com.emcash.customerapp.utils.SCREEN_TRANSFER
 import pub.devrel.easypermissions.AppSettingsDialog
 import pub.devrel.easypermissions.EasyPermissions
@@ -27,9 +28,16 @@ EasyPermissions.RationaleCallbacks{
 
     val viewModel:NewPaymentViewModel by viewModels()
 
+    val source by lazy {
+        intent.getIntExtra(LAUNCH_SOURCE, SCREEN_TRANSFER)
+    }
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_new_payment)
+        if(source == SCREEN_HOME_RECENT_CONTACTS)
+            viewModel.gotoScreen(CHAT)
         observe()
 
     }
@@ -100,9 +108,11 @@ EasyPermissions.RationaleCallbacks{
                 }
                 CONTACTS -> {
                     openActivity(HomeActivity::class.java)
+                    finish()
                 }
                 CHAT -> {
                     openActivity(HomeActivity::class.java)
+                    finish()
                 }
                 PIN -> {
                     viewModel.gotoScreen(TRANSFER)

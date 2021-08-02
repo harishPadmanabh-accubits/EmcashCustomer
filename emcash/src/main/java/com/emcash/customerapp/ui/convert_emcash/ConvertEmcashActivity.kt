@@ -1,5 +1,6 @@
 package com.emcash.customerapp.ui.convert_emcash
 
+import android.icu.lang.UScript
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.inputmethod.EditorInfo
@@ -12,25 +13,38 @@ import kotlinx.android.synthetic.main.activity_convert_emcash.*
 import kotlinx.android.synthetic.main.activity_convert_emcash.et_value
 
 class ConvertEmcashActivity : AppCompatActivity(),SuccessDialogListener {
+
+    private lateinit var dialog: SuccesDialog
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_convert_emcash)
+        dialog =SuccesDialog(this,this)
         et_value.requestFocus()
         et_iban.setOnEditorActionListener { textView, action, keyEvent ->
             if (action == EditorInfo.IME_ACTION_DONE) {
-                SuccesDialog(this,this).show(supportFragmentManager,"Success")
+              dialog.show(supportFragmentManager,"Success")
                 return@setOnEditorActionListener  true
             }
             return@setOnEditorActionListener  true
         }
     fab_done.setOnClickListener {
-        SuccesDialog(this,this).show(supportFragmentManager,"Success")
+        dialog.show(supportFragmentManager,"Success")
     }
+
+        iv_back.setOnClickListener {
+            onBackPressed()
+        }
+
+    }
+
+    override fun onBackPressed() {
+        openActivity(WalletActivity::class.java)
     }
 
     override fun onNavigate() {
-        openActivity(WalletActivity::class.java)
-        overridePendingTransition(android.R.anim.fade_out,android.R.anim.fade_in)
+      onBackPressed()
+        finish()
     }
 
 }

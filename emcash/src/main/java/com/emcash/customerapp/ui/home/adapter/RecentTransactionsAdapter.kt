@@ -6,10 +6,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.emcash.customerapp.R
 import com.emcash.customerapp.model.DummyUserData
+import com.emcash.customerapp.ui.newPayment.adapters.ContactsListener
 import kotlinx.android.synthetic.main.item_recent_payment.view.*
 import java.lang.IllegalStateException
 
-class RecentTransactionsAdapter(val users : List<DummyUserData>) : RecyclerView.Adapter<RecyclerView.ViewHolder>(){
+class RecentTransactionsAdapter(val users : List<DummyUserData>,val listener:ContactsListener) : RecyclerView.Adapter<RecyclerView.ViewHolder>(){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when(viewType){
@@ -40,7 +41,7 @@ class RecentTransactionsAdapter(val users : List<DummyUserData>) : RecyclerView.
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder){
             is RecentTransactionsViewHolder->{
-                holder.bind(users[position])
+                holder.bind(users[position],listener)
             }
             is ViewAllViewHolder->{
                 holder.bind()
@@ -49,7 +50,7 @@ class RecentTransactionsAdapter(val users : List<DummyUserData>) : RecyclerView.
     }
 
     class RecentTransactionsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
-        fun bind(user:DummyUserData){
+        fun bind(user: DummyUserData, listener: ContactsListener){
 
             itemView.level_image.setProfileName(user.name)
             itemView.level_image.setLevel(user.level)
@@ -57,6 +58,9 @@ class RecentTransactionsAdapter(val users : List<DummyUserData>) : RecyclerView.
                 itemView.level_image.setProfileImage(user.image)
             }else{
                 itemView.level_image.setFirstLetter(user.name)
+            }
+            itemView.setOnClickListener {
+                listener.onContactSelected(null,null)
             }
         }
 
