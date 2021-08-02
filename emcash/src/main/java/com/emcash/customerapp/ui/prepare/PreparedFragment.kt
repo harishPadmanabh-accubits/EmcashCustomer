@@ -43,7 +43,7 @@ class PreparedFragment : Fragment() {
             )
             startActivity(Intent(requireActivity(), HomeActivity::class.java), options.toBundle())
             // requireActivity().overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
-            requireActivity().finish()
+        //    requireActivity().finish()
 
         }
 
