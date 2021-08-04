@@ -17,6 +17,8 @@ const val SCREEN_TRANSFER=200
 const val SCREEN_HOME_RECENT_CONTACTS = 201
 const val SCREEN_HOME =202
 const val SCREEN_WALLET=203
+const val INTRO_SCREEN =204
+const val SCREEN_SETTINGS=205
 
 
 /*

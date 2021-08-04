@@ -7,6 +7,8 @@ import com.emcash.customerapp.R
 import com.emcash.customerapp.extensions.openActivity
 import com.emcash.customerapp.ui.terms.TermsAndConditionsActivity
 import com.emcash.customerapp.ui.wallet.WalletActivity
+import com.emcash.customerapp.utils.LAUNCH_SOURCE
+import com.emcash.customerapp.utils.SCREEN_SETTINGS
 
 class SettingsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,7 +27,9 @@ class SettingsActivity : AppCompatActivity() {
 
             }
             R.id.ll_terms->{
-                openActivity(TermsAndConditionsActivity::class.java)
+                openActivity(TermsAndConditionsActivity::class.java){
+                    this.putInt(LAUNCH_SOURCE, SCREEN_SETTINGS)
+                }
                 overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
 
             }
