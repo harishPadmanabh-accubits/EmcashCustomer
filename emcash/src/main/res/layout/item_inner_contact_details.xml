@@ -44,6 +44,7 @@
         android:text="Abd al-Rahman"
         android:textColor="@color/black"
         android:textSize="14sp"
+        android:textFontWeight="400"
         android:layout_marginStart="16dp"
         app:layout_constraintStart_toEndOf="@+id/fl_user_level"
         app:layout_constraintTop_toTopOf="@+id/fl_user_level" />
@@ -56,9 +57,19 @@
         android:alpha=".6"
         android:fontFamily="@font/roboto"
         android:text="+62 898 787 78"
+        android:letterSpacing=".05"
         android:textColor="@color/black"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="@+id/fl_user_level"
         app:layout_constraintStart_toStartOf="@+id/tv_name"
         app:layout_constraintTop_toBottomOf="@+id/tv_name" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_is_member"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tv_name"
+        app:srcCompat="@drawable/ic_double_tick_blue" />
 </androidx.constraintlayout.widget.ConstraintLayout>

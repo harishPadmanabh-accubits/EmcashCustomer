@@ -70,6 +70,18 @@
             app:layout_constraintEnd_toEndOf="@+id/btn_got_it"
             app:layout_constraintStart_toStartOf="@+id/btn_got_it" />
 
+        <CheckBox
+            android:id="@+id/check_dont_show"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical|end"
+            android:translationX="10dp"
+            app:buttonTint="@color/app_blue"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_dont_show"
+            app:layout_constraintEnd_toStartOf="@+id/tv_dont_show"
+            app:layout_constraintTop_toTopOf="@+id/tv_dont_show" />
+
+
         <TextView
             android:id="@+id/tv_description"
             android:layout_width="0dp"

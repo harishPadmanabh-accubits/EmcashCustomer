@@ -9,12 +9,10 @@
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/fab_new_payment"
-        android:layout_width="200dp"
-        android:layout_height="44dp"
-        android:layout_marginBottom="24dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:fontFamily="@font/biennale_medium"
-       android:gravity="center"
-        app:iconGravity="textStart"
+        android:gravity="center"
         android:text="@string/new_payment"
         android:textAlignment="center"
         android:textAllCaps="false"
@@ -22,10 +20,12 @@
         android:textSize="14sp"
         app:backgroundTint="@color/black"
         app:icon="@drawable/ic_baseline_add_24"
+        app:iconGravity="textStart"
         app:iconTint="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="40:9"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline7" />
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/iv_menu_handle"
@@ -287,6 +287,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="30dp"
                 android:layout_marginTop="24dp"
+                android:visibility="gone"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/rv_recent_transactions"
                 app:srcCompat="@drawable/ic_rewards" />
@@ -298,6 +299,7 @@
                 android:layout_marginStart="12dp"
                 android:fontFamily="@font/roboto_medium"
                 android:text="@string/my_rewards"
+                android:visibility="gone"
                 android:textColor="@color/black"
                 android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="@+id/iv_rewards_icon"
@@ -310,7 +312,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="30dp"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="44dp"
                 android:layout_marginBottom="150dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
