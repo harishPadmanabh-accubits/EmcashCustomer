@@ -193,7 +193,7 @@
             android:fontFamily="@font/biennale_medium"
             android:text="@string/terms_and_conditions"
             android:textColor="@color/black"
-            android:textSize="14dp" />
+            android:textSize="14sp" />
     </LinearLayout>
 
     <LinearLayout

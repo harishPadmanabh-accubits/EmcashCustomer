@@ -1,5 +1,9 @@
 package com.emcash.customerapp.utils
 
+import android.os.Build
+import androidx.annotation.RequiresApi
+import androidx.security.crypto.MasterKeys
+
 const val RC_CAMERA_PERM = 123
 const val RC_LOCATION_PERM = 124
 const val RC_SMS_PERM = 125
@@ -26,3 +30,6 @@ const val SCREEN_SETTINGS=205
  */
 const val ITEM_RECENT_CONTACTS = 1000
 const val ITEM_ALL_CONTACTS = 1001
+
+
+const val BASE_URL:String = "https://emcash-api-dev.devtomaster.com/"

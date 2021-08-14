@@ -9,11 +9,13 @@ android {
 
     defaultConfig {
         applicationId "com.emcash.emcashcustomer"
-        minSdkVersion 21
+        minSdkVersion 23
         targetSdkVersion 30
-        versionCode 5
-        versionName "1.0.4 AEC"
+        versionCode 6
+        versionName "1.0.5 AEC"
         multiDexEnabled true
+        setProperty("archivesBaseName", "Emcash-Customer-"  + versionCode + "(" + versionName + ")")
+
 
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
