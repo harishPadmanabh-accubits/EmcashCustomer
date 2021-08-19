@@ -36,6 +36,7 @@ class IntroActivity : AppCompatActivity() {
                     2 -> openThirdIntroFragment()
                     3 -> openFourthIntroFragment()
                     4 -> {
+                        syncManager.shouldShowOnboardingScreens = false
                         openActivity(TermsAndConditionsActivity::class.java)
                         finish()
                     }

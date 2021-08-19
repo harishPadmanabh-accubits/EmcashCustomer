@@ -17,9 +17,11 @@ import androidx.fragment.app.commit
 import androidx.fragment.app.replace
 import androidx.lifecycle.Observer
 import com.emcash.customerapp.R
+import com.emcash.customerapp.data.network.ApiCallStatus
 import com.emcash.customerapp.extensions.hide
 import com.emcash.customerapp.extensions.obtainViewModel
 import com.emcash.customerapp.extensions.show
+import com.emcash.customerapp.model.profile.ProfileDetailsResponse
 import kotlinx.android.synthetic.main.activity_prepare_em_cash.*
 import kotlinx.android.synthetic.main.bottom_sheet_how_it_works.*
 import timber.log.Timber
@@ -52,8 +54,12 @@ class PrepareEmCashActivity : AppCompatActivity(),BottomSheetListener {
                     false -> closeBottomSheet()
                 }
             })
+
+
         }
     }
+
+
 
     fun openAnalyseFragment() {
         supportFragmentManager.commit {

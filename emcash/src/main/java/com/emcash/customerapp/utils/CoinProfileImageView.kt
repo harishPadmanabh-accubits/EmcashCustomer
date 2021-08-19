@@ -2,8 +2,10 @@ package com.emcash.customerapp.utils
 
 import android.content.Context
 import android.util.AttributeSet
+import android.widget.ImageView
 import android.widget.RelativeLayout
 import androidx.constraintlayout.widget.ConstraintLayout
+import com.bumptech.glide.Glide
 import com.emcash.customerapp.R
 import com.emcash.customerapp.extensions.loadImageWithResId
 import com.emcash.customerapp.extensions.loadImageWithUrl
@@ -42,7 +44,8 @@ class CoinProfileImageView(context: Context, attrs: AttributeSet) :
     }
 
     fun setImage(url: String) {
-        //iv_dp.loadImageWithUrl(url)
+        val dpView = findViewById<ImageView>(R.id.iv_profile_image)
+        Glide.with(dpView.context).load(url).placeholder(R.drawable.ic_profile_placeholder).into(dpView)
     }
 
     fun setImage(resID: Int) {

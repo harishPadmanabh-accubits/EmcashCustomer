@@ -35,6 +35,7 @@ class PreparedFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        iv_dp.setImage(viewModel.dpUrl)
         tv_lets_start.setOnClickListener {
             val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
                 requireActivity(),

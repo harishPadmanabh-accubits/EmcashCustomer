@@ -19,6 +19,8 @@ data class SwitchAccountResponse(
         @SerializedName("phoneNumber")
         val phoneNumber: String,
         @SerializedName("sessionId")
-        val sessionId: String
+        val sessionId: String,
+        @SerializedName("isExistingUser")
+        val isExistingUser:Boolean
     )
 }

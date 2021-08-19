@@ -112,10 +112,6 @@
         android:lineSpacingMultiplier="0"
         android:lineSpacingExtra="22sp"
         android:fontFamily="@font/roboto"
-        android:text="EmCash allows you to transact using a bank-issued virtual account number representing a credit or debit card you register with EmCash , a transit agency pass you register with EmCash, and a digital wallet or account that you have with a company other than EmPay and link to EmCash in order to enable additional payment functionality . Virtual Account Numbers, Transit Passes, and Linked Third-Party Accounts  may be used: (i) at participating merchant or transit locations, using an eligible NFC mobile device (which may include an eligible Android Wear device) and either the EmCash application
-\n\nPayment cards saved to your separate  Payments account are distinct from any Virtual Account Numbers you registered with EmCash Payment cards saved to your separate Google Payments account are distinct from any Virtual Account Numbers you registered with EmCash
-\n\nPayment cards saved to your separate  Payments account are distinct from any Virtual Account Numbers you registered with EmCash Payment cards saved to your separate Google Payments account are distinct from any Virtual Account Numbers you registered with EmCash
-\n\nPayment cards saved to your separate  Payments account are distinct from any Virtual Account Numbers you registered with EmCash Payment cards saved to your separate Google Payments account are distinct from any Virtual Account Numbers you registered with EmCash\n\n\n\n\n\n\n"
         android:scrollbarSize="0dp"
         app:layout_constraintBottom_toTopOf="@+id/btn_reject"
         app:layout_constraintEnd_toEndOf="parent"
