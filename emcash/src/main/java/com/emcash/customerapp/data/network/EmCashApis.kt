@@ -6,6 +6,7 @@ import com.emcash.customerapp.model.auth.userExists.UserExistCheckRequest
 import com.emcash.customerapp.model.auth.userExists.UserExistCheckResponse
 import com.emcash.customerapp.model.profile.ProfileDetailsResponse
 import com.emcash.customerapp.model.tnc.TncResponse
+import com.emcash.customerapp.model.transactions.RecentTransactionResponse
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -24,5 +25,8 @@ interface EmCashApis {
 
     @GET("v1/customers/termsandconditions")
     fun getTnc():Call<TncResponse>
+
+    @GET("v1/customers/transactions/recent?page=1&limit=9")
+    fun getRecentTransactions():Call<RecentTransactionResponse>
 
 }

@@ -4,16 +4,16 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.transition.Transition
-import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.transition.ChangeBounds
+import androidx.lifecycle.Observer
 import com.emcash.customerapp.R
+import com.emcash.customerapp.data.network.ApiCallStatus
 import com.emcash.customerapp.extensions.*
 import com.emcash.customerapp.model.DummyContactsRawData
 import com.emcash.customerapp.model.DummyUserData
 import com.emcash.customerapp.model.profile.ProfileDetailsResponse
+import com.emcash.customerapp.model.transactions.RecentTransactionResponse
 import com.emcash.customerapp.model.users
 import com.emcash.customerapp.ui.history.TransactionHistory
 import com.emcash.customerapp.ui.home.adapter.RecentTransactionsAdapter
@@ -31,46 +31,105 @@ import pub.devrel.easypermissions.EasyPermissions
 import timber.log.Timber
 
 class HomeActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks,
-EasyPermissions.RationaleCallbacks,ContactsListener{
+    EasyPermissions.RationaleCallbacks, ContactsListener {
 
-    val profileDataCache by lazy {
+    private val profileDataCache by lazy {
         intent.getStringExtra(KEY_PROFILE_DATA_CACHE)
     }
+
+    private val loader by lazy {
+        LoaderDialog(this)
+    }
+
+    private val viewModel: HomeViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
         window.sharedElementEnterTransition.duration = 500
         validateCache(profileDataCache)
+        getRecentTransactions()
         setupViews()
     }
 
+    private fun getRecentTransactions() {
+        viewModel.recentTransactions.observe(this, Observer {
+            when(it.status){
+                ApiCallStatus.SUCCESS->{
+                    renderRecentTransactions(it.data)
+                }
+            }
+        })
+
+    }
+
+    private fun renderRecentTransactions(data: RecentTransactionResponse.Data?) {
+        data?.let {
+            if(it.transactionList.isNotEmpty()){
+
+            }
+        }
+    }
+
     private fun validateCache(profileDataCache: String?) {
-        if(!profileDataCache.isNullOrEmpty()){
+        if (!profileDataCache.isNullOrEmpty()) {    //from intent
             val profileDetails = profileDataCache.fromJson(ProfileDetailsResponse.Data::class.java)
             renderProfileDetails(profileDetails)
-        }else{
-
+        } else {                //get from cache - if null - get from server
+            val profileCache = viewModel.syncManager.profileDetails
+            if (profileCache != null)
+                renderProfileDetails(profileCache)
+            else
+                getProfileDetailsFromServer()
         }
 
+    }
+
+    private fun getProfileDetailsFromServer() {
+        viewModel.profileDetails.observe(this, Observer {
+            when (it.status) {
+                ApiCallStatus.SUCCESS -> {
+                    Timber.e("Observer Success")
+                    val profileData = it.data
+                    if (profileData != null)
+                        renderProfileDetails(profileData)
+                }
+                ApiCallStatus.ERROR ->{
+                    showShortToast(it.errorMessage)
+                }
+                ApiCallStatus.LOADING->{
+                    loader.show()
+                }
+            }
+        })
     }
 
     private fun renderProfileDetails(profileDetails: ProfileDetailsResponse.Data) {
         tv_score_count.text = profileDetails.customer.score.toString()
         tv_level.text = profileDetails.customer.rewardLevel.toRewardLevelString(this)
-        iv_user_image.loadImageWithPlaceHolder(profileDetails.profileImage,R.drawable.ic_profile_placeholder)
+        iv_user_image.loadImageWithPlaceHolder(
+            profileDetails.profileImage,
+            R.drawable.ic_profile_placeholder
+        )
         coinProfileImageView.setImage(profileDetails.profileImage)
         tv_tv_balance.text = profileDetails.wallet.amount.toString()
         setLevelShower(profileDetails.customer.rewardLevel)
 
+        hideLoader()
+
 
     }
 
+    private fun hideLoader() {
+        if(loader.isShowing)
+            loader.dismiss()
+    }
+
     private fun setLevelShower(rewardLevel: Int) {
-        when(rewardLevel){
-            1-> iv_level_shower.loadImageWithResId(R.drawable.ic_level_green)
-            2-> iv_level_shower.loadImageWithResId(R.drawable.ic_level_yellow)
-            3-> iv_level_shower.loadImageWithResId(R.drawable.ic_level_red)
+        when (rewardLevel) {
+            1 -> iv_level_shower.loadImageWithResId(R.drawable.ic_level_green)
+            2 -> iv_level_shower.loadImageWithResId(R.drawable.ic_level_yellow)
+            3 -> iv_level_shower.loadImageWithResId(R.drawable.ic_level_red)
         }
     }
 
@@ -83,7 +142,7 @@ EasyPermissions.RationaleCallbacks,ContactsListener{
 
         rv_recent_transactions.apply {
             //layoutManager = GridLayoutManager(this@HomeActivity, 5)
-            adapter = RecentTransactionsAdapter(users,this@HomeActivity)
+            adapter = RecentTransactionsAdapter(users, this@HomeActivity)
         }
 
         tv_load_emcash.setOnClickListener {
@@ -103,7 +162,7 @@ EasyPermissions.RationaleCallbacks,ContactsListener{
         }
 
         iv_qr_scanner.setOnClickListener {
-          //  openQRScanner()
+            //  openQRScanner()
         }
 
         fab_new_payment.setOnClickListener {
@@ -132,13 +191,13 @@ EasyPermissions.RationaleCallbacks,ContactsListener{
     }
 
     private fun openLoadEmcash() {
-        openActivity(LoadEmcashActivity::class.java){
+        openActivity(LoadEmcashActivity::class.java) {
             this.putInt(LAUNCH_SOURCE, SCREEN_HOME)
         }
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
     }
 
-    private fun openNewPayment(){
+    private fun openNewPayment() {
         openActivity(NewPaymentActivity::class.java)
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
     }
@@ -151,66 +210,66 @@ EasyPermissions.RationaleCallbacks,ContactsListener{
         finishAffinity()
     }
 
-    private fun hasCameraPermission():Boolean {
+    private fun hasCameraPermission(): Boolean {
         return EasyPermissions.hasPermissions(this, Manifest.permission.CAMERA)
     }
 
-    private fun hasContactPermission():Boolean {
+    private fun hasContactPermission(): Boolean {
         return EasyPermissions.hasPermissions(this, Manifest.permission.READ_CONTACTS)
     }
 
     fun openQRScanner() {
-        if (hasCameraPermission())
-        {
+        if (hasCameraPermission()) {
             openActivity(QrScannerActivity::class.java)
-        }
-        else
-        {
+        } else {
             EasyPermissions.requestPermissions(
                 this,
                 getString(R.string.rationale_camera),
                 RC_CAMERA_PERM,
-                Manifest.permission.CAMERA)
+                Manifest.permission.CAMERA
+            )
         }
     }
 
-    override fun onRequestPermissionsResult(requestCode:Int,
-                                            permissions:Array<String>,
-                                            grantResults:IntArray) {
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
+    ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         // EasyPermissions handles the request result.
         EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this)
     }
 
-    override fun onRationaleAccepted(requestCode:Int) {
+    override fun onRationaleAccepted(requestCode: Int) {
         Timber.e("onRationaleAccepted:%s", requestCode)
 
     }
-    override fun onRationaleDenied(requestCode:Int) {
+
+    override fun onRationaleDenied(requestCode: Int) {
         Timber.e("onRationaleDenied:%s", requestCode)
     }
+
     override fun onPermissionsDenied(requestCode: Int, perms: MutableList<String>) {
-        if (EasyPermissions.somePermissionPermanentlyDenied(this, perms))
-        {
+        if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
             AppSettingsDialog.Builder(this).build().show()
         }
     }
 
     override fun onPermissionsGranted(requestCode: Int, perms: MutableList<String>) {
-       // Log.d(TAG, "onPermissionsGranted:" + requestCode + ":" + perms.size)
+        // Log.d(TAG, "onPermissionsGranted:" + requestCode + ":" + perms.size)
     }
 
     @SuppressLint("StringFormatMatches")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == AppSettingsDialog.DEFAULT_SETTINGS_REQ_CODE)
-        {
-          Timber.e("Camera Permission ${hasCameraPermission()}")
+        if (requestCode == AppSettingsDialog.DEFAULT_SETTINGS_REQ_CODE) {
+            Timber.e("Camera Permission ${hasCameraPermission()}")
         }
     }
 
     override fun onContactSelected(contact: DummyContactsRawData?, recentContact: DummyUserData?) {
-        openActivity(NewPaymentActivity::class.java){
+        openActivity(NewPaymentActivity::class.java) {
             this.putInt(LAUNCH_SOURCE, SCREEN_HOME_RECENT_CONTACTS)
         }
     }
@@ -218,8 +277,8 @@ EasyPermissions.RationaleCallbacks,ContactsListener{
 
 }
 
-enum class RewardLevels{
-    LOW,MEDIUM,HIGH
+enum class RewardLevels {
+    LOW, MEDIUM, HIGH
 }
 
 //https://blog.mindorks.com/implementing-easy-permissions-in-android-android-tutorial

@@ -8,6 +8,7 @@ import com.emcash.customerapp.extensions.FromJson
 import com.emcash.customerapp.extensions.fromJson
 import com.emcash.customerapp.extensions.toJson
 import com.emcash.customerapp.model.auth.switchAccount.SwitchAccountResponse
+import com.emcash.customerapp.model.profile.ProfileDetailsResponse
 import com.emcash.customerapp.ui.terms.TncStatus
 import com.emcash.customerapp.utils.*
 import java.lang.Exception
@@ -71,6 +72,18 @@ class SyncManager(val context: Context) {
         TncStatus.NOT_SHOWN
     }
     set(value) = editor.putString(KEY_TERMS_ACCEPTED,value.toString()).apply()
+
+    var profileDetails:ProfileDetailsResponse.Data?
+    get() = try {
+        val profileData=sharedPreferences.getString(KEY_PROFILE_DATA_CACHE,"")
+        if(profileData!=null && profileData.isNotEmpty())
+            profileData.fromJson(ProfileDetailsResponse.Data::class.java)
+        else
+            null
+    }catch (e:Exception){
+        null
+    }
+    set(value) = editor.putString(KEY_PROFILE_DATA_CACHE,value.toString()).apply()
 
 
 

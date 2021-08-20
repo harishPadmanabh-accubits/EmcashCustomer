@@ -5,6 +5,7 @@
     android:id="@+id/cl_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
     tools:context=".ui.home.HomeActivity">
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
@@ -253,32 +254,49 @@
 
             </com.google.android.material.card.MaterialCardView>
 
-            <TextView
-                android:id="@+id/tv_info_recent_transactions"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:fontFamily="@font/roboto_medium"
-                android:text="@string/recent_transactions"
-                android:textColor="@color/black"
-                android:textSize="14sp"
-                app:layout_constraintStart_toStartOf="@+id/cv_balance"
-                app:layout_constraintTop_toBottomOf="@+id/cv_balance" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_recent_transactions"
+            <FrameLayout
+                android:id="@+id/frame_recent_transactions"
                 android:layout_width="0dp"
+                android:layout_marginTop="24dp"
+                android:visibility="gone"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="12dp"
-                android:layout_marginEnd="12dp"
-                android:overScrollMode="never"
-                app:spanCount="5"
-                android:nestedScrollingEnabled="false"
-                tools:listitem="@layout/item_recent_payment"
-                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/tv_info_recent_transactions"
-                app:layout_constraintTop_toBottomOf="@+id/tv_info_recent_transactions" />
+                app:layout_constraintStart_toStartOf="@+id/cv_balance"
+                app:layout_constraintTop_toBottomOf="@+id/cv_balance">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/tv_info_recent_transactions"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto_medium"
+                        android:text="@string/recent_transactions"
+                        android:textColor="@color/black"
+                        android:textSize="14sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_recent_transactions"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="12dp"
+                        android:layout_marginBottom="12dp"
+                        android:nestedScrollingEnabled="false"
+                        android:overScrollMode="never"
+                        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="@+id/tv_info_recent_transactions"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_info_recent_transactions"
+                        app:spanCount="5"
+                        tools:listitem="@layout/item_recent_payment" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </FrameLayout>
+
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/iv_rewards_icon"
@@ -288,7 +306,7 @@
                 android:layout_marginTop="24dp"
                 android:visibility="gone"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/rv_recent_transactions"
+                app:layout_constraintTop_toBottomOf="@+id/frame_recent_transactions"
                 app:srcCompat="@drawable/ic_rewards" />
 
             <TextView

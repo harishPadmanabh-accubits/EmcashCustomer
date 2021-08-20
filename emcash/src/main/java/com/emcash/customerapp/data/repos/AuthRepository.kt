@@ -57,6 +57,7 @@ class AuthRepository(val context: Context) {
         api.getProfileDetails().awaitResponse(onSuccess = {response->
             val profileDetails = response?.data
             profileDetails?.let{
+                syncManager.profileDetails = it
                 _profileData.value = ApiMapper(ApiCallStatus.SUCCESS,profileDetails,null)
             }
         },onFailure = {error->

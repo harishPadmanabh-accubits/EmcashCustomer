@@ -53,7 +53,7 @@ class EmCashHelper(val appContext: Context,val listener:EmCashListener) {
             appContext.startActivity(intent)
         } else {
             if (syncManager.tncStatus == TncStatus.ACCEPTED) {
-                val intent = Intent(appContext, PrepareEmCashActivity::class.java).also {
+                val intent = Intent(appContext, HomeActivity::class.java).also {
                     it.setFlags(FLAG_ACTIVITY_NEW_TASK)
                 }
                 appContext.startActivity(intent)
