@@ -128,9 +128,8 @@
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/iv_level_shower"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/sample_level_round"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
                 app:layout_constraintBottom_toBottomOf="@+id/tv_level"
                 app:layout_constraintEnd_toEndOf="@+id/iv_user_image"
                 app:layout_constraintTop_toTopOf="@+id/tv_level" />
@@ -158,7 +157,7 @@
                 android:textColor="@color/black"
                 android:textFontWeight="700"
                 android:textSize="14sp"
-                app:layout_constraintStart_toStartOf="@+id/tv_level"
+                app:layout_constraintEnd_toEndOf="@+id/iv_level_shower"
                 app:layout_constraintTop_toBottomOf="@+id/tv_level" />
 
 

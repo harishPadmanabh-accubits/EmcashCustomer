@@ -65,4 +65,7 @@ Payment cards saved to your separate  Payments account are distinct from any Vir
     <string name="how_does_it_work">How does it work?</string>
     <string name="send_token_rewards"><![CDATA[Send your Token & earn Rewards]]></string>
     <string name="paymen_made">Payment Made</string>
+    <string name="reward_high">High</string>
+    <string name="reward_medium">Medium</string>
+    <string name="reward_low">Low</string>
 </resources>

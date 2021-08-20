@@ -43,7 +43,7 @@ class CoinProfileImageView(context: Context, attrs: AttributeSet) :
         //inflate(context, R.layout.custom_view_coin_profile_image, this)
     }
 
-    fun setImage(url: String) {
+    fun setImage(url: String?) {
         val dpView = findViewById<ImageView>(R.id.iv_profile_image)
         Glide.with(dpView.context).load(url).placeholder(R.drawable.ic_profile_placeholder).into(dpView)
     }

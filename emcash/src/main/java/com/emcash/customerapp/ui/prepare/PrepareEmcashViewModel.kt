@@ -22,6 +22,7 @@ class PrepareEmcashViewModel(val app : Application):AndroidViewModel(app) {
     var dpUrl=""
 
     val profileData:LiveData<ApiMapper<ProfileDetailsResponse.Data>> get()=authRepository.getProfileDetails()
+    var profileDetails:ProfileDetailsResponse.Data?=null
 
 
 }

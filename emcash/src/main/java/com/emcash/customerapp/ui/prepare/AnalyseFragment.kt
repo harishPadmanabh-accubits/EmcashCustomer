@@ -12,6 +12,7 @@ import androidx.fragment.app.replace
 import androidx.lifecycle.Observer
 import com.emcash.customerapp.R
 import com.emcash.customerapp.data.network.ApiCallStatus
+import com.emcash.customerapp.extensions.showShortToast
 import com.emcash.customerapp.model.profile.ProfileDetailsResponse
 import kotlinx.android.synthetic.main.frame_analyse_score.*
 
@@ -33,7 +34,11 @@ class AnalyseFragment : Fragment(R.layout.frame_analyse_score) {
             profileData.observe(viewLifecycleOwner, Observer {
                 when (it.status) {
                     ApiCallStatus.SUCCESS -> {
+                        viewModel.profileDetails=it.data
                         renderUserDetails(it.data)
+                    }
+                    ApiCallStatus.ERROR->{
+                        requireActivity().showShortToast(it.errorMessage)
                     }
                 }
             })

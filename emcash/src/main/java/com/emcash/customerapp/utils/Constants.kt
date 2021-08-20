@@ -18,6 +18,7 @@ const val KEY_SWITCH_ACCOUNT = "switch_account"
 const val KEY_USER_EXIST = "user_exist"
 const val KEY_SHOW_ONBOARDING = "show_onboarding"
 const val KEY_TERMS_ACCEPTED = "tnc_status"
+const val KEY_PROFILE_DATA_CACHE =  "profile_data"
 
 /**
  * Screen Keys

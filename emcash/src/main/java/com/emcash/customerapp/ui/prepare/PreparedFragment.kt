@@ -11,7 +11,9 @@ import androidx.fragment.app.activityViewModels
 import androidx.transition.ChangeBounds
 import com.emcash.customerapp.R
 import com.emcash.customerapp.extensions.obtainViewModel
+import com.emcash.customerapp.extensions.toJson
 import com.emcash.customerapp.ui.home.HomeActivity
+import com.emcash.customerapp.utils.KEY_PROFILE_DATA_CACHE
 import kotlinx.android.synthetic.main.frame_emcash_prepared.*
 
 
@@ -37,14 +39,20 @@ class PreparedFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         iv_dp.setImage(viewModel.dpUrl)
         tv_lets_start.setOnClickListener {
+            val profileData = viewModel.profileDetails?.let {
+                it.toJson()
+            }
+
             val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
                 requireActivity(),
                 (iv_dp as View),
                 "coin_image"
             )
-            startActivity(Intent(requireActivity(), HomeActivity::class.java), options.toBundle())
+            startActivity(Intent(requireActivity(), HomeActivity::class.java).also {
+                it.putExtra(KEY_PROFILE_DATA_CACHE, profileData)
+            }, options.toBundle())
             // requireActivity().overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
-        //    requireActivity().finish()
+            //    requireActivity().finish()
 
         }
 

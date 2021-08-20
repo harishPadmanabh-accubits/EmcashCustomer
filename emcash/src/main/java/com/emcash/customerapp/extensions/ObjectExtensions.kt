@@ -25,6 +25,7 @@ import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import com.emcash.customerapp.BuildConfig
+import com.emcash.customerapp.R
 import com.emcash.customerapp.data.network.exceptions.NoInternetException
 import com.google.gson.Gson
 import retrofit2.Call
@@ -397,18 +398,17 @@ fun ImageView.loadImageWithError(imageUrl: String?, errorResId: Int) = try {
 
 
 //load imageView with image url  and @NON-NULL placeholder
-fun ImageView.loadImageWithPlaceHolder(imageUrl: String?, placeHolderResId: Int) = try {
-
-    imageUrl?.let { imageUrl ->
-        Glide.with(context)
-            .load(imageUrl)
-            .placeholder(placeHolderResId)
-            .into(this)
-    }
-
-} catch (e: Exception) {
-    e.printStackTrace()
-}
+//fun ImageView.loadImageWithPlaceHolder(imageUrl: String?, placeHolderResId: Int) = try {
+//    imageUrl?.let { imageUrl ->
+//        Glide.with(context)
+//            .load(imageUrl)
+//            .placeholder(placeHolderResId)
+//            .into(this)
+//    }
+//
+//} catch (e: Exception) {
+//    e.printStackTrace()
+//}
 
 //hide view
 fun View.hide() {
@@ -456,6 +456,24 @@ fun <T : Any> Call<T>.awaitResponse(
     })
 }
 
+fun Int.toRewardLevelString(context: Context):String{
+   return when(this){
+       1->context.getString(R.string.reward_high)
+       2->context.getString(R.string.reward_medium)
+       3->context.getString(R.string.reward_low)
+       else -> throw IllegalArgumentException("Invalid level constant received at toRewardLevelString()")
+   }
+
+}
+
+fun ImageView.loadImageWithPlaceHolder(
+    url:String?,placeHolderResId:Int
+){
+    Glide.with(this.context)
+        .load(url)
+        .placeholder(placeHolderResId)
+        .into(this)
+}
 
 
 

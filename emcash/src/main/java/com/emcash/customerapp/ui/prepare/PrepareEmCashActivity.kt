@@ -107,7 +107,8 @@ class PrepareEmCashActivity : AppCompatActivity(),BottomSheetListener {
                 }
 
                 )
-                ObjectAnimator.ofFloat(iv_curve, "translationX", screenWidth.toFloat() / 3).apply {
+                val dest = (screenWidth.toFloat()/2.4).toFloat()
+                ObjectAnimator.ofFloat(iv_curve, "translationX",dest).apply {
                     duration = 800
                     start()
                 }.addListener(onEnd = {

@@ -10,9 +10,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.transition.ChangeBounds
 import com.emcash.customerapp.R
-import com.emcash.customerapp.extensions.openActivity
+import com.emcash.customerapp.extensions.*
 import com.emcash.customerapp.model.DummyContactsRawData
 import com.emcash.customerapp.model.DummyUserData
+import com.emcash.customerapp.model.profile.ProfileDetailsResponse
 import com.emcash.customerapp.model.users
 import com.emcash.customerapp.ui.history.TransactionHistory
 import com.emcash.customerapp.ui.home.adapter.RecentTransactionsAdapter
@@ -32,15 +33,45 @@ import timber.log.Timber
 class HomeActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks,
 EasyPermissions.RationaleCallbacks,ContactsListener{
 
+    val profileDataCache by lazy {
+        intent.getStringExtra(KEY_PROFILE_DATA_CACHE)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
         window.sharedElementEnterTransition.duration = 500
+        validateCache(profileDataCache)
         setupViews()
+    }
+
+    private fun validateCache(profileDataCache: String?) {
+        if(!profileDataCache.isNullOrEmpty()){
+            val profileDetails = profileDataCache.fromJson(ProfileDetailsResponse.Data::class.java)
+            renderProfileDetails(profileDetails)
+        }else{
+
+        }
+
+    }
+
+    private fun renderProfileDetails(profileDetails: ProfileDetailsResponse.Data) {
+        tv_score_count.text = profileDetails.customer.score.toString()
+        tv_level.text = profileDetails.customer.rewardLevel.toRewardLevelString(this)
+        iv_user_image.loadImageWithPlaceHolder(profileDetails.profileImage,R.drawable.ic_profile_placeholder)
+        coinProfileImageView.setImage(profileDetails.profileImage)
+        tv_tv_balance.text = profileDetails.wallet.amount.toString()
+        setLevelShower(profileDetails.customer.rewardLevel)
 
 
+    }
+
+    private fun setLevelShower(rewardLevel: Int) {
+        when(rewardLevel){
+            1-> iv_level_shower.loadImageWithResId(R.drawable.ic_level_green)
+            2-> iv_level_shower.loadImageWithResId(R.drawable.ic_level_yellow)
+            3-> iv_level_shower.loadImageWithResId(R.drawable.ic_level_red)
+        }
     }
 
     private fun setupViews() {
@@ -185,6 +216,10 @@ EasyPermissions.RationaleCallbacks,ContactsListener{
     }
 
 
+}
+
+enum class RewardLevels{
+    LOW,MEDIUM,HIGH
 }
 
 //https://blog.mindorks.com/implementing-easy-permissions-in-android-android-tutorial
