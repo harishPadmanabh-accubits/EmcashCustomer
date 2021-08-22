@@ -434,7 +434,8 @@ fun isLollipopOrAbove(): Boolean =
 
 fun <T : Any> Call<T>.awaitResponse(
     onSuccess: (T?) -> Unit = {},
-    onFailure: (String?) -> Unit = {}
+    onFailure: (String?) -> Unit = {},
+    onSessionExpired:() -> Unit = {}
 ) {
 
     this.enqueue(object : Callback<T> {
@@ -443,6 +444,8 @@ fun <T : Any> Call<T>.awaitResponse(
             if (response.isSuccessful) {
                 onSuccess.invoke(response.body())
             } else {
+                if(response.code()==401)
+
                 onFailure.invoke(response.message())
             }
         }

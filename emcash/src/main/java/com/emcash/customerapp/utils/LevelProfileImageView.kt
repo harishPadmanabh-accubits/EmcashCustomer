@@ -1,4 +1,5 @@
 package com.emcash.customerapp.utils
+
 import android.content.Context
 import android.util.AttributeSet
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -15,52 +16,58 @@ class LevelProfileImageView(context: Context, attrs: AttributeSet) :
         inflate(context, R.layout.layout_item_recent_payment, this)
     }
 
-    enum class UserProfileLevel{
-        RED,GREEN,YELLOW,NONE
+    enum class UserProfileLevel {
+        RED, GREEN, YELLOW, NONE
     }
 
-    fun setLevel(level : UserProfileLevel){
-        when(level){
-            UserProfileLevel.RED->{
+    fun setLevel(level: UserProfileLevel) {
+        when (level) {
+            UserProfileLevel.RED -> {
                 fl_user_level.setBackgroundResource(R.drawable.red_round)
             }
-            UserProfileLevel.GREEN->{
+            UserProfileLevel.GREEN -> {
                 fl_user_level.setBackgroundResource(R.drawable.green_round)
             }
-            UserProfileLevel.YELLOW->{
+            UserProfileLevel.YELLOW -> {
                 fl_user_level.setBackgroundResource((R.drawable.yellow_round))
             }
-            UserProfileLevel.NONE->{
+            UserProfileLevel.NONE -> {
                 fl_user_level.makeInvisible()
             }
         }
     }
 
-    fun setProfileImage(imageUrl:String?){
-        if(!imageUrl.isNullOrEmpty()){
-            iv_user_image.loadImageWithUrl(imageUrl,onError = {
-                when(it){
-                    //set bg to imageview
-                }
-            })
-        }else{
-            //set bg to imageview
+    fun setLevel(level: Int) {
+        when (level) {
+            1 -> fl_user_level.setBackgroundResource(R.drawable.green_round)
+            2 -> fl_user_level.setBackgroundResource((R.drawable.yellow_round))
+            3 -> fl_user_level.setBackgroundResource(R.drawable.red_round)
+            else -> fl_user_level.makeInvisible()
         }
     }
-    fun setProfileImage(resId:Int?){
-        if(!resId.isNull()){
+
+    fun setProfileImage(imageUrl: String?) {
+        if (!imageUrl.isNullOrEmpty()) {
+            iv_user_image.loadImageWithPlaceHolder(imageUrl,R.drawable.ic_profile_placeholder)
+        } else {
+            iv_user_image.setBackgroundColor(ContextCompat.getColor(context, R.color.app_sky_blue))
+        }
+    }
+
+    fun setProfileImage(resId: Int?) {
+        if (!resId.isNull()) {
             iv_user_image.loadImageWithResId(resId)
             tv_user_name_letter.hide()
-        }else{
-            iv_user_image.setBackgroundColor(ContextCompat.getColor(context,R.color.app_sky_blue))
+        } else {
+            iv_user_image.setBackgroundColor(ContextCompat.getColor(context, R.color.ash))
         }
     }
 
-    fun setProfileName(name:String){
-        tv_user_name_.text =name
+    fun setProfileName(name: String) {
+        tv_user_name_.text = name
     }
 
-    fun setFirstLetter(name:String){
+    fun setFirstLetter(name: String) {
         tv_user_name_letter.text = name.first().toString().toUpperCase(Locale.getDefault())
         tv_user_name_letter.show()
 

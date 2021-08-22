@@ -9,6 +9,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
 import androidx.lifecycle.Observer
+import com.emcash.customerapp.CommunicationHelper
+import com.emcash.customerapp.EmCashHelper
+import com.emcash.customerapp.EmCashListener
 import com.emcash.customerapp.R
 import com.emcash.customerapp.extensions.openActivity
 import com.emcash.customerapp.ui.home.HomeActivity
@@ -23,10 +26,10 @@ import pub.devrel.easypermissions.EasyPermissions
 import timber.log.Timber
 
 @Suppress("WHEN_ENUM_CAN_BE_NULL_IN_JAVA")
-class NewPaymentActivity : AppCompatActivity() , EasyPermissions.PermissionCallbacks,
-EasyPermissions.RationaleCallbacks{
+class NewPaymentActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks,
+    EasyPermissions.RationaleCallbacks,EmCashListener {
 
-    val viewModel:NewPaymentViewModel by viewModels()
+    val viewModel: NewPaymentViewModel by viewModels()
 
     val source by lazy {
         intent.getIntExtra(LAUNCH_SOURCE, SCREEN_TRANSFER)
@@ -36,7 +39,7 @@ EasyPermissions.RationaleCallbacks{
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_new_payment)
-        if(source == SCREEN_HOME_RECENT_CONTACTS)
+        if (source == SCREEN_HOME_RECENT_CONTACTS)
             viewModel.gotoScreen(CHAT)
         observe()
 
@@ -44,14 +47,17 @@ EasyPermissions.RationaleCallbacks{
 
     private fun observe() {
         viewModel.apply {
-            screens.observe(this@NewPaymentActivity, Observer {screen->
-                when(screen){
-                    CONTACTS->openContactsScreen()
-                    TRANSFER->openTransferScreen()
-                    CHAT->openPaymentChatScreen()
-                    RECEIPT->openPaymentReceipt()
-                    PIN->openPinScreen()
-                    SCAN->openQRScanner()
+            screens.observe(this@NewPaymentActivity, Observer { screen ->
+                when (screen) {
+                    CONTACTS -> openContactsScreen()
+                    TRANSFER -> openTransferScreen()
+                    CHAT -> openPaymentChatScreen()
+                    RECEIPT -> openPaymentReceipt()
+                    PIN -> {
+                        Timber.e("listener ${ CommunicationHelper.getParentInstance()}")
+                        CommunicationHelper.getParentInstance()?.onVerifyPin()
+                    }
+                    SCAN -> openQRScanner()
                 }
             })
         }
@@ -60,40 +66,65 @@ EasyPermissions.RationaleCallbacks{
     private fun openPinScreen() {
         supportFragmentManager.commit {
             addToBackStack("Pin Screen")
-            this.setCustomAnimations(android.R.anim.fade_in,android.R.anim.fade_out,android.R.anim.fade_in,android.R.anim.fade_out)
+            this.setCustomAnimations(
+                android.R.anim.fade_in,
+                android.R.anim.fade_out,
+                android.R.anim.fade_in,
+                android.R.anim.fade_out
+            )
             replace<EmcashPinFragment>(R.id.container)
         }
     }
 
-    fun openTransferScreen(){
+    fun openTransferScreen() {
         supportFragmentManager.commit {
             addToBackStack("Transfer Screen")
-            this.setCustomAnimations(android.R.anim.fade_in,android.R.anim.fade_out,android.R.anim.fade_in,android.R.anim.fade_out)
+            this.setCustomAnimations(
+                android.R.anim.fade_in,
+                android.R.anim.fade_out,
+                android.R.anim.fade_in,
+                android.R.anim.fade_out
+            )
             replace<TransferFragment>(R.id.container)
         }
     }
 
-    fun openContactsScreen(){
+    fun openContactsScreen() {
         supportFragmentManager.commit {
-           // addToBackStack("Contacts Screen")
-            this.setCustomAnimations(android.R.anim.fade_in,android.R.anim.fade_out,android.R.anim.fade_in,android.R.anim.fade_out)
+            // addToBackStack("Contacts Screen")
+            this.setCustomAnimations(
+                android.R.anim.fade_in,
+                android.R.anim.fade_out,
+                android.R.anim.fade_in,
+                android.R.anim.fade_out
+            )
             replace<ContactsFragment>(R.id.container)
         }
     }
 
 
-    fun openPaymentChatScreen(){
+    fun openPaymentChatScreen() {
         supportFragmentManager.commit {
             addToBackStack("Chat Screen")
-            this.setCustomAnimations(android.R.anim.fade_in,android.R.anim.fade_out,android.R.anim.fade_in,android.R.anim.fade_out)
+            this.setCustomAnimations(
+                android.R.anim.fade_in,
+                android.R.anim.fade_out,
+                android.R.anim.fade_in,
+                android.R.anim.fade_out
+            )
             replace<PaymentChatFragment>(R.id.container)
         }
     }
 
-    fun openPaymentReceipt(){
+    fun openPaymentReceipt() {
         supportFragmentManager.commit {
             addToBackStack("Receipt Screen")
-            this.setCustomAnimations(android.R.anim.fade_in,android.R.anim.fade_out,android.R.anim.fade_in,android.R.anim.fade_out)
+            this.setCustomAnimations(
+                android.R.anim.fade_in,
+                android.R.anim.fade_out,
+                android.R.anim.fade_in,
+                android.R.anim.fade_out
+            )
             replace<PaymentReceiptFragment>(R.id.container)
         }
     }
@@ -115,7 +146,7 @@ EasyPermissions.RationaleCallbacks{
                     finish()
                 }
                 PIN -> {
-                    viewModel.gotoScreen(TRANSFER)
+                      viewModel.gotoScreen(TRANSFER)
                 }
                 TRANSFER -> {
                     viewModel.gotoScreen(CONTACTS)
@@ -126,72 +157,78 @@ EasyPermissions.RationaleCallbacks{
             }
         }
     }
-    private fun hasCameraPermission():Boolean {
+
+    private fun hasCameraPermission(): Boolean {
         return EasyPermissions.hasPermissions(this, Manifest.permission.CAMERA)
     }
 
-    private fun hasContactPermission():Boolean {
+    private fun hasContactPermission(): Boolean {
         return EasyPermissions.hasPermissions(this, Manifest.permission.READ_CONTACTS)
     }
 
     fun openQRScanner() {
-        if (hasCameraPermission())
-        {
-            openActivity(QrScannerActivity::class.java){
+        if (hasCameraPermission()) {
+            openActivity(QrScannerActivity::class.java) {
                 this.putInt(LAUNCH_SOURCE, SCREEN_TRANSFER)
             }
-            overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out)
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
 
-        }
-        else
-        {
+        } else {
             EasyPermissions.requestPermissions(
                 this,
                 getString(R.string.rationale_camera),
                 RC_CAMERA_PERM,
-                Manifest.permission.CAMERA)
+                Manifest.permission.CAMERA
+            )
         }
     }
 
-    override fun onRequestPermissionsResult(requestCode:Int,
-                                            permissions:Array<String>,
-                                            grantResults:IntArray) {
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
+    ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         // EasyPermissions handles the request result.
         EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this)
     }
 
-    override fun onRationaleAccepted(requestCode:Int) {
+    override fun onRationaleAccepted(requestCode: Int) {
         Timber.e("onRationaleAccepted:%s", requestCode)
 
     }
-    override fun onRationaleDenied(requestCode:Int) {
+
+    override fun onRationaleDenied(requestCode: Int) {
         Timber.e("onRationaleDenied:%s", requestCode)
     }
+
     override fun onPermissionsDenied(requestCode: Int, perms: MutableList<String>) {
-        if (EasyPermissions.somePermissionPermanentlyDenied(this, perms))
-        {
+        if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
             AppSettingsDialog.Builder(this).build().show()
         }
     }
 
     override fun onPermissionsGranted(requestCode: Int, perms: MutableList<String>) {
         // Log.d(TAG, "onPermissionsGranted:" + requestCode + ":" + perms.size)
-        openActivity(QrScannerActivity::class.java){
+        openActivity(QrScannerActivity::class.java) {
             this.putInt(LAUNCH_SOURCE, SCREEN_TRANSFER)
         }
-        overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out)
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
 
     }
 
     @SuppressLint("StringFormatMatches")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == AppSettingsDialog.DEFAULT_SETTINGS_REQ_CODE)
-        {
+        if (requestCode == AppSettingsDialog.DEFAULT_SETTINGS_REQ_CODE) {
             Timber.e("Camera Permission ${hasCameraPermission()}")
         }
     }
+
+    override fun onLoginSuccess(status: Boolean) {
+    }
+
+
 
 
 }

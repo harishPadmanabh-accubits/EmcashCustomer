@@ -66,7 +66,15 @@ class HomeActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks,
     private fun renderRecentTransactions(data: RecentTransactionResponse.Data?) {
         data?.let {
             if(it.transactionList.isNotEmpty()){
-
+                rv_recent_transactions.apply {
+                    adapter = RecentTransactionsAdapter(it.transactionList, this@HomeActivity)
+                }
+                frame_recent_transactions.show()
+                iv_no_transactions.hide()
+            }else{
+                frame_recent_transactions.show()
+                iv_no_transactions.show()
+                rv_recent_transactions.hide()
             }
         }
     }
@@ -96,6 +104,7 @@ class HomeActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks,
                 }
                 ApiCallStatus.ERROR ->{
                     showShortToast(it.errorMessage)
+                    hideLoader()
                 }
                 ApiCallStatus.LOADING->{
                     loader.show()
@@ -140,10 +149,6 @@ class HomeActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks,
             finish()
         }
 
-        rv_recent_transactions.apply {
-            //layoutManager = GridLayoutManager(this@HomeActivity, 5)
-            adapter = RecentTransactionsAdapter(users, this@HomeActivity)
-        }
 
         tv_load_emcash.setOnClickListener {
             openLoadEmcash()

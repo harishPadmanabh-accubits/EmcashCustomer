@@ -13,6 +13,7 @@ const val RC_CONTACTS_PERM = 126
  * Intent Keys
  */
 const val LAUNCH_SOURCE = "launch_source"
+const val LAUNCH_DESTINATION = "launch_destination"
 const val KEY_SESSION_ID = "session_id"
 const val KEY_SWITCH_ACCOUNT = "switch_account"
 const val KEY_USER_EXIST = "user_exist"
@@ -29,7 +30,8 @@ const val SCREEN_HOME = 202
 const val SCREEN_WALLET = 203
 const val INTRO_SCREEN = 204
 const val SCREEN_SETTINGS = 205
-
+const val SCREEN_RECEIPT = 206
+const val SCREEN_CHAT = 207
 
 /*
     Contacts Page Items

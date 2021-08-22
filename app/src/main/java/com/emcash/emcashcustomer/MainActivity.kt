@@ -1,5 +1,6 @@
 package com.emcash.emcashcustomer
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -35,5 +36,10 @@ class MainActivity : AppCompatActivity() ,EmCashListener{
         else
             showShortToast("Login Failed")
 
+    }
+
+    override fun onVerifyPin() {
+        Log.e("On verify ","called listended in parent")
+        startActivity(Intent(this,PinScreen::class.java))
     }
 }

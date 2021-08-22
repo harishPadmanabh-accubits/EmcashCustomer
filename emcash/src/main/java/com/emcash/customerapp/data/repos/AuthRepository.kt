@@ -52,6 +52,7 @@ class AuthRepository(val context: Context) {
     }
 
     val _profileData = MutableLiveData<ApiMapper<ProfileDetailsResponse.Data>>()
+
     fun getProfileDetails():MutableLiveData<ApiMapper<ProfileDetailsResponse.Data>>{
         _profileData.value = ApiMapper(ApiCallStatus.LOADING,null,null)
         api.getProfileDetails().awaitResponse(onSuccess = {response->
@@ -63,6 +64,7 @@ class AuthRepository(val context: Context) {
         },onFailure = {error->
             _profileData.value = ApiMapper(ApiCallStatus.ERROR,null,error)
         })
+
         return _profileData
     }
 

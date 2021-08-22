@@ -9,8 +9,11 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        tools:replace="android:theme"
-        android:theme="@style/Theme.EmcashWhiteStatusBar">
+        android:theme="@style/Theme.EmcashWhiteStatusBar"
+        tools:replace="android:theme">
+        <activity
+            android:name=".PinScreen"
+            android:windowSoftInputMode="adjustResize" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
