@@ -9,6 +9,10 @@ import com.emcash.customerapp.data.network.ApiMapper
 import com.emcash.customerapp.data.network.EmCashApiManager
 import com.emcash.customerapp.extensions.awaitResponse
 import com.emcash.customerapp.model.transactions.RecentTransactionResponse
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class HomeRepository(private val context: Context) {
     private val syncManager = SyncManager(context)
@@ -24,6 +28,19 @@ class HomeRepository(private val context: Context) {
             _transactions.value = ApiMapper(ApiCallStatus.ERROR,null,error)
         })
         return _transactions
+    }
+
+    fun getRecentTransactions(scope: CoroutineScope,onApiCallBack:(status:Boolean,result:RecentTransactionResponse.Data?,error:String?)->Unit){
+        scope.launch {
+            withContext(Dispatchers.IO){
+                api.getRecentTransactions().awaitResponse(onSuccess = {
+                    onApiCallBack(true,it?.data,null)
+                },onFailure = {
+                    onApiCallBack(false,null,it)
+                })
+
+            }
+        }
     }
 
 

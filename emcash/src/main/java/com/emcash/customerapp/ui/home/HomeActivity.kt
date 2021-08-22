@@ -7,6 +7,7 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import com.emcash.customerapp.R
 import com.emcash.customerapp.data.network.ApiCallStatus
 import com.emcash.customerapp.extensions.*
@@ -14,7 +15,6 @@ import com.emcash.customerapp.model.DummyContactsRawData
 import com.emcash.customerapp.model.DummyUserData
 import com.emcash.customerapp.model.profile.ProfileDetailsResponse
 import com.emcash.customerapp.model.transactions.RecentTransactionResponse
-import com.emcash.customerapp.model.users
 import com.emcash.customerapp.ui.history.TransactionHistory
 import com.emcash.customerapp.ui.home.adapter.RecentTransactionsAdapter
 import com.emcash.customerapp.ui.loademcash.LoadEmcashActivity
@@ -26,6 +26,9 @@ import com.emcash.customerapp.ui.settings.SettingsActivity
 import com.emcash.customerapp.ui.wallet.WalletActivity
 import com.emcash.customerapp.utils.*
 import kotlinx.android.synthetic.main.activity_home.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import pub.devrel.easypermissions.AppSettingsDialog
 import pub.devrel.easypermissions.EasyPermissions
 import timber.log.Timber
@@ -43,12 +46,19 @@ class HomeActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks,
 
     private val viewModel: HomeViewModel by viewModels()
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
         window.sharedElementEnterTransition.duration = 500
-        validateCache(profileDataCache)
-        getRecentTransactions()
+        lifecycleScope.launch (Dispatchers.Main){
+            validateCache(profileDataCache,this)
+        }
+        lifecycleScope.launch (Dispatchers.Main){
+            getRecentTransactions()
+        }
+
+
         setupViews()
     }
 
@@ -79,7 +89,7 @@ class HomeActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks,
         }
     }
 
-    private fun validateCache(profileDataCache: String?) {
+    private fun validateCache(profileDataCache: String?, coroutineScope: CoroutineScope) {
         if (!profileDataCache.isNullOrEmpty()) {    //from intent
             val profileDetails = profileDataCache.fromJson(ProfileDetailsResponse.Data::class.java)
             renderProfileDetails(profileDetails)
