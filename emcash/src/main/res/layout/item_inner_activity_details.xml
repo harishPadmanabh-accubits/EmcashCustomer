@@ -44,7 +44,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="7dp"
         android:fontFamily="@font/biennale_bold"
-        android:text="30"
+        android:text=""
         android:textColor="@color/black"
         android:textSize="12dp"
         app:layout_constraintBottom_toBottomOf="@+id/tv_type_indicator"
@@ -57,7 +57,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="7dp"
         android:fontFamily="@font/biennale_regular"
-        android:text="@string/emcash"
+        android:text=""
         android:textColor="@color/black"
         android:textSize="12dp"
         app:layout_constraintBottom_toBottomOf="@+id/tv_value_emcash"
@@ -89,11 +89,12 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/tv_info_emcash" />
 
-    <androidx.appcompat.widget.AppCompatImageView
+    <com.emcash.customerapp.utils.CoinProfileImageView
         android:id="@+id/iv_coin_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="12dp"
+        app:coin_size="tiny"
         android:src="@drawable/tbd_coin_profile_activity_list_item"
         app:layout_constraintBottom_toBottomOf="@+id/tv_value_changed"
         app:layout_constraintEnd_toStartOf="@+id/tv_value_changed"

@@ -478,6 +478,23 @@ fun ImageView.loadImageWithPlaceHolder(
         .into(this)
 }
 
+fun toFormattedDate(dateStr: String): String {
+    val sdfInput = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX", Locale.getDefault())
+    val date = sdfInput.parse(dateStr)
+    val sdfOutput = SimpleDateFormat("dd MMM yyyy")
+    sdfOutput.timeZone = TimeZone.getTimeZone("Etc/UTC")
+    val formatted = sdfOutput.format(date)
+    return formatted
+}
+
+fun toFormattedTime(dateStr: String): String? {
+    val sdfInput = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX", Locale.getDefault())
+    val date = sdfInput.parse(dateStr)
+    val sdfOutput = SimpleDateFormat("hh:mm a")
+    val formatted = sdfOutput.format(date)
+    return formatted
+
+}
 
 
 

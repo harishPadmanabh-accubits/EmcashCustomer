@@ -94,7 +94,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:fontFamily="@font/biennale_bold"
-        android:text="60"
         android:textColor="@color/white"
         android:textSize="28dp"
         app:layout_constraintEnd_toEndOf="@+id/appCompatImageView"

@@ -1,12 +1,13 @@
 package com.emcash.customerapp.model.wallet
 
 
+import com.emcash.customerapp.model.DummyTransactionDetalsModel
 import com.emcash.customerapp.model.profile.Wallet
 import com.google.gson.annotations.SerializedName
 
 data class WalletActivityResponse(
     @SerializedName("data")
-    val `data`: Data,
+    val data: Data,
     @SerializedName("error")
     val error: String,
     @SerializedName("message")
@@ -27,29 +28,31 @@ data class WalletActivityResponse(
         val totalPages: Int,
         @SerializedName("wallet")
         val wallet: Wallet
-    )
+    ){
+        data class WalletActivityItem(
+            @SerializedName("balance")
+            val balance: Int,
+            @SerializedName("createdAt")
+            val createdAt: String,
+            @SerializedName("id")
+            val id: String,
+            @SerializedName("mode")
+            val mode: Int,
+            @SerializedName("transactionId")
+            val transactionId: String,
+            @SerializedName("transactionInfo")
+            val transactionInfo: TransactionInfo,
+            @SerializedName("updatedAt")
+            val updatedAt: String,
+            @SerializedName("userId")
+            val userId: String,
+            @SerializedName("walletId")
+            val walletId: String
+        )
+
+    }
 }
 
-data class WalletActivityItem(
-    @SerializedName("balance")
-    val balance: Int,
-    @SerializedName("createdAt")
-    val createdAt: String,
-    @SerializedName("id")
-    val id: String,
-    @SerializedName("mode")
-    val mode: Int,
-    @SerializedName("transactionId")
-    val transactionId: String,
-    @SerializedName("transactionInfo")
-    val transactionInfo: TransactionInfo,
-    @SerializedName("updatedAt")
-    val updatedAt: String,
-    @SerializedName("userId")
-    val userId: String,
-    @SerializedName("walletId")
-    val walletId: String
-)
 
 
 data class TransactionInfo(
@@ -135,4 +138,13 @@ data class Remitter(
     val profileImage: Any?,
     @SerializedName("roleId")
     val roleId: Int
+)
+
+data class TransactionItemUiModel(
+    val date: String,
+    val transactionList: List<WalletActivityResponse.Data.WalletActivityItem>
+)
+
+data class WalletActivityUIModel(
+val walletActivities:List<TransactionItemUiModel>
 )

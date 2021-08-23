@@ -52,7 +52,7 @@ class HomeActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks,
         setContentView(R.layout.activity_home)
         window.sharedElementEnterTransition.duration = 500
         lifecycleScope.launch (Dispatchers.Main){
-            validateCache(profileDataCache,this)
+            validateCache(profileDataCache)
         }
         lifecycleScope.launch (Dispatchers.Main){
             getRecentTransactions()
@@ -89,8 +89,9 @@ class HomeActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks,
         }
     }
 
-    private fun validateCache(profileDataCache: String?, coroutineScope: CoroutineScope) {
+    private fun validateCache(profileDataCache: String?) {
         if (!profileDataCache.isNullOrEmpty()) {    //from intent
+            Timber.e("profile intent ")
             val profileDetails = profileDataCache.fromJson(ProfileDetailsResponse.Data::class.java)
             renderProfileDetails(profileDetails)
         } else {                //get from cache - if null - get from server

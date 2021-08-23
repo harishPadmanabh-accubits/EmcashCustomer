@@ -7,10 +7,13 @@ import com.emcash.customerapp.model.auth.userExists.UserExistCheckResponse
 import com.emcash.customerapp.model.profile.ProfileDetailsResponse
 import com.emcash.customerapp.model.tnc.TncResponse
 import com.emcash.customerapp.model.transactions.RecentTransactionResponse
+import com.emcash.customerapp.model.wallet.WalletActivityResponse
 import retrofit2.Call
+import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.Query
 
 interface EmCashApis {
 
@@ -28,5 +31,12 @@ interface EmCashApis {
 
     @GET("v1/customers/transactions/recent?page=1&limit=9")
     fun getRecentTransactions():Call<RecentTransactionResponse>
+
+    @GET("v1/customers/transactions/wallet?")
+   suspend fun getWalletTransactions(
+        @Query("page") page:Int,
+        @Query("limit") limit:Int
+    ):Response<WalletActivityResponse>
+
 
 }

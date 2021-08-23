@@ -83,7 +83,7 @@ class SyncManager(val context: Context) {
     }catch (e:Exception){
         null
     }
-    set(value) = editor.putString(KEY_PROFILE_DATA_CACHE,value.toString()).apply()
+    set(value) = editor.putString(KEY_PROFILE_DATA_CACHE,value?.toJson()).apply()
 
 
 

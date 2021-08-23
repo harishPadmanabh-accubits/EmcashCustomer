@@ -24,7 +24,7 @@ class WalletActivityAdapter(val data:List<DummyAcivityModel>):RecyclerView.Adapt
         holder.itemView.apply {
             tv_activity_date.text =currentItem.date
             rv_activity_details.apply {
-                adapter = WalletActivityDetailsAdapter(currentItem.activities)
+                //adapter = WalletActivityDetailsAdapter(currentItem.activities)
             }
 
         }
