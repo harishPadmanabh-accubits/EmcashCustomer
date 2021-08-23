@@ -17,11 +17,8 @@ class HomeViewModel(app:Application):AndroidViewModel(app) {
     val profileDetails = authRepository.getProfileDetails()
     val recentTransactions = homeRepository.getRecentTransactions()
 
-    fun getTransactionsAsync(){
-        homeRepository.getRecentTransactions(viewModelScope,onApiCallBack = {
-            status, result, error ->
-        })
-    }
+
+
 
 
 }

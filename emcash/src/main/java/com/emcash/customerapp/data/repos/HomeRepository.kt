@@ -30,18 +30,6 @@ class HomeRepository(private val context: Context) {
         return _transactions
     }
 
-    fun getRecentTransactions(scope: CoroutineScope,onApiCallBack:(status:Boolean,result:RecentTransactionResponse.Data?,error:String?)->Unit){
-        scope.launch {
-            withContext(Dispatchers.IO){
-                api.getRecentTransactions().awaitResponse(onSuccess = {
-                    onApiCallBack(true,it?.data,null)
-                },onFailure = {
-                    onApiCallBack(false,null,it)
-                })
-
-            }
-        }
-    }
 
 
 }
