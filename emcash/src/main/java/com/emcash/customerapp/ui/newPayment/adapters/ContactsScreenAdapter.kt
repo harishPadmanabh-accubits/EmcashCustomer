@@ -19,6 +19,8 @@ import java.lang.IllegalArgumentException
 class ContactsScreenAdapter(var contactsPageItems: ArrayList<ContactsPageItems>,val listener: ContactsListener) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
+    var querry =""
+
     override fun getItemViewType(position: Int): Int {
         return contactsPageItems[position].type
     }
@@ -51,8 +53,12 @@ class ContactsScreenAdapter(var contactsPageItems: ArrayList<ContactsPageItems>,
 
     class AllContactsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
        private val allContactsRecyclerView: RecyclerView =itemView.findViewById(R.id.rv_contacts)
-        fun bind(groupedContactList: ArrayList<GroupedContacts>, listener: ContactsListener) {
-         allContactsRecyclerView.adapter = AllContactsAdapter(groupedContactList,listener)
+        fun bind(
+            groupedContactList: ArrayList<GroupedContacts>,
+            listener: ContactsListener,
+            querry: String
+        ) {
+         allContactsRecyclerView.adapter = AllContactsAdapter(groupedContactList,listener,querry)
         }
     }
 
@@ -61,12 +67,16 @@ class ContactsScreenAdapter(var contactsPageItems: ArrayList<ContactsPageItems>,
         when(holder){
             is RecentContactsViewHolder ->{
                 currentItem.recentContactList?.let {
+                    if(querry.isNotEmpty())
+                        it.filter {
+                            it.name.contains(querry,true)
+                        }
                     holder.bind(it,listener)
                 }
             }
             is AllContactsViewHolder ->{
                 currentItem.allContactList?.let {
-                    holder.bind(it,listener)
+                    holder.bind(it,listener,querry)
                 }
             }
         }

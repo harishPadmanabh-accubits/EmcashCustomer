@@ -1,10 +1,8 @@
 package com.emcash.customerapp.ui.newPayment
 
 import android.app.Application
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.MutableLiveData
+import android.os.Bundle
+import androidx.lifecycle.*
 import com.emcash.customerapp.data.repos.HomeRepository
 import com.emcash.customerapp.data.repos.PaymentRepository
 import com.emcash.customerapp.extensions.default
@@ -14,6 +12,9 @@ import com.emcash.customerapp.model.transactions.RecentTransactionItem
 import com.emcash.customerapp.ui.newPayment.NewPaymentScreens.*
 import com.emcash.customerapp.utils.ITEM_ALL_CONTACTS
 import com.emcash.customerapp.utils.ITEM_RECENT_CONTACTS
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.withContext
 import timber.log.Timber
 
 class NewPaymentViewModel(val app: Application) : AndroidViewModel(app) {
@@ -44,12 +45,17 @@ class NewPaymentViewModel(val app: Application) : AndroidViewModel(app) {
             }
         }.map {
             it.name.first()
-        }
+        } as MutableList
+
+       firstLetters.forEach {
+           it.toUpperCase()
+       }
+
         firstLetters.distinct().forEach { letter ->
             Timber.e("Letter $letter")
             val contacts = ArrayList<ContactItem>()
             val groupedContacts = allContacts.filter {
-                it.name.first() == letter
+                it.name.first().equals(letter, ignoreCase = true)
             }
             if (groupedContacts.isNotEmpty()) {
                 contacts.addAll(groupedContacts)
@@ -61,7 +67,7 @@ class NewPaymentViewModel(val app: Application) : AndroidViewModel(app) {
 
         }
 
-         groupedContactsList.sortBy {
+        groupedContactsList.sortBy {
             it.letter
         }
 
@@ -78,15 +84,25 @@ class NewPaymentViewModel(val app: Application) : AndroidViewModel(app) {
         var groupedContacts: ArrayList<GroupedContacts>? = null
         _contactScreenItems.addSource(paymentRepository.getRecentTransactions()) {
             recentContacts = ArrayList(it.transactionList)
-            val result = processContactScreenItems(recentContacts, groupedContacts)
-            _contactScreenItems.postValue(result)
+            viewModelScope.async(Dispatchers.Default) {
+                val result = processContactScreenItems(recentContacts, groupedContacts)
+                withContext(Dispatchers.Main) {
+                    _contactScreenItems.postValue(result)
+                }
+            }
+
         }
 
         _contactScreenItems.addSource(paymentRepository.getAllContacts()) {
-            val allContacts = ArrayList(it)
-            groupedContacts = groupContactsByLetters(allContacts)
-            val result = processContactScreenItems(recentContacts, groupedContacts)
-            _contactScreenItems.postValue(result)
+            viewModelScope.async(Dispatchers.Default) {
+                val allContacts = ArrayList(it)
+                groupedContacts = groupContactsByLetters(allContacts)
+                val result = processContactScreenItems(recentContacts, groupedContacts)
+                withContext(Dispatchers.Main) {
+                    _contactScreenItems.postValue(result)
+                }
+            }
+
         }
 
 

@@ -10,7 +10,8 @@ import kotlinx.android.synthetic.main.item_contact.view.*
 
 class AllContactsAdapter(
     val groupedContactList: ArrayList<GroupedContacts>,
-    val listener: ContactsListener
+    val listener: ContactsListener,
+    val querry: String
 ) : RecyclerView.Adapter<AllContactsAdapter.ViewHolder>() {
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
@@ -23,7 +24,12 @@ class AllContactsAdapter(
         val currentItem = groupedContactList[position]
         holder.itemView.apply {
             tv_contact_group_letter.text = currentItem.letter
-            rv_contacts.adapter = ContactDetailsAdapter(currentItem.contacts,listener)
+            rv_contacts.adapter = ContactDetailsAdapter(
+                if (querry.isNotEmpty())
+                    ArrayList(currentItem.contacts.filter {
+                        it.name.contains(querry, true)
+                    }) else currentItem.contacts, listener
+            )
         }
     }
 

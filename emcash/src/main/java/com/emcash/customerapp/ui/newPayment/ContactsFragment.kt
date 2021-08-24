@@ -6,11 +6,12 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import com.emcash.customerapp.R
+import com.emcash.customerapp.extensions.afterTextChanged
+import com.emcash.customerapp.model.ContactsPageItems
 import com.emcash.customerapp.model.DummyContactsRawData
 import com.emcash.customerapp.model.DummyUserData
 import com.emcash.customerapp.model.contacts.ContactItem
 import com.emcash.customerapp.model.transactions.RecentTransactionItem
-import com.emcash.customerapp.model.users
 import com.emcash.customerapp.ui.newPayment.adapters.ContactsListener
 import com.emcash.customerapp.ui.newPayment.adapters.ContactsScreenAdapter
 import kotlinx.android.synthetic.main.layout_contacts_fragment.*
@@ -37,9 +38,20 @@ class ContactsFragment:Fragment(R.layout.layout_contacts_fragment),ContactsListe
         viewModel.apply {
             getContactScreenItems()
             contactScreenItems.observe(viewLifecycleOwner, Observer {
+                listenForQuerry(it)
                 rv_contact_items.adapter =ContactsScreenAdapter(it,this@ContactsFragment)
             })
         }
+    }
+
+    private fun listenForQuerry(data: ArrayList<ContactsPageItems>) {
+        et_search.afterTextChanged {querry->
+            rv_contact_items.adapter =ContactsScreenAdapter(data,this@ContactsFragment).also {
+                it.querry = querry
+            }
+
+        }
+
     }
 
     override fun onContactSelected(contact: DummyContactsRawData?, recentContact: DummyUserData?) {
