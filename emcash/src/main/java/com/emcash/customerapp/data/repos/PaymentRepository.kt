@@ -11,6 +11,7 @@ import com.emcash.customerapp.extensions.awaitResponse
 import com.emcash.customerapp.model.contacts.Contact
 import com.emcash.customerapp.model.contacts.ContactItem
 import com.emcash.customerapp.model.payments.PaymentRequest
+import com.emcash.customerapp.model.payments.TransactionDetails
 import com.emcash.customerapp.model.payments.TransferRequest
 import com.emcash.customerapp.model.transactions.RecentTransactionResponse
 import timber.log.Timber
@@ -74,7 +75,8 @@ class PaymentRepository(private val context: Context) {
     }
 
     fun transferAmount(onTransferCallBack:(status:Boolean,error:String?)->Unit){
-        val refId = syncManager.sessionId
+        val refId = syncManager.initiatedRefId
+        Timber.e("refid in repo for transfer $refId")
         if(!refId.isNullOrEmpty()){
             val request = TransferRequest(refId)
             api.transferAmount(request).awaitResponse(onSuccess = {
@@ -85,6 +87,18 @@ class PaymentRepository(private val context: Context) {
             })
 
         }
+    }
+
+    fun getTransactionDetails(refId:String,onApiCallBack: (status: Boolean, response: TransactionDetails.Data?, error: String?) -> Unit){
+        api.getTransactionDetails(refId).awaitResponse(onSuccess = {
+            if(it?.status==true)
+                onApiCallBack(true,it?.data,null)
+            else
+                onApiCallBack(false,null,it?.message)
+        },onFailure = {
+            onApiCallBack(false,null,it)
+        })
+
     }
 
 }

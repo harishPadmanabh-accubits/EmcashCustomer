@@ -6,10 +6,7 @@ import com.emcash.customerapp.model.auth.userExists.UserExistCheckRequest
 import com.emcash.customerapp.model.auth.userExists.UserExistCheckResponse
 import com.emcash.customerapp.model.contacts.AllContactsResponse
 import com.emcash.customerapp.model.contacts.ContactDetails
-import com.emcash.customerapp.model.payments.PaymentRequest
-import com.emcash.customerapp.model.payments.PaymentResponse
-import com.emcash.customerapp.model.payments.TransferRequest
-import com.emcash.customerapp.model.payments.TransferResponse
+import com.emcash.customerapp.model.payments.*
 import com.emcash.customerapp.model.profile.ProfileDetailsResponse
 import com.emcash.customerapp.model.tnc.TncResponse
 import com.emcash.customerapp.model.transactions.RecentTransactionResponse
@@ -69,4 +66,6 @@ interface EmCashApis {
    @POST("v1/customers/payments/transfer")
    fun transferAmount(@Body transferRequest: TransferRequest):Call<TransferResponse>
 
+   @GET("v1/customers/transactions/main/{ref_id}")
+   fun getTransactionDetails(@Path("ref_id") refId:String):Call<TransactionDetails>
 }

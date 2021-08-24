@@ -507,5 +507,15 @@ fun FrameLayout.setlevel(level:Int){
     }
 }
 
+fun trimID(string: String): String? {
+    var output: String? = null
+    try {
+        output = string.substring(0, string.indexOf('-'))
+    } catch (exception: java.lang.Exception) {
 
+    }
+
+    return output
+
+}
 
