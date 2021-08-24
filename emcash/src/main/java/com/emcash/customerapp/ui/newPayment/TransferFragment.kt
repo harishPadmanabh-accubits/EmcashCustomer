@@ -10,37 +10,116 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import com.emcash.customerapp.R
-import com.emcash.customerapp.extensions.hide
-import com.emcash.customerapp.extensions.hideKeyboard
-import com.emcash.customerapp.extensions.show
-import com.emcash.customerapp.extensions.showKeyboard
+import com.emcash.customerapp.data.network.ApiCallStatus
+import com.emcash.customerapp.extensions.*
+import com.emcash.customerapp.model.contacts.Contact
+import com.emcash.customerapp.model.contacts.ContactItem
 import com.emcash.customerapp.ui.prepare.BottomSheetListener
-import kotlinx.android.synthetic.main.activity_prepare_em_cash.*
+import com.emcash.customerapp.utils.KEY_SELECTED_CONTACT
+import com.emcash.customerapp.utils.LoaderDialog
 import kotlinx.android.synthetic.main.bottom_sheet_how_it_works.*
 import kotlinx.android.synthetic.main.transfer_fragment.*
 import kotlinx.android.synthetic.main.transfer_fragment.fl_bottom_sheet
-import kotlinx.android.synthetic.main.activity_prepare_em_cash.fl_tint as fl_tint1
+import kotlinx.coroutines.launch
 
-class TransferFragment:Fragment(R.layout.transfer_fragment) , BottomSheetListener {
+class TransferFragment : Fragment(R.layout.transfer_fragment), BottomSheetListener {
 
-    val viewModel:NewPaymentViewModel by activityViewModels()
+    val viewModel: NewPaymentViewModel by activityViewModels()
+    val contactBundle by lazy { arguments }
+    val loader by lazy { LoaderDialog(requireContext()) }
+    var userId = 0
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         et_value.requestFocus()
         fab_transfer.setOnClickListener {
-            viewModel.gotoScreen(NewPaymentScreens.PIN)
+            //viewModel.gotoScreen(NewPaymentScreens.PIN)
+            transfer()
         }
         iv_back.setOnClickListener {
             requireActivity().onBackPressed()
         }
 
-        ll_info.setOnClickListener{
+        ll_info.setOnClickListener {
             viewModel._bottomSheetVisiblity.value = true
         }
 
+        getContactDetails()
+
         observe()
+    }
+
+    private fun transfer() {
+        val amount=if(et_value.text.toString().isNotEmpty()) et_value.text.toString().toInt() else 0
+        if(amount>0){
+            viewModel.initPayment(amount,userId,et_description.text.toString(),onInit = {
+                status, refId, error ->
+                when(status){
+                    true->{
+                        viewModel.gotoScreen(NewPaymentScreens.PIN)
+                    }
+                    false->{
+                        requireActivity().showShortToast(error)
+                    }
+                }
+            })
+
+        }else{
+            requireActivity().showShortToast("Please enter a valid amount to transfer")
+        }
+
+    }
+
+    private fun getContactDetails() {
+        contactBundle?.let {
+            val contact = it[KEY_SELECTED_CONTACT].toString().toInt() ?: 0
+            userId=contact
+            viewModel.getContactDetails(contact).observe(viewLifecycleOwner, Observer {
+                when (it.status) {
+                    ApiCallStatus.SUCCESS -> {
+                        loader.hideLoader()
+                        renderDetails(it.data)
+                    }
+                    ApiCallStatus.ERROR -> {
+                        loader.hideLoader()
+                        requireActivity().showShortToast(it.errorMessage)
+                    }
+                    ApiCallStatus.LOADING -> {
+                        loader.showLoader()
+                    }
+                }
+            })
+
+
+        }
+    }
+
+    private fun renderDetails(data: Contact?) {
+        data?.let {
+            fl_user_level.setlevel(it.level)
+            iv_user_dp.loadImageWithPlaceHolder(
+                it.profileImage,
+                R.drawable.ic_profile_placeholder
+            )
+            tv_user_name.text = it.name
+            tv_user_phone.text = it.phoneNumber
+            handleBlocking(it.isContactUserBlockedLoggedInUser,it.isLoggedInUserBlockedContactUser)
+        }
+    }
+
+    private fun handleBlocking(
+        contactUserBlockedLoggedInUser: Boolean,
+        loggedInUserBlockedContactUser: Boolean
+    ) {
+        if(!contactUserBlockedLoggedInUser && !loggedInUserBlockedContactUser )
+            fab_transfer.show()
+        else{
+            fab_transfer.hide()
+            requireActivity().showShortToast("This contact has benn blocked")
+
+        }
     }
 
     private fun observe() {
@@ -58,13 +137,14 @@ class TransferFragment:Fragment(R.layout.transfer_fragment) , BottomSheetListene
         super.onResume()
         requireActivity().showKeyboard(et_value)
     }
+
     private fun showBottomSheet() {
         requireActivity().hideKeyboard()
         tv_info_desc.text = getString(R.string.send_token_rewards)
         val transition: Transition = Slide(Gravity.BOTTOM);
         transition.duration = 600
         transition.addTarget(fl_bottom_sheet)
-        transition.addListener(object : Transition.TransitionListener{
+        transition.addListener(object : Transition.TransitionListener {
             override fun onTransitionEnd(p0: Transition?) {
             }
 
@@ -93,7 +173,7 @@ class TransferFragment:Fragment(R.layout.transfer_fragment) , BottomSheetListene
         val transition: Transition = Slide(Gravity.BOTTOM);
         transition.duration = 500
         transition.addTarget(fl_bottom_sheet)
-        transition.addListener(object : Transition.TransitionListener{
+        transition.addListener(object : Transition.TransitionListener {
             override fun onTransitionEnd(p0: Transition?) {
             }
 
@@ -121,7 +201,7 @@ class TransferFragment:Fragment(R.layout.transfer_fragment) , BottomSheetListene
         }
     }
 
-    fun hideTint(){
+    fun hideTint() {
         ObjectAnimator.ofFloat(fl_tint, "alpha", 0f).apply {
             duration = 500
             start()
@@ -130,7 +210,7 @@ class TransferFragment:Fragment(R.layout.transfer_fragment) , BottomSheetListene
 
     override fun onGotitClicked() {
         //closeBottomSheet()
-        viewModel._bottomSheetVisiblity.value =false
+        viewModel._bottomSheetVisiblity.value = false
 
     }
 

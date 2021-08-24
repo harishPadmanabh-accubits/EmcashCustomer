@@ -3,17 +3,22 @@ package com.emcash.customerapp.ui.newPayment
 import android.app.Application
 import android.os.Bundle
 import androidx.lifecycle.*
+import com.emcash.customerapp.data.network.ApiCallStatus
+import com.emcash.customerapp.data.network.ApiMapper
 import com.emcash.customerapp.data.repos.HomeRepository
 import com.emcash.customerapp.data.repos.PaymentRepository
 import com.emcash.customerapp.extensions.default
 import com.emcash.customerapp.model.*
+import com.emcash.customerapp.model.contacts.Contact
 import com.emcash.customerapp.model.contacts.ContactItem
+import com.emcash.customerapp.model.payments.PaymentRequest
 import com.emcash.customerapp.model.transactions.RecentTransactionItem
 import com.emcash.customerapp.ui.newPayment.NewPaymentScreens.*
 import com.emcash.customerapp.utils.ITEM_ALL_CONTACTS
 import com.emcash.customerapp.utils.ITEM_RECENT_CONTACTS
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import timber.log.Timber
 
@@ -22,13 +27,17 @@ class NewPaymentViewModel(val app: Application) : AndroidViewModel(app) {
     val paymentRepository = PaymentRepository(app)
     val homeRepository = HomeRepository(app)
 
-    var _screen = MutableLiveData<NewPaymentScreens>().default(CONTACTS)
-    val screens: LiveData<NewPaymentScreens> get() = _screen
+
+    var _screenConfig = MutableLiveData<ScreenConfig>().default(ScreenConfig(CONTACTS))
+    val screenConfig: LiveData<ScreenConfig> get() = _screenConfig
 
     val validPin = "0000"
 
-    fun gotoScreen(screen: NewPaymentScreens) {
-        _screen.value = screen
+    fun gotoScreen(screen: NewPaymentScreens, bundle: Bundle? = null) {
+        if (bundle != null)
+            _screenConfig.value = ScreenConfig(screen, bundle)
+        else
+            _screenConfig.value = ScreenConfig(screen)
     }
 
 
@@ -47,9 +56,9 @@ class NewPaymentViewModel(val app: Application) : AndroidViewModel(app) {
             it.name.first()
         } as MutableList
 
-       firstLetters.forEach {
-           it.toUpperCase()
-       }
+        firstLetters.forEach {
+            it.toUpperCase()
+        }
 
         firstLetters.distinct().forEach { letter ->
             Timber.e("Letter $letter")
@@ -136,14 +145,42 @@ class NewPaymentViewModel(val app: Application) : AndroidViewModel(app) {
         return processedContacts
     }
 
-    fun getRecentTransactions() {
-        homeRepository.getRecentTransactions()
-
+    val _contact = MutableLiveData<ApiMapper<Contact>>()
+    fun getContactDetails(id: Int): LiveData<ApiMapper<Contact>> {
+        _contact.value = ApiMapper(ApiCallStatus.LOADING, null, null)
+        paymentRepository.getContactDetails(id, onApiCallBack = { status, response, error ->
+            when (status) {
+                true -> _contact.value = ApiMapper(ApiCallStatus.SUCCESS, response, null)
+                false -> _contact.value = ApiMapper(ApiCallStatus.ERROR, null, error)
+            }
+        })
+        return _contact
     }
 
+    fun initPayment(
+        amount: Int,
+        userId: Int,
+        desc: String,
+        onInit: (status: Boolean, refId: String?, error: String?) -> Unit
+    ) {
+        val request = PaymentRequest(amount, desc, userId)
+        paymentRepository.initPayment(request,onApiCallBack = {
+            status, response, error ->
+            when(status){
+                true-> onInit(true,response,null)
+                false->onInit(false,null,error)
+            }
+        })
+    }
 
 }
 
 enum class NewPaymentScreens {
     CONTACTS, TRANSFER, CHAT, RECEIPT, PIN, SCAN
 }
+
+
+data class ScreenConfig(
+    val screen: NewPaymentScreens,
+    val bundle: Bundle? = null
+)

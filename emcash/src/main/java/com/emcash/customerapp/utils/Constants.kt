@@ -22,7 +22,8 @@ const val KEY_TERMS_ACCEPTED = "tnc_status"
 const val KEY_PROFILE_DATA_CACHE =  "profile_data"
 const val KEY_TOPUP_AMOUNT = "topup"
 const val KEY_TOPUP_DESC = "topup_desc"
-
+const val KEY_SELECTED_CONTACT = "selected_contact"
+const val KEY_REF_IF = "ref_id"
 
 
 /**

@@ -1,8 +1,10 @@
 package com.emcash.emcashcustomer
 
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.animation.AnimationUtils
+import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import com.emcash.customerapp.EmCashHelper
 import com.emcash.customerapp.EmCashListener
@@ -17,12 +19,14 @@ class PinScreen : AppCompatActivity(),EmCashListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_pin_screen)
+        val imm =
+            this.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.showSoftInput(cl_root, InputMethodManager.SHOW_IMPLICIT)
         configurePinViews()
 
     }
     override fun onResume() {
         super.onResume()
-        showKeyboard(et_pin_1)
         refresh( arrayListOf<EditText>(et_pin_1, et_pin_2, et_pin_3, et_pin_4))
     }
 
@@ -165,7 +169,7 @@ class PinScreen : AppCompatActivity(),EmCashListener {
     }
 
     private fun onValidPin(){
-        EmCashHelper(applicationContext,this).onPinVerified()
+        EmCashHelper(applicationContext,this).proceedToTransfer()
     }
 
     override fun onLoginSuccess(status: Boolean) {

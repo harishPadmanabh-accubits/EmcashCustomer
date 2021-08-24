@@ -6,6 +6,7 @@ import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import androidx.core.content.ContextCompat.startActivity
 import com.emcash.customerapp.data.SyncManager
 import com.emcash.customerapp.data.repos.AuthRepository
+import com.emcash.customerapp.data.repos.PaymentRepository
 import com.emcash.customerapp.extensions.openActivity
 import com.emcash.customerapp.extensions.showShortToast
 import com.emcash.customerapp.model.auth.switchAccount.SwitchAccountRequest
@@ -16,10 +17,7 @@ import com.emcash.customerapp.ui.newPayment.NewPaymentActivity
 import com.emcash.customerapp.ui.prepare.PrepareEmCashActivity
 import com.emcash.customerapp.ui.terms.TermsAndConditionsActivity
 import com.emcash.customerapp.ui.terms.TncStatus
-import com.emcash.customerapp.utils.LAUNCH_SOURCE
-import com.emcash.customerapp.utils.LoaderDialog
-import com.emcash.customerapp.utils.SCREEN_HOME_RECENT_CONTACTS
-import com.emcash.customerapp.utils.SCREEN_RECEIPT
+import com.emcash.customerapp.utils.*
 import timber.log.Timber
 
 class EmCashHelper(val appContext: Context,val listener:EmCashListener) {
@@ -90,6 +88,23 @@ class EmCashHelper(val appContext: Context,val listener:EmCashListener) {
         appContext.startActivity(intent)
     }
 
+    fun proceedToTransfer(){
+        val intent = Intent(appContext, NewPaymentActivity::class.java).also {
+            it.setFlags(FLAG_ACTIVITY_NEW_TASK)
+        }
+        intent.putExtra(LAUNCH_SOURCE, SCREEN_RECEIPT)
+        intent.putExtra(LAUNCH_DESTINATION, SCREEN_RECEIPT)
+        PaymentRepository(appContext).transferAmount { status, error ->
+            when(status){
+                true->{
+                    appContext.startActivity(intent)
+                }
+                false->{
+                    appContext.startActivity(intent)
+                }
+            }
+        }
+    }
 
 
 

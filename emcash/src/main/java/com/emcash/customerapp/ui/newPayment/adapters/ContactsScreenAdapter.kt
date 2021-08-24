@@ -3,6 +3,7 @@ package com.emcash.customerapp.ui.newPayment.adapters
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import androidx.recyclerview.widget.RecyclerView
 import com.emcash.customerapp.R
 import com.emcash.customerapp.model.ContactsPageItems
@@ -80,6 +81,7 @@ class ContactsScreenAdapter(var contactsPageItems: ArrayList<ContactsPageItems>,
                 }
             }
         }
+        holder.itemView.animation = AnimationUtils.loadAnimation(holder.itemView.context,R.anim.contacts_anim)
     }
 
     override fun getItemCount(): Int = contactsPageItems.size

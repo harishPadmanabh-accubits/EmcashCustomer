@@ -10,17 +10,13 @@ import androidx.fragment.app.commit
 import androidx.fragment.app.replace
 import androidx.lifecycle.Observer
 import com.emcash.customerapp.CommunicationHelper
-import com.emcash.customerapp.EmCashHelper
 import com.emcash.customerapp.EmCashListener
 import com.emcash.customerapp.R
 import com.emcash.customerapp.extensions.openActivity
 import com.emcash.customerapp.ui.home.HomeActivity
 import com.emcash.customerapp.ui.newPayment.NewPaymentScreens.*
 import com.emcash.customerapp.ui.qr.QrScannerActivity
-import com.emcash.customerapp.utils.LAUNCH_SOURCE
-import com.emcash.customerapp.utils.RC_CAMERA_PERM
-import com.emcash.customerapp.utils.SCREEN_HOME_RECENT_CONTACTS
-import com.emcash.customerapp.utils.SCREEN_TRANSFER
+import com.emcash.customerapp.utils.*
 import pub.devrel.easypermissions.AppSettingsDialog
 import pub.devrel.easypermissions.EasyPermissions
 import timber.log.Timber
@@ -35,29 +31,43 @@ class NewPaymentActivity : AppCompatActivity(), EasyPermissions.PermissionCallba
         intent.getIntExtra(LAUNCH_SOURCE, SCREEN_TRANSFER)
     }
 
+    val destination by lazy {
+        intent.getIntExtra(LAUNCH_DESTINATION,0)
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_new_payment)
         if (source == SCREEN_HOME_RECENT_CONTACTS)
             viewModel.gotoScreen(CHAT)
+        handleDestinations(destination)
         observe()
+
+    }
+
+    private fun handleDestinations(destination: Int) {
+        if(destination>0){
+            when(destination){
+                SCREEN_RECEIPT->viewModel.gotoScreen(RECEIPT)
+            }
+        }
 
     }
 
     private fun observe() {
         viewModel.apply {
-            screens.observe(this@NewPaymentActivity, Observer { screen ->
-                when (screen) {
-                    CONTACTS -> openContactsScreen()
-                    TRANSFER -> openTransferScreen()
-                    CHAT -> openPaymentChatScreen()
-                    RECEIPT -> openPaymentReceipt()
+            screenConfig.observe(this@NewPaymentActivity, Observer { screenConfig ->
+                when (screenConfig.screen) {
+                    CONTACTS -> openContactsScreen(screenConfig.bundle)
+                    TRANSFER -> openTransferScreen(screenConfig.bundle)
+                    CHAT -> openPaymentChatScreen(screenConfig.bundle)
+                    RECEIPT -> openPaymentReceipt(screenConfig.bundle)
                     PIN -> {
                         Timber.e("listener ${ CommunicationHelper.getParentInstance()}")
                         CommunicationHelper.getParentInstance()?.onVerifyPin()
                     }
-                    SCAN -> openQRScanner()
+                    SCAN -> openQRScanner(screenConfig.bundle)
                 }
             })
         }
@@ -72,11 +82,11 @@ class NewPaymentActivity : AppCompatActivity(), EasyPermissions.PermissionCallba
                 android.R.anim.fade_in,
                 android.R.anim.fade_out
             )
-            replace<EmcashPinFragment>(R.id.container)
+            replace<EmcashPinFragment>(R.id.container,"")
         }
     }
 
-    fun openTransferScreen() {
+    fun openTransferScreen(bundle: Bundle?) {
         supportFragmentManager.commit {
             addToBackStack("Transfer Screen")
             this.setCustomAnimations(
@@ -85,11 +95,12 @@ class NewPaymentActivity : AppCompatActivity(), EasyPermissions.PermissionCallba
                 android.R.anim.fade_in,
                 android.R.anim.fade_out
             )
-            replace<TransferFragment>(R.id.container)
+
+            replace<TransferFragment>(R.id.container,"Transfer to",bundle)
         }
     }
 
-    fun openContactsScreen() {
+    fun openContactsScreen(bundle: Bundle?) {
         supportFragmentManager.commit {
             // addToBackStack("Contacts Screen")
             this.setCustomAnimations(
@@ -103,7 +114,7 @@ class NewPaymentActivity : AppCompatActivity(), EasyPermissions.PermissionCallba
     }
 
 
-    fun openPaymentChatScreen() {
+    fun openPaymentChatScreen(bundle: Bundle?) {
         supportFragmentManager.commit {
             addToBackStack("Chat Screen")
             this.setCustomAnimations(
@@ -116,7 +127,7 @@ class NewPaymentActivity : AppCompatActivity(), EasyPermissions.PermissionCallba
         }
     }
 
-    fun openPaymentReceipt() {
+    fun openPaymentReceipt(bundle: Bundle?) {
         supportFragmentManager.commit {
             addToBackStack("Receipt Screen")
             this.setCustomAnimations(
@@ -133,7 +144,7 @@ class NewPaymentActivity : AppCompatActivity(), EasyPermissions.PermissionCallba
         if (viewModel._bottomSheetVisiblity.value == true)
             viewModel._bottomSheetVisiblity.value = false
         else {
-            when (viewModel.screens.value) {
+            when (viewModel.screenConfig.value?.screen) {
                 RECEIPT -> {
                     viewModel.gotoScreen(CHAT)
                 }
@@ -166,7 +177,7 @@ class NewPaymentActivity : AppCompatActivity(), EasyPermissions.PermissionCallba
         return EasyPermissions.hasPermissions(this, Manifest.permission.READ_CONTACTS)
     }
 
-    fun openQRScanner() {
+    fun openQRScanner(bundle: Bundle?) {
         if (hasCameraPermission()) {
             openActivity(QrScannerActivity::class.java) {
                 this.putInt(LAUNCH_SOURCE, SCREEN_TRANSFER)

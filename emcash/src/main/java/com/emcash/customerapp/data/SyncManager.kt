@@ -85,6 +85,13 @@ class SyncManager(val context: Context) {
     }
     set(value) = editor.putString(KEY_PROFILE_DATA_CACHE,value?.toJson()).apply()
 
+    var initiatedRefId:String?
+    get()=try{
+        sharedPreferences.getString(KEY_REF_IF,"")
+    }catch (e:Exception){
+        null
+    }
+    set(value) = editor.putString(KEY_REF_IF,value).apply()
 
 
 

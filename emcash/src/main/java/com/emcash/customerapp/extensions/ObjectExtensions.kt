@@ -13,6 +13,7 @@ import android.view.KeyEvent
 import android.view.View
 import android.view.WindowManager
 import android.widget.EditText
+import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.annotation.ColorRes
@@ -28,6 +29,7 @@ import com.emcash.customerapp.BuildConfig
 import com.emcash.customerapp.R
 import com.emcash.customerapp.data.network.exceptions.NoInternetException
 import com.google.gson.Gson
+import kotlinx.android.synthetic.main.item_inner_contact_details.view.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -444,9 +446,9 @@ fun <T : Any> Call<T>.awaitResponse(
             if (response.isSuccessful) {
                 onSuccess.invoke(response.body())
             } else {
-                if(response.code()==401)
-
+                //if(response.code()==401)
                 onFailure.invoke(response.message())
+
             }
         }
 
@@ -496,6 +498,14 @@ fun toFormattedTime(dateStr: String): String? {
 
 }
 
+fun FrameLayout.setlevel(level:Int){
+    when (level) {
+        1 -> this.setBackgroundResource(R.drawable.green_round)
+        2 -> this.setBackgroundResource((R.drawable.yellow_round))
+        3 -> this.setBackgroundResource(R.drawable.red_round)
+        else -> this.makeInvisible()
+    }
+}
 
 
 
