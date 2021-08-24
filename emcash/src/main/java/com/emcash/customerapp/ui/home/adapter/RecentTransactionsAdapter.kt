@@ -80,7 +80,7 @@ class RecentTransactionsAdapter(val transactions : List<RecentTransactionItem>,v
                 itemView.level_image.setFirstLetter(user.name)
             }
             itemView.setOnClickListener {
-                listener.onContactSelected(null,null)
+                listener.onSelectedFromRecentContacts(user)
             }
         }
 

@@ -24,7 +24,7 @@ class WalletActivityPagingSource(
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, TransactionItemUiModel> {
         // Start refresh at page 1 if undefined.
         val nextPage = params.key ?: 1
-        val response = api.getWalletTransactions(nextPage,10).body()
+        val response = api.getWalletTransactions(nextPage,8).body()
         val groupedActivities = response?.data?.activities?.let { groupByDate(it).toList() } ?: listOf<TransactionItemUiModel>()
         return LoadResult.Page(
             data = groupedActivities,

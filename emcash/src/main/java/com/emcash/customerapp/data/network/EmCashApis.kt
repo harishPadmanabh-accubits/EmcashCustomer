@@ -4,10 +4,15 @@ import com.emcash.customerapp.model.auth.switchAccount.SwitchAccountRequest
 import com.emcash.customerapp.model.auth.switchAccount.SwitchAccountResponse
 import com.emcash.customerapp.model.auth.userExists.UserExistCheckRequest
 import com.emcash.customerapp.model.auth.userExists.UserExistCheckResponse
+import com.emcash.customerapp.model.contacts.AllContactsResponse
 import com.emcash.customerapp.model.profile.ProfileDetailsResponse
 import com.emcash.customerapp.model.tnc.TncResponse
 import com.emcash.customerapp.model.transactions.RecentTransactionResponse
 import com.emcash.customerapp.model.wallet.WalletActivityResponse
+import com.emcash.customerapp.model.wallet.topup.WalletTopupRequest
+import com.emcash.customerapp.model.wallet.topup.WalletTopupResponse
+import com.emcash.customerapp.model.wallet.withdraw.WalletWithdrawRequest
+import com.emcash.customerapp.model.wallet.withdraw.WalletWithdrawResponse
 import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.Body
@@ -37,6 +42,21 @@ interface EmCashApis {
         @Query("page") page:Int,
         @Query("limit") limit:Int
     ):Response<WalletActivityResponse>
+
+   @POST("v1/customers/wallet/topup")
+   fun topupWallet(@Body topupRequest: WalletTopupRequest):Call<WalletTopupResponse>
+
+   @POST("v1/customers/wallet/withdraw")
+   fun withdrawFromWallet(
+       @Body withdrawRequest: WalletWithdrawRequest
+   ):Call<WalletWithdrawResponse>
+
+   @GET("v1/customers/contacts")
+   fun getAllContacts(
+       @Query("search") search: String,
+       @Query("page") page:Int,
+       @Query("limit") limit:Int
+   ):Call<AllContactsResponse>
 
 
 }

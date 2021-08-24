@@ -5,18 +5,30 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import com.emcash.customerapp.R
-import com.emcash.customerapp.extensions.hide
-import com.emcash.customerapp.extensions.obtainViewModel
-import com.emcash.customerapp.extensions.openActivity
-import com.emcash.customerapp.extensions.show
+import com.emcash.customerapp.extensions.*
 import com.emcash.customerapp.model.DummyCardResponse
 import com.emcash.customerapp.model.dummyAccounts
 import com.emcash.customerapp.ui.wallet.WalletActivity
+import com.emcash.customerapp.utils.KEY_TOPUP_AMOUNT
+import com.emcash.customerapp.utils.KEY_TOPUP_DESC
+import com.emcash.customerapp.utils.LoaderDialog
 import kotlinx.android.synthetic.main.activity_transaction.*
 
 class TransactionActivity : AppCompatActivity() {
 
     val viewModel: LoadEmCashViewModel by viewModels()
+
+    val amount by lazy {
+        intent.getIntExtra(KEY_TOPUP_AMOUNT, 0)
+    }
+
+    val desc by lazy {
+        intent.getStringExtra(KEY_TOPUP_DESC)
+    }
+
+    val loader by lazy {
+        LoaderDialog(this)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,9 +46,7 @@ class TransactionActivity : AppCompatActivity() {
         }
 
         btn_continue.setOnClickListener {
-            openActivity(WalletActivity::class.java)
-            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
-            finish()
+            topup(amount,desc)
         }
 
         iv_back.setOnClickListener {
@@ -70,6 +80,36 @@ class TransactionActivity : AppCompatActivity() {
 
         tab_bank_card.setBackgroundResource(R.drawable.blue_stroke_light_blue_fill_round_bg)
         iv_bank_selected.show()
+    }
+
+    private fun topup(amount:Int,desc:String?){
+        if(amount>0){
+            loader.showLoader()
+            viewModel.addEmCash(amount,
+                desc?:"",
+                onFinished = {
+                status, error ->
+                when(status){
+                    true->{
+                        loader.hideLoader()
+                        gotoWalletScreen()
+                    }
+                    false->{
+                        loader.hideLoader()
+                        showShortToast(error)
+                    }
+                }
+            })
+
+        }else{
+            showShortToast("Invalid Amount.")
+        }
+    }
+
+    private fun gotoWalletScreen() {
+        openActivity(WalletActivity::class.java)
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+        finish()
     }
 }
 

@@ -8,6 +8,8 @@ import androidx.lifecycle.Observer
 import com.emcash.customerapp.R
 import com.emcash.customerapp.model.DummyContactsRawData
 import com.emcash.customerapp.model.DummyUserData
+import com.emcash.customerapp.model.contacts.ContactItem
+import com.emcash.customerapp.model.transactions.RecentTransactionItem
 import com.emcash.customerapp.model.users
 import com.emcash.customerapp.ui.newPayment.adapters.ContactsListener
 import com.emcash.customerapp.ui.newPayment.adapters.ContactsScreenAdapter
@@ -19,9 +21,6 @@ class ContactsFragment:Fragment(R.layout.layout_contacts_fragment),ContactsListe
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val groupedContacts = viewModel.groupContactsByLetters(viewModel.contactsRaw)
-        val recentContactList = users
-        viewModel.getContactScreenItems(ArrayList(recentContactList),groupedContacts)
         observe()
         fab_scan.setOnClickListener {
             viewModel.gotoScreen(NewPaymentScreens.SCAN)
@@ -36,6 +35,7 @@ class ContactsFragment:Fragment(R.layout.layout_contacts_fragment),ContactsListe
 
     private fun observe() {
         viewModel.apply {
+            getContactScreenItems()
             contactScreenItems.observe(viewLifecycleOwner, Observer {
                 rv_contact_items.adapter =ContactsScreenAdapter(it,this@ContactsFragment)
             })
@@ -44,5 +44,12 @@ class ContactsFragment:Fragment(R.layout.layout_contacts_fragment),ContactsListe
 
     override fun onContactSelected(contact: DummyContactsRawData?, recentContact: DummyUserData?) {
         viewModel.gotoScreen(NewPaymentScreens.TRANSFER)
+    }
+
+    override fun onSelectedFromRecentContacts(contact: RecentTransactionItem) {
+
+    }
+
+    override fun onSelectedFromAllContacts(contact: ContactItem) {
     }
 }

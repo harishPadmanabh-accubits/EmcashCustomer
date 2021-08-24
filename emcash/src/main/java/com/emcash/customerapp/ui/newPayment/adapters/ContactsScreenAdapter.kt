@@ -9,6 +9,9 @@ import com.emcash.customerapp.model.ContactsPageItems
 import com.emcash.customerapp.model.DummyContactsRawData
 import com.emcash.customerapp.model.DummyUserData
 import com.emcash.customerapp.model.GroupedContacts
+import com.emcash.customerapp.model.contacts.ContactItem
+import com.emcash.customerapp.model.transactions.RecentTransactionItem
+import com.emcash.customerapp.ui.home.adapter.RecentTransactionsAdapter
 import com.emcash.customerapp.utils.ITEM_ALL_CONTACTS
 import com.emcash.customerapp.utils.ITEM_RECENT_CONTACTS
 import java.lang.IllegalArgumentException
@@ -41,8 +44,8 @@ class ContactsScreenAdapter(var contactsPageItems: ArrayList<ContactsPageItems>,
     class RecentContactsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val recentContactsRecyclerView: RecyclerView = itemView.findViewById(R.id.rv_recent_contacts)
 
-        fun bind(recentContactList: ArrayList<DummyUserData>, listener: ContactsListener) {
-            recentContactsRecyclerView.adapter = RecentContactsAdapter(recentContactList.toList(),listener)
+        fun bind(recentContactList: ArrayList<RecentTransactionItem>, listener: ContactsListener) {
+            recentContactsRecyclerView.adapter = RecentTransactionsAdapter(recentContactList.toList(),listener)
         }
     }
 
@@ -74,4 +77,7 @@ class ContactsScreenAdapter(var contactsPageItems: ArrayList<ContactsPageItems>,
 
 interface ContactsListener{
     fun onContactSelected(contact:DummyContactsRawData?,recentContact:DummyUserData?)
+    fun onSelectedFromRecentContacts(contact:RecentTransactionItem)
+    fun onSelectedFromAllContacts(contact: ContactItem)
+
 }

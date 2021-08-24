@@ -2,6 +2,8 @@ package com.emcash.customerapp.model
 
 import android.icu.text.CaseMap
 import com.emcash.customerapp.R
+import com.emcash.customerapp.model.contacts.ContactItem
+import com.emcash.customerapp.model.transactions.RecentTransactionItem
 import com.emcash.customerapp.utils.LevelProfileImageView
 import com.emcash.customerapp.utils.LevelProfileImageView.UserProfileLevel
 import com.emcash.customerapp.utils.LevelProfileImageView.UserProfileLevel.*
@@ -25,13 +27,13 @@ val dummyRecentContacts = users
 
 data class GroupedContacts(
     var letter : String,
-    var contacts : ArrayList<DummyContactsRawData>
+    var contacts : ArrayList<ContactItem>
 )
 
 data class ContactsPageItems(
     val title: String,
     var type : Int
 ){
-    var recentContactList : ArrayList<DummyUserData> ?=null
+    var recentContactList : ArrayList<RecentTransactionItem> ?=null
     var allContactList : ArrayList<GroupedContacts>?=null
 }

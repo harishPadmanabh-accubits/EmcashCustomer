@@ -37,7 +37,7 @@ data class ContactItem(
     @SerializedName("phoneNumber")
     val phoneNumber: String,
     @SerializedName("ppp")
-    val ppp: Int,
+    val level: Int,
     @SerializedName("profileImage")
     val profileImage: String,
     @SerializedName("roleId")

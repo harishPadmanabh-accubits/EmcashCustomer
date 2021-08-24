@@ -4,13 +4,16 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.emcash.customerapp.R
 import com.emcash.customerapp.data.SyncManager
+import com.emcash.customerapp.data.network.ApiCallStatus
 import com.emcash.customerapp.extensions.openActivity
+import com.emcash.customerapp.extensions.showShortToast
 import com.emcash.customerapp.ui.convert_emcash.ConvertEmcashActivity
 import com.emcash.customerapp.ui.home.HomeActivity
 import com.emcash.customerapp.ui.loademcash.LoadEmcashActivity
@@ -18,6 +21,7 @@ import com.emcash.customerapp.utils.LAUNCH_SOURCE
 import com.emcash.customerapp.utils.LoaderDialog
 import com.emcash.customerapp.utils.SCREEN_WALLET
 import kotlinx.android.synthetic.main.wallet_screen_v2.*
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -37,7 +41,6 @@ class WalletActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.wallet_screen_v2)
-        renderWalletDetails()
 
         iv_back.setOnClickListener {
             onBackPressed()
@@ -80,6 +83,10 @@ class WalletActivity : AppCompatActivity() {
             }
         }
 
+        lifecycleScope.launch(Dispatchers.Main) {
+            renderWalletDetails()
+        }
+
 
 
         lifecycleScope.launch {
@@ -91,11 +98,24 @@ class WalletActivity : AppCompatActivity() {
 
     private fun renderWalletDetails() {
         viewModel.apply {
-            if(profile!=null){
-                appCompatImageView.setImage(profile.profileImage)
-                tv_balance.text = profile.wallet.amount.toString()
-                tv_safe_box_id.text = profile.wallet.walletAddress
-            }
+            syncProfileFromServer().observe(this@WalletActivity, Observer {
+                when(it.status){
+                    ApiCallStatus.SUCCESS->{
+                        val profile= it.data
+                        profile?.let{
+                            appCompatImageView.setImage(it.profileImage)
+                            tv_balance.text = it.wallet.amount.toString()
+                            tv_safe_box_id.text = profile.wallet.walletAddress
+                        }
+                    }
+                    ApiCallStatus.ERROR->{
+                        showShortToast(it.errorMessage)
+                    }
+                }
+
+
+
+            })
         }
 
 

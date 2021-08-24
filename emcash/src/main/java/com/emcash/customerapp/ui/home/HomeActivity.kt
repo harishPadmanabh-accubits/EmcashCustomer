@@ -13,7 +13,9 @@ import com.emcash.customerapp.data.network.ApiCallStatus
 import com.emcash.customerapp.extensions.*
 import com.emcash.customerapp.model.DummyContactsRawData
 import com.emcash.customerapp.model.DummyUserData
+import com.emcash.customerapp.model.contacts.ContactItem
 import com.emcash.customerapp.model.profile.ProfileDetailsResponse
+import com.emcash.customerapp.model.transactions.RecentTransactionItem
 import com.emcash.customerapp.model.transactions.RecentTransactionResponse
 import com.emcash.customerapp.ui.history.TransactionHistory
 import com.emcash.customerapp.ui.home.adapter.RecentTransactionsAdapter
@@ -52,7 +54,8 @@ class HomeActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks,
         setContentView(R.layout.activity_home)
         window.sharedElementEnterTransition.duration = 500
         lifecycleScope.launch (Dispatchers.Main){
-            validateCache(profileDataCache)
+           // validateCache(profileDataCache)
+            getProfileDetailsFromServer()
         }
         lifecycleScope.launch (Dispatchers.Main){
             getRecentTransactions()
@@ -288,6 +291,12 @@ class HomeActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks,
         openActivity(NewPaymentActivity::class.java) {
             this.putInt(LAUNCH_SOURCE, SCREEN_HOME_RECENT_CONTACTS)
         }
+    }
+
+    override fun onSelectedFromRecentContacts(contact: RecentTransactionItem) {
+    }
+
+    override fun onSelectedFromAllContacts(contact: ContactItem) {
     }
 
 

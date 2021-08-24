@@ -21,6 +21,15 @@ init {
     window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 }
 
+    fun hideLoader(){
+        if(isShowing)
+            dismiss()
+    }
+
+    fun showLoader(){
+        show()
+    }
+
 
 
 

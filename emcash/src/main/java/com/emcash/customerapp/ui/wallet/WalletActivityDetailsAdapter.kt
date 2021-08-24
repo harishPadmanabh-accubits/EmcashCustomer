@@ -64,7 +64,7 @@ class WalletActivityDetailsAdapter(val data : List<WalletActivityItem>):Recycler
         holder.itemView.apply {
             tv_time.text = toFormattedTime(currentItem.updatedAt)
             val type=currentItem.transactionInfo.type
-            if(type==1){ //TODO Show corresponding icon in image view
+            if(type==1){
                 if (currentItem.mode == 1) {
                     tv_type_indicator.text=currentItem.transactionInfo.remitter.name
                     iv_type_indicator_load_emcash.setBackgroundResource(R.drawable.ic_inbound)
@@ -77,12 +77,16 @@ class WalletActivityDetailsAdapter(val data : List<WalletActivityItem>):Recycler
             else if(type==2){
                 iv_type_indicator_load_emcash.setBackgroundResource(R.drawable.ic_icon_load_emcash)
                 iv_type_indicator_load_emcash.show()
-                tv_type_indicator.text="Emcash Loaded"
+                tv_type_indicator.text="Loaded"
+                tv_value_emcash.text = currentItem.transactionInfo.amount.toString()
+                tv_value_changed.text = "+${currentItem.transactionInfo.amount}"
             }else if(type==3){
                 iv_type_indicator_load_emcash.setBackgroundResource(R.drawable.ic_icon_convert)
                 iv_type_indicator_load_emcash.show()
-                tv_type_indicator.text="Emcash Converted"
-
+                tv_type_indicator.text="Converted"
+                tv_value_emcash.text = currentItem.transactionInfo.amount.toString()
+                tv_value_changed.text = "AED ${currentItem.transactionInfo.amount}"
+                iv_coin_image.hide()
             }else if(type ==4 ){
                 if (currentItem.mode == 1) {
                     tv_type_indicator.text=currentItem.transactionInfo.remitter.name
@@ -94,13 +98,13 @@ class WalletActivityDetailsAdapter(val data : List<WalletActivityItem>):Recycler
 
                 }
             }
-            if (currentItem.mode == 1) {
-                tv_value_changed.text="+"+currentItem.transactionInfo.amount.toString()+" EmCash"
-
-            } else {
-                tv_value_changed.text="-"+currentItem.transactionInfo.amount.toString()+" EmCash"
-
-            }
+//            if (currentItem.mode == 1) {
+//                tv_value_changed.text="+"+currentItem.transactionInfo.amount.toString()+" EmCash"
+//
+//            } else {
+//                tv_value_changed.text="-"+currentItem.transactionInfo.amount.toString()+" EmCash"
+//
+//            }
             tv_balance.apply {
                 tv_balance.text = currentItem.balance.toString()
                 if (currentItem.mode == 1) {
