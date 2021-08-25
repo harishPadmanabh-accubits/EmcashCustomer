@@ -39,6 +39,10 @@ class NewPaymentActivity : AppCompatActivity(), EasyPermissions.PermissionCallba
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_new_payment)
+        if(intent.getIntExtra(KEY_BEN_ID,0)>0)
+            viewModel.beneficiaryId = intent.getIntExtra(KEY_BEN_ID,0)
+
+
         if (source == SCREEN_HOME_RECENT_CONTACTS)
             viewModel.gotoScreen(CHAT)
         handleDestinations(destination)

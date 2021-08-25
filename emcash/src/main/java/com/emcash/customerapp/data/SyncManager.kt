@@ -87,11 +87,11 @@ class SyncManager(val context: Context) {
 
     var initiatedRefId:String?
     get()=try{
-        sharedPreferences.getString(KEY_REF_IF,"")
+        sharedPreferences.getString(KEY_REF_ID,"")
     }catch (e:Exception){
         null
     }
-    set(value) = editor.putString(KEY_REF_IF,value).apply()
+    set(value) = editor.putString(KEY_REF_ID,value).apply()
 
 
 

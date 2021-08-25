@@ -76,5 +76,12 @@ interface EmCashApis {
         @Query("limit") limit: Int
     ):Response<TransactionHistoryResponse>
 
+    @GET("v1/customers/contacts/{user_id}/transactions")
+     fun getTransactionHistoryAsync(
+        @Path("user_id") userId: Int,
+        @Query("page") page: Int,
+        @Query("limit") limit: Int
+    ):Call<TransactionHistoryResponse>
+
 
 }

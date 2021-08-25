@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.emcash.customerapp.R
 import com.emcash.customerapp.extensions.toFormattedTime
 import com.emcash.customerapp.model.payments.TransactionHistory
-import com.emcash.customerapp.utils.KEY_REF_IF
+import com.emcash.customerapp.utils.KEY_REF_ID
 import kotlinx.android.synthetic.main.row_payment_chat_item.view.*
 
 class PaymentItemListAdapter(
@@ -31,7 +31,7 @@ class PaymentItemListAdapter(
 
             ll_chat_receive.setOnClickListener {
                 var bundle = bundleOf(
-                    KEY_REF_IF to transactions[position].id
+                    KEY_REF_ID to transactions[position].id
                 )
 
                // findNavController().navigate(R.id.transferpaymentRecieptFragment, bundle)
@@ -40,7 +40,7 @@ class PaymentItemListAdapter(
             ll_chat_send.setOnClickListener {
 
                 var bundle = bundleOf(
-                    KEY_REF_IF to transactions[position].id
+                    KEY_REF_ID to transactions[position].id
                 )
 
              //   findNavController().navigate(R.id.transferpaymentRecieptFragment, bundle)

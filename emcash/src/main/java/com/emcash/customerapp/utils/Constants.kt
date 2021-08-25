@@ -23,9 +23,8 @@ const val KEY_PROFILE_DATA_CACHE =  "profile_data"
 const val KEY_TOPUP_AMOUNT = "topup"
 const val KEY_TOPUP_DESC = "topup_desc"
 const val KEY_SELECTED_CONTACT = "selected_contact"
-const val KEY_REF_IF = "ref_id"
-
-
+const val KEY_REF_ID = "ref_id"
+const val KEY_BEN_ID = "ben_id"
 /**
  * Screen Keys
  */

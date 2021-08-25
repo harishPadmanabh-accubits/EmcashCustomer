@@ -8,9 +8,7 @@ import com.emcash.customerapp.data.network.EmCashApiManager
 import com.emcash.customerapp.extensions.awaitResponse
 import com.emcash.customerapp.model.contacts.Contact
 import com.emcash.customerapp.model.contacts.ContactItem
-import com.emcash.customerapp.model.payments.PaymentRequest
-import com.emcash.customerapp.model.payments.TransactionDetailsResponse
-import com.emcash.customerapp.model.payments.TransferRequest
+import com.emcash.customerapp.model.payments.*
 import com.emcash.customerapp.model.transactions.RecentTransactionResponse
 import timber.log.Timber
 
@@ -99,4 +97,13 @@ class PaymentRepository(private val context: Context) {
 
     }
 
+    fun getTransactions(userId:Int,onApiCallBack: (status: Boolean, response: TransactionHistoryResponse.Data?, error: String?) -> Unit){
+        api.getTransactionHistoryAsync(userId,1,10).awaitResponse(onSuccess = {
+            onApiCallBack(true,it?.data,null)
+
+        },onFailure = {
+            onApiCallBack(false,null,it)
+
+        })
+    }
 }

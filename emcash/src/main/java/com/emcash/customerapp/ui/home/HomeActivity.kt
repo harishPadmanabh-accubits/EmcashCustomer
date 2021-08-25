@@ -294,6 +294,10 @@ class HomeActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks,
     }
 
     override fun onSelectedFromRecentContacts(contact: RecentTransactionItem) {
+        openActivity(NewPaymentActivity::class.java) {
+            this.putInt(LAUNCH_SOURCE, SCREEN_HOME_RECENT_CONTACTS)
+            this.putInt(KEY_BEN_ID,contact.userId)
+        }
     }
 
     override fun onSelectedFromAllContacts(contact: ContactItem) {

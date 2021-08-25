@@ -17,6 +17,7 @@ import com.emcash.customerapp.model.contacts.Contact
 import com.emcash.customerapp.model.contacts.ContactItem
 import com.emcash.customerapp.model.payments.PaymentRequest
 import com.emcash.customerapp.model.payments.TransactionDetailsResponse
+import com.emcash.customerapp.model.payments.TransactionHistoryResponse
 import com.emcash.customerapp.model.transactions.RecentTransactionItem
 import com.emcash.customerapp.ui.newPayment.NewPaymentScreens.*
 import com.emcash.customerapp.ui.newPayment.adapters.TransactionHistoryPagingSource
@@ -39,6 +40,8 @@ class NewPaymentViewModel(val app: Application) : AndroidViewModel(app) {
     val screenConfig: LiveData<ScreenConfig> get() = _screenConfig
 
     val validPin = "0000"
+
+    var beneficiaryId=0
 
     fun gotoScreen(screen: NewPaymentScreens, bundle: Bundle? = null) {
         if (bundle != null)
@@ -196,10 +199,23 @@ class NewPaymentViewModel(val app: Application) : AndroidViewModel(app) {
     val transactionHistory = Pager(PagingConfig(pageSize = 20)) {
         TransactionHistoryPagingSource(
             paymentRepository.api,
-            1
+            beneficiaryId
         )
     }.flow
         .cachedIn(viewModelScope)
+
+    val _history=MutableLiveData<ApiMapper<TransactionHistoryResponse.Data>>()
+    fun getHistory(): LiveData<ApiMapper<TransactionHistoryResponse.Data>> {
+        _history.value = ApiMapper(ApiCallStatus.LOADING,null,null)
+        paymentRepository.getTransactions(beneficiaryId){
+            status, response, error ->
+            when(status){
+                true->_history.value = ApiMapper(ApiCallStatus.SUCCESS,response,null)
+                false->_history.value = ApiMapper(ApiCallStatus.ERROR,null,error)
+            }
+        }
+        return _history
+    }
 }
 
 enum class NewPaymentScreens {

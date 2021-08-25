@@ -39,6 +39,7 @@ class PaymentReceiptFragment:Fragment(R.layout.payment_reciept) {
                         ApiCallStatus.SUCCESS->{
                             loader.hideLoader()
                             val details = it.data
+                            beneficiaryId = details?.transferUserInfo?.userId ?: 0
                             details?.let {transactionDetails->
                                 renderReceipt(transactionDetails)
                             }
@@ -152,7 +153,6 @@ class PaymentReceiptFragment:Fragment(R.layout.payment_reciept) {
         tv_transaction_id.text= trimID(details.id)
         tv_wallet_id.text= trimID(details.walletTransactionInfo?.walletId.toString())
         tv_desc.text=details.description
-
 
     }
 
