@@ -36,6 +36,7 @@ const val INTRO_SCREEN = 204
 const val SCREEN_SETTINGS = 205
 const val SCREEN_RECEIPT = 206
 const val SCREEN_CHAT = 207
+const val SCREEN_CONTACTS = 208
 
 /*
     Contacts Page Items

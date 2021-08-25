@@ -56,7 +56,7 @@ class PaymentItemListAdapter(
                 ll_chat_receive.visibility = View.VISIBLE
                 ll_chat_send.visibility = View.GONE
 
-                if (!transactions[position].isConfirm) {
+                if (transactions[position].isConfirm) {
                     ll_button_holder.visibility = View.VISIBLE
                 } else {
                     ll_button_holder.visibility = View.GONE

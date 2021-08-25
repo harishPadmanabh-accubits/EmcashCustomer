@@ -9,7 +9,5 @@ data class TransferRequest(
     @SerializedName("latitude")
     val latitude: Double=0.0,
     @SerializedName("longitude")
-    val longitude: Double=0.0,
-    @SerializedName("pin")
-    val pin: Int=123456
+    val longitude: Double=0.0
 )

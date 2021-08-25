@@ -26,7 +26,7 @@ class TransactionHistoryPagingSource(
         val alltransactions = response.body()?.data?.transactions
         val groupedTransactions = groupPaymentTransactionsByDate(ArrayList(alltransactions))
         return LoadResult.Page(
-            data = groupedTransactions,
+            data = groupedTransactions.asReversed(),
             prevKey = if (nextPage == 1) null else nextPage - 1,
             nextKey =if(nextPage==response?.body()?.data?.totalPages) null else response?.body()?.data?.page?.plus(1)
         )
@@ -67,7 +67,7 @@ class TransactionHistoryPagingSource(
 
 
         }
-        return paymentActivityList //pass this to adapter
+        return paymentActivityList//pass this to adapter
     }
 
 }

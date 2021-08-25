@@ -89,17 +89,22 @@ class EmCashHelper(val appContext: Context,val listener:EmCashListener) {
     }
 
     fun proceedToTransfer(){
-        val intent = Intent(appContext, NewPaymentActivity::class.java).also {
-            it.setFlags(FLAG_ACTIVITY_NEW_TASK)
-        }
-        intent.putExtra(LAUNCH_SOURCE, SCREEN_RECEIPT)
-        intent.putExtra(LAUNCH_DESTINATION, SCREEN_RECEIPT)
+
         PaymentRepository(appContext).transferAmount { status, error ->
             when(status){
                 true->{
+                    val intent = Intent(appContext, NewPaymentActivity::class.java).also {
+                        it.setFlags(FLAG_ACTIVITY_NEW_TASK)
+                    }
+                    intent.putExtra(LAUNCH_SOURCE, SCREEN_RECEIPT)
+                    intent.putExtra(LAUNCH_DESTINATION, SCREEN_RECEIPT)
                     appContext.startActivity(intent)
                 }
                 false->{
+                    val intent = Intent(appContext, HomeActivity::class.java).also {
+                        it.setFlags(FLAG_ACTIVITY_NEW_TASK)
+                    }
+                    appContext.showShortToast("Transfer Failed.Try again after some time.")
                     appContext.startActivity(intent)
                 }
             }

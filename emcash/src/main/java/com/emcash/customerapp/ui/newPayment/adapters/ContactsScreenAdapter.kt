@@ -15,6 +15,7 @@ import com.emcash.customerapp.model.transactions.RecentTransactionItem
 import com.emcash.customerapp.ui.home.adapter.RecentTransactionsAdapter
 import com.emcash.customerapp.utils.ITEM_ALL_CONTACTS
 import com.emcash.customerapp.utils.ITEM_RECENT_CONTACTS
+import com.emcash.customerapp.utils.SCREEN_CONTACTS
 import java.lang.IllegalArgumentException
 
 class ContactsScreenAdapter(var contactsPageItems: ArrayList<ContactsPageItems>,val listener: ContactsListener) :
@@ -48,7 +49,9 @@ class ContactsScreenAdapter(var contactsPageItems: ArrayList<ContactsPageItems>,
         private val recentContactsRecyclerView: RecyclerView = itemView.findViewById(R.id.rv_recent_contacts)
 
         fun bind(recentContactList: ArrayList<RecentTransactionItem>, listener: ContactsListener) {
-            recentContactsRecyclerView.adapter = RecentTransactionsAdapter(recentContactList.toList(),listener)
+            recentContactsRecyclerView.adapter = RecentTransactionsAdapter(recentContactList.toList(),listener).also {
+                it.source = SCREEN_CONTACTS
+            }
         }
     }
 

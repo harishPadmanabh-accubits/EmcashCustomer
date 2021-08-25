@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.emcash.customerapp.R
 import com.emcash.customerapp.model.transactions.RecentTransactionItem
 import com.emcash.customerapp.ui.newPayment.adapters.ContactsListener
+import com.emcash.customerapp.utils.SCREEN_HOME_RECENT_CONTACTS
 import kotlinx.android.synthetic.main.item_recent_payment.view.*
 import java.lang.IllegalStateException
 
@@ -14,12 +15,19 @@ class RecentTransactionsAdapter(val transactions : List<RecentTransactionItem>,v
 
     var shouldShowViewAll = transactions.size>=9
 
+    var source = SCREEN_HOME_RECENT_CONTACTS
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when(viewType){
             TYPE_USER ->{
+                if(source== SCREEN_HOME_RECENT_CONTACTS)
                 RecentTransactionsViewHolder(
                     LayoutInflater.from(parent.context).inflate(R.layout.item_recent_payment, parent, false)
                 )
+                else
+                    RecentTransactionsViewHolder(
+                        LayoutInflater.from(parent.context).inflate(R.layout.item_recent_contacts_screen, parent, false)
+                    )
             }
             TYPE_VIEW_ALL->{
                 ViewAllViewHolder(
@@ -72,7 +80,8 @@ class RecentTransactionsAdapter(val transactions : List<RecentTransactionItem>,v
     class RecentTransactionsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
         fun bind(user: RecentTransactionItem, listener: ContactsListener){
 
-            itemView.level_image.setProfileName(user.name)
+            val firstname = user.name.split(" ")
+            itemView.level_image.setProfileName(firstname[0])
             itemView.level_image.setLevel(user.level)
             if(user.profileImage!==null){
                 itemView.level_image.setProfileImage(user.profileImage)
