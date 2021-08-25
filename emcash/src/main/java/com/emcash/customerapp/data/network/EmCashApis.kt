@@ -22,50 +22,59 @@ import retrofit2.http.*
 interface EmCashApis {
 
     @POST("v1/customers/auth/usercheck")
-    fun checkIfUserExist(@Body checkRequest: UserExistCheckRequest):Call<UserExistCheckResponse>
+    fun checkIfUserExist(@Body checkRequest: UserExistCheckRequest): Call<UserExistCheckResponse>
 
     @POST("v1/customers/auth/switch")
     fun switchAccount(@Body switchAccountRequest: SwitchAccountRequest): Call<SwitchAccountResponse>
 
     @GET("v1/customers/profile")
-    fun getProfileDetails():Call<ProfileDetailsResponse>
+    fun getProfileDetails(): Call<ProfileDetailsResponse>
 
     @GET("v1/customers/termsandconditions")
-    fun getTnc():Call<TncResponse>
+    fun getTnc(): Call<TncResponse>
 
     @GET("v1/customers/transactions/recent?page=1&limit=9")
-    fun getRecentTransactions():Call<RecentTransactionResponse>
+    fun getRecentTransactions(): Call<RecentTransactionResponse>
 
     @GET("v1/customers/transactions/wallet?")
-   suspend fun getWalletTransactions(
-        @Query("page") page:Int,
-        @Query("limit") limit:Int
-    ):Response<WalletActivityResponse>
+    suspend fun getWalletTransactions(
+        @Query("page") page: Int,
+        @Query("limit") limit: Int
+    ): Response<WalletActivityResponse>
 
-   @POST("v1/customers/wallet/topup")
-   fun topupWallet(@Body topupRequest: WalletTopupRequest):Call<WalletTopupResponse>
+    @POST("v1/customers/wallet/topup")
+    fun topupWallet(@Body topupRequest: WalletTopupRequest): Call<WalletTopupResponse>
 
-   @POST("v1/customers/wallet/withdraw")
-   fun withdrawFromWallet(
-       @Body withdrawRequest: WalletWithdrawRequest
-   ):Call<WalletWithdrawResponse>
+    @POST("v1/customers/wallet/withdraw")
+    fun withdrawFromWallet(
+        @Body withdrawRequest: WalletWithdrawRequest
+    ): Call<WalletWithdrawResponse>
 
-   @GET("v1/customers/contacts")
-   fun getAllContacts(
-       @Query("search") search: String,
-       @Query("page") page:Int,
-       @Query("limit") limit:Int
-   ):Call<AllContactsResponse>
+    @GET("v1/customers/contacts")
+    fun getAllContacts(
+        @Query("search") search: String,
+        @Query("page") page: Int,
+        @Query("limit") limit: Int
+    ): Call<AllContactsResponse>
 
-   @GET("v1/customers/contacts/{id}")
-   fun getContactDetails(@Path("id") id:Int):Call<ContactDetails>
+    @GET("v1/customers/contacts/{id}")
+    fun getContactDetails(@Path("id") id: Int): Call<ContactDetails>
 
-   @POST("v1/customers/payments/initiate")
-   fun initPayment(@Body paymentRequest: PaymentRequest):Call<PaymentResponse>
+    @POST("v1/customers/payments/initiate")
+    fun initPayment(@Body paymentRequest: PaymentRequest): Call<PaymentResponse>
 
-   @POST("v1/customers/payments/transfer")
-   fun transferAmount(@Body transferRequest: TransferRequest):Call<TransferResponse>
+    @POST("v1/customers/payments/transfer")
+    fun transferAmount(@Body transferRequest: TransferRequest): Call<TransferResponse>
 
-   @GET("v1/customers/transactions/main/{ref_id}")
-   fun getTransactionDetails(@Path("ref_id") refId:String):Call<TransactionDetails>
+    @GET("v1/customers/transactions/main/{ref_id}")
+    fun getTransactionDetails(@Path("ref_id") refId: String): Call<TransactionDetailsResponse>
+
+    @GET("v1/customers/contacts/{user_id}/transactions")
+    suspend fun getTransactionHistory(
+        @Path("user_id") userId: Int,
+        @Query("page") page: Int,
+        @Query("limit") limit: Int
+    ):Response<TransactionHistoryResponse>
+
+
 }

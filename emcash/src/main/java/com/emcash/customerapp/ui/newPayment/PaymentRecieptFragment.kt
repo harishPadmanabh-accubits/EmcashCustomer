@@ -8,7 +8,7 @@ import androidx.lifecycle.Observer
 import com.emcash.customerapp.R
 import com.emcash.customerapp.data.network.ApiCallStatus
 import com.emcash.customerapp.extensions.*
-import com.emcash.customerapp.model.payments.TransactionDetails
+import com.emcash.customerapp.model.payments.TransactionDetailsResponse
 import com.emcash.customerapp.utils.LoaderDialog
 import kotlinx.android.synthetic.main.payment_reciept.*
 import kotlinx.android.synthetic.main.payment_reciept.iv_user_dp
@@ -53,7 +53,7 @@ class PaymentReceiptFragment:Fragment(R.layout.payment_reciept) {
         }
     }
 
-    private fun renderReceipt(details: TransactionDetails.Data) {
+    private fun renderReceipt(details: TransactionDetailsResponse.Data) {
         fl_user_level.setlevel(details.transferUserInfo.level)
         iv_user_dp.loadImageWithPlaceHolder(details.transferUserInfo.profileImage,R.drawable.ic_profile_placeholder)
         tv_user_name.text = details.transferUserInfo.name
@@ -78,14 +78,15 @@ class PaymentReceiptFragment:Fragment(R.layout.payment_reciept) {
 
             }
 
-            iv_status.setBackgroundResource(R.drawable.ic_payment_success)
+            iv_status.loadImageWithResId(R.drawable.ic_payment_success)
+           // iv_status.setBackgroundResource(R.drawable.ic_payment_success)
             //iv_status_point.setBackgroundResource(R.drawable.ic_green_ellipse)
         } else if (status == 2) {
             tv_payment_type.text = "Payment In Progress"
            // tv_payment_status2.text=getString(R.string.payment_inprogress)
           //  tv_request_status.text=getString(R.string.payment_inprogress)
 
-            iv_status.setBackgroundResource(R.drawable.ic_payment_pending)
+            iv_status.loadImageWithResId(R.drawable.ic_payment_pending)
             if(type==1){
             //    tv_request_status.text="Transfer In Progress"
                 tv_payment_type.text = "Transfer In Progress"
@@ -111,7 +112,7 @@ class PaymentReceiptFragment:Fragment(R.layout.payment_reciept) {
                 tv_payment_type.text="Request Failed"
 
             }
-            iv_status.setBackgroundResource(R.drawable.ic_paymnet_failed)
+            iv_status.loadImageWithResId(R.drawable.ic_paymnet_failed)
          //   iv_status_point.setBackgroundResource(R.drawable.ic_red_ellipse)
 
         }else if(status==4){
@@ -133,17 +134,17 @@ class PaymentReceiptFragment:Fragment(R.layout.payment_reciept) {
 
         if(!details.handShakingStatus){
             if(status==4){
-                iv_handshake.setBackgroundResource(R.drawable.ic_handshake_rejected)
+                iv_handshake.loadImageWithResId(R.drawable.ic_handshake_rejected)
                 tv_handshake_date.visibility=View.GONE
                 tv_handshake_status.visibility=View.INVISIBLE
             }else if(status==2){
-                iv_handshake.setBackgroundResource(R.drawable.ic_handshakepending)
+                iv_handshake.loadImageWithResId(R.drawable.ic_handshakepending)
                 tv_handshake_date.visibility=View.GONE
                 tv_handshake_status.visibility=View.INVISIBLE
             }
 
         }else{
-            iv_handshake.setBackgroundResource(R.drawable.handshake)
+            iv_handshake.loadImageWithResId(R.drawable.handshake)
             tv_handshake_date.visibility=View.VISIBLE
             tv_handshake_status.visibility=View.VISIBLE
 

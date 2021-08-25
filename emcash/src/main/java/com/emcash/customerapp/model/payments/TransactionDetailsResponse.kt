@@ -3,7 +3,7 @@ package com.emcash.customerapp.model.payments
 
 import com.google.gson.annotations.SerializedName
 
-data class TransactionDetails(
+data class TransactionDetailsResponse(
     @SerializedName("data")
     val `data`: Data,
     @SerializedName("error")

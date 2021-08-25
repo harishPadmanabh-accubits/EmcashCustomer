@@ -519,3 +519,12 @@ fun trimID(string: String): String? {
 
 }
 
+fun getCurrentDate(): String {
+    val sdfInput = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX", Locale.getDefault())
+    val sdfOutput = SimpleDateFormat("dd MMM yyyy")
+    sdfOutput.timeZone = TimeZone.getTimeZone("Etc/UTC")
+    val formatted = sdfOutput.format(Date())
+
+
+    return formatted
+}

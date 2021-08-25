@@ -3,6 +3,9 @@ package com.emcash.customerapp.ui.newPayment
 import android.app.Application
 import android.os.Bundle
 import androidx.lifecycle.*
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.cachedIn
 import com.emcash.customerapp.data.SyncManager
 import com.emcash.customerapp.data.network.ApiCallStatus
 import com.emcash.customerapp.data.network.ApiMapper
@@ -13,14 +16,14 @@ import com.emcash.customerapp.model.*
 import com.emcash.customerapp.model.contacts.Contact
 import com.emcash.customerapp.model.contacts.ContactItem
 import com.emcash.customerapp.model.payments.PaymentRequest
-import com.emcash.customerapp.model.payments.TransactionDetails
+import com.emcash.customerapp.model.payments.TransactionDetailsResponse
 import com.emcash.customerapp.model.transactions.RecentTransactionItem
 import com.emcash.customerapp.ui.newPayment.NewPaymentScreens.*
+import com.emcash.customerapp.ui.newPayment.adapters.TransactionHistoryPagingSource
 import com.emcash.customerapp.utils.ITEM_ALL_CONTACTS
 import com.emcash.customerapp.utils.ITEM_RECENT_CONTACTS
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import timber.log.Timber
 
@@ -177,8 +180,8 @@ class NewPaymentViewModel(val app: Application) : AndroidViewModel(app) {
         })
     }
 
-    val _transactionDetails=MutableLiveData<ApiMapper<TransactionDetails.Data>>()
-    fun getTransactionDetails(refId: String):LiveData<ApiMapper<TransactionDetails.Data>>{
+    val _transactionDetails=MutableLiveData<ApiMapper<TransactionDetailsResponse.Data>>()
+    fun getTransactionDetails(refId: String):LiveData<ApiMapper<TransactionDetailsResponse.Data>>{
         _transactionDetails.value =  ApiMapper(ApiCallStatus.LOADING, null, null)
         paymentRepository.getTransactionDetails(refId,onApiCallBack = {
             status, response, error ->
@@ -189,6 +192,14 @@ class NewPaymentViewModel(val app: Application) : AndroidViewModel(app) {
         })
         return _transactionDetails
     }
+
+    val transactionHistory = Pager(PagingConfig(pageSize = 20)) {
+        TransactionHistoryPagingSource(
+            paymentRepository.api,
+            1
+        )
+    }.flow
+        .cachedIn(viewModelScope)
 }
 
 enum class NewPaymentScreens {

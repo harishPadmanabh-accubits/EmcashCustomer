@@ -4,21 +4,19 @@ import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.emcash.customerapp.data.SyncManager
-import com.emcash.customerapp.data.network.ApiCallStatus
-import com.emcash.customerapp.data.network.ApiMapper
 import com.emcash.customerapp.data.network.EmCashApiManager
 import com.emcash.customerapp.extensions.awaitResponse
 import com.emcash.customerapp.model.contacts.Contact
 import com.emcash.customerapp.model.contacts.ContactItem
 import com.emcash.customerapp.model.payments.PaymentRequest
-import com.emcash.customerapp.model.payments.TransactionDetails
+import com.emcash.customerapp.model.payments.TransactionDetailsResponse
 import com.emcash.customerapp.model.payments.TransferRequest
 import com.emcash.customerapp.model.transactions.RecentTransactionResponse
 import timber.log.Timber
 
 class PaymentRepository(private val context: Context) {
     private val syncManager = SyncManager(context)
-    private val api = EmCashApiManager(context).api
+     val api = EmCashApiManager(context).api
     fun getRecentTransactions(): LiveData<RecentTransactionResponse.Data> {
         val _transactions = MutableLiveData<RecentTransactionResponse.Data>()
         api.getRecentTransactions()
@@ -89,7 +87,7 @@ class PaymentRepository(private val context: Context) {
         }
     }
 
-    fun getTransactionDetails(refId:String,onApiCallBack: (status: Boolean, response: TransactionDetails.Data?, error: String?) -> Unit){
+    fun getTransactionDetails(refId:String,onApiCallBack: (status: Boolean, response: TransactionDetailsResponse.Data?, error: String?) -> Unit){
         api.getTransactionDetails(refId).awaitResponse(onSuccess = {
             if(it?.status==true)
                 onApiCallBack(true,it?.data,null)
