@@ -83,5 +83,8 @@ interface EmCashApis {
         @Query("limit") limit: Int
     ):Call<TransactionHistoryResponse>
 
+     @POST("v1/customers/payments/request")
+     fun requestPayment(@Body paymentRequest: PaymentRequest):Call<PaymentResponse>
+
 
 }

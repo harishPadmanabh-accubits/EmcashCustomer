@@ -14,7 +14,7 @@ import timber.log.Timber
 
 class PaymentRepository(private val context: Context) {
     private val syncManager = SyncManager(context)
-     val api = EmCashApiManager(context).api
+    val api = EmCashApiManager(context).api
     fun getRecentTransactions(): LiveData<RecentTransactionResponse.Data> {
         val _transactions = MutableLiveData<RecentTransactionResponse.Data>()
         api.getRecentTransactions()
@@ -58,11 +58,10 @@ class PaymentRepository(private val context: Context) {
         onApiCallBack: (status: Boolean, response: String?, error: String?) -> Unit
     ) {
         api.initPayment(paymentRequest).awaitResponse(onSuccess = {
-            if (!it?.data?.referenceId.isNullOrEmpty()){
-                syncManager.initiatedRefId =it?.data?.referenceId
+            if (!it?.data?.referenceId.isNullOrEmpty()) {
+                syncManager.initiatedRefId = it?.data?.referenceId
                 onApiCallBack(true, it?.data?.referenceId, null)
-            }
-            else
+            } else
                 onApiCallBack(false, null, "Reference id null")
         }, onFailure = {
             onApiCallBack(false, null, it)
@@ -70,40 +69,61 @@ class PaymentRepository(private val context: Context) {
 
     }
 
-    fun transferAmount(onTransferCallBack:(status:Boolean,error:String?)->Unit){
+    fun transferAmount(onTransferCallBack: (status: Boolean, error: String?) -> Unit) {
         val refId = syncManager.initiatedRefId
         Timber.e("refid in repo for transfer $refId")
-        if(!refId.isNullOrEmpty()){
+        if (!refId.isNullOrEmpty()) {
             val request = TransferRequest(refId)
             api.transferAmount(request).awaitResponse(onSuccess = {
                 val status = it?.status ?: false
-                onTransferCallBack(true,null)
-            },onFailure = {
-                onTransferCallBack(false,it)
+                onTransferCallBack(true, null)
+            }, onFailure = {
+                onTransferCallBack(false, it)
             })
 
         }
     }
 
-    fun getTransactionDetails(refId:String,onApiCallBack: (status: Boolean, response: TransactionDetailsResponse.Data?, error: String?) -> Unit){
+    fun getTransactionDetails(
+        refId: String,
+        onApiCallBack: (status: Boolean, response: TransactionDetailsResponse.Data?, error: String?) -> Unit
+    ) {
         api.getTransactionDetails(refId).awaitResponse(onSuccess = {
-            if(it?.status==true)
-                onApiCallBack(true,it?.data,null)
+            if (it?.status == true)
+                onApiCallBack(true, it?.data, null)
             else
-                onApiCallBack(false,null,it?.message)
-        },onFailure = {
-            onApiCallBack(false,null,it)
+                onApiCallBack(false, null, it?.message)
+        }, onFailure = {
+            onApiCallBack(false, null, it)
         })
 
     }
 
-    fun getTransactions(userId:Int,onApiCallBack: (status: Boolean, response: TransactionHistoryResponse.Data?, error: String?) -> Unit){
-        api.getTransactionHistoryAsync(userId,1,10).awaitResponse(onSuccess = {
-            onApiCallBack(true,it?.data,null)
+    fun getTransactions(
+        userId: Int,
+        onApiCallBack: (status: Boolean, response: TransactionHistoryResponse.Data?, error: String?) -> Unit
+    ) {
+        api.getTransactionHistoryAsync(userId, 1, 10).awaitResponse(onSuccess = {
+            onApiCallBack(true, it?.data, null)
 
-        },onFailure = {
-            onApiCallBack(false,null,it)
+        }, onFailure = {
+            onApiCallBack(false, null, it)
 
+        })
+    }
+
+    fun requestPayment(
+        paymentRequest: PaymentRequest,
+        onApiCallBack: (status: Boolean, response: String?, error: String?) -> Unit
+    ){
+        api.requestPayment(paymentRequest).awaitResponse(onSuccess = {
+            if (!it?.data?.referenceId.isNullOrEmpty()) {
+                syncManager.initiatedRefId = it?.data?.referenceId
+                onApiCallBack(true, it?.data?.referenceId, null)
+            } else
+                onApiCallBack(false, null, "Reference id null")
+        }, onFailure = {
+            onApiCallBack(false, null, it)
         })
     }
 }

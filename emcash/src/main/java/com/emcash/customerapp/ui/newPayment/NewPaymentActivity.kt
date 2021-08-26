@@ -127,7 +127,7 @@ class NewPaymentActivity : AppCompatActivity(), EasyPermissions.PermissionCallba
                 android.R.anim.fade_in,
                 android.R.anim.fade_out
             )
-            replace<PaymentChatFragment>(R.id.container)
+            replace<PaymentChatFragment>(R.id.container,"Chats",bundle)
         }
     }
 

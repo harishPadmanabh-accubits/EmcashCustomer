@@ -25,6 +25,7 @@ const val KEY_TOPUP_DESC = "topup_desc"
 const val KEY_SELECTED_CONTACT = "selected_contact"
 const val KEY_REF_ID = "ref_id"
 const val KEY_BEN_ID = "ben_id"
+const val KEY_TRANSACTION_TYPE="trans_type"
 /**
  * Screen Keys
  */
@@ -46,4 +47,8 @@ const val ITEM_ALL_CONTACTS = 1001
 
 
 const val BASE_URL: String = "https://emcash-api-dev.devtomaster.com/"
+
+const val TYPE_TRANSFER = "Transfer"
+const val TYPE_REQUEST = "Request"
+
 

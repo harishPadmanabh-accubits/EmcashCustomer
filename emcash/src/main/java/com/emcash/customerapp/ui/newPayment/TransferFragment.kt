@@ -17,12 +17,12 @@ import com.emcash.customerapp.extensions.*
 import com.emcash.customerapp.model.contacts.Contact
 import com.emcash.customerapp.model.contacts.ContactItem
 import com.emcash.customerapp.ui.prepare.BottomSheetListener
-import com.emcash.customerapp.utils.KEY_SELECTED_CONTACT
-import com.emcash.customerapp.utils.LoaderDialog
+import com.emcash.customerapp.utils.*
 import kotlinx.android.synthetic.main.bottom_sheet_how_it_works.*
 import kotlinx.android.synthetic.main.transfer_fragment.*
 import kotlinx.android.synthetic.main.transfer_fragment.fl_bottom_sheet
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 class TransferFragment : Fragment(R.layout.transfer_fragment), BottomSheetListener {
 
@@ -72,9 +72,35 @@ class TransferFragment : Fragment(R.layout.transfer_fragment), BottomSheetListen
 
     }
 
+    fun request(){
+        val amount=if(et_value.text.toString().isNotEmpty()) et_value.text.toString().toInt() else 0
+        if(amount>0){
+            viewModel.requestPayment(amount,userId,et_description.text.toString(),onRequest = {
+                    status, refId, error ->
+                when(status){
+                    true->{
+                        viewModel.gotoScreen(NewPaymentScreens.PIN)
+                    }
+                    false->{
+                        requireActivity().showShortToast(error)
+                    }
+                }
+            })
+
+        }else{
+            requireActivity().showShortToast("Please enter a valid amount to transfer")
+        }
+
+    }
+
     private fun getContactDetails() {
         contactBundle?.let {
             val contact = it[KEY_SELECTED_CONTACT].toString().toInt() ?: 0
+            val type = it[KEY_TRANSACTION_TYPE].toString()
+            setupFab(type)
+            Timber.e("Contact id in transfer screen $contact type $type")
+
+
             userId=contact
             viewModel.getContactDetails(contact).observe(viewLifecycleOwner, Observer {
                 when (it.status) {
@@ -94,6 +120,10 @@ class TransferFragment : Fragment(R.layout.transfer_fragment), BottomSheetListen
 
 
         }
+    }
+
+    private fun setupFab(type: String) {
+      fab_transfer.text =   if(type.equals(TYPE_TRANSFER)) TYPE_TRANSFER else TYPE_REQUEST
     }
 
     private fun renderDetails(data: Contact?) {

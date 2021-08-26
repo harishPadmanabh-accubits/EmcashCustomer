@@ -2,6 +2,7 @@ package com.emcash.customerapp.ui.newPayment
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
@@ -16,7 +17,7 @@ import com.emcash.customerapp.extensions.showShortToast
 import com.emcash.customerapp.model.payments.TransactionHistoryResponse
 import com.emcash.customerapp.ui.home.HomeActivity
 import com.emcash.customerapp.ui.newPayment.adapters.PaymentChatListAdapter
-import com.emcash.customerapp.utils.LoaderDialog
+import com.emcash.customerapp.utils.*
 import kotlinx.android.synthetic.main.item_chat.*
 import kotlinx.android.synthetic.main.payment_chats.*
 import kotlinx.coroutines.Dispatchers
@@ -33,11 +34,25 @@ class PaymentChatFragment:Fragment(R.layout.payment_chats) {
 
     val loader by lazy{LoaderDialog(requireContext())}
 
+    var bundle = arguments
+
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 //        cl_chats.setOnClickListener {
 //            viewModel.gotoScreen(NewPaymentScreens.RECEIPT)
 //        }
+
+        btn_pay.setOnClickListener {
+            gotoTransferScreen()
+        }
+
+        btn_request.setOnClickListener {
+            gotoRequestScreen()
+        }
+
+
+
 
         iv_back.setOnClickListener {
             requireActivity().onBackPressed()
@@ -71,6 +86,22 @@ class PaymentChatFragment:Fragment(R.layout.payment_chats) {
             })
         }
 
+    }
+
+    private fun gotoRequestScreen() {
+        val bundle = bundleOf(
+            KEY_SELECTED_CONTACT to viewModel.beneficiaryId.toString(),
+            KEY_TRANSACTION_TYPE to TYPE_REQUEST
+        )
+        viewModel.gotoScreen(NewPaymentScreens.TRANSFER,bundle)
+    }
+
+    private fun gotoTransferScreen() {
+        val bundle = bundleOf(
+            KEY_SELECTED_CONTACT to viewModel.beneficiaryId.toString(),
+            KEY_TRANSACTION_TYPE to TYPE_TRANSFER
+        )
+        viewModel.gotoScreen(NewPaymentScreens.TRANSFER,bundle)
     }
 
     private fun renderDetails(data: TransactionHistoryResponse.Data?) {

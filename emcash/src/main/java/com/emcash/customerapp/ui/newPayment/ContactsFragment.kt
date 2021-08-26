@@ -6,6 +6,7 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.DefaultItemAnimator
 import com.emcash.customerapp.R
 import com.emcash.customerapp.extensions.afterTextChanged
 import com.emcash.customerapp.extensions.toJson
@@ -42,6 +43,7 @@ class ContactsFragment:Fragment(R.layout.layout_contacts_fragment),ContactsListe
             getContactScreenItems()
             contactScreenItems.observe(viewLifecycleOwner, Observer {
                 listenForQuerry(it)
+                rv_contact_items.itemAnimator = DefaultItemAnimator()
                 rv_contact_items.adapter =ContactsScreenAdapter(it,this@ContactsFragment)
             })
         }
@@ -65,7 +67,7 @@ class ContactsFragment:Fragment(R.layout.layout_contacts_fragment),ContactsListe
         val bundle = bundleOf(
             KEY_SELECTED_CONTACT to contact.userId
         )
-        viewModel.gotoScreen(NewPaymentScreens.TRANSFER,bundle)
+        viewModel.gotoScreen(NewPaymentScreens.CHAT,bundle)
 
 
     }
@@ -74,7 +76,8 @@ class ContactsFragment:Fragment(R.layout.layout_contacts_fragment),ContactsListe
         val bundle = bundleOf(
             KEY_SELECTED_CONTACT to contact.id
         )
-        viewModel.gotoScreen(NewPaymentScreens.TRANSFER,bundle)
+        viewModel.beneficiaryId = contact.id.toInt()
+        viewModel.gotoScreen(NewPaymentScreens.CHAT,bundle)
 
     }
 }

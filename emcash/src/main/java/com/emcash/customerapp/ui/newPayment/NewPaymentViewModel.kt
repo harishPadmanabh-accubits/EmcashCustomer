@@ -103,7 +103,7 @@ class NewPaymentViewModel(val app: Application) : AndroidViewModel(app) {
         var groupedContacts: ArrayList<GroupedContacts>? = null
         _contactScreenItems.addSource(paymentRepository.getRecentTransactions()) {
             recentContacts = ArrayList(it.transactionList)
-            viewModelScope.async(Dispatchers.Default) {
+            viewModelScope.async(Dispatchers.IO) {
                 val result = processContactScreenItems(recentContacts, groupedContacts)
                 withContext(Dispatchers.Main) {
                     _contactScreenItems.postValue(result)
@@ -113,7 +113,7 @@ class NewPaymentViewModel(val app: Application) : AndroidViewModel(app) {
         }
 
         _contactScreenItems.addSource(paymentRepository.getAllContacts()) {
-            viewModelScope.async(Dispatchers.Default) {
+            viewModelScope.async(Dispatchers.IO) {
                 val allContacts = ArrayList(it)
                 groupedContacts = groupContactsByLetters(allContacts)
                 val result = processContactScreenItems(recentContacts, groupedContacts)
@@ -179,6 +179,22 @@ class NewPaymentViewModel(val app: Application) : AndroidViewModel(app) {
             when(status){
                 true-> onInit(true,response,null)
                 false->onInit(false,null,error)
+            }
+        })
+    }
+
+    fun requestPayment(
+        amount: Int,
+        userId: Int,
+        desc: String,
+        onRequest: (status: Boolean, refId: String?, error: String?) -> Unit
+    ){
+        val request = PaymentRequest(amount, desc, userId)
+        paymentRepository.initPayment(request,onApiCallBack = {
+                status, response, error ->
+            when(status){
+                true-> onRequest(true,response,null)
+                false->onRequest(false,null,error)
             }
         })
     }

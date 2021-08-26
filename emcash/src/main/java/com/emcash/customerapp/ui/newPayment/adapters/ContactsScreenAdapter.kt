@@ -16,6 +16,7 @@ import com.emcash.customerapp.ui.home.adapter.RecentTransactionsAdapter
 import com.emcash.customerapp.utils.ITEM_ALL_CONTACTS
 import com.emcash.customerapp.utils.ITEM_RECENT_CONTACTS
 import com.emcash.customerapp.utils.SCREEN_CONTACTS
+import timber.log.Timber
 import java.lang.IllegalArgumentException
 
 class ContactsScreenAdapter(var contactsPageItems: ArrayList<ContactsPageItems>,val listener: ContactsListener) :
@@ -71,6 +72,7 @@ class ContactsScreenAdapter(var contactsPageItems: ArrayList<ContactsPageItems>,
         when(holder){
             is RecentContactsViewHolder ->{
                 currentItem.recentContactList?.let {
+                    Timber.e("Recent transactions ${it.size}")
                     if(querry.isNotEmpty())
                         it.filter {
                             it.name.contains(querry,true)
@@ -80,6 +82,7 @@ class ContactsScreenAdapter(var contactsPageItems: ArrayList<ContactsPageItems>,
             }
             is AllContactsViewHolder ->{
                 currentItem.allContactList?.let {
+                    Timber.e("All contacts ${it.size}")
                     holder.bind(it,listener,querry)
                 }
             }
