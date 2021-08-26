@@ -68,10 +68,16 @@ class WalletActivityDetailsAdapter(val data : List<WalletActivityItem>):Recycler
                 if (currentItem.mode == 1) {
                     tv_type_indicator.text=currentItem.transactionInfo.remitter.name
                     iv_type_indicator_load_emcash.setBackgroundResource(R.drawable.ic_inbound)
+                    iv_type_indicator_load_emcash.show()
+                    tv_info_emcash.hide()
+
 
                 } else {
                     iv_type_indicator_load_emcash.setBackgroundResource(R.drawable.ic_outbound)
+                    iv_type_indicator_load_emcash.show()
                     tv_type_indicator.text=currentItem.transactionInfo.beneficiary.name
+                    tv_info_emcash.hide()
+
                 }
             }
             else if(type==2){
@@ -91,10 +97,16 @@ class WalletActivityDetailsAdapter(val data : List<WalletActivityItem>):Recycler
                 if (currentItem.mode == 1) {
                     tv_type_indicator.text=currentItem.transactionInfo.remitter.name
                     iv_type_indicator_load_emcash.setBackgroundResource(R.drawable.ic_inbound)
+                    iv_type_indicator_load_emcash.show()
+                    tv_info_emcash.hide()
+
 
                 } else {
                     iv_type_indicator_load_emcash.setBackgroundResource(R.drawable.ic_outbound)
                     tv_type_indicator.text=currentItem.transactionInfo.beneficiary.name
+                    iv_type_indicator_load_emcash.show()
+                    tv_info_emcash.hide()
+
 
                 }
             }

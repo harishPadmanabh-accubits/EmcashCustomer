@@ -35,8 +35,10 @@ class TransferFragment : Fragment(R.layout.transfer_fragment), BottomSheetListen
         super.onViewCreated(view, savedInstanceState)
         et_value.requestFocus()
         fab_transfer.setOnClickListener {
-            //viewModel.gotoScreen(NewPaymentScreens.PIN)
-            transfer()
+            if (fab_transfer.text.equals(TYPE_TRANSFER))
+                transfer()
+            else if (fab_transfer.text.equals(TYPE_REQUEST))
+                request()
         }
         iv_back.setOnClickListener {
             requireActivity().onBackPressed()
@@ -52,42 +54,50 @@ class TransferFragment : Fragment(R.layout.transfer_fragment), BottomSheetListen
     }
 
     private fun transfer() {
-        val amount=if(et_value.text.toString().isNotEmpty()) et_value.text.toString().toInt() else 0
-        if(amount>0){
-            viewModel.initPayment(amount,userId,et_description.text.toString(),onInit = {
-                status, refId, error ->
-                when(status){
-                    true->{
-                        viewModel.gotoScreen(NewPaymentScreens.PIN)
+        val amount =
+            if (et_value.text.toString().isNotEmpty()) et_value.text.toString().toInt() else 0
+        if (amount > 0) {
+            viewModel.initPayment(
+                amount,
+                userId,
+                et_description.text.toString(),
+                onInit = { status, refId, error ->
+                    when (status) {
+                        true -> {
+                            viewModel.gotoScreen(NewPaymentScreens.PIN)
+                        }
+                        false -> {
+                            requireActivity().showShortToast(error)
+                        }
                     }
-                    false->{
-                        requireActivity().showShortToast(error)
-                    }
-                }
-            })
+                })
 
-        }else{
+        } else {
             requireActivity().showShortToast("Please enter a valid amount to transfer")
         }
 
     }
 
-    fun request(){
-        val amount=if(et_value.text.toString().isNotEmpty()) et_value.text.toString().toInt() else 0
-        if(amount>0){
-            viewModel.requestPayment(amount,userId,et_description.text.toString(),onRequest = {
-                    status, refId, error ->
-                when(status){
-                    true->{
-                        viewModel.gotoScreen(NewPaymentScreens.PIN)
+    fun request() {
+        val amount =
+            if (et_value.text.toString().isNotEmpty()) et_value.text.toString().toInt() else 0
+        if (amount > 0) {
+            viewModel.requestPayment(
+                amount,
+                userId,
+                et_description.text.toString(),
+                onRequest = { status, refId, error ->
+                    when (status) {
+                        true -> {
+                            viewModel.gotoScreen(NewPaymentScreens.PIN)
+                        }
+                        false -> {
+                            requireActivity().showShortToast(error)
+                        }
                     }
-                    false->{
-                        requireActivity().showShortToast(error)
-                    }
-                }
-            })
+                })
 
-        }else{
+        } else {
             requireActivity().showShortToast("Please enter a valid amount to transfer")
         }
 
@@ -101,7 +111,7 @@ class TransferFragment : Fragment(R.layout.transfer_fragment), BottomSheetListen
             Timber.e("Contact id in transfer screen $contact type $type")
 
 
-            userId=contact
+            userId = contact
             viewModel.getContactDetails(contact).observe(viewLifecycleOwner, Observer {
                 when (it.status) {
                     ApiCallStatus.SUCCESS -> {
@@ -123,7 +133,7 @@ class TransferFragment : Fragment(R.layout.transfer_fragment), BottomSheetListen
     }
 
     private fun setupFab(type: String) {
-      fab_transfer.text =   if(type.equals(TYPE_TRANSFER)) TYPE_TRANSFER else TYPE_REQUEST
+        fab_transfer.text = if (type.equals(TYPE_TRANSFER)) TYPE_TRANSFER else TYPE_REQUEST
     }
 
     private fun renderDetails(data: Contact?) {
@@ -135,7 +145,7 @@ class TransferFragment : Fragment(R.layout.transfer_fragment), BottomSheetListen
             )
             tv_user_name.text = it.name
             tv_user_phone.text = it.phoneNumber
-            handleBlocking(it.isContactUserBlockedLoggedInUser,it.isLoggedInUserBlockedContactUser)
+            handleBlocking(it.isContactUserBlockedLoggedInUser, it.isLoggedInUserBlockedContactUser)
         }
     }
 
@@ -143,9 +153,9 @@ class TransferFragment : Fragment(R.layout.transfer_fragment), BottomSheetListen
         contactUserBlockedLoggedInUser: Boolean,
         loggedInUserBlockedContactUser: Boolean
     ) {
-        if(!contactUserBlockedLoggedInUser && !loggedInUserBlockedContactUser )
+        if (!contactUserBlockedLoggedInUser && !loggedInUserBlockedContactUser)
             fab_transfer.show()
-        else{
+        else {
             fab_transfer.hide()
             requireActivity().showShortToast("This contact has benn blocked")
 

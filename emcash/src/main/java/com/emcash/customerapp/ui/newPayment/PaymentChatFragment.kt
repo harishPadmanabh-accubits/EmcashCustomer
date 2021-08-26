@@ -10,10 +10,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.emcash.customerapp.R
 import com.emcash.customerapp.data.network.ApiCallStatus
-import com.emcash.customerapp.extensions.loadImageWithPlaceHolder
-import com.emcash.customerapp.extensions.openActivity
-import com.emcash.customerapp.extensions.setlevel
-import com.emcash.customerapp.extensions.showShortToast
+import com.emcash.customerapp.extensions.*
 import com.emcash.customerapp.model.payments.TransactionHistoryResponse
 import com.emcash.customerapp.ui.home.HomeActivity
 import com.emcash.customerapp.ui.newPayment.adapters.PaymentChatListAdapter
@@ -114,6 +111,7 @@ class PaymentChatFragment:Fragment(R.layout.payment_chats) {
             tv_contact_number.text = beneficiary.phoneNumber
             iv_user_coin_dp.setImage(viewModel.syncManager.profileDetails?.profileImage)
             tv_value_balance.text = wallet.amount.toString()
+            cl_root.show()
 
         }
     }

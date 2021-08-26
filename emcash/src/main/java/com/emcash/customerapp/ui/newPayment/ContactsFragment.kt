@@ -67,6 +67,7 @@ class ContactsFragment:Fragment(R.layout.layout_contacts_fragment),ContactsListe
         val bundle = bundleOf(
             KEY_SELECTED_CONTACT to contact.userId
         )
+        viewModel.beneficiaryId = contact.userId.toInt()
         viewModel.gotoScreen(NewPaymentScreens.CHAT,bundle)
 
 
