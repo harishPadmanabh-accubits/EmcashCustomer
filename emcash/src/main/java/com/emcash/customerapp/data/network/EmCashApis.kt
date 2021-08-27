@@ -92,5 +92,14 @@ interface EmCashApis {
      @POST("v1/customers/payments/approve")
      fun acceptPayment(@Body paymentApprovalRequest: PaymentApprovalRequest):Call<PaymentApprovalResponse>
 
-
+    @GET("v1/customers/transactions/main?")
+    fun getTransactionHistory(
+        @Query("page") page: Int,
+        @Query("limit") limit: Int,
+        @Query("mode") mode: String,
+        @Query("startDate") startDate: String,
+        @Query("endDate") endDate: String,
+        @Query("status") status: String,
+        @Query("type") type: String
+    ): Call<com.emcash.customerapp.model.transactions.TransactionHistoryResponse>
 }

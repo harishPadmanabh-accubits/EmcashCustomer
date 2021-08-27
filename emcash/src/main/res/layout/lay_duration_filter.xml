@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="20dp"
+    android:layout_marginTop="24dp"
+    android:layout_marginRight="20dp"
+    android:layout_marginBottom="24dp"
+    android:orientation="vertical">
+
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_duration_back"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_gravity="right"
+        android:layout_margin="16dp"
+        android:src="@drawable/ic_close_grey"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/biennale_regular"
+        android:text="Select Duration"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toStartOf="@+id/iv_duration_back"
+        app:layout_constraintHorizontal_bias="0.066"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_duration"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <LinearLayout
+        android:id="@+id/ll_holder"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="@+id/rv_duration"
+        app:layout_constraintStart_toStartOf="@+id/rv_duration"
+        app:layout_constraintTop_toBottomOf="@+id/rv_duration">
+
+        <LinearLayout
+
+            android:id="@+id/ll_fromDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="12dp"
+            android:layout_weight="1"
+            android:background="@drawable/white_greyborderd_5dp"
+            android:gravity="center_vertical"
+            android:paddingLeft="12dp"
+            android:paddingTop="12dp"
+            android:paddingRight="12dp"
+            android:paddingBottom="12dp">
+
+            <TextView
+                android:id="@+id/tv_fromDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/biennale_regular"
+                android:hint="From Date"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="12sp" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_marginRight="12dp"
+                android:src="@drawable/ic_calender" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_toDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="12dp"
+            android:layout_weight="1"
+            android:background="@drawable/white_greyborderd_5dp"
+            android:gravity="center_vertical"
+            android:paddingLeft="12dp"
+            android:paddingTop="12dp"
+            android:paddingRight="12dp"
+            android:paddingBottom="12dp">
+
+            <TextView
+                android:id="@+id/tv_toDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/biennale_regular"
+                android:hint="To Date"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="12sp" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_marginRight="12dp"
+                android:src="@drawable/ic_calender" />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+<!--    <LinearLayout-->
+<!--        android:visibility="invisible"-->
+<!--        android:id="@+id/ll_calenderController"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:gravity="center_vertical"-->
+<!--        android:orientation="horizontal"-->
+<!--        app:layout_constraintEnd_toEndOf="@+id/ll_holder"-->
+<!--        app:layout_constraintStart_toStartOf="@+id/ll_holder"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/ll_holder">-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/tv_date"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginLeft="12dp"-->
+<!--            android:fontFamily="@font/biennale_semi_bold"-->
+<!--            android:text="August 2021"-->
+<!--            android:textColor="@color/black"-->
+<!--            android:textSize="@dimen/sp14" />-->
+
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:gravity="right|center_vertical">-->
+
+<!--            <androidx.appcompat.widget.AppCompatImageView-->
+<!--                android:id="@+id/iv_backward"-->
+<!--                android:layout_width="16dp"-->
+<!--                android:layout_height="16dp"-->
+<!--                android:src="@drawable/ic_previous"-->
+<!--                android:layout_marginRight="12dp"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintTop_toTopOf="parent" />-->
+
+<!--            <androidx.appcompat.widget.AppCompatImageView-->
+<!--                android:id="@+id/iv_forward"-->
+<!--                android:layout_width="16dp"-->
+<!--                android:layout_height="16dp"-->
+<!--                android:layout_marginRight="12dp"-->
+<!--                android:src="@drawable/ic_next" />-->
+<!--        </LinearLayout>-->
+<!--    </LinearLayout>-->
+
+    <com.savvi.rangedatepicker.CalendarPickerView
+        android:id="@+id/calenderView"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:scrollbarStyle="outsideOverlay"
+        app:fastScrollEnabled="false"
+        android:layout_marginTop="20dp"
+        app:layout_constraintEnd_toEndOf="@+id/ll_holder"
+        app:layout_constraintStart_toStartOf="@+id/ll_holder"
+        app:layout_constraintTop_toBottomOf="@+id/ll_holder"
+        app:tsquare_dividerColor="@color/white"
+        app:tsquare_headerTextColor="@color/black"
+        app:tsquare_orientation_horizontal="true"
+        app:tsquare_titleTextColor="@color/black" />
+
+    <Button
+        android:id="@+id/btn_filter"
+        style="@style/BlueRoundedButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="32dp"
+        android:onClick="onClick"
+        android:text="Apply Filter"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/calenderView"
+        app:layout_constraintStart_toStartOf="@+id/calenderView"
+        app:layout_constraintTop_toBottomOf="@+id/calenderView" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

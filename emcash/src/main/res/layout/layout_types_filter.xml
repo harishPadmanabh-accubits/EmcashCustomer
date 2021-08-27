@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="24dp"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_back_type"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_gravity="right"
+        android:layout_margin="12dp"
+        android:src="@drawable/ic_close_grey" />
+
+    <RadioGroup
+        android:id="@+id/rg_type"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RadioButton
+            android:id="@+id/rb_emcashSent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:buttonTint="@color/app_blue"
+            android:fontFamily="@font/biennale_regular"
+            android:paddingStart="12dp"
+            android:text="EmCash Sent"
+            android:textSize="16sp" />
+
+        <RadioButton
+            android:id="@+id/rb_emcashrecieved"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:buttonTint="@color/app_blue"
+            android:fontFamily="@font/biennale_regular"
+            android:paddingStart="12dp"
+            android:text="EmCash Recieved"
+            android:textSize="16sp" />
+        <RadioButton
+            android:id="@+id/rb_success"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:buttonTint="@color/app_blue"
+            android:fontFamily="@font/biennale_regular"
+            android:paddingStart="12dp"
+            android:text="Success"
+            android:textSize="16sp" />
+
+        <RadioButton
+            android:id="@+id/rb_pending"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:buttonTint="@color/app_blue"
+            android:fontFamily="@font/biennale_regular"
+            android:paddingStart="12dp"
+            android:text="Pending"
+            android:textSize="16sp" />
+
+        <RadioButton
+            android:id="@+id/rb_rejected"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:buttonTint="@color/app_blue"
+            android:fontFamily="@font/biennale_regular"
+            android:paddingStart="12dp"
+            android:text="Rejected"
+            android:textSize="16sp" />
+
+        <RadioButton
+            android:id="@+id/rb_failed"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:buttonTint="@color/app_blue"
+            android:fontFamily="@font/biennale_regular"
+            android:paddingStart="12dp"
+            android:text="Failed"
+            android:textSize="16sp" />
+
+
+        <RadioButton
+            android:id="@+id/rb_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:layout_marginBottom="6dp"
+            android:buttonTint="@color/app_blue"
+            android:fontFamily="@font/biennale_regular"
+            android:paddingStart="12dp"
+            android:text="Date"
+            android:textSize="16sp" />
+
+    </RadioGroup>
+</LinearLayout>
