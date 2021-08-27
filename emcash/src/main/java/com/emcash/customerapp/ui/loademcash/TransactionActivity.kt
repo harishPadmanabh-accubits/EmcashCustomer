@@ -53,6 +53,9 @@ class TransactionActivity : AppCompatActivity() {
             onBackPressed()
         }
 
+        tv_info_currency.text = amount.toString()
+        iv_user_dp.setImage(viewModel.syncManager.profileDetails?.profileImage)
+
         setupObservers()
     }
 

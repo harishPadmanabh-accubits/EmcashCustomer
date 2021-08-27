@@ -86,5 +86,11 @@ interface EmCashApis {
      @POST("v1/customers/payments/request")
      fun requestPayment(@Body paymentRequest: PaymentRequest):Call<PaymentResponse>
 
+     @POST("v1/customers/payments/reject")
+     fun rejectPayment(@Body paymentApprovalRequest: PaymentApprovalRequest):Call<PaymentApprovalResponse>
+
+     @POST("v1/customers/payments/approve")
+     fun acceptPayment(@Body paymentApprovalRequest: PaymentApprovalRequest):Call<PaymentApprovalResponse>
+
 
 }

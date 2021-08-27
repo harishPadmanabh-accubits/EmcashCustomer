@@ -126,4 +126,33 @@ class PaymentRepository(private val context: Context) {
             onApiCallBack(false, null, it)
         })
     }
+
+    fun acceptPayment(
+        paymentApprovalRequest: PaymentApprovalRequest,
+        onApiCallBack: (status: Boolean, error: String?) -> Unit
+    ){
+        api.acceptPayment(paymentApprovalRequest).awaitResponse(onSuccess = {
+            if(it?.status == true)
+                onApiCallBack(true,null)
+            else
+                onApiCallBack(false,it?.message)
+        },onFailure = {
+            onApiCallBack(false,it)
+        })
+    }
+
+
+    fun rejectPayment(
+        paymentApprovalRequest: PaymentApprovalRequest,
+        onApiCallBack: (status: Boolean, error: String?) -> Unit
+    ){
+        api.rejectPayment(paymentApprovalRequest).awaitResponse(onSuccess = {
+            if(it?.status == true)
+                onApiCallBack(true,null)
+            else
+                onApiCallBack(false,it?.message)
+        },onFailure = {
+            onApiCallBack(false,it)
+        })
+    }
 }

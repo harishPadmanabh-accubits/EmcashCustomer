@@ -31,7 +31,6 @@ import timber.log.Timber
 class NewPaymentViewModel(val app: Application) : AndroidViewModel(app) {
 
     val paymentRepository = PaymentRepository(app)
-    val homeRepository = HomeRepository(app)
     val syncManager =SyncManager(app)
 
 
@@ -190,7 +189,7 @@ class NewPaymentViewModel(val app: Application) : AndroidViewModel(app) {
         onRequest: (status: Boolean, refId: String?, error: String?) -> Unit
     ){
         val request = PaymentRequest(amount, desc, userId)
-        paymentRepository.initPayment(request,onApiCallBack = {
+        paymentRepository.requestPayment(request,onApiCallBack = {
                 status, response, error ->
             when(status){
                 true-> onRequest(true,response,null)
@@ -238,8 +237,3 @@ enum class NewPaymentScreens {
     CONTACTS, TRANSFER, CHAT, RECEIPT, PIN, SCAN
 }
 
-
-data class ScreenConfig(
-    val screen: NewPaymentScreens,
-    val bundle: Bundle? = null
-)

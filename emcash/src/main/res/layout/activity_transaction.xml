@@ -62,6 +62,7 @@
 
       <com.emcash.customerapp.utils.CoinProfileImageView
           android:layout_width="wrap_content"
+          android:id="@+id/iv_user_dp"
           android:layout_height="wrap_content"
           app:coin_size="normal"/>
 
