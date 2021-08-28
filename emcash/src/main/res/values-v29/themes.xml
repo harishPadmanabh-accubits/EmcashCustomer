@@ -16,5 +16,10 @@
         <item name="android:windowTranslucentNavigation">false</item>
     </style>
 
-
+    <style name="TabItemTextAppearence" parent="Widget.MaterialComponents.TabLayout">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="fontFamily">@font/biennale_book</item>
+        <item name="android:fontFamily">@font/biennale_book</item>
+    </style>
 </resources>

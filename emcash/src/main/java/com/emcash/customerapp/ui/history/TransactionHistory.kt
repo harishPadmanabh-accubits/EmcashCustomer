@@ -193,7 +193,6 @@ class TransactionHistory : FragmentActivity() , DurationItemClickListener {
     }
 
     private fun durationData() {
-
         val durations = ArrayList<FilterDurationResponse>()
         durations.add(FilterDurationResponse(1, "2 Days"))
         durations.add(FilterDurationResponse(2, "1 Week"))
@@ -201,7 +200,6 @@ class TransactionHistory : FragmentActivity() , DurationItemClickListener {
         durations.add(FilterDurationResponse(4, "Custom"))
 
         rv_duration.apply {
-            layoutManager = GridLayoutManager(this@TransactionHistory, 4)
             adapter = DurationAdapter(durations, this@TransactionHistory)
         }
     }
@@ -216,7 +214,11 @@ class TransactionHistory : FragmentActivity() , DurationItemClickListener {
             )
         TabLayoutMediator(tab_layout, viewpager_tabs) { tab, position ->
             when (position) {
-                0 -> tab.text = getString(R.string.all)
+                0 -> tab.apply {
+                    text = getString(R.string.all)
+
+
+                }
                 1 -> tab.text = getString(R.string.inbound)
                 2 -> tab.text = getString(R.string.outbound)
             }

@@ -14,6 +14,7 @@
         android:layout_marginTop="44dp"
         android:paddingTop="12dp"
         android:paddingBottom="12dp"
+        app:tint="@color/black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_back_arrow" />
@@ -57,12 +58,14 @@
             android:id="@+id/tab_item_all"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            app:tabTextAppearance="@style/TabItemTextAppearence"
             android:text="All" />
 
         <com.google.android.material.tabs.TabItem
             android:id="@+id/tab_item_inbound"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            app:tabTextAppearance="@style/TabItemTextAppearence"
             android:text="Inbound" />
 
         <com.google.android.material.tabs.TabItem
@@ -108,7 +111,7 @@
 
         <LinearLayout
             android:id="@+id/ll_duration"
-            android:visibility="gone"
+            android:visibility="visible"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/white_top_edged"
