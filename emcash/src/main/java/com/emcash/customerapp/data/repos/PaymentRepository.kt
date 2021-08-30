@@ -128,31 +128,44 @@ class PaymentRepository(private val context: Context) {
     }
 
     fun acceptPayment(
-        paymentApprovalRequest: PaymentApprovalRequest,
         onApiCallBack: (status: Boolean, error: String?) -> Unit
     ){
-        api.acceptPayment(paymentApprovalRequest).awaitResponse(onSuccess = {
-            if(it?.status == true)
-                onApiCallBack(true,null)
-            else
-                onApiCallBack(false,it?.message)
-        },onFailure = {
-            onApiCallBack(false,it)
-        })
+        val refId = syncManager.initiatedRefId
+        if(refId.isNullOrEmpty()){
+            onApiCallBack(false,"Invalid Transaction")
+        }else{
+            val request = PaymentApprovalRequest(refId)
+            api.acceptPayment(request).awaitResponse(onSuccess = {
+                Timber.e("Accept Response $it")
+                if(it?.status == true)
+                    onApiCallBack(true,null)
+                else
+                    onApiCallBack(false,it?.message)
+            },onFailure = {
+                onApiCallBack(false,it)
+            })
+        }
+
     }
 
 
     fun rejectPayment(
-        paymentApprovalRequest: PaymentApprovalRequest,
         onApiCallBack: (status: Boolean, error: String?) -> Unit
     ){
-        api.rejectPayment(paymentApprovalRequest).awaitResponse(onSuccess = {
-            if(it?.status == true)
-                onApiCallBack(true,null)
-            else
-                onApiCallBack(false,it?.message)
-        },onFailure = {
-            onApiCallBack(false,it)
-        })
+        val refId = syncManager.initiatedRefId
+        if(refId.isNullOrEmpty()){
+            onApiCallBack(false,"Invalid Transaction")
+        }else{
+            val request = PaymentApprovalRequest(refId)
+            api.rejectPayment(request).awaitResponse(onSuccess = {
+                if(it?.status == true)
+                    onApiCallBack(true,null)
+                else
+                    onApiCallBack(false,it?.message)
+            },onFailure = {
+                onApiCallBack(false,it)
+            })
+        }
+
     }
 }

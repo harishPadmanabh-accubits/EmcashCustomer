@@ -233,33 +233,33 @@ class NewPaymentViewModel(val app: Application) : AndroidViewModel(app) {
         return _history
     }
 
-    fun acceptPayment(transactionId:String, onResult: (status: Boolean, error: String?) -> Unit){
-        if(transactionId.isNotEmpty()){
-            val request = PaymentApprovalRequest(transactionId)
-            paymentRepository.acceptPayment(request){
-                status, error ->
-                when(status){
-                    true-> onResult(true,null)
-                    false-> onResult(false,error)
-                }
-            }
-        }
-
-    }
-
-    fun rejectPayment(transactionId:String, onResult: (status: Boolean, error: String?) -> Unit){
-        if(transactionId.isNotEmpty()){
-            val request = PaymentApprovalRequest(transactionId)
-            paymentRepository.rejectPayment(request){
-                    status, error ->
-                when(status){
-                    true-> onResult(true,null)
-                    false-> onResult(false,error)
-                }
-            }
-        }
-
-    }
+//    fun acceptPayment(transactionId:String, onResult: (status: Boolean, error: String?) -> Unit){
+//        if(transactionId.isNotEmpty()){
+//            val request = PaymentApprovalRequest(transactionId)
+//            paymentRepository.acceptPayment(request){
+//                status, error ->
+//                when(status){
+//                    true-> onResult(true,null)
+//                    false-> onResult(false,error)
+//                }
+//            }
+//        }
+//
+//    }
+//
+//    fun rejectPayment(transactionId:String, onResult: (status: Boolean, error: String?) -> Unit){
+//        if(transactionId.isNotEmpty()){
+//            val request = PaymentApprovalRequest(transactionId)
+//            paymentRepository.rejectPayment(request){
+//                    status, error ->
+//                when(status){
+//                    true-> onResult(true,null)
+//                    false-> onResult(false,error)
+//                }
+//            }
+//        }
+//
+//    }
 }
 
 enum class NewPaymentScreens {

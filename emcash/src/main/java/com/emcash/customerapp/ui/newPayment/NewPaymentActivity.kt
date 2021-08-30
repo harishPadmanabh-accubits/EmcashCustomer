@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
 import androidx.lifecycle.Observer
-import com.emcash.customerapp.CommunicationHelper
+import com.emcash.customerapp.EmCashCommunicationHelper
 import com.emcash.customerapp.EmCashListener
 import com.emcash.customerapp.R
 import com.emcash.customerapp.TransactionType
@@ -70,8 +70,8 @@ class NewPaymentActivity : AppCompatActivity(), EasyPermissions.PermissionCallba
                     RECEIPT -> openPaymentReceipt(screenConfig.bundle)
                     PIN -> {
                         val type = screenConfig.bundle?.get(KEY_TRANSACTION_TYPE) as TransactionType
-                        Timber.e("listener ${ CommunicationHelper.getParentInstance()} type $type")
-                        CommunicationHelper.getParentInstance()?.onVerifyPin(type)
+                        Timber.e("listener ${ EmCashCommunicationHelper.getParentListener()} type $type")
+                        EmCashCommunicationHelper.getParentListener()?.onVerifyPin(type)
                     }
                     SCAN -> openQRScanner(screenConfig.bundle)
                 }

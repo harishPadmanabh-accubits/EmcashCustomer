@@ -10,6 +10,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.emcash.customerapp.R
+import com.emcash.customerapp.TransactionType
 import com.emcash.customerapp.data.network.ApiCallStatus
 import com.emcash.customerapp.extensions.*
 import com.emcash.customerapp.model.payments.TransactionHistory
@@ -22,6 +23,7 @@ import kotlinx.android.synthetic.main.payment_chats.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import kotlin.math.PI
 
 class PaymentChatFragment:Fragment(R.layout.payment_chats),PaymentHistoryItemClickListener {
 
@@ -125,10 +127,16 @@ class PaymentChatFragment:Fragment(R.layout.payment_chats),PaymentHistoryItemCli
     }
 
     override fun onAcceptPayment(transaction: TransactionHistory) {
+        viewModel.syncManager.initiatedRefId = transaction.id
+        val bundle = bundleOf(KEY_TRANSACTION_TYPE to TransactionType.ACCEPT)
+        viewModel.gotoScreen(NewPaymentScreens.PIN,bundle)
 
     }
 
     override fun onRejectPayment(transaction: TransactionHistory) {
+        viewModel.syncManager.initiatedRefId = transaction.id
+        val bundle = bundleOf(KEY_TRANSACTION_TYPE to TransactionType.REJECT)
+        viewModel.gotoScreen(NewPaymentScreens.PIN,bundle)
     }
 
 }

@@ -3,30 +3,24 @@ package com.emcash.customerapp
 import android.content.Context
 import android.content.Intent
 import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
-import androidx.core.content.ContextCompat.startActivity
 import com.emcash.customerapp.data.SyncManager
 import com.emcash.customerapp.data.repos.AuthRepository
 import com.emcash.customerapp.data.repos.PaymentRepository
-import com.emcash.customerapp.extensions.openActivity
 import com.emcash.customerapp.extensions.showShortToast
 import com.emcash.customerapp.model.auth.switchAccount.SwitchAccountRequest
-import com.emcash.customerapp.model.auth.userExists.UserExistCheckRequest
 import com.emcash.customerapp.ui.home.HomeActivity
 import com.emcash.customerapp.ui.intro.IntroActivity
 import com.emcash.customerapp.ui.newPayment.NewPaymentActivity
-import com.emcash.customerapp.ui.prepare.PrepareEmCashActivity
-import com.emcash.customerapp.ui.terms.TermsAndConditionsActivity
 import com.emcash.customerapp.ui.terms.TncStatus
 import com.emcash.customerapp.utils.*
 import timber.log.Timber
-import kotlin.reflect.typeOf
 
 class EmCashHelper(val appContext: Context,val listener:EmCashListener) {
     val syncManager = SyncManager(appContext)
     val authRepository = AuthRepository(appContext)
 
     init {
-        CommunicationHelper.setParentInstance(listener)
+        EmCashCommunicationHelper.setParentListener(listener)
     }
 
     fun doEmCashLogin(
@@ -92,8 +86,8 @@ class EmCashHelper(val appContext: Context,val listener:EmCashListener) {
         when(forAction){
             TransactionType.TRANSFER->proceedToTransfer()
             TransactionType.REQUEST->{}
-            TransactionType.ACCEPT->{}
-            TransactionType.REJECT->{}
+            TransactionType.ACCEPT-> proceedToAcceptPayment()
+            TransactionType.REJECT-> proceedToRejectPayment()
 
         }
     }
@@ -120,7 +114,49 @@ class EmCashHelper(val appContext: Context,val listener:EmCashListener) {
         }
     }
 
-    fun proceedToRequest(){
+    fun proceedToAcceptPayment(){
+        PaymentRepository(appContext).acceptPayment{status, error ->  
+            when(status){
+                true->{
+                    val intent = Intent(appContext, NewPaymentActivity::class.java).also {
+                        it.setFlags(FLAG_ACTIVITY_NEW_TASK)
+                    }
+                    intent.putExtra(LAUNCH_SOURCE, SCREEN_RECEIPT)
+                    intent.putExtra(LAUNCH_DESTINATION, SCREEN_RECEIPT)
+                    appContext.startActivity(intent)
+                }
+                false->{
+                    val intent = Intent(appContext, HomeActivity::class.java).also {
+                        it.setFlags(FLAG_ACTIVITY_NEW_TASK)
+                    }
+                    appContext.showShortToast("Transfer Failed.Try again after some time.")
+                    appContext.startActivity(intent)
+                }
+            }
+        }
+
+    }
+
+    fun proceedToRejectPayment(){
+        PaymentRepository(appContext).rejectPayment{status, error ->
+            when(status){
+                true->{
+                    val intent = Intent(appContext, NewPaymentActivity::class.java).also {
+                        it.setFlags(FLAG_ACTIVITY_NEW_TASK)
+                    }
+                    intent.putExtra(LAUNCH_SOURCE, SCREEN_RECEIPT)
+                    intent.putExtra(LAUNCH_DESTINATION, SCREEN_RECEIPT)
+                    appContext.startActivity(intent)
+                }
+                false->{
+                    val intent = Intent(appContext, HomeActivity::class.java).also {
+                        it.setFlags(FLAG_ACTIVITY_NEW_TASK)
+                    }
+                    appContext.showShortToast("Transfer Failed.Try again after some time.")
+                    appContext.startActivity(intent)
+                }
+            }
+        }
 
     }
 
@@ -129,10 +165,9 @@ class EmCashHelper(val appContext: Context,val listener:EmCashListener) {
 
 
 }
-public interface EmCashListener{
-    fun onLoginSuccess(status:Boolean)
-    fun onVerifyPin(forAction:TransactionType){
-    }
+ interface EmCashListener{
+    fun onLoginSuccess(status:Boolean){}
+    fun onVerifyPin(forAction:TransactionType){}
 }
 
 enum class TransactionType{

@@ -6,18 +6,17 @@ import android.os.Bundle
 import android.view.animation.AnimationUtils
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
+import com.emcash.customerapp.EmCashCommunicationHelper
 import com.emcash.customerapp.EmCashHelper
 import com.emcash.customerapp.EmCashListener
 import com.emcash.customerapp.TransactionType
 import com.emcash.customerapp.extensions.afterTextChanged
 import com.emcash.customerapp.extensions.onDeletePressed
-import com.emcash.customerapp.extensions.showKeyboard
 import com.emcash.customerapp.extensions.showShortToast
-import com.emcash.customerapp.ui.newPayment.NewPaymentScreens
 import com.emcash.customerapp.utils.KEY_TRANSACTION_TYPE
 import kotlinx.android.synthetic.main.activity_pin_screen.*
 
-class PinScreen : AppCompatActivity(),EmCashListener {
+class PinScreen : AppCompatActivity() {
 
     val bundle by lazy {
         intent.getBundleExtra("KEY_TRANSACTION_TYPE")
@@ -148,7 +147,6 @@ class PinScreen : AppCompatActivity(),EmCashListener {
     }
 
     private fun refreshWithShake() {
-
         val shake = AnimationUtils.loadAnimation(this,
             com.emcash.customerapp.R.anim.shake
         )
@@ -172,20 +170,15 @@ class PinScreen : AppCompatActivity(),EmCashListener {
             }
             pinVIews[0].requestFocus()
         }
-
     }
 
     private fun onValidPin(){
-        //EmCashHelper(applicationContext,this).proceedToTransfer()
-        val emCashHelper = EmCashHelper(applicationContext,this)
+        val emCashHelper = EmCashHelper(applicationContext,EmCashCommunicationHelper.getParentListener())
         val type = bundle?.get(KEY_TRANSACTION_TYPE) as TransactionType
         emCashHelper.onPinVerified(type)
-
     }
 
-    override fun onLoginSuccess(status: Boolean) {
 
-    }
 
 
 }
