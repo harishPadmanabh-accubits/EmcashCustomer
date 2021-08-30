@@ -28,11 +28,13 @@ import com.bumptech.glide.request.target.Target
 import com.emcash.customerapp.BuildConfig
 import com.emcash.customerapp.R
 import com.emcash.customerapp.data.network.exceptions.NoInternetException
+import com.emcash.customerapp.utils.IMAGE_BASE_URL
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.item_inner_contact_details.view.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import timber.log.Timber
 import java.net.UnknownHostException
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -474,8 +476,9 @@ fun Int.toRewardLevelString(context: Context):String{
 fun ImageView.loadImageWithPlaceHolder(
     url:String?,placeHolderResId:Int
 ){
+    Timber.e("Image Url ${IMAGE_BASE_URL.plus(url)}")
     Glide.with(this.context)
-        .load(url)
+        .load(IMAGE_BASE_URL.plus(url))
         .placeholder(placeHolderResId)
         .into(this)
 }

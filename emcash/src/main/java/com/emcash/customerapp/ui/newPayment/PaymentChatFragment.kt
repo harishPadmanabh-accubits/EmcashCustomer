@@ -8,6 +8,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.emcash.customerapp.R
 import com.emcash.customerapp.data.network.ApiCallStatus
 import com.emcash.customerapp.extensions.*
@@ -55,16 +56,17 @@ class PaymentChatFragment:Fragment(R.layout.payment_chats) {
             requireActivity().onBackPressed()
         }
 
-        rv_history.apply {
-            layoutManager = LinearLayoutManager(context)
-            setHasFixedSize(true)
-            adapter = chatAdapter
-        }
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.transactionHistory.collectLatest {
                 chatAdapter.submitData(it)
             }
+        }
+
+        rv_history.apply {
+            setHasFixedSize(true)
+            adapter = chatAdapter
+
         }
 
         viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main){

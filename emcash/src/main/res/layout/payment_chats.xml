@@ -209,6 +209,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/fl_user_details"
+        android:orientation="vertical"
         app:reverseLayout="true"
         app:stackFromEnd="false"
         />

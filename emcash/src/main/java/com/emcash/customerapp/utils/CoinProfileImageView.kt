@@ -15,12 +15,12 @@ class CoinProfileImageView(context: Context, attrs: AttributeSet) :
     RelativeLayout(context, attrs) {
 
     enum class CoinSize {
-        DP_112, //semi_large
-        DP_157, //large
-        DP_52, //small
-        DP_15, //tiny
-        DP_57,  //normal
-        DP_64 //medium
+        DP_112,  //semi_large
+        DP_157,  //large
+        DP_52,   //small
+        DP_15,   //tiny
+        DP_57,   //normal
+        DP_64    //medium
     }
 
     var coinSize: CoinSize
@@ -38,18 +38,12 @@ class CoinProfileImageView(context: Context, attrs: AttributeSet) :
             CoinSize.DP_64 -> inflate(context, R.layout.custom_view_coin_profile_64, this)
 
         }
-
-
-        //inflate(context, R.layout.custom_view_coin_profile_image, this)
     }
 
     fun setImage(url: String?) {
         val dpView = findViewById<ImageView>(R.id.iv_profile_image)
-        Glide.with(dpView.context).load(url).placeholder(R.drawable.ic_profile_placeholder).into(dpView)
+        Glide.with(dpView.context).load(IMAGE_BASE_URL.plus(url)).placeholder(R.drawable.ic_profile_placeholder).into(dpView)
     }
 
-    fun setImage(resID: Int) {
-        //iv_dp.loadImageWithResId(resID)
-    }
 
 }

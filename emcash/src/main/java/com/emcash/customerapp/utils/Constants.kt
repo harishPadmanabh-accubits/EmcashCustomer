@@ -26,6 +26,7 @@ const val KEY_SELECTED_CONTACT = "selected_contact"
 const val KEY_REF_ID = "ref_id"
 const val KEY_BEN_ID = "ben_id"
 const val KEY_TRANSACTION_TYPE="trans_type"
+const val kEY_PENDING_REQUEST = "pending_request"
 /**
  * Screen Keys
  */
@@ -47,6 +48,7 @@ const val ITEM_ALL_CONTACTS = 1001
 
 
 const val BASE_URL: String = "https://emcash-api-dev.devtomaster.com/"
+const val IMAGE_BASE_URL : String ="https://stemcashmerchantdocstest.blob.core.windows.net"
 
 const val TYPE_TRANSFER = "Transfer"
 const val TYPE_REQUEST = "Request"

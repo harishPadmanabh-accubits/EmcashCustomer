@@ -82,6 +82,7 @@ class TransferFragment : Fragment(R.layout.transfer_fragment), BottomSheetListen
         val amount =
             if (et_value.text.toString().isNotEmpty()) et_value.text.toString().toInt() else 0
         if (amount > 0) {
+            loader.showLoader()
             viewModel.requestPayment(
                 amount,
                 userId,
@@ -89,9 +90,11 @@ class TransferFragment : Fragment(R.layout.transfer_fragment), BottomSheetListen
                 onRequest = { status, refId, error ->
                     when (status) {
                         true -> {
-                            viewModel.gotoScreen(NewPaymentScreens.PIN)
+                            loader.hideLoader()
+                            viewModel.gotoScreen(NewPaymentScreens.RECEIPT)
                         }
                         false -> {
+                            loader.hideLoader()
                             requireActivity().showShortToast(error)
                         }
                     }

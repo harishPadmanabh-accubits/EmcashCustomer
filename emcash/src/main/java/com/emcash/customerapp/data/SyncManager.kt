@@ -8,9 +8,11 @@ import com.emcash.customerapp.extensions.FromJson
 import com.emcash.customerapp.extensions.fromJson
 import com.emcash.customerapp.extensions.toJson
 import com.emcash.customerapp.model.auth.switchAccount.SwitchAccountResponse
+import com.emcash.customerapp.model.payments.PaymentRequest
 import com.emcash.customerapp.model.profile.ProfileDetailsResponse
 import com.emcash.customerapp.ui.terms.TncStatus
 import com.emcash.customerapp.utils.*
+import timber.log.Timber
 import java.lang.Exception
 
 
@@ -92,6 +94,8 @@ class SyncManager(val context: Context) {
         null
     }
     set(value) = editor.putString(KEY_REF_ID,value).apply()
+
+
 
 
 

@@ -89,7 +89,6 @@ class EmCashHelper(val appContext: Context,val listener:EmCashListener) {
     }
 
     fun proceedToTransfer(){
-
         PaymentRepository(appContext).transferAmount { status, error ->
             when(status){
                 true->{
@@ -111,6 +110,10 @@ class EmCashHelper(val appContext: Context,val listener:EmCashListener) {
         }
     }
 
+    fun proceedToRequest(){
+
+    }
+
 
 
 
@@ -119,6 +122,5 @@ class EmCashHelper(val appContext: Context,val listener:EmCashListener) {
 public interface EmCashListener{
     fun onLoginSuccess(status:Boolean)
     fun onVerifyPin(){
-        Timber.e("on verify called from interface")
     }
 }
