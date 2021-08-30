@@ -15,6 +15,7 @@ import com.emcash.customerapp.extensions.default
 import com.emcash.customerapp.model.*
 import com.emcash.customerapp.model.contacts.Contact
 import com.emcash.customerapp.model.contacts.ContactItem
+import com.emcash.customerapp.model.payments.PaymentApprovalRequest
 import com.emcash.customerapp.model.payments.PaymentRequest
 import com.emcash.customerapp.model.payments.TransactionDetailsResponse
 import com.emcash.customerapp.model.payments.TransactionHistoryResponse
@@ -230,6 +231,34 @@ class NewPaymentViewModel(val app: Application) : AndroidViewModel(app) {
             }
         }
         return _history
+    }
+
+    fun acceptPayment(transactionId:String, onResult: (status: Boolean, error: String?) -> Unit){
+        if(transactionId.isNotEmpty()){
+            val request = PaymentApprovalRequest(transactionId)
+            paymentRepository.acceptPayment(request){
+                status, error ->
+                when(status){
+                    true-> onResult(true,null)
+                    false-> onResult(false,error)
+                }
+            }
+        }
+
+    }
+
+    fun rejectPayment(transactionId:String, onResult: (status: Boolean, error: String?) -> Unit){
+        if(transactionId.isNotEmpty()){
+            val request = PaymentApprovalRequest(transactionId)
+            paymentRepository.rejectPayment(request){
+                    status, error ->
+                when(status){
+                    true-> onResult(true,null)
+                    false-> onResult(false,error)
+                }
+            }
+        }
+
     }
 }
 

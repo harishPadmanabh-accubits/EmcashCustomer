@@ -8,14 +8,21 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import com.emcash.customerapp.EmCashHelper
 import com.emcash.customerapp.EmCashListener
+import com.emcash.customerapp.TransactionType
 import com.emcash.customerapp.extensions.afterTextChanged
 import com.emcash.customerapp.extensions.onDeletePressed
 import com.emcash.customerapp.extensions.showKeyboard
 import com.emcash.customerapp.extensions.showShortToast
 import com.emcash.customerapp.ui.newPayment.NewPaymentScreens
+import com.emcash.customerapp.utils.KEY_TRANSACTION_TYPE
 import kotlinx.android.synthetic.main.activity_pin_screen.*
 
 class PinScreen : AppCompatActivity(),EmCashListener {
+
+    val bundle by lazy {
+        intent.getBundleExtra("KEY_TRANSACTION_TYPE")
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_pin_screen)
@@ -169,7 +176,11 @@ class PinScreen : AppCompatActivity(),EmCashListener {
     }
 
     private fun onValidPin(){
-        EmCashHelper(applicationContext,this).proceedToTransfer()
+        //EmCashHelper(applicationContext,this).proceedToTransfer()
+        val emCashHelper = EmCashHelper(applicationContext,this)
+        val type = bundle?.get(KEY_TRANSACTION_TYPE) as TransactionType
+        emCashHelper.onPinVerified(type)
+
     }
 
     override fun onLoginSuccess(status: Boolean) {

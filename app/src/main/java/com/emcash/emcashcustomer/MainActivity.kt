@@ -5,11 +5,14 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.core.os.bundleOf
 import com.emcash.customerapp.EmCashHelper
 import com.emcash.customerapp.EmCashListener
+import com.emcash.customerapp.TransactionType
 import com.emcash.customerapp.extensions.hide
 import com.emcash.customerapp.extensions.show
 import com.emcash.customerapp.extensions.showShortToast
+import com.emcash.customerapp.utils.KEY_TRANSACTION_TYPE
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.logging.Logger
 
@@ -38,8 +41,11 @@ class MainActivity : AppCompatActivity() ,EmCashListener{
 
     }
 
-    override fun onVerifyPin() {
+    override fun onVerifyPin(forAction:TransactionType) {
         Log.e("On verify ","called listended in parent")
-        startActivity(Intent(this,PinScreen::class.java))
+        startActivity(Intent(this,PinScreen::class.java).also {
+            val typeBundle = bundleOf(KEY_TRANSACTION_TYPE to forAction)
+            it.putExtra("KEY_TRANSACTION_TYPE",typeBundle)
+        })
     }
 }

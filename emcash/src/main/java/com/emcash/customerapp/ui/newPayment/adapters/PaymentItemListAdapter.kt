@@ -8,48 +8,45 @@ import androidx.recyclerview.widget.RecyclerView
 import com.emcash.customerapp.R
 import com.emcash.customerapp.extensions.toFormattedTime
 import com.emcash.customerapp.model.payments.TransactionHistory
+import com.emcash.customerapp.ui.newPayment.PaymentHistoryItemClickListener
 import com.emcash.customerapp.utils.KEY_REF_ID
 import kotlinx.android.synthetic.main.row_payment_chat_item.view.*
 
 class PaymentItemListAdapter(
-    val transactions:ArrayList<TransactionHistory>
-) : RecyclerView.Adapter<PaymentItemListAdapter.ViewHolder>(){
-    class ViewHolder(itemView: View) :RecyclerView.ViewHolder(itemView)
+    val transactions: ArrayList<TransactionHistory>,
+    val listener: PaymentHistoryItemClickListener
+) : RecyclerView.Adapter<PaymentItemListAdapter.ViewHolder>() {
+    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder=
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =
         ViewHolder(
-            LayoutInflater.from(parent.context).inflate(R.layout.row_payment_chat_item, parent, false)
-
+            LayoutInflater.from(parent.context)
+                .inflate(R.layout.row_payment_chat_item, parent, false)
         )
+
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
-        var status = transactions[position].status
-        var type = transactions[position].type
-        var mode = transactions[position].mode
+        val status = transactions[position].status
+        val type = transactions[position].type
+        val mode = transactions[position].mode
 
         holder.itemView.apply {
 
             ll_chat_receive.setOnClickListener {
-                var bundle = bundleOf(
-                    KEY_REF_ID to transactions[position].id
-                )
-
-               // findNavController().navigate(R.id.transferpaymentRecieptFragment, bundle)
+                listener.onItemClick(transactions[position].id)
             }
 
             ll_chat_send.setOnClickListener {
+                listener.onItemClick(transactions[position].id)
 
-                var bundle = bundleOf(
-                    KEY_REF_ID to transactions[position].id
-                )
-
-             //   findNavController().navigate(R.id.transferpaymentRecieptFragment, bundle)
             }
             bt_reject.setOnClickListener {
-               // ClickListener.onChatRejectClicked(transactions[position])
+                // ClickListener.onChatRejectClicked(transactions[position])
+                listener.onRejectPayment(transactions[position])
             }
             bt_accept.setOnClickListener {
-               // ClickListener.onChatAcceptClicked(transactions[position])
+                // ClickListener.onChatAcceptClicked(transactions[position])
+                listener.onAcceptPayment(transactions[position])
 
             }
             if (transactions[position].isReciever) {
@@ -66,7 +63,7 @@ class PaymentItemListAdapter(
                 tv_time_receive.text = toFormattedTime(transactions[position].createdAt)
                 tv_cash_receive.text = transactions[position].amount.toString()
                 if (status == 1) {
-                    if (mode==2) {
+                    if (mode == 2) {
                         tv_payment_type_label_receive.text = "Payment Received"
 
                     } else {
@@ -108,7 +105,7 @@ class PaymentItemListAdapter(
                         tv_status_receive.text = "Request Failed"
 
                     }
-                }else if (status == 4) {
+                } else if (status == 4) {
                     iv_image_receive_status.setBackgroundResource(R.drawable.ic_rejected)
 
                     tv_payment_type_label_receive.text = "Payment Rejected"
@@ -124,8 +121,7 @@ class PaymentItemListAdapter(
                 }
 
 
-            }
-            else {
+            } else {
 
                 ll_chat_receive.visibility = View.GONE
                 ll_chat_send.visibility = View.VISIBLE
@@ -136,7 +132,7 @@ class PaymentItemListAdapter(
 
                 if (status == 1) {
 
-                    if (mode==2) {
+                    if (mode == 2) {
                         tv_payment_type_label_send.text = "Payment Received"
 
                     } else {
@@ -173,7 +169,7 @@ class PaymentItemListAdapter(
                         tv_status_send.text = "Request Failed"
 
                     }
-                }else if (status == 4) {
+                } else if (status == 4) {
                     iv_image_send_status.setBackgroundResource(R.drawable.ic_rejected)
                     tv_payment_type_label_send.text = "Payment Rejected"
 
@@ -194,5 +190,5 @@ class PaymentItemListAdapter(
 
     }
 
-    override fun getItemCount(): Int=transactions.size
+    override fun getItemCount(): Int = transactions.size
 }

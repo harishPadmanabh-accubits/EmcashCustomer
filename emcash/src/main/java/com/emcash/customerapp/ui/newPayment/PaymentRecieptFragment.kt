@@ -16,6 +16,7 @@ import kotlinx.android.synthetic.main.receipt_card.*
 import timber.log.Timber
 
 class PaymentReceiptFragment:Fragment(R.layout.payment_reciept) {
+
     val viewModel:NewPaymentViewModel by activityViewModels()
     val loader by lazy{LoaderDialog(requireContext())}
 

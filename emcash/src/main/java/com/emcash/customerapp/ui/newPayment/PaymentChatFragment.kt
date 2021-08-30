@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.emcash.customerapp.R
 import com.emcash.customerapp.data.network.ApiCallStatus
 import com.emcash.customerapp.extensions.*
+import com.emcash.customerapp.model.payments.TransactionHistory
 import com.emcash.customerapp.model.payments.TransactionHistoryResponse
 import com.emcash.customerapp.ui.home.HomeActivity
 import com.emcash.customerapp.ui.newPayment.adapters.PaymentChatListAdapter
@@ -22,12 +23,12 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
-class PaymentChatFragment:Fragment(R.layout.payment_chats) {
+class PaymentChatFragment:Fragment(R.layout.payment_chats),PaymentHistoryItemClickListener {
 
     val viewModel : NewPaymentViewModel by activityViewModels()
 
     val chatAdapter by lazy {
-        PaymentChatListAdapter()
+        PaymentChatListAdapter(this)
     }
 
     val loader by lazy{LoaderDialog(requireContext())}
@@ -118,4 +119,22 @@ class PaymentChatFragment:Fragment(R.layout.payment_chats) {
         }
     }
 
+    override fun onItemClick(transactionId: String) {
+        viewModel.syncManager.initiatedRefId = transactionId
+        viewModel.gotoScreen(NewPaymentScreens.RECEIPT)
+    }
+
+    override fun onAcceptPayment(transaction: TransactionHistory) {
+
+    }
+
+    override fun onRejectPayment(transaction: TransactionHistory) {
+    }
+
+}
+
+interface PaymentHistoryItemClickListener{
+   fun onItemClick(transactionId:String)
+   fun onAcceptPayment(transaction:TransactionHistory)
+   fun onRejectPayment(transaction:TransactionHistory)
 }

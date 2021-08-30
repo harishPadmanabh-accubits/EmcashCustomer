@@ -19,6 +19,7 @@ import com.emcash.customerapp.ui.terms.TermsAndConditionsActivity
 import com.emcash.customerapp.ui.terms.TncStatus
 import com.emcash.customerapp.utils.*
 import timber.log.Timber
+import kotlin.reflect.typeOf
 
 class EmCashHelper(val appContext: Context,val listener:EmCashListener) {
     val syncManager = SyncManager(appContext)
@@ -80,12 +81,21 @@ class EmCashHelper(val appContext: Context,val listener:EmCashListener) {
     }
 
 
-    fun onPinVerified(){
-        val intent = Intent(appContext, NewPaymentActivity::class.java).also {
-            it.setFlags(FLAG_ACTIVITY_NEW_TASK)
+    fun onPinVerified(forAction:TransactionType){
+//        val intent = Intent(appContext, NewPaymentActivity::class.java).also {
+//            it.setFlags(FLAG_ACTIVITY_NEW_TASK)
+//        }
+//        intent.putExtra(LAUNCH_SOURCE, SCREEN_RECEIPT)
+//        appContext.startActivity(intent)
+
+        Timber.e("Type Recieved $forAction")
+        when(forAction){
+            TransactionType.TRANSFER->proceedToTransfer()
+            TransactionType.REQUEST->{}
+            TransactionType.ACCEPT->{}
+            TransactionType.REJECT->{}
+
         }
-        intent.putExtra(LAUNCH_SOURCE, SCREEN_RECEIPT)
-        appContext.startActivity(intent)
     }
 
     fun proceedToTransfer(){
@@ -121,6 +131,10 @@ class EmCashHelper(val appContext: Context,val listener:EmCashListener) {
 }
 public interface EmCashListener{
     fun onLoginSuccess(status:Boolean)
-    fun onVerifyPin(){
+    fun onVerifyPin(forAction:TransactionType){
     }
+}
+
+enum class TransactionType{
+    TRANSFER,REQUEST,ACCEPT,REJECT
 }

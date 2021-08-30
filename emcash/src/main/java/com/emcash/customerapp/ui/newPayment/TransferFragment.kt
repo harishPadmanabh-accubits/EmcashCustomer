@@ -7,11 +7,13 @@ import android.transition.Transition
 import android.transition.TransitionManager
 import android.view.Gravity
 import android.view.View
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import com.emcash.customerapp.R
+import com.emcash.customerapp.TransactionType
 import com.emcash.customerapp.data.network.ApiCallStatus
 import com.emcash.customerapp.extensions.*
 import com.emcash.customerapp.model.contacts.Contact
@@ -64,7 +66,10 @@ class TransferFragment : Fragment(R.layout.transfer_fragment), BottomSheetListen
                 onInit = { status, refId, error ->
                     when (status) {
                         true -> {
-                            viewModel.gotoScreen(NewPaymentScreens.PIN)
+                            val bundle = bundleOf(
+                                KEY_TRANSACTION_TYPE to TransactionType.TRANSFER
+                            )
+                            viewModel.gotoScreen(NewPaymentScreens.PIN,bundle)
                         }
                         false -> {
                             requireActivity().showShortToast(error)

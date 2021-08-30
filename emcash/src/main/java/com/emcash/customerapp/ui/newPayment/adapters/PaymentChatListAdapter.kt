@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.emcash.customerapp.R
 import com.emcash.customerapp.extensions.getCurrentDate
 import com.emcash.customerapp.model.payments.TransactionHistoryUI
+import com.emcash.customerapp.ui.newPayment.PaymentHistoryItemClickListener
 import kotlinx.android.synthetic.main.row_payment_chat.view.*
 
 object PaymentDiffUtil : DiffUtil.ItemCallback<TransactionHistoryUI>() {
@@ -29,7 +30,9 @@ object PaymentDiffUtil : DiffUtil.ItemCallback<TransactionHistoryUI>() {
 
 }
 
-class PaymentChatListAdapter:PagingDataAdapter<TransactionHistoryUI,PaymentChatListAdapter.ViewHolder>(PaymentDiffUtil) {
+class PaymentChatListAdapter(
+    val listener:PaymentHistoryItemClickListener
+):PagingDataAdapter<TransactionHistoryUI,PaymentChatListAdapter.ViewHolder>(PaymentDiffUtil) {
 
     class ViewHolder(itemView: View) :RecyclerView.ViewHolder(itemView)
 
@@ -44,7 +47,7 @@ class PaymentChatListAdapter:PagingDataAdapter<TransactionHistoryUI,PaymentChatL
             }
             rv_chat_details.apply {
                 adapter = PaymentItemListAdapter(
-                    ArrayList(currentItem?.transactions)
+                    ArrayList(currentItem?.transactions),listener
                 )
             }
 
