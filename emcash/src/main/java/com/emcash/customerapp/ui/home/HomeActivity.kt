@@ -22,6 +22,7 @@ import com.emcash.customerapp.ui.home.adapter.RecentTransactionsAdapter
 import com.emcash.customerapp.ui.loademcash.LoadEmcashActivity
 import com.emcash.customerapp.ui.newPayment.NewPaymentActivity
 import com.emcash.customerapp.ui.newPayment.adapters.ContactsListener
+import com.emcash.customerapp.ui.notifiacations.NotificationsActivity
 import com.emcash.customerapp.ui.qr.QrScannerActivity
 import com.emcash.customerapp.ui.rewards.MyRewardsActivity
 import com.emcash.customerapp.ui.settings.SettingsActivity
@@ -186,6 +187,10 @@ class HomeActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks,
 
         fab_new_payment.setOnClickListener {
             openNewPayment()
+        }
+
+        iv_notifications.setOnClickListener {
+            openActivity(NotificationsActivity::class.java)
         }
 
     }

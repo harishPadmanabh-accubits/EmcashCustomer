@@ -6,6 +6,7 @@ import com.emcash.customerapp.model.auth.userExists.UserExistCheckRequest
 import com.emcash.customerapp.model.auth.userExists.UserExistCheckResponse
 import com.emcash.customerapp.model.contacts.AllContactsResponse
 import com.emcash.customerapp.model.contacts.ContactDetails
+import com.emcash.customerapp.model.notifications.NotificationResponse
 import com.emcash.customerapp.model.payments.*
 import com.emcash.customerapp.model.profile.ProfileDetailsResponse
 import com.emcash.customerapp.model.tnc.TncResponse
@@ -102,4 +103,12 @@ interface EmCashApis {
         @Query("status") status: String,
         @Query("type") type: String
     ): Call<com.emcash.customerapp.model.transactions.TransactionHistoryResponse>
+
+    @GET("v1/customers/notification")
+    fun getNotifications(
+        @Query("page") page: Int,
+        @Query("limit") limit: Int
+    ): Call<NotificationResponse>
+
+
 }

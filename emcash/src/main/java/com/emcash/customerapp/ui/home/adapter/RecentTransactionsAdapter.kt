@@ -50,12 +50,6 @@ class RecentTransactionsAdapter(val transactions : List<RecentTransactionItem>,v
         }
         return type
 
-
-
-//        return if(position==transactions.size)
-//            TYPE_VIEW_ALL
-//        else
-//            TYPE_USER
     }
 
 

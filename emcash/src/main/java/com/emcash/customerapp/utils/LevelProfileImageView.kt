@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.AttributeSet
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
+import com.bumptech.glide.Glide
 import com.emcash.customerapp.R
 import com.emcash.customerapp.extensions.*
 import kotlinx.android.synthetic.main.layout_item_recent_payment.view.*
@@ -42,7 +43,7 @@ class LevelProfileImageView(context: Context, attrs: AttributeSet) :
             1 -> fl_user_level.setBackgroundResource(R.drawable.green_round)
             2 -> fl_user_level.setBackgroundResource((R.drawable.yellow_round))
             3 -> fl_user_level.setBackgroundResource(R.drawable.red_round)
-            else -> fl_user_level.makeInvisible()
+            else -> fl_user_level.setBackgroundResource(0)
         }
     }
 
@@ -50,7 +51,7 @@ class LevelProfileImageView(context: Context, attrs: AttributeSet) :
         if (!imageUrl.isNullOrEmpty()) {
             iv_user_image.loadImageWithPlaceHolder(imageUrl,R.drawable.ic_profile_placeholder)
         } else {
-            iv_user_image.setBackgroundColor(ContextCompat.getColor(context, R.color.app_sky_blue))
+            iv_user_image.setBackgroundColor(ContextCompat.getColor(context, R.color.ash))
         }
     }
 
@@ -70,7 +71,6 @@ class LevelProfileImageView(context: Context, attrs: AttributeSet) :
     fun setFirstLetter(name: String) {
         tv_user_name_letter.text = name.first().toString().toUpperCase(Locale.getDefault())
         tv_user_name_letter.show()
-
-
+        Glide.with(context).load(R.drawable.round_ash).into(iv_user_image)
     }
 }

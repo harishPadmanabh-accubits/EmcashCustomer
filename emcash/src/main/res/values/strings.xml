@@ -68,4 +68,5 @@ Payment cards saved to your separate  Payments account are distinct from any Vir
     <string name="reward_high">High</string>
     <string name="reward_medium">Medium</string>
     <string name="reward_low">Low</string>
+    <string name="notification">Notifications</string>
 </resources>
