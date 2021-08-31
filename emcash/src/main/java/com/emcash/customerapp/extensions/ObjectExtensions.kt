@@ -26,6 +26,7 @@ import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import com.emcash.customerapp.BuildConfig
+import com.emcash.customerapp.EmCashHelper
 import com.emcash.customerapp.R
 import com.emcash.customerapp.data.network.exceptions.NoInternetException
 import com.emcash.customerapp.utils.IMAGE_BASE_URL
@@ -450,6 +451,8 @@ fun <T : Any> Call<T>.awaitResponse(
             } else {
                 //if(response.code()==401)
                 onFailure.invoke(response.message())
+
+
 
             }
         }

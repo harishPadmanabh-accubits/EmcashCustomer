@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "1030574324813",
+    "project_id": "test-24d1f",
+    "storage_bucket": "test-24d1f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1030574324813:android:0afb7dd6b516a84617f004",
+        "android_client_info": {
+          "package_name": "com.app.emcashmerchant"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1030574324813-mbna53a344rease9dqqhuc6fhgdbp4v7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAsHXoQYA2IyVdQD-TTxSvtFxzNZ-bVRJ8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1030574324813-mbna53a344rease9dqqhuc6fhgdbp4v7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1030574324813:android:24a68f66ff8a6b5717f004",
+        "android_client_info": {
+          "package_name": "com.emcash.emcashcustomer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1030574324813-mbna53a344rease9dqqhuc6fhgdbp4v7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAsHXoQYA2IyVdQD-TTxSvtFxzNZ-bVRJ8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1030574324813-mbna53a344rease9dqqhuc6fhgdbp4v7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

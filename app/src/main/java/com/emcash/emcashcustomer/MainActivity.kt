@@ -13,14 +13,40 @@ import com.emcash.customerapp.extensions.hide
 import com.emcash.customerapp.extensions.show
 import com.emcash.customerapp.extensions.showShortToast
 import com.emcash.customerapp.utils.KEY_TRANSACTION_TYPE
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.FirebaseApp
+import com.google.firebase.messaging.FirebaseMessaging
 import kotlinx.android.synthetic.main.activity_main.*
-import java.util.logging.Logger
+import java.lang.Exception
 
 class MainActivity : AppCompatActivity() ,EmCashListener{
+
+    var token =""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        FirebaseApp.initializeApp(this)
+
+        try {
+            FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+                if (!task.isSuccessful) {
+                    Log.e("fcmError", "Fetching FCM registration token failed", task.exception)
+                    return@OnCompleteListener
+                }
+                // Get new FCM registration token
+                val fcmToken = task.result.toString()
+                token = fcmToken
+                Log.d("fcmToken007", fcmToken.toString())
+            })
+
+        } catch (exception: Exception) {
+            Log.d("fcm exception", exception.toString())
+
+        }
+
+
+
     }
 
     fun onClick(view: View) {
@@ -28,7 +54,7 @@ class MainActivity : AppCompatActivity() ,EmCashListener{
         EmCashHelper(applicationContext,this).doEmCashLogin(
             "509842776",
             "50464B84832A00209E3065B6146A99471EAE21613FFAB4D0742693C70978EE31",
-            "201812231321016084"
+            "201812231321016084",token
         )
       }
 

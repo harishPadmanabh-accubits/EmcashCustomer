@@ -43,6 +43,10 @@ const val SCREEN_RECEIPT = 206
 const val SCREEN_CHAT = 207
 const val SCREEN_CONTACTS = 208
 
+const val KEY_DEEPLINK = "deeplink"
+const val KEY_TYPE = " notify_type"
+const val IS_FROM_DEEPLINK = "is_from_deeplink"
+
 /*
     Contacts Page Items
  */
