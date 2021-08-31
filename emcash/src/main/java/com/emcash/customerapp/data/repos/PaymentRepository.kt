@@ -168,4 +168,18 @@ class PaymentRepository(private val context: Context) {
         }
 
     }
+
+    fun getQRResult(
+        qrRequest: QRRequest,
+        onApiCallBack: (status: Boolean,response:QRResponse.Data?, error: String?) -> Unit
+    ){
+        api.getQRResult(qrRequest).awaitResponse(onSuccess = {
+            val data = it?.data
+            data?.let {
+                onApiCallBack(true,data,null)
+            }
+        },onFailure = {
+            onApiCallBack(false,null, it)
+        })
+    }
 }

@@ -19,14 +19,17 @@ const val KEY_SWITCH_ACCOUNT = "switch_account"
 const val KEY_USER_EXIST = "user_exist"
 const val KEY_SHOW_ONBOARDING = "show_onboarding"
 const val KEY_TERMS_ACCEPTED = "tnc_status"
-const val KEY_PROFILE_DATA_CACHE =  "profile_data"
+const val KEY_PROFILE_DATA_CACHE = "profile_data"
 const val KEY_TOPUP_AMOUNT = "topup"
 const val KEY_TOPUP_DESC = "topup_desc"
 const val KEY_SELECTED_CONTACT = "selected_contact"
 const val KEY_REF_ID = "ref_id"
 const val KEY_BEN_ID = "ben_id"
-const val KEY_TRANSACTION_TYPE="trans_type"
+const val KEY_TRANSACTION_TYPE = "trans_type"
 const val kEY_PENDING_REQUEST = "pending_request"
+const val KEY_IS_FROM_QR = "is_from_qr"
+const val KEY_QR_DATA = "data_from_qr"
+
 /**
  * Screen Keys
  */
@@ -48,7 +51,7 @@ const val ITEM_ALL_CONTACTS = 1001
 
 
 const val BASE_URL: String = "https://emcash-api-dev.devtomaster.com/"
-const val IMAGE_BASE_URL : String ="https://stemcashmerchantdocstest.blob.core.windows.net"
+const val IMAGE_BASE_URL: String = "https://stemcashmerchantdocstest.blob.core.windows.net"
 
 const val TYPE_TRANSFER = "Transfer"
 const val TYPE_REQUEST = "Request"

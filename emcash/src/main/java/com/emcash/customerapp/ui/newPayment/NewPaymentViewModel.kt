@@ -15,10 +15,7 @@ import com.emcash.customerapp.extensions.default
 import com.emcash.customerapp.model.*
 import com.emcash.customerapp.model.contacts.Contact
 import com.emcash.customerapp.model.contacts.ContactItem
-import com.emcash.customerapp.model.payments.PaymentApprovalRequest
-import com.emcash.customerapp.model.payments.PaymentRequest
-import com.emcash.customerapp.model.payments.TransactionDetailsResponse
-import com.emcash.customerapp.model.payments.TransactionHistoryResponse
+import com.emcash.customerapp.model.payments.*
 import com.emcash.customerapp.model.transactions.RecentTransactionItem
 import com.emcash.customerapp.ui.newPayment.NewPaymentScreens.*
 import com.emcash.customerapp.ui.newPayment.adapters.TransactionHistoryPagingSource
@@ -233,33 +230,17 @@ class NewPaymentViewModel(val app: Application) : AndroidViewModel(app) {
         return _history
     }
 
-//    fun acceptPayment(transactionId:String, onResult: (status: Boolean, error: String?) -> Unit){
-//        if(transactionId.isNotEmpty()){
-//            val request = PaymentApprovalRequest(transactionId)
-//            paymentRepository.acceptPayment(request){
-//                status, error ->
-//                when(status){
-//                    true-> onResult(true,null)
-//                    false-> onResult(false,error)
-//                }
-//            }
-//        }
-//
-//    }
-//
-//    fun rejectPayment(transactionId:String, onResult: (status: Boolean, error: String?) -> Unit){
-//        if(transactionId.isNotEmpty()){
-//            val request = PaymentApprovalRequest(transactionId)
-//            paymentRepository.rejectPayment(request){
-//                    status, error ->
-//                when(status){
-//                    true-> onResult(true,null)
-//                    false-> onResult(false,error)
-//                }
-//            }
-//        }
-//
-//    }
+    fun onQrScanResult(refId: String,onResult:(status:Boolean,profile:QRResponse.Data?,error:String?)->Unit){
+        val request = QRRequest(refId)
+        paymentRepository.getQRResult(request){
+            status, response, error ->
+            when(status){
+                true-> onResult(true,response,null)
+                false->onResult(false,null,error)
+            }
+        }
+    }
+
 }
 
 enum class NewPaymentScreens {

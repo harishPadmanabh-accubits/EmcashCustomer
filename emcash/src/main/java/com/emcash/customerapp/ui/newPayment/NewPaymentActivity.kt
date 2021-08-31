@@ -6,6 +6,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.os.bundleOf
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
 import androidx.lifecycle.Observer
@@ -13,7 +14,9 @@ import com.emcash.customerapp.EmCashCommunicationHelper
 import com.emcash.customerapp.EmCashListener
 import com.emcash.customerapp.R
 import com.emcash.customerapp.TransactionType
+import com.emcash.customerapp.extensions.fromJson
 import com.emcash.customerapp.extensions.openActivity
+import com.emcash.customerapp.model.payments.QRResponse
 import com.emcash.customerapp.ui.home.HomeActivity
 import com.emcash.customerapp.ui.newPayment.NewPaymentScreens.*
 import com.emcash.customerapp.ui.qr.QrScannerActivity
@@ -36,10 +39,22 @@ class NewPaymentActivity : AppCompatActivity(), EasyPermissions.PermissionCallba
         intent.getIntExtra(LAUNCH_DESTINATION,0)
     }
 
+    val isFromQR by lazy {
+        intent.getBooleanExtra(KEY_IS_FROM_QR,false)
+    }
+
+    val qrDataProfile by lazy {
+        intent.getStringExtra(KEY_QR_DATA)?.fromJson(QRResponse.Data::class.java)
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_new_payment)
+
+
+
+
         if(intent.getIntExtra(KEY_BEN_ID,0)>0)
             viewModel.beneficiaryId = intent.getIntExtra(KEY_BEN_ID,0)
 
@@ -55,6 +70,19 @@ class NewPaymentActivity : AppCompatActivity(), EasyPermissions.PermissionCallba
         if(destination>0){
             when(destination){
                 SCREEN_RECEIPT->viewModel.gotoScreen(RECEIPT)
+                SCREEN_TRANSFER->{
+                    if(isFromQR){
+                     qrDataProfile?.let {profile->
+                         val contactBundle = bundleOf(
+                             KEY_SELECTED_CONTACT to profile.id,
+                             KEY_TRANSACTION_TYPE to TYPE_TRANSFER
+                         )
+                         viewModel.gotoScreen(TRANSFER,contactBundle)
+
+                     }
+
+                    }
+                }
             }
         }
 

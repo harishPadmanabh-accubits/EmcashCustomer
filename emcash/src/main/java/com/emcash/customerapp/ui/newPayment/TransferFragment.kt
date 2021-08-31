@@ -25,6 +25,7 @@ import kotlinx.android.synthetic.main.transfer_fragment.*
 import kotlinx.android.synthetic.main.transfer_fragment.fl_bottom_sheet
 import kotlinx.coroutines.launch
 import timber.log.Timber
+import java.time.temporal.TemporalAmount
 
 class TransferFragment : Fragment(R.layout.transfer_fragment), BottomSheetListener {
 
@@ -117,14 +118,20 @@ class TransferFragment : Fragment(R.layout.transfer_fragment), BottomSheetListen
             val type = it[KEY_TRANSACTION_TYPE].toString()
             setupFab(type)
             Timber.e("Contact id in transfer screen $contact type $type")
-
-
             userId = contact
             viewModel.getContactDetails(contact).observe(viewLifecycleOwner, Observer {
                 when (it.status) {
                     ApiCallStatus.SUCCESS -> {
                         loader.hideLoader()
                         renderDetails(it.data)
+                        val activity= requireActivity() as NewPaymentActivity
+                        if(activity.isFromQR){
+                            val profileDataFromQR = activity.qrDataProfile
+                            profileDataFromQR?.let {
+                                renderTransactionDetails(it.amount.toString(),it.description)
+                            }
+                        }
+
                     }
                     ApiCallStatus.ERROR -> {
                         loader.hideLoader()
@@ -142,6 +149,21 @@ class TransferFragment : Fragment(R.layout.transfer_fragment), BottomSheetListen
 
     private fun setupFab(type: String) {
         fab_transfer.text = if (type.equals(TYPE_TRANSFER)) TYPE_TRANSFER else TYPE_REQUEST
+    }
+
+    private fun renderTransactionDetails(amount:String,desc:String){
+        et_value.apply {
+            setText(amount)
+            isEnabled = false
+        }
+
+        et_description.apply {
+            if(desc.isNotEmpty()){
+                setText(desc)
+                isEnabled = false
+            }
+        }
+
     }
 
     private fun renderDetails(data: Contact?) {
@@ -261,5 +283,7 @@ class TransferFragment : Fragment(R.layout.transfer_fragment), BottomSheetListen
         viewModel._bottomSheetVisiblity.value = false
 
     }
+
+
 
 }

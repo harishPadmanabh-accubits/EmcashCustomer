@@ -138,8 +138,8 @@ class HomeActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks,
         coinProfileImageView.setImage(profileDetails.profileImage)
         tv_tv_balance.text = profileDetails.wallet.amount.toString()
         setLevelShower(profileDetails.customer.rewardLevel)
-
         hideLoader()
+        cl_root.show()
 
 
     }
@@ -182,7 +182,7 @@ class HomeActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks,
         }
 
         iv_qr_scanner.setOnClickListener {
-            //  openQRScanner()
+              openQRScanner()
         }
 
         fab_new_payment.setOnClickListener {
@@ -244,7 +244,9 @@ class HomeActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks,
 
     fun openQRScanner() {
         if (hasCameraPermission()) {
-            openActivity(QrScannerActivity::class.java)
+            openActivity(QrScannerActivity::class.java){
+                this.putInt(LAUNCH_SOURCE, SCREEN_HOME)
+            }
         } else {
             EasyPermissions.requestPermissions(
                 this,

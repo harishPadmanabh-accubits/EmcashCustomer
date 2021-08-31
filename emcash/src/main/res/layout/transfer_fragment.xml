@@ -92,6 +92,7 @@
         android:focusedByDefault="true"
         android:fontFamily="@font/biennale_bold"
         android:hint="00"
+        android:textAlignment="center"
         android:inputType="number"
         android:maxLength="5"
         android:maxLines="1"

@@ -110,5 +110,9 @@ interface EmCashApis {
         @Query("limit") limit: Int
     ): Call<NotificationResponse>
 
+    @POST("v1/customers/payments/qrcode/check")
+    fun getQRResult(
+        @Body qrRequest: QRRequest
+    ):Call<QRResponse>
 
 }
