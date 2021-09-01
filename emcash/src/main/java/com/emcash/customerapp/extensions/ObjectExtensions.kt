@@ -11,7 +11,9 @@ import android.text.TextWatcher
 import android.util.DisplayMetrics
 import android.view.KeyEvent
 import android.view.View
+import android.view.ViewTreeObserver
 import android.view.WindowManager
+import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.FrameLayout
 import android.widget.ImageView
@@ -25,9 +27,7 @@ import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
-import com.emcash.customerapp.BuildConfig
-import com.emcash.customerapp.EmCashHelper
-import com.emcash.customerapp.R
+import com.emcash.customerapp.*
 import com.emcash.customerapp.data.network.exceptions.NoInternetException
 import com.emcash.customerapp.utils.IMAGE_BASE_URL
 import com.google.gson.Gson
@@ -449,7 +449,9 @@ fun <T : Any> Call<T>.awaitResponse(
             if (response.isSuccessful) {
                 onSuccess.invoke(response.body())
             } else {
-                //if(response.code()==401)
+                if(response.code()==401)
+                    EmCashCommunicationHelper.getParentListener().onVerifyPin(TransactionType.VERIFY_USER)
+
                 onFailure.invoke(response.message())
 
 
@@ -533,4 +535,39 @@ fun getCurrentDate(): String {
 
 
     return formatted
+}
+
+fun View.focusAndShowKeyboard() {
+    /**
+     * This is to be called when the window already has focus.
+     */
+    fun View.showTheKeyboardNow() {
+        if (isFocused) {
+            post {
+                // We still post the call, just in case we are being notified of the windows focus
+                // but InputMethodManager didn't get properly setup yet.
+                val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.showSoftInput(this, InputMethodManager.SHOW_IMPLICIT)
+            }
+        }
+    }
+
+    requestFocus()
+    if (hasWindowFocus()) {
+        // No need to wait for the window to get focus.
+        showTheKeyboardNow()
+    } else {
+        // We need to wait until the window gets focus.
+        viewTreeObserver.addOnWindowFocusChangeListener(
+            object : ViewTreeObserver.OnWindowFocusChangeListener {
+                override fun onWindowFocusChanged(hasFocus: Boolean) {
+                    // This notification will arrive just before the InputMethodManager gets set up.
+                    if (hasFocus) {
+                        this@focusAndShowKeyboard.showTheKeyboardNow()
+                        // It’s very important to remove this listener once we are done.
+                        viewTreeObserver.removeOnWindowFocusChangeListener(this)
+                    }
+                }
+            })
+    }
 }

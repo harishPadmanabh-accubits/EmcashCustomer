@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProviders
+import timber.log.Timber
 
 
 fun <T : ViewModel> FragmentActivity.obtainViewModel(viewModelClass: Class<T>) =
@@ -33,6 +34,7 @@ fun FragmentActivity.showKeyboard(view: View?) {
             this.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT)
     } catch (e: Exception) {
+        Timber.e("Exc in keyboard manger $e")
         e.printStackTrace()
     }
 }

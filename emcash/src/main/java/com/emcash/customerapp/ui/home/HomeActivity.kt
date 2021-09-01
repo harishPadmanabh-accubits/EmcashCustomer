@@ -6,8 +6,10 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.net.toUri
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
+import com.emcash.customerapp.DeepLinkFactory
 import com.emcash.customerapp.R
 import com.emcash.customerapp.data.network.ApiCallStatus
 import com.emcash.customerapp.extensions.*
@@ -47,6 +49,18 @@ class HomeActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks,
         LoaderDialog(this)
     }
 
+    private val deeplink by lazy {
+        intent.getStringExtra(KEY_DEEPLINK).toString()
+    }
+
+    private val type by lazy {
+        intent.getStringExtra(KEY_TYPE)
+    }
+
+    private val isFromDeeplink by lazy {
+        intent.getBooleanExtra(IS_FROM_DEEPLINK,false)
+    }
+
     private val viewModel: HomeViewModel by viewModels()
 
 
@@ -54,6 +68,8 @@ class HomeActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks,
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
         window.sharedElementEnterTransition.duration = 500
+       checkDataFromPendingIntent()
+
         lifecycleScope.launch (Dispatchers.Main){
            // validateCache(profileDataCache)
             getProfileDetailsFromServer()
@@ -64,6 +80,13 @@ class HomeActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks,
 
 
         setupViews()
+    }
+
+    private fun checkDataFromPendingIntent() {
+        if(deeplink.isNotBlank() && isFromDeeplink){
+            val intent = DeepLinkFactory.getIntentFromDeeplink(deeplink.toUri(),this)
+            startActivity(intent)
+        }
     }
 
     private fun getRecentTransactions() {

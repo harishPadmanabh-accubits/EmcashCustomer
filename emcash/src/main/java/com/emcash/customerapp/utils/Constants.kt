@@ -29,6 +29,7 @@ const val KEY_TRANSACTION_TYPE = "trans_type"
 const val kEY_PENDING_REQUEST = "pending_request"
 const val KEY_IS_FROM_QR = "is_from_qr"
 const val KEY_QR_DATA = "data_from_qr"
+const val KEY_USER_ID_FROM_DEEPLINK = "deep_user"
 
 /**
  * Screen Keys

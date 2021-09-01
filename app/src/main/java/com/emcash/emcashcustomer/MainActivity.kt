@@ -67,11 +67,19 @@ class MainActivity : AppCompatActivity() ,EmCashListener{
 
     }
 
-    override fun onVerifyPin(forAction:TransactionType) {
-        Log.e("On verify ","called listended in parent")
+//    override fun onVerifyPin(forAction:TransactionType,) {
+//        Log.e("On verify ","called listended in parent")
+//        startActivity(Intent(this,PinScreen::class.java).also {
+//            val typeBundle = bundleOf(KEY_TRANSACTION_TYPE to forAction)
+//            it.putExtra("KEY_TRANSACTION_TYPE",typeBundle)
+//        })
+//    }
+
+    override fun onVerifyPin(forAction: TransactionType, sourceIfAny: Int?) {
         startActivity(Intent(this,PinScreen::class.java).also {
             val typeBundle = bundleOf(KEY_TRANSACTION_TYPE to forAction)
             it.putExtra("KEY_TRANSACTION_TYPE",typeBundle)
+            it.putExtra("SOURCE",sourceIfAny)
         })
     }
 }

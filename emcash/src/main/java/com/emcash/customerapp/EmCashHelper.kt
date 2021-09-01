@@ -91,6 +91,9 @@ class EmCashHelper(val appContext: Context, val listener: EmCashListener) {
             }
             TransactionType.ACCEPT -> proceedToAcceptPayment()
             TransactionType.REJECT -> proceedToRejectPayment()
+            TransactionType.VERIFY_USER->{
+
+            }
 
         }
     }
@@ -195,7 +198,7 @@ class EmCashHelper(val appContext: Context, val listener: EmCashListener) {
         }
 
         val stackBuilder = TaskStackBuilder.create(appContext).also {
-            it.addParentStack(IntroActivity::class.java)
+            it.addParentStack(HomeActivity::class.java)
             it.addNextIntent(notificationIntent)
         }
         val resultPendingIntent =
@@ -238,7 +241,7 @@ class EmCashHelper(val appContext: Context, val listener: EmCashListener) {
 
 interface EmCashListener {
     fun onLoginSuccess(status: Boolean) {}
-    fun onVerifyPin(forAction: TransactionType) {}
+    fun onVerifyPin(forAction: TransactionType,sourceIfAny:Int?=null) {}
 }
 
 enum class TransactionType {

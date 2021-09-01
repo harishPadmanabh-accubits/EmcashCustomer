@@ -1,31 +1,30 @@
 package com.emcash.customerapp.ui.newPayment
 
 import android.animation.ObjectAnimator
+import android.content.Context
 import android.os.Bundle
 import android.transition.Slide
 import android.transition.Transition
 import android.transition.TransitionManager
 import android.view.Gravity
 import android.view.View
+import android.view.inputmethod.InputMethodManager
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.lifecycleScope
 import com.emcash.customerapp.R
 import com.emcash.customerapp.TransactionType
 import com.emcash.customerapp.data.network.ApiCallStatus
 import com.emcash.customerapp.extensions.*
 import com.emcash.customerapp.model.contacts.Contact
-import com.emcash.customerapp.model.contacts.ContactItem
 import com.emcash.customerapp.ui.prepare.BottomSheetListener
 import com.emcash.customerapp.utils.*
 import kotlinx.android.synthetic.main.bottom_sheet_how_it_works.*
 import kotlinx.android.synthetic.main.transfer_fragment.*
-import kotlinx.android.synthetic.main.transfer_fragment.fl_bottom_sheet
-import kotlinx.coroutines.launch
 import timber.log.Timber
-import java.time.temporal.TemporalAmount
+
 
 class TransferFragment : Fragment(R.layout.transfer_fragment), BottomSheetListener {
 
@@ -70,7 +69,7 @@ class TransferFragment : Fragment(R.layout.transfer_fragment), BottomSheetListen
                             val bundle = bundleOf(
                                 KEY_TRANSACTION_TYPE to TransactionType.TRANSFER
                             )
-                            viewModel.gotoScreen(NewPaymentScreens.PIN,bundle)
+                            viewModel.gotoScreen(NewPaymentScreens.PIN, bundle)
                         }
                         false -> {
                             requireActivity().showShortToast(error)
@@ -119,16 +118,17 @@ class TransferFragment : Fragment(R.layout.transfer_fragment), BottomSheetListen
             setupFab(type)
             Timber.e("Contact id in transfer screen $contact type $type")
             userId = contact
+            viewModel.beneficiaryId = userId
             viewModel.getContactDetails(contact).observe(viewLifecycleOwner, Observer {
                 when (it.status) {
                     ApiCallStatus.SUCCESS -> {
                         loader.hideLoader()
                         renderDetails(it.data)
-                        val activity= requireActivity() as NewPaymentActivity
-                        if(activity.isFromQR){
+                        val activity = requireActivity() as NewPaymentActivity
+                        if (activity.isFromQR) {
                             val profileDataFromQR = activity.qrDataProfile
                             profileDataFromQR?.let {
-                                renderTransactionDetails(it.amount.toString(),it.description)
+                                renderTransactionDetails(it.amount.toString(), it.description)
                             }
                         }
 
@@ -142,21 +142,19 @@ class TransferFragment : Fragment(R.layout.transfer_fragment), BottomSheetListen
                     }
                 }
             })
-
-
         }
     }
 
     private fun setupFab(type: String) {
-        fab_transfer.text = if (type.equals(TYPE_TRANSFER)) TYPE_TRANSFER else TYPE_REQUEST
+        fab_transfer.text = type
     }
 
-    private fun renderTransactionDetails(amount:String,desc:String){
+    private fun renderTransactionDetails(amount: String, desc: String){
         et_value.apply {
             setText(amount)
+
             isEnabled = false
         }
-
         et_description.apply {
             if(desc.isNotEmpty()){
                 setText(desc)
@@ -284,6 +282,11 @@ class TransferFragment : Fragment(R.layout.transfer_fragment), BottomSheetListen
 
     }
 
-
+    private fun showSoftKeyboard(view: View) {
+        if (view.requestFocus()) {
+            val inputMethodManager: InputMethodManager = view.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            inputMethodManager.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT)
+        }
+    }
 
 }

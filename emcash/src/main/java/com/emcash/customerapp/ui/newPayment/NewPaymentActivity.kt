@@ -27,7 +27,7 @@ import timber.log.Timber
 
 @Suppress("WHEN_ENUM_CAN_BE_NULL_IN_JAVA")
 class NewPaymentActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks,
-    EasyPermissions.RationaleCallbacks,EmCashListener {
+    EasyPermissions.RationaleCallbacks, EmCashListener {
 
     val viewModel: NewPaymentViewModel by viewModels()
 
@@ -36,28 +36,27 @@ class NewPaymentActivity : AppCompatActivity(), EasyPermissions.PermissionCallba
     }
 
     val destination by lazy {
-        intent.getIntExtra(LAUNCH_DESTINATION,0)
+        intent.getIntExtra(LAUNCH_DESTINATION, 0)
     }
 
     val isFromQR by lazy {
-        intent.getBooleanExtra(KEY_IS_FROM_QR,false)
+        intent.getBooleanExtra(KEY_IS_FROM_QR, false)
     }
 
     val qrDataProfile by lazy {
         intent.getStringExtra(KEY_QR_DATA)?.fromJson(QRResponse.Data::class.java)
     }
 
+    val benId by lazy {
+        intent.getIntExtra(KEY_BEN_ID, 0)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_new_payment)
 
-
-
-
-        if(intent.getIntExtra(KEY_BEN_ID,0)>0)
-            viewModel.beneficiaryId = intent.getIntExtra(KEY_BEN_ID,0)
-
+        if (benId > 0)
+            viewModel.beneficiaryId = benId
 
         if (source == SCREEN_HOME_RECENT_CONTACTS)
             viewModel.gotoScreen(CHAT)
@@ -67,22 +66,24 @@ class NewPaymentActivity : AppCompatActivity(), EasyPermissions.PermissionCallba
     }
 
     private fun handleDestinations(destination: Int) {
-        if(destination>0){
-            when(destination){
-                SCREEN_RECEIPT->viewModel.gotoScreen(RECEIPT)
-                SCREEN_TRANSFER->{
-                    if(isFromQR){
-                     qrDataProfile?.let {profile->
-                         val contactBundle = bundleOf(
-                             KEY_SELECTED_CONTACT to profile.id,
-                             KEY_TRANSACTION_TYPE to TYPE_TRANSFER
-                         )
-                         viewModel.gotoScreen(TRANSFER,contactBundle)
-
-                     }
-
+        if (destination > 0) {
+            when (destination) {
+                SCREEN_RECEIPT -> viewModel.gotoScreen(RECEIPT)
+                SCREEN_TRANSFER -> {
+                    if (isFromQR) {
+                        qrDataProfile?.let { profile ->
+                            val contactBundle = bundleOf(
+                                KEY_SELECTED_CONTACT to profile.id,
+                                KEY_TRANSACTION_TYPE to TYPE_TRANSFER
+                            )
+                            viewModel.gotoScreen(TRANSFER, contactBundle)
+                        }
                     }
                 }
+                SCREEN_CHAT -> {
+                    viewModel.gotoScreen(CHAT)
+                }
+
             }
         }
 
@@ -98,7 +99,7 @@ class NewPaymentActivity : AppCompatActivity(), EasyPermissions.PermissionCallba
                     RECEIPT -> openPaymentReceipt(screenConfig.bundle)
                     PIN -> {
                         val type = screenConfig.bundle?.get(KEY_TRANSACTION_TYPE) as TransactionType
-                        Timber.e("listener ${ EmCashCommunicationHelper.getParentListener()} type $type")
+                        Timber.e("listener ${EmCashCommunicationHelper.getParentListener()} type $type")
                         EmCashCommunicationHelper.getParentListener()?.onVerifyPin(type)
                     }
                     SCAN -> openQRScanner(screenConfig.bundle)
@@ -116,7 +117,7 @@ class NewPaymentActivity : AppCompatActivity(), EasyPermissions.PermissionCallba
                 android.R.anim.fade_in,
                 android.R.anim.fade_out
             )
-            replace<EmcashPinFragment>(R.id.container,"")
+            replace<EmcashPinFragment>(R.id.container, "")
         }
     }
 
@@ -130,7 +131,7 @@ class NewPaymentActivity : AppCompatActivity(), EasyPermissions.PermissionCallba
                 android.R.anim.fade_out
             )
 
-            replace<TransferFragment>(R.id.container,"Transfer to",bundle)
+            replace<TransferFragment>(R.id.container, "Transfer to", bundle)
         }
     }
 
@@ -157,7 +158,7 @@ class NewPaymentActivity : AppCompatActivity(), EasyPermissions.PermissionCallba
                 android.R.anim.fade_in,
                 android.R.anim.fade_out
             )
-            replace<PaymentChatFragment>(R.id.container,"Chats",bundle)
+            replace<PaymentChatFragment>(R.id.container, "Chats", bundle)
         }
     }
 
@@ -191,10 +192,10 @@ class NewPaymentActivity : AppCompatActivity(), EasyPermissions.PermissionCallba
                     finish()
                 }
                 PIN -> {
-                      viewModel.gotoScreen(TRANSFER)
+                    viewModel.gotoScreen(TRANSFER)
                 }
                 TRANSFER -> {
-                    viewModel.gotoScreen(CONTACTS)
+                    viewModel.gotoScreen(CHAT)
                 }
                 else -> {
                     super.onBackPressed()
@@ -272,8 +273,6 @@ class NewPaymentActivity : AppCompatActivity(), EasyPermissions.PermissionCallba
 
     override fun onLoginSuccess(status: Boolean) {
     }
-
-
 
 
 }
