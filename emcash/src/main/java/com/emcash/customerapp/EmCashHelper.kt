@@ -13,6 +13,7 @@ import androidx.core.app.TaskStackBuilder
 import com.emcash.customerapp.data.SyncManager
 import com.emcash.customerapp.data.repos.AuthRepository
 import com.emcash.customerapp.data.repos.PaymentRepository
+import com.emcash.customerapp.enums.TransactionType
 import com.emcash.customerapp.extensions.showShortToast
 import com.emcash.customerapp.model.auth.switchAccount.SwitchAccountRequest
 import com.emcash.customerapp.ui.home.HomeActivity
@@ -167,83 +168,12 @@ class EmCashHelper(val appContext: Context, val listener: EmCashListener) {
 
     }
 
-    fun handleEmCashNotification(
-        title: String?,
-        message: String?,
-        deepLink: String?,
-        type: String?,
-        rejectContent: String?
-    ) {
-        Timber.e("fcm $title,$message,$deepLink")
-        if (title != null && message != null) {
-            showNotification(title,message,deepLink)
-        }else{
-            Timber.e("Arrived null on notify")
-        }
-
-    }
-
-    private fun showNotification(title: String?, message: String?, deeplink: String?) {
-        val channelId = "com.emcash.customer.notifications"
-        val channeldesc = "Emcash customer Notification Channel"
-        val builder: Notification.Builder
-
-        val notificationManager: NotificationManager =
-            appContext.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        val notificationIntent = Intent(appContext,HomeActivity::class.java).apply {
-            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            putExtra(KEY_DEEPLINK, deeplink?.toString())
-            putExtra(KEY_TYPE, type?.toString())
-            putExtra(IS_FROM_DEEPLINK, true)
-        }
-
-        val stackBuilder = TaskStackBuilder.create(appContext).also {
-            it.addParentStack(HomeActivity::class.java)
-            it.addNextIntent(notificationIntent)
-        }
-        val resultPendingIntent =
-            stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT)
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val notificationChannel = NotificationChannel(
-                channelId,
-                channeldesc,
-                NotificationManager.IMPORTANCE_HIGH
-            )
-            notificationChannel.enableLights(true)
-            notificationChannel.lightColor = Color.GREEN
-            notificationChannel.enableVibration(false)
-            notificationManager.createNotificationChannel(notificationChannel)
-
-            builder = Notification.Builder(appContext, channelId)
-                .setContentTitle(title)
-                .setContentText(message)
-                .setContentIntent(resultPendingIntent)
-                .setSmallIcon(R.drawable.intro_small_coin)
-                .setBadgeIconType(R.mipmap.ic_launcher)
-        } else {
-
-            builder = Notification.Builder(appContext)
-                .setContentTitle(title)
-                .setContentText(message)
-                .setContentIntent(resultPendingIntent)
-                .setSmallIcon(R.mipmap.ic_launcher)
-
-        }
-
-
-        notificationManager.notify(10001, builder.build())
-
-    }
 
 
 }
 
 interface EmCashListener {
     fun onLoginSuccess(status: Boolean) {}
-    fun onVerifyPin(forAction: TransactionType,sourceIfAny:Int?=null) {}
+    fun onVerifyPin(forAction: TransactionType, sourceIfAny:Int?=null) {}
 }
 
-enum class TransactionType {
-    TRANSFER, REQUEST, ACCEPT, REJECT, VERIFY_USER
-}

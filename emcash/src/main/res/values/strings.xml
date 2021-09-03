@@ -69,4 +69,7 @@ Payment cards saved to your separate  Payments account are distinct from any Vir
     <string name="reward_medium">Medium</string>
     <string name="reward_low">Low</string>
     <string name="notification">Notifications</string>
+    <string name="defaultChannel">Emcash</string>
+    <string name="notificationDescription">Notifications for Emcash</string>
+    <string name="deepLinkNotificationTitle">deepLinkNotificationTitle</string>
 </resources>
