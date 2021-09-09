@@ -10,8 +10,8 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.emcash.customerapp.R
-import com.emcash.customerapp.TransactionType
 import com.emcash.customerapp.data.network.ApiCallStatus
+import com.emcash.customerapp.enums.TransactionType
 import com.emcash.customerapp.extensions.*
 import com.emcash.customerapp.model.payments.TransactionHistory
 import com.emcash.customerapp.model.payments.TransactionHistoryResponse

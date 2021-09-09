@@ -13,7 +13,7 @@ import androidx.lifecycle.Observer
 import com.emcash.customerapp.EmCashCommunicationHelper
 import com.emcash.customerapp.EmCashListener
 import com.emcash.customerapp.R
-import com.emcash.customerapp.TransactionType
+import com.emcash.customerapp.enums.TransactionType
 import com.emcash.customerapp.extensions.fromJson
 import com.emcash.customerapp.extensions.openActivity
 import com.emcash.customerapp.model.payments.QRResponse

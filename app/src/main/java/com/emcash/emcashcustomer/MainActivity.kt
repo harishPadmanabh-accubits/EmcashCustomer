@@ -6,9 +6,10 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.core.os.bundleOf
+import com.emcash.customerapp.EmCashCommunicationHelper
 import com.emcash.customerapp.EmCashHelper
 import com.emcash.customerapp.EmCashListener
-import com.emcash.customerapp.TransactionType
+import com.emcash.customerapp.enums.TransactionType
 import com.emcash.customerapp.extensions.hide
 import com.emcash.customerapp.extensions.show
 import com.emcash.customerapp.extensions.showShortToast
@@ -23,10 +24,12 @@ class MainActivity : AppCompatActivity() ,EmCashListener{
 
     var token =""
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         FirebaseApp.initializeApp(this)
+        EmCashCommunicationHelper.setParentListener(this)
 
         try {
             FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
@@ -37,7 +40,7 @@ class MainActivity : AppCompatActivity() ,EmCashListener{
                 // Get new FCM registration token
                 val fcmToken = task.result.toString()
                 token = fcmToken
-                Log.d("fcmToken007", fcmToken.toString())
+                Log.d("fcmToken", fcmToken.toString())
             })
 
         } catch (exception: Exception) {
@@ -51,7 +54,7 @@ class MainActivity : AppCompatActivity() ,EmCashListener{
 
     fun onClick(view: View) {
         pb_login.show()
-        EmCashHelper(applicationContext,this).doEmCashLogin(
+        EmCashHelper(applicationContext,EmCashCommunicationHelper.getParentListener()).doEmCashLogin(
             "509842776",
             "50464B84832A00209E3065B6146A99471EAE21613FFAB4D0742693C70978EE31",
             "201812231321016084",token
@@ -66,15 +69,6 @@ class MainActivity : AppCompatActivity() ,EmCashListener{
             showShortToast("Login Failed")
 
     }
-
-//    override fun onVerifyPin(forAction:TransactionType,) {
-//        Log.e("On verify ","called listended in parent")
-//        startActivity(Intent(this,PinScreen::class.java).also {
-//            val typeBundle = bundleOf(KEY_TRANSACTION_TYPE to forAction)
-//            it.putExtra("KEY_TRANSACTION_TYPE",typeBundle)
-//        })
-//    }
-
     override fun onVerifyPin(forAction: TransactionType, sourceIfAny: Int?) {
         startActivity(Intent(this,PinScreen::class.java).also {
             val typeBundle = bundleOf(KEY_TRANSACTION_TYPE to forAction)

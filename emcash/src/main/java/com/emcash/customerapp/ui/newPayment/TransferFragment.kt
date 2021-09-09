@@ -15,8 +15,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import com.emcash.customerapp.R
-import com.emcash.customerapp.TransactionType
 import com.emcash.customerapp.data.network.ApiCallStatus
+import com.emcash.customerapp.enums.TransactionType
 import com.emcash.customerapp.extensions.*
 import com.emcash.customerapp.model.contacts.Contact
 import com.emcash.customerapp.ui.prepare.BottomSheetListener

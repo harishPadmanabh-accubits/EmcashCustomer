@@ -9,7 +9,7 @@ import android.widget.EditText
 import com.emcash.customerapp.EmCashCommunicationHelper
 import com.emcash.customerapp.EmCashHelper
 import com.emcash.customerapp.EmCashListener
-import com.emcash.customerapp.TransactionType
+import com.emcash.customerapp.enums.TransactionType
 import com.emcash.customerapp.extensions.afterTextChanged
 import com.emcash.customerapp.extensions.onDeletePressed
 import com.emcash.customerapp.extensions.showShortToast

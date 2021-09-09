@@ -29,6 +29,7 @@ import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import com.emcash.customerapp.*
 import com.emcash.customerapp.data.network.exceptions.NoInternetException
+import com.emcash.customerapp.enums.TransactionType
 import com.emcash.customerapp.utils.IMAGE_BASE_URL
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.item_inner_contact_details.view.*
