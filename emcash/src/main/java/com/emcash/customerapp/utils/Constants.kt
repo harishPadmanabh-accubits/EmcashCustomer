@@ -61,4 +61,5 @@ const val IMAGE_BASE_URL: String = "https://stemcashmerchantdocstest.blob.core.w
 const val TYPE_TRANSFER = "Transfer"
 const val TYPE_REQUEST = "Request"
 
+const val DEFAULT_PAGE_CONFIG = 3
 

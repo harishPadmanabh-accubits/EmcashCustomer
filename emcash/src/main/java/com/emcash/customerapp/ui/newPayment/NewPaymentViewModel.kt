@@ -19,6 +19,7 @@ import com.emcash.customerapp.model.payments.*
 import com.emcash.customerapp.model.transactions.RecentTransactionItem
 import com.emcash.customerapp.ui.newPayment.NewPaymentScreens.*
 import com.emcash.customerapp.ui.newPayment.adapters.TransactionHistoryPagingSource
+import com.emcash.customerapp.utils.DEFAULT_PAGE_CONFIG
 import com.emcash.customerapp.utils.ITEM_ALL_CONTACTS
 import com.emcash.customerapp.utils.ITEM_RECENT_CONTACTS
 import kotlinx.coroutines.Dispatchers
@@ -29,8 +30,7 @@ import timber.log.Timber
 class NewPaymentViewModel(val app: Application) : AndroidViewModel(app) {
 
     val paymentRepository = PaymentRepository(app)
-    val syncManager =SyncManager(app)
-
+    val syncManager = SyncManager(app)
 
 
     var _screenConfig = MutableLiveData<ScreenConfig>().default(ScreenConfig(CONTACTS))
@@ -38,7 +38,7 @@ class NewPaymentViewModel(val app: Application) : AndroidViewModel(app) {
 
     val validPin = "0000"
 
-    var beneficiaryId=0
+    var beneficiaryId = 0
 
     fun gotoScreen(screen: NewPaymentScreens, bundle: Bundle? = null) {
         if (bundle != null)
@@ -171,11 +171,10 @@ class NewPaymentViewModel(val app: Application) : AndroidViewModel(app) {
         onInit: (status: Boolean, refId: String?, error: String?) -> Unit
     ) {
         val request = PaymentRequest(amount, desc, userId)
-        paymentRepository.initPayment(request,onApiCallBack = {
-            status, response, error ->
-            when(status){
-                true-> onInit(true,response,null)
-                false->onInit(false,null,error)
+        paymentRepository.initPayment(request, onApiCallBack = { status, response, error ->
+            when (status) {
+                true -> onInit(true, response, null)
+                false -> onInit(false, null, error)
             }
         })
     }
@@ -185,58 +184,56 @@ class NewPaymentViewModel(val app: Application) : AndroidViewModel(app) {
         userId: Int,
         desc: String,
         onRequest: (status: Boolean, refId: String?, error: String?) -> Unit
-    ){
+    ) {
         val request = PaymentRequest(amount, desc, userId)
-        paymentRepository.requestPayment(request,onApiCallBack = {
-                status, response, error ->
-            when(status){
-                true-> onRequest(true,response,null)
-                false->onRequest(false,null,error)
+        paymentRepository.requestPayment(request, onApiCallBack = { status, response, error ->
+            when (status) {
+                true -> onRequest(true, response, null)
+                false -> onRequest(false, null, error)
             }
         })
     }
 
-    val _transactionDetails=MutableLiveData<ApiMapper<TransactionDetailsResponse.Data>>()
-    fun getTransactionDetails(refId: String):LiveData<ApiMapper<TransactionDetailsResponse.Data>>{
-        _transactionDetails.value =  ApiMapper(ApiCallStatus.LOADING, null, null)
-        paymentRepository.getTransactionDetails(refId,onApiCallBack = {
-            status, response, error ->
-            when(status){
-                true-> _transactionDetails.value = ApiMapper(ApiCallStatus.SUCCESS,response,null)
-                false->_transactionDetails.value = ApiMapper(ApiCallStatus.ERROR,null,error)
+    val _transactionDetails = MutableLiveData<ApiMapper<TransactionDetailsResponse.Data>>()
+    fun getTransactionDetails(refId: String): LiveData<ApiMapper<TransactionDetailsResponse.Data>> {
+        _transactionDetails.value = ApiMapper(ApiCallStatus.LOADING, null, null)
+        paymentRepository.getTransactionDetails(refId, onApiCallBack = { status, response, error ->
+            when (status) {
+                true -> _transactionDetails.value = ApiMapper(ApiCallStatus.SUCCESS, response, null)
+                false -> _transactionDetails.value = ApiMapper(ApiCallStatus.ERROR, null, error)
             }
         })
         return _transactionDetails
     }
 
-    val transactionHistory = Pager(PagingConfig(pageSize = 20)) {
+    val transactionHistory = Pager(PagingConfig(pageSize = DEFAULT_PAGE_CONFIG)) {
         TransactionHistoryPagingSource(
             paymentRepository.api,
             beneficiaryId
         )
-    }.flow
-        .cachedIn(viewModelScope)
+    }.flow.cachedIn(viewModelScope)
 
-    val _history=MutableLiveData<ApiMapper<TransactionHistoryResponse.Data>>()
+    val _history = MutableLiveData<ApiMapper<TransactionHistoryResponse.Data>>()
     fun getHistory(): LiveData<ApiMapper<TransactionHistoryResponse.Data>> {
-        _history.value = ApiMapper(ApiCallStatus.LOADING,null,null)
-        paymentRepository.getTransactions(beneficiaryId){
-            status, response, error ->
-            when(status){
-                true->_history.value = ApiMapper(ApiCallStatus.SUCCESS,response,null)
-                false->_history.value = ApiMapper(ApiCallStatus.ERROR,null,error)
+        _history.value = ApiMapper(ApiCallStatus.LOADING, null, null)
+        paymentRepository.getTransactions(beneficiaryId) { status, response, error ->
+            when (status) {
+                true -> _history.value = ApiMapper(ApiCallStatus.SUCCESS, response, null)
+                false -> _history.value = ApiMapper(ApiCallStatus.ERROR, null, error)
             }
         }
         return _history
     }
 
-    fun onQrScanResult(refId: String,onResult:(status:Boolean,profile:QRResponse.Data?,error:String?)->Unit){
+    fun onQrScanResult(
+        refId: String,
+        onResult: (status: Boolean, profile: QRResponse.Data?, error: String?) -> Unit
+    ) {
         val request = QRRequest(refId)
-        paymentRepository.getQRResult(request){
-            status, response, error ->
-            when(status){
-                true-> onResult(true,response,null)
-                false->onResult(false,null,error)
+        paymentRepository.getQRResult(request) { status, response, error ->
+            when (status) {
+                true -> onResult(true, response, null)
+                false -> onResult(false, null, error)
             }
         }
     }
