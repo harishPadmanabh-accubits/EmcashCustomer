@@ -146,5 +146,65 @@ data class TransactionItemUiModel(
 )
 
 data class WalletActivityUIModel(
-val walletActivities:List<TransactionItemUiModel>
+val walletActivities:List<WalletActivityGroupResponse.Data.WalletActivityGroup>
 )
+
+
+data class WalletActivityGroupResponse(
+    @SerializedName("data")
+    val `data`: Data,
+    @SerializedName("error")
+    val error: String,
+    @SerializedName("message")
+    val message: String,
+    @SerializedName("status")
+    val status: Boolean
+) {
+    data class Data(
+        @SerializedName("count")
+        val count: Int,
+        @SerializedName("limit")
+        val limit: Int,
+        @SerializedName("page")
+        val page: Int,
+        @SerializedName("rows")
+        val walletActivities: List<WalletActivityGroup>,
+        @SerializedName("totalPages")
+        val totalPages: Int,
+        @SerializedName("wallet")
+        val wallet: Wallet
+    ) {
+        data class WalletActivityGroup(
+            @SerializedName("key")
+            val date: String,
+            @SerializedName("transactions")
+            val transactions: List<WalletActivity>
+        ) {
+            data class WalletActivity(
+                @SerializedName("balance")
+                val balance: Int,
+                @SerializedName("beneficiary")
+                val beneficiary: Beneficiary,
+                @SerializedName("createdAt")
+                val createdAt: String,
+                @SerializedName("id")
+                val id: String,
+                @SerializedName("mode")
+                val mode: Int,
+                @SerializedName("remitter")
+                val remitter: Remitter,
+                @SerializedName("transactionId")
+                val transactionId: String,
+                @SerializedName("transactionInfo")
+                val transactionInfo: TransactionInfo,
+                @SerializedName("updatedAt")
+                val updatedAt: String,
+                @SerializedName("userId")
+                val userId: Int,
+                @SerializedName("walletId")
+                val walletId: String
+            )
+        }
+
+    }
+}

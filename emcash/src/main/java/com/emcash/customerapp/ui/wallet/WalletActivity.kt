@@ -25,6 +25,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 class WalletActivity : AppCompatActivity() {
 
@@ -41,7 +42,36 @@ class WalletActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.wallet_screen_v2)
+        configureViews()
+        pagedAdapter.addLoadStateListener {loadState ->
+            if (loadState.refresh is LoadState.Loading){
+                Timber.e("Wallet refreshing")
+            }
+            else{
+                Timber.e("Wallet state $loadState")
+                val error = when {
+                    loadState.prepend is LoadState.Error -> loadState.prepend as LoadState.Error
+                    loadState.append is LoadState.Error -> loadState.append as LoadState.Error
+                    loadState.refresh is LoadState.Error -> loadState.refresh as LoadState.Error
+                    else -> null
+                }
+                error?.let {
+                    Toast.makeText(this, it.error.message, Toast.LENGTH_LONG).show()
+                }
+            }
+        }
+        lifecycleScope.launch(Dispatchers.Main) {
+            renderWalletDetails()
+        }
 
+        lifecycleScope.launch {
+            viewModel.walletActivities.collect {
+                pagedAdapter.submitData(it)
+            }
+        }
+    }
+
+    private fun configureViews() {
         iv_back.setOnClickListener {
             onBackPressed()
         }
@@ -55,45 +85,12 @@ class WalletActivity : AppCompatActivity() {
             openActivity(ConvertEmcashActivity::class.java)
         }
 
-
-
         rv_activities.apply {
             layoutManager = LinearLayoutManager(this@WalletActivity,RecyclerView.VERTICAL,false)
             adapter = pagedAdapter
 
         }
 
-        pagedAdapter.addLoadStateListener {loadState ->
-            if (loadState.refresh is LoadState.Loading){
-               loader.show()
-            }
-            else{
-                loader.hide()
-
-                // getting the error
-                val error = when {
-                    loadState.prepend is LoadState.Error -> loadState.prepend as LoadState.Error
-                    loadState.append is LoadState.Error -> loadState.append as LoadState.Error
-                    loadState.refresh is LoadState.Error -> loadState.refresh as LoadState.Error
-                    else -> null
-                }
-                error?.let {
-                    Toast.makeText(this, it.error.message, Toast.LENGTH_LONG).show()
-                }
-            }
-        }
-
-        lifecycleScope.launch(Dispatchers.Main) {
-            renderWalletDetails()
-        }
-
-
-
-        lifecycleScope.launch {
-            viewModel.walletActivities.collect {
-                pagedAdapter.submitData(it)
-            }
-        }
     }
 
     private fun renderWalletDetails() {
@@ -112,9 +109,6 @@ class WalletActivity : AppCompatActivity() {
                         showShortToast(it.errorMessage)
                     }
                 }
-
-
-
             })
         }
 

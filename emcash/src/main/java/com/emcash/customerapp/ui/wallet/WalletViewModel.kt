@@ -15,13 +15,14 @@ import com.emcash.customerapp.data.network.EmCashApiManager
 import com.emcash.customerapp.data.repos.HomeRepository
 import com.emcash.customerapp.model.profile.ProfileDetailsResponse
 import com.emcash.customerapp.model.wallet.topup.WalletTopupRequest
+import com.emcash.customerapp.utils.DEFAULT_PAGE_CONFIG
 
 class WalletViewModel(val app:Application):AndroidViewModel(app) {
     val api = EmCashApiManager(app).api
 
     val homeRepository = HomeRepository(app)
 
-    val walletActivities = Pager(PagingConfig(10)){
+    val walletActivities = Pager(PagingConfig(DEFAULT_PAGE_CONFIG)){
         WalletActivityPagingSource(api)
     }.flow.cachedIn(viewModelScope)
 

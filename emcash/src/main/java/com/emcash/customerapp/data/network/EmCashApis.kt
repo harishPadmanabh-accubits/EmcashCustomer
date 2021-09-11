@@ -11,6 +11,7 @@ import com.emcash.customerapp.model.payments.*
 import com.emcash.customerapp.model.profile.ProfileDetailsResponse
 import com.emcash.customerapp.model.tnc.TncResponse
 import com.emcash.customerapp.model.transactions.RecentTransactionResponse
+import com.emcash.customerapp.model.wallet.WalletActivityGroupResponse
 import com.emcash.customerapp.model.wallet.WalletActivityResponse
 import com.emcash.customerapp.model.wallet.topup.WalletTopupRequest
 import com.emcash.customerapp.model.wallet.topup.WalletTopupResponse
@@ -114,5 +115,12 @@ interface EmCashApis {
     fun getQRResult(
         @Body qrRequest: QRRequest
     ):Call<QRResponse>
+
+    @GET("v1/customers/transactions/wallet/group")
+    suspend fun getWalletGropedTransactions(
+        @Query("page") page: Int,
+        @Query("limit") limit: Int
+    ): WalletActivityGroupResponse
+
 
 }

@@ -12,12 +12,15 @@ import com.emcash.customerapp.extensions.toFormattedTime
 import com.emcash.customerapp.model.ACTIVITY_TYPE_CONVERTED
 import com.emcash.customerapp.model.ACTIVITY_TYPE_LOADED
 import com.emcash.customerapp.model.DummyActivityDetails
+import com.emcash.customerapp.model.wallet.WalletActivityGroupResponse
+import com.emcash.customerapp.model.wallet.WalletActivityGroupResponse.Data.WalletActivityGroup
+import com.emcash.customerapp.model.wallet.WalletActivityGroupResponse.Data.WalletActivityGroup.WalletActivity
 import com.emcash.customerapp.model.wallet.WalletActivityResponse
 import com.emcash.customerapp.model.wallet.WalletActivityResponse.Data
 import com.emcash.customerapp.model.wallet.WalletActivityResponse.Data.*
 import kotlinx.android.synthetic.main.item_inner_activity_details.view.*
 
-class WalletActivityDetailsAdapter(val data : List<WalletActivityItem>):RecyclerView.Adapter<WalletActivityDetailsAdapter.ViewHolder>() {
+class WalletActivityDetailsAdapter(val data : List<WalletActivity>):RecyclerView.Adapter<WalletActivityDetailsAdapter.ViewHolder>() {
     open class ViewHolder(itemView: View) :RecyclerView.ViewHolder(itemView)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -30,43 +33,12 @@ class WalletActivityDetailsAdapter(val data : List<WalletActivityItem>):Recycler
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentItem = data[position]
-//        holder.itemView.apply {
-//            if(currentItem.type == ACTIVITY_TYPE_LOADED){
-//                tv_type_indicator.text = "Loaded"
-//                tv_value_emcash.text = currentItem.valueLoaded
-//                tv_time.text = currentItem.time
-//                tv_balance.apply {
-//                    text = currentItem.Balance
-//                    setTextColor(ContextCompat.getColor(context,R.color.green))
-//                }
-//                tv_value_changed.text = currentItem.changedValue
-//                iv_type_indicator_convert_emcash.hide()
-//                iv_type_indicator_load_emcash.show()
-//            }else if(currentItem.type == ACTIVITY_TYPE_CONVERTED){
-//                tv_type_indicator.text = "Converted"
-//                tv_value_emcash.text = currentItem.valueLoaded
-//                tv_time.text = currentItem.time
-//                tv_balance.apply {
-//                    text = currentItem.Balance
-//                    setTextColor(ContextCompat.getColor(context,R.color.red))
-//                }
-//                tv_value_changed.text = currentItem.changedValue
-//                iv_coin_image.hide()
-//                iv_type_indicator_convert_emcash.show()
-//                iv_type_indicator_load_emcash.hide()
-//
-//            }
-//
-//        }
-
-
-
         holder.itemView.apply {
             tv_time.text = toFormattedTime(currentItem.updatedAt)
             val type=currentItem.transactionInfo.type
             if(type==1){
                 if (currentItem.mode == 1) {
-                    tv_type_indicator.text=currentItem.transactionInfo.remitter.name
+                    tv_type_indicator.text=currentItem.remitter.name
                     iv_type_indicator_load_emcash.setBackgroundResource(R.drawable.ic_inbound)
                     iv_type_indicator_load_emcash.show()
                     tv_info_emcash.hide()
@@ -75,7 +47,7 @@ class WalletActivityDetailsAdapter(val data : List<WalletActivityItem>):Recycler
                 } else {
                     iv_type_indicator_load_emcash.setBackgroundResource(R.drawable.ic_outbound)
                     iv_type_indicator_load_emcash.show()
-                    tv_type_indicator.text=currentItem.transactionInfo.beneficiary.name
+                    tv_type_indicator.text=currentItem.beneficiary.name
                     tv_info_emcash.hide()
 
                 }
@@ -95,7 +67,7 @@ class WalletActivityDetailsAdapter(val data : List<WalletActivityItem>):Recycler
                 iv_coin_image.hide()
             }else if(type ==4 ){
                 if (currentItem.mode == 1) {
-                    tv_type_indicator.text=currentItem.transactionInfo.remitter.name
+                    tv_type_indicator.text=currentItem.remitter.name
                     iv_type_indicator_load_emcash.setBackgroundResource(R.drawable.ic_inbound)
                     iv_type_indicator_load_emcash.show()
                     tv_info_emcash.hide()
@@ -103,7 +75,7 @@ class WalletActivityDetailsAdapter(val data : List<WalletActivityItem>):Recycler
 
                 } else {
                     iv_type_indicator_load_emcash.setBackgroundResource(R.drawable.ic_outbound)
-                    tv_type_indicator.text=currentItem.transactionInfo.beneficiary.name
+                    tv_type_indicator.text=currentItem.beneficiary.name
                     iv_type_indicator_load_emcash.show()
                     tv_info_emcash.hide()
 
@@ -130,11 +102,6 @@ class WalletActivityDetailsAdapter(val data : List<WalletActivityItem>):Recycler
             }
 
         }
-
-
-
-
-
     }
 
 
