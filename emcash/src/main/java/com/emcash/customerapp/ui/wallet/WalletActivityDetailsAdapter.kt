@@ -36,8 +36,8 @@ class WalletActivityDetailsAdapter(val data : List<WalletActivity>):RecyclerView
         holder.itemView.apply {
             tv_time.text = toFormattedTime(currentItem.updatedAt)
             val type=currentItem.transactionInfo.type
-            if(type==1){
-                if (currentItem.mode == 1) {
+            if(type== TYPE_TRANSFER){
+                if (currentItem.mode == MODE_CREDIT) {
                     tv_type_indicator.text=currentItem.remitter.name
                     iv_type_indicator_load_emcash.setBackgroundResource(R.drawable.ic_inbound)
                     iv_type_indicator_load_emcash.show()
@@ -52,21 +52,21 @@ class WalletActivityDetailsAdapter(val data : List<WalletActivity>):RecyclerView
 
                 }
             }
-            else if(type==2){
+            else if(type==TYPE_TOPUP){
                 iv_type_indicator_load_emcash.setBackgroundResource(R.drawable.ic_icon_load_emcash)
                 iv_type_indicator_load_emcash.show()
                 tv_type_indicator.text="Loaded"
                 tv_value_emcash.text = currentItem.transactionInfo.amount.toString()
                 tv_value_changed.text = "+${currentItem.transactionInfo.amount}"
-            }else if(type==3){
+            }else if(type==TYPE_WITHDRAW){
                 iv_type_indicator_load_emcash.setBackgroundResource(R.drawable.ic_icon_convert)
                 iv_type_indicator_load_emcash.show()
                 tv_type_indicator.text="Converted"
                 tv_value_emcash.text = currentItem.transactionInfo.amount.toString()
                 tv_value_changed.text = "AED ${currentItem.transactionInfo.amount}"
                 iv_coin_image.hide()
-            }else if(type ==4 ){
-                if (currentItem.mode == 1) {
+            }else if(type ==TYPE_REQUEST ){
+                if (currentItem.mode == MODE_CREDIT) {
                     tv_type_indicator.text=currentItem.remitter.name
                     iv_type_indicator_load_emcash.setBackgroundResource(R.drawable.ic_inbound)
                     iv_type_indicator_load_emcash.show()
@@ -110,5 +110,7 @@ class WalletActivityDetailsAdapter(val data : List<WalletActivity>):RecyclerView
         const val TYPE_TOPUP=2
         const val TYPE_WITHDRAW = 3
         const val TYPE_REQUEST=4
+        const val MODE_CREDIT=1
+        const val MODE_DEBIT=2
     }
 }
