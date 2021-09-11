@@ -21,11 +21,12 @@ import timber.log.Timber
 object Notifier {
     fun handleEmCashNotification(
         remoteData: RemoteData,
-        context: Context
+        context: Context,
+        launchClassName:String
     ) {
         Timber.e("fcm $remoteData")
         if (remoteData.title != null && remoteData.message != null) {
-            showNotification(remoteData, context)
+            showNotification(remoteData,context,launchClassName)
         } else {
             Timber.e("Arrived null on notify")
         }
@@ -34,7 +35,8 @@ object Notifier {
 
     private fun showNotification(
         remoteData: RemoteData,
-        context: Context
+        context: Context,
+        launchClassName:String
     ) {
         val channelId = "com.emcash.customer.notifications"
         val channeldesc = "Emcash customer Notification Channel"
@@ -42,15 +44,21 @@ object Notifier {
 
         val notificationManager: NotificationManager =
             context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        val notificationIntent = Intent(context, HomeActivity::class.java).apply {
-            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+//        val notificationIntent = Intent(context, HomeActivity::class.java).apply {
+//            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+//            putExtra(KEY_DEEPLINK, remoteData.deeplink?.toString())
+//            putExtra(KEY_TYPE, type?.toString())
+//            putExtra(IS_FROM_DEEPLINK, true)
+//        }
+
+        val notificationIntent = Intent(context, Class.forName(launchClassName)).apply {
             putExtra(KEY_DEEPLINK, remoteData.deeplink?.toString())
             putExtra(KEY_TYPE, type?.toString())
             putExtra(IS_FROM_DEEPLINK, true)
         }
 
-        val stackBuilder = TaskStackBuilder.create(context).also {
-            it.addParentStack(HomeActivity::class.java)
+        val stackBuilder = TaskStackBuilder.create(context)
+            .also {
             it.addNextIntent(notificationIntent)
         }
         val resultPendingIntent =

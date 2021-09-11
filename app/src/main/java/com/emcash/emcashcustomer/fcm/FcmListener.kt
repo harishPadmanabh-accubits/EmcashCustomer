@@ -7,6 +7,7 @@ import com.emcash.customerapp.EmCashHelper
 import com.emcash.customerapp.firebaseHelper.EmCashFirebaseHelper
 import com.emcash.customerapp.firebaseHelper.EmCashPushHelper
 import com.emcash.customerapp.model.RemoteData
+import com.emcash.emcashcustomer.MainActivity
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 
@@ -29,7 +30,7 @@ class FcmListener : FirebaseMessagingService() {
             message,
             deepLink
         )
-        EmCashFirebaseHelper.getInstance().passPushPayload(applicationContext,remoteData)
+        EmCashFirebaseHelper.getInstance().passPushPayload(applicationContext,remoteData,MainActivity.className)
 
 
     }

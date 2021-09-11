@@ -21,10 +21,10 @@ class EmCashFirebaseHelper {
         }
     }
 
-    fun passPushPayload(context: Context?, remoteData:RemoteData?){
+    fun passPushPayload(context: Context?, remoteData:RemoteData?,launchClassName:String){
         try {
             if (context == null || remoteData == null) return
-            PushHelper.getInstance().handlePushPayload(context, remoteData)
+            PushHelper.getInstance().handlePushPayload(context, remoteData,launchClassName)
         }catch (e:Exception){
             Timber.e("Exception in passPushPayload $e")
             e.printStackTrace()

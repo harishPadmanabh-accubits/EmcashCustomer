@@ -20,13 +20,13 @@ class PushHelper {
 
 
     @Suppress("SENSELESS_COMPARISON")
-    fun handlePushPayload(context: Context, remoteData: RemoteData) {
+    fun handlePushPayload(context: Context, remoteData: RemoteData,launchClassName:String) {
         try {
             if (context == null || remoteData == null) {
                 Timber.e("Notification context null")
                 return
             }
-            Notifier.handleEmCashNotification(remoteData, context)
+            Notifier.handleEmCashNotification(remoteData, context,launchClassName)
         } catch (e: Exception) {
             Timber.e(" handlePushPayload() : $e")
         }

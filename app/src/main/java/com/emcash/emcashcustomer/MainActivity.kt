@@ -24,6 +24,11 @@ class MainActivity : AppCompatActivity() ,EmCashListener{
 
     var token =""
 
+    companion object{
+        val className = "com.emcash.emcashcustomer.MainActivity"
+    }
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
