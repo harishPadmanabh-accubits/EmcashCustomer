@@ -11,6 +11,7 @@ import com.emcash.customerapp.model.payments.*
 import com.emcash.customerapp.model.profile.ProfileDetailsResponse
 import com.emcash.customerapp.model.tnc.TncResponse
 import com.emcash.customerapp.model.transactions.RecentTransactionResponse
+import com.emcash.customerapp.model.transactions.TransactionHistoryGroupResponse
 import com.emcash.customerapp.model.wallet.WalletActivityGroupResponse
 import com.emcash.customerapp.model.wallet.WalletActivityResponse
 import com.emcash.customerapp.model.wallet.topup.WalletTopupRequest
@@ -121,6 +122,18 @@ interface EmCashApis {
         @Query("page") page: Int,
         @Query("limit") limit: Int
     ): WalletActivityGroupResponse
+
+    @GET("v1/customers/transactions/main/group?")
+    suspend fun getGroupedTransactionHistory(
+        @Query("page") page: Int,
+        @Query("limit") limit: Int,
+        @Query("mode") mode: String,
+        @Query("startDate") startDate: String,
+        @Query("endDate") endDate: String,
+        @Query("status") status: String,
+        @Query("type") type: String
+    ): TransactionHistoryGroupResponse
+
 
 
 }

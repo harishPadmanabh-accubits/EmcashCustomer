@@ -5,7 +5,6 @@ import android.view.View
 import androidx.activity.viewModels
 import androidx.core.view.isVisible
 import androidx.fragment.app.FragmentActivity
-import androidx.recyclerview.widget.GridLayoutManager
 import com.emcash.customerapp.R
 import com.emcash.customerapp.extensions.openActivity
 import com.emcash.customerapp.extensions.showShortToast
@@ -42,7 +41,6 @@ class TransactionHistory : FragmentActivity() , DurationItemClickListener {
             onBackPressed()
         }
         iv_filter.setOnClickListener {
-            //setup bottom sheet
             if (fl_holder.isVisible) {
                 fl_holder.visibility = View.GONE
             } else {
@@ -59,7 +57,6 @@ class TransactionHistory : FragmentActivity() , DurationItemClickListener {
 
         ll_holder.visibility = View.GONE
         calenderView.visibility = View.GONE
-//        ll_calenderController.visibility=View.GONE
 
         val timeZone = TimeZone.getDefault();
         val locale = Locale.getDefault();
@@ -75,11 +72,6 @@ class TransactionHistory : FragmentActivity() , DurationItemClickListener {
             .inMode(CalendarPickerView.SelectionMode.RANGE)
             .withSelectedDate(Date())
 
-
-
-
-
-
         iv_back_type.setOnClickListener {
             fl_holder.visibility = View.GONE
 
@@ -88,28 +80,14 @@ class TransactionHistory : FragmentActivity() , DurationItemClickListener {
             showTypes()
         }
 
-//        iv_backward.setOnClickListener {
-//
-//
-//        }
-//
-//        iv_forward.setOnClickListener {
-//            var nextMonth = Calendar.getInstance(timeZone, locale)
-//            nextMonth.add(Calendar.MONTH, 1)
-//
-//            calenderView.scrollToDate(nextMonth.time)
-//
-//        }
         btn_filter.setOnClickListener {
 
             if (durationFilterCustom == 0) {
                 if (startDate.isEmpty()) {
                     showShortToast("Select a Date")
                 } else {
-
                     dateArray.add(0, startDate)
-                    dateArray.add(1,  getDaysAgo(0).toString())
-
+                    dateArray.add(1, getDayAgo("yyyy-MM-dd",0).toString())
                     viewModel.sendDate(dateArray)
                     fl_holder.visibility = View.GONE
 
@@ -121,16 +99,15 @@ class TransactionHistory : FragmentActivity() , DurationItemClickListener {
                 if (listDates.size <= 1) {
                    showShortToast("Select a Dates")
                 } else {
-
                     startDate = listDates[0].toString()
                     endDate = listDates[listDates.size - 1].toString()
-                    dateArray.add(0, startDate)
-                    dateArray.add(1, endDate)
+                    dateArray.add(0, dateFormatFromCalender("yyyy-MM-dd",startDate))
+                    dateArray.add(1, dateFormatFromCalender("yyyy-MM-dd",endDate))
 
                     viewModel.sendDate(dateArray)
                     fl_holder.visibility = View.GONE
-                    tv_toDate.text = dateFormatFromCalender(endDate)
-                    tv_fromDate.text = dateFormatFromCalender(startDate)
+                    tv_toDate.text = dateFormatFromCalender("dd-MMM-YYYY",endDate)
+                    tv_fromDate.text = dateFormatFromCalender("dd-MMM-YYYY",startDate)
 
 
                 }
@@ -233,19 +210,17 @@ class TransactionHistory : FragmentActivity() , DurationItemClickListener {
     }
 
     override fun onDurationClicked(duration: FilterDurationResponse) {
-
         if (duration.id == 4) {
             ll_holder.visibility = View.VISIBLE
             calenderView.visibility = View.VISIBLE
             startDate = ""
             endDate=""
-
             durationFilterCustom = 1
 
         } else if (duration.id == 3) {
             ll_holder.visibility = View.GONE
             calenderView.visibility = View.GONE
-            startDate = getDaysAgo(30).toString()
+            startDate = getDayAgo("yyyy-MM-dd",-30).toString()
             endDate=""
 
             durationFilterCustom = 0
@@ -253,29 +228,32 @@ class TransactionHistory : FragmentActivity() , DurationItemClickListener {
         } else if (duration.id == 2) {
             ll_holder.visibility = View.GONE
             calenderView.visibility = View.GONE
-            startDate = getDaysAgo(7).toString()
+            startDate =  getDayAgo("yyyy-MM-dd",-7).toString()
             durationFilterCustom = 0
         } else if (duration.id == 1) {
             ll_holder.visibility = View.GONE
             calenderView.visibility = View.GONE
             endDate=""
-            startDate = getDaysAgo(2).toString()
+            startDate =  getDayAgo("yyyy-MM-dd",-2).toString()
             durationFilterCustom = 0
         }
 
     }
 }
 
-fun getDaysAgo(daysAgo: Int): Date {
-    val calendar = Calendar.getInstance()
-    calendar.add(Calendar.DAY_OF_YEAR, -daysAgo)
-    return calendar.time
-}
-fun dateFormatFromCalender(dateStr: String): String {
+
+fun dateFormatFromCalender(dateFormat:String,dateStr: String): String {
     val utc = TimeZone.getTimeZone("UTC")
     val sourceFormat = SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy")
-    val destFormat = SimpleDateFormat("dd-MMM-YYYY")
+    val destFormat = SimpleDateFormat(dateFormat)
     sourceFormat.timeZone = utc
     val convertedDate = sourceFormat.parse(dateStr)
     return destFormat.format(convertedDate)
+}
+
+fun getDayAgo(dateFormat: String?, days: Int): String? {
+    val cal = Calendar.getInstance()
+    val s = SimpleDateFormat(dateFormat)
+    cal.add(Calendar.DAY_OF_YEAR, days)
+    return s.format(Date(cal.timeInMillis))
 }

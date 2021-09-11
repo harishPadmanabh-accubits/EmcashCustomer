@@ -27,6 +27,7 @@ data class TransactionHistoryResponse(
         val totalPages: Int
     )
 }
+
 data class Transaction(
     @SerializedName("amount")
     val amount: Int,
@@ -93,5 +94,44 @@ data class TransactionHistoryGroupUIModel(
 )
 
 data class FilterDurationResponse(
-    val id:Int, val duration:String
+    val id: Int, val duration: String
+)
+
+data class TransactionHistoryGroupResponse(
+    @SerializedName("data")
+    val `data`: Data,
+    @SerializedName("error")
+    val error: String,
+    @SerializedName("message")
+    val message: String,
+    @SerializedName("status")
+    val status: Boolean
+) {
+    data class Data(
+        @SerializedName("count")
+        val count: Int,
+        @SerializedName("limit")
+        val limit: Int,
+        @SerializedName("page")
+        val page: Int,
+        @SerializedName("rows")
+        val transactionGroup: List<TransactionGroup>,
+        @SerializedName("totalPages")
+        val totalPages: Int
+    ) {
+        data class TransactionGroup(
+            @SerializedName("key")
+            val date: String,
+            @SerializedName("transactions")
+            val transactions: List<Transaction>
+        )
+    }
+}
+
+data class HistoryFilter(
+    var mode: String = "0",
+    var startDate: String = "",
+    var endDate: String = "",
+    var status: String = "",
+    var type: String = ""
 )

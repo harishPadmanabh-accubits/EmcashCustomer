@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -13,74 +15,75 @@ import com.emcash.customerapp.extensions.obtainViewModel
 import com.emcash.customerapp.extensions.showShortToast
 import com.emcash.customerapp.model.DummyTransactionModel
 import com.emcash.customerapp.ui.history.adapters.AllTransactionAdapter
+import com.emcash.customerapp.ui.history.adapters.HistoryPagerAdapter
 import com.emcash.customerapp.ui.history.adapters.TransactionFilter
 import com.emcash.customerapp.ui.history.adapters.TransactionHistoryAdapter
 import com.emcash.customerapp.utils.LoaderDialog
 import kotlinx.android.synthetic.main.layout_all_transactions.*
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 class AllTransactionsFragment:Fragment(R.layout.layout_all_transactions) {
 
-    private  val viewModel: TransactionHistoryViewModel by activityViewModels()
+    private val viewModel: TransactionHistoryViewModel by activityViewModels()
     private val loader by lazy { LoaderDialog(requireContext()) }
+    val pagedAdapter by lazy { HistoryPagerAdapter() }
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.getAllTransactions("0","","","","")
+        rv_all_transactions.adapter = pagedAdapter
+
+//        lifecycleScope.launch {
+//            viewModel.getPagedTransactions("0", "", "", "", "").collect {
+//                pagedAdapter.submitData(it)
+//            }
+//
+//        }
+
+
+//        lifecycleScope.launch {
+//            viewModel.getPagedTransactions("0", "", "", "", "").observe(viewLifecycleOwner, Observer {
+//                pagedAdapter.submitData(lifecycle,it)
+//            })
+//
+//
+//        }
+
         observe()
     }
 
     private fun observe() {
         viewModel.apply {
-            alltransactionHistoryResponse.observe(requireActivity(), androidx.lifecycle.Observer {
-                when (it.status) {
-                    ApiCallStatus.LOADING -> {
-                        loader.showLoader()
-                    }
-                    ApiCallStatus.SUCCESS -> {
-                        loader.hideLoader()
-                        it.data?.transactions.let {
-                            val groupedTransactions = groupTransactionActivitiesByDate(ArrayList(it))
-                            rv_all_transactions.apply {
-                                layoutManager = LinearLayoutManager(
-                                    requireActivity(),
-                                    RecyclerView.VERTICAL, false
-                                )
-                                itemAnimator = DefaultItemAnimator()
-                                adapter = AllTransactionAdapter(
-                                    groupedTransactions
-                                )
-                            }
-                        }
 
-
-                    }
-
-                    ApiCallStatus.ERROR -> {
-                        loader.hideLoader()
-                        requireActivity().showShortToast(it.errorMessage)
-
-                    }
-                }
-
+            pagedTransactions.observe(viewLifecycleOwner, Observer {
+                pagedAdapter.submitData(lifecycle, it)
             })
 
 
-
-
-
-            status.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
-                viewModel.getAllTransactions("0","",it,"","")
-
-            })
-            date.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
-                viewModel.getAllTransactions("0","","",it[0], it[1])
-
-            })
-
+//
+//            status.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+//             //   viewModel.getAllTransactions("0","",it,"","")
+////                lifecycleScope.launch {
+////                    viewModel.getPagedTransactions("0","","",it,"").observe(viewLifecycleOwner, Observer {
+////                        pagedAdapter.submitData(lifecycle,it)
+////                    })
+////
+////
+////                }
+//
+//
+//
+//
+//            })
+//            date.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+//                viewModel.getAllTransactions("0","","",it[0], it[1])
+//
+//            })
+//
+//        }
         }
     }
-
-
-
 }
+
+
