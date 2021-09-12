@@ -19,24 +19,15 @@ import timber.log.Timber
 
 class TransactionHistoryViewModel(val app: Application) : AndroidViewModel(app) {
 
-    val type = MutableLiveData<String>()
-    val status = MutableLiveData<String>().default("4")
-    val date = MutableLiveData<ArrayList<String>>()
     val api = EmCashApiManager(app).api
-
     val filter = MutableLiveData<HistoryFilter>().default(HistoryFilter())
-
-    fun sendType(s_type: String) {
-        type.value = s_type
-    }
+    var scope : CoroutineScope ? = null
 
     fun sendStatus(s_status: String) {
-        status.value = s_status
         filter.value = HistoryFilter(status = s_status)
     }
 
     fun sendDate(s_date: ArrayList<String>) {
-        date.value = s_date
         filter.value = HistoryFilter(
             startDate = s_date.first(),
             endDate = s_date.last()
@@ -44,7 +35,6 @@ class TransactionHistoryViewModel(val app: Application) : AndroidViewModel(app) 
         Timber.e("date start ${s_date[0]} end ${s_date.last()}")
     }
 
-    var scope : CoroutineScope ? = null
 
     val pagedTransactions: LiveData<PagingData<TransactionHistoryGroupResponse.Data.TransactionGroup>> =
         Transformations.switchMap(filter) {

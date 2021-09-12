@@ -18,11 +18,12 @@ import com.savvi.rangedatepicker.CalendarPickerView
 import kotlinx.android.synthetic.main.activity_transaction_history.*
 import kotlinx.android.synthetic.main.lay_duration_filter.*
 import kotlinx.android.synthetic.main.layout_types_filter.*
+import timber.log.Timber
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
-class TransactionHistory : FragmentActivity() , DurationItemClickListener {
+class TransactionHistory : FragmentActivity(), DurationItemClickListener {
 
     private val viewModel: TransactionHistoryViewModel by viewModels()
     private var startDate: String = ""
@@ -58,19 +59,9 @@ class TransactionHistory : FragmentActivity() , DurationItemClickListener {
         ll_holder.visibility = View.GONE
         calenderView.visibility = View.GONE
 
-        val timeZone = TimeZone.getDefault();
-        val locale = Locale.getDefault();
-
-        val nextYear = Calendar.getInstance(timeZone, locale)
-        nextYear.add(Calendar.YEAR, 1)
+        configureCalendarView()
 
 
-        val lastYear = Calendar.getInstance()
-        lastYear.add(Calendar.YEAR, -2)
-
-        calenderView.init(lastYear.time, nextYear.time) //
-            .inMode(CalendarPickerView.SelectionMode.RANGE)
-            .withSelectedDate(Date())
 
         iv_back_type.setOnClickListener {
             fl_holder.visibility = View.GONE
@@ -87,7 +78,7 @@ class TransactionHistory : FragmentActivity() , DurationItemClickListener {
                     showShortToast("Select a Date")
                 } else {
                     dateArray.add(0, startDate)
-                    dateArray.add(1, getDayAgo("yyyy-MM-dd",0).toString())
+                    dateArray.add(1, getDayAgo("yyyy-MM-dd", 0).toString())
                     viewModel.sendDate(dateArray)
                     fl_holder.visibility = View.GONE
 
@@ -97,17 +88,15 @@ class TransactionHistory : FragmentActivity() , DurationItemClickListener {
                 listDates = calenderView.selectedDates as java.util.ArrayList<Date>
 
                 if (listDates.size <= 1) {
-                   showShortToast("Select a Dates")
+                    showShortToast("Select a Dates")
                 } else {
                     startDate = listDates[0].toString()
                     endDate = listDates[listDates.size - 1].toString()
-                    dateArray.add(0, dateFormatFromCalender("yyyy-MM-dd",startDate))
-                    dateArray.add(1, dateFormatFromCalender("yyyy-MM-dd",endDate))
+                    dateArray.add(0, dateFormatFromCalender("yyyy-MM-dd", startDate))
+                    dateArray.add(1, dateFormatFromCalender("yyyy-MM-dd", endDate))
 
                     viewModel.sendDate(dateArray)
                     fl_holder.visibility = View.GONE
-                    tv_toDate.text = dateFormatFromCalender("dd-MMM-YYYY",endDate)
-                    tv_fromDate.text = dateFormatFromCalender("dd-MMM-YYYY",startDate)
 
 
                 }
@@ -159,6 +148,40 @@ class TransactionHistory : FragmentActivity() , DurationItemClickListener {
 
     }
 
+    private fun configureCalendarView() {
+
+        val timeZone = TimeZone.getDefault()
+        val locale = Locale.getDefault()
+
+        val nextYear = Calendar.getInstance(timeZone, locale)
+        nextYear.add(Calendar.YEAR, 1)
+
+
+        val lastYear = Calendar.getInstance()
+        lastYear.add(Calendar.YEAR, -2)
+
+        calenderView.init(lastYear.time, nextYear.time) //
+            .inMode(CalendarPickerView.SelectionMode.RANGE)
+            .withSelectedDate(Date())
+
+        calenderView.setOnDateSelectedListener(object : CalendarPickerView.OnDateSelectedListener {
+            override fun onDateSelected(date: Date?) {
+                updateUIwithCalendar(calenderView.selectedDates)
+            }
+
+            override fun onDateUnselected(date: Date?) {
+            }
+
+        })
+
+    }
+
+    private fun updateUIwithCalendar(selectedDates: List<Date>) {
+
+        tv_toDate.text = dateFormatFromCalender("dd-MMM-YYYY", selectedDates.last().toString())
+        tv_fromDate.text = dateFormatFromCalender("dd-MMM-YYYY", selectedDates.first().toString())
+    }
+
     private fun showTypes() {
         ll_type.visibility = View.VISIBLE
         ll_duration.visibility = View.GONE
@@ -180,8 +203,6 @@ class TransactionHistory : FragmentActivity() , DurationItemClickListener {
             adapter = DurationAdapter(durations, this@TransactionHistory)
         }
     }
-
-
 
 
     private fun setupTabs() {
@@ -214,27 +235,27 @@ class TransactionHistory : FragmentActivity() , DurationItemClickListener {
             ll_holder.visibility = View.VISIBLE
             calenderView.visibility = View.VISIBLE
             startDate = ""
-            endDate=""
+            endDate = ""
             durationFilterCustom = 1
 
         } else if (duration.id == 3) {
             ll_holder.visibility = View.GONE
             calenderView.visibility = View.GONE
-            startDate = getDayAgo("yyyy-MM-dd",-30).toString()
-            endDate=""
+            startDate = getDayAgo("yyyy-MM-dd", -30).toString()
+            endDate = ""
 
             durationFilterCustom = 0
 
         } else if (duration.id == 2) {
             ll_holder.visibility = View.GONE
             calenderView.visibility = View.GONE
-            startDate =  getDayAgo("yyyy-MM-dd",-7).toString()
+            startDate = getDayAgo("yyyy-MM-dd", -7).toString()
             durationFilterCustom = 0
         } else if (duration.id == 1) {
             ll_holder.visibility = View.GONE
             calenderView.visibility = View.GONE
-            endDate=""
-            startDate =  getDayAgo("yyyy-MM-dd",-2).toString()
+            endDate = ""
+            startDate = getDayAgo("yyyy-MM-dd", -2).toString()
             durationFilterCustom = 0
         }
 
@@ -242,7 +263,7 @@ class TransactionHistory : FragmentActivity() , DurationItemClickListener {
 }
 
 
-fun dateFormatFromCalender(dateFormat:String,dateStr: String): String {
+fun dateFormatFromCalender(dateFormat: String, dateStr: String): String {
     val utc = TimeZone.getTimeZone("UTC")
     val sourceFormat = SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy")
     val destFormat = SimpleDateFormat(dateFormat)
