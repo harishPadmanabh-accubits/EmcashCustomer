@@ -7,23 +7,18 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.emcash.customerapp.R
 import com.emcash.customerapp.data.network.ApiCallStatus
 import com.emcash.customerapp.enums.TransactionType
 import com.emcash.customerapp.extensions.*
-import com.emcash.customerapp.model.payments.TransactionHistory
+import com.emcash.customerapp.model.payments.TransactionGroupResponse
 import com.emcash.customerapp.model.payments.TransactionHistoryResponse
-import com.emcash.customerapp.ui.home.HomeActivity
 import com.emcash.customerapp.ui.newPayment.adapters.PaymentChatListAdapter
 import com.emcash.customerapp.utils.*
-import kotlinx.android.synthetic.main.item_chat.*
 import kotlinx.android.synthetic.main.payment_chats.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import kotlin.math.PI
 
 class PaymentChatFragment:Fragment(R.layout.payment_chats),PaymentHistoryItemClickListener {
 
@@ -40,21 +35,12 @@ class PaymentChatFragment:Fragment(R.layout.payment_chats),PaymentHistoryItemCli
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-//        cl_chats.setOnClickListener {
-//            viewModel.gotoScreen(NewPaymentScreens.RECEIPT)
-//        }
-
         btn_pay.setOnClickListener {
             gotoTransferScreen()
         }
-
         btn_request.setOnClickListener {
             gotoRequestScreen()
         }
-
-
-
-
         iv_back.setOnClickListener {
             requireActivity().onBackPressed()
         }
@@ -126,14 +112,14 @@ class PaymentChatFragment:Fragment(R.layout.payment_chats),PaymentHistoryItemCli
         viewModel.gotoScreen(NewPaymentScreens.RECEIPT)
     }
 
-    override fun onAcceptPayment(transaction: TransactionHistory) {
+    override fun onAcceptPayment(transaction: TransactionGroupResponse.Data.TransactionGroup.Transaction) {
         viewModel.syncManager.initiatedRefId = transaction.id
         val bundle = bundleOf(KEY_TRANSACTION_TYPE to TransactionType.ACCEPT)
         viewModel.gotoScreen(NewPaymentScreens.PIN,bundle)
 
     }
 
-    override fun onRejectPayment(transaction: TransactionHistory) {
+    override fun onRejectPayment(transaction: TransactionGroupResponse.Data.TransactionGroup.Transaction) {
         viewModel.syncManager.initiatedRefId = transaction.id
         val bundle = bundleOf(KEY_TRANSACTION_TYPE to TransactionType.REJECT)
         viewModel.gotoScreen(NewPaymentScreens.PIN,bundle)
@@ -143,6 +129,6 @@ class PaymentChatFragment:Fragment(R.layout.payment_chats),PaymentHistoryItemCli
 
 interface PaymentHistoryItemClickListener{
    fun onItemClick(transactionId:String)
-   fun onAcceptPayment(transaction:TransactionHistory)
-   fun onRejectPayment(transaction:TransactionHistory)
+   fun onAcceptPayment(transaction: TransactionGroupResponse.Data.TransactionGroup.Transaction)
+   fun onRejectPayment(transaction: TransactionGroupResponse.Data.TransactionGroup.Transaction)
 }

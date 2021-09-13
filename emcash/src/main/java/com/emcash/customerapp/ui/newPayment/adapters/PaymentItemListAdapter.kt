@@ -3,17 +3,15 @@ package com.emcash.customerapp.ui.newPayment.adapters
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.RecyclerView
 import com.emcash.customerapp.R
 import com.emcash.customerapp.extensions.toFormattedTime
-import com.emcash.customerapp.model.payments.TransactionHistory
+import com.emcash.customerapp.model.payments.TransactionGroupResponse
 import com.emcash.customerapp.ui.newPayment.PaymentHistoryItemClickListener
-import com.emcash.customerapp.utils.KEY_REF_ID
 import kotlinx.android.synthetic.main.row_payment_chat_item.view.*
 
 class PaymentItemListAdapter(
-    val transactions: ArrayList<TransactionHistory>,
+    val transactions: List<TransactionGroupResponse.Data.TransactionGroup.Transaction>,
     val listener: PaymentHistoryItemClickListener
 ) : RecyclerView.Adapter<PaymentItemListAdapter.ViewHolder>() {
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
