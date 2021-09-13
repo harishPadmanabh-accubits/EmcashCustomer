@@ -6,6 +6,7 @@ import com.emcash.customerapp.model.auth.userExists.UserExistCheckRequest
 import com.emcash.customerapp.model.auth.userExists.UserExistCheckResponse
 import com.emcash.customerapp.model.contacts.AllContactsResponse
 import com.emcash.customerapp.model.contacts.ContactDetails
+import com.emcash.customerapp.model.contacts.ContactsGroupResponse
 import com.emcash.customerapp.model.notifications.NotificationResponse
 import com.emcash.customerapp.model.payments.*
 import com.emcash.customerapp.model.profile.ProfileDetailsResponse
@@ -133,6 +134,21 @@ interface EmCashApis {
         @Query("status") status: String,
         @Query("type") type: String
     ): TransactionHistoryGroupResponse
+
+    @GET("v1/customers/contacts/group")
+    suspend fun getGroupedContacts(
+        @Query("page") page: Int,
+        @Query("limit") limit: Int,
+        @Query("search") search: String
+    ): ContactsGroupResponse
+
+    @GET("v1/customers/contacts/{user_id}/transactions/group")
+    suspend fun getContactTransactionPagedList(
+        @Path("user_id") user_id: Int,
+        @Query("page") page: Int,
+        @Query("limit") limit: Int
+    ): TransactionGroupResponse
+
 
 
 

@@ -7,6 +7,7 @@ import com.emcash.customerapp.extensions.toFormattedDate
 import com.emcash.customerapp.model.payments.TransactionHistory
 import com.emcash.customerapp.model.payments.TransactionHistoryUI
 import timber.log.Timber
+import java.lang.Exception
 
 class TransactionHistoryPagingSource(
     val api: EmCashApis,
@@ -21,15 +22,20 @@ class TransactionHistoryPagingSource(
     }
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, TransactionHistoryUI> {
-        val nextPage = params.key ?: 1
-        val response = api.getTransactionHistory(userId,nextPage,10)
-        val alltransactions = response.body()?.data?.transactions
-        val groupedTransactions = groupPaymentTransactionsByDate(ArrayList(alltransactions))
-        return LoadResult.Page(
-            data = groupedTransactions.asReversed(),
-            prevKey = if (nextPage == 1) null else nextPage - 1,
-            nextKey =if(nextPage==response?.body()?.data?.totalPages) null else response?.body()?.data?.page?.plus(1)
-        )
+        try {
+            val nextPage = params.key ?: 1
+            val response = api.getTransactionHistory(userId,nextPage,10)
+            val alltransactions = response.body()?.data?.transactions
+            val groupedTransactions = groupPaymentTransactionsByDate(ArrayList(alltransactions))
+            return LoadResult.Page(
+                data = groupedTransactions.asReversed(),
+                prevKey = if (nextPage == 1) null else nextPage - 1,
+                nextKey =if(nextPage==response?.body()?.data?.totalPages) null else response?.body()?.data?.page?.plus(1)
+            )
+        }catch (e:Exception){
+            return LoadResult.Error(e)
+        }
+
     }
 
 

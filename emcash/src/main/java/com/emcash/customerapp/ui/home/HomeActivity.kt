@@ -15,7 +15,7 @@ import com.emcash.customerapp.data.network.ApiCallStatus
 import com.emcash.customerapp.extensions.*
 import com.emcash.customerapp.model.DummyContactsRawData
 import com.emcash.customerapp.model.DummyUserData
-import com.emcash.customerapp.model.contacts.ContactItem
+import com.emcash.customerapp.model.contacts.ContactsGroup
 import com.emcash.customerapp.model.profile.ProfileDetailsResponse
 import com.emcash.customerapp.model.transactions.RecentTransactionItem
 import com.emcash.customerapp.model.transactions.RecentTransactionResponse
@@ -31,7 +31,6 @@ import com.emcash.customerapp.ui.settings.SettingsActivity
 import com.emcash.customerapp.ui.wallet.WalletActivity
 import com.emcash.customerapp.utils.*
 import kotlinx.android.synthetic.main.activity_home.*
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import pub.devrel.easypermissions.AppSettingsDialog
@@ -330,7 +329,7 @@ class HomeActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks,
         }
     }
 
-    override fun onSelectedFromAllContacts(contact: ContactItem) {
+    override fun onSelectedFromAllContacts(contact: ContactsGroup.ContactInfo) {
     }
 
 

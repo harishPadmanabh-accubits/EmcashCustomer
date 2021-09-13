@@ -24,12 +24,12 @@ class AllContactsAdapter(
         val currentItem = groupedContactList[position]
         holder.itemView.apply {
             tv_contact_group_letter.text = currentItem.letter
-            rv_contacts.adapter = ContactDetailsAdapter(
-                if (querry.isNotEmpty())
-                    ArrayList(currentItem.contacts.filter {
-                        it.name.contains(querry, true)
-                    }) else currentItem.contacts, listener
-            )
+//            rv_contacts.adapter = ContactDetailsAdapter(
+//                if (querry.isNotEmpty())
+//                    ArrayList(currentItem.contacts.filter {
+//                        it.name.contains(querry, true)
+//                    }) else currentItem.contacts, listener
+//            )
         }
     }
 

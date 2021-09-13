@@ -6,9 +6,12 @@ import androidx.lifecycle.*
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.cachedIn
+import androidx.paging.liveData
 import com.emcash.customerapp.data.SyncManager
 import com.emcash.customerapp.data.network.ApiCallStatus
 import com.emcash.customerapp.data.network.ApiMapper
+import com.emcash.customerapp.data.network.EmCashApiManager
+import com.emcash.customerapp.data.network.EmCashApis
 import com.emcash.customerapp.data.repos.HomeRepository
 import com.emcash.customerapp.data.repos.PaymentRepository
 import com.emcash.customerapp.extensions.default
@@ -18,7 +21,9 @@ import com.emcash.customerapp.model.contacts.ContactItem
 import com.emcash.customerapp.model.payments.*
 import com.emcash.customerapp.model.transactions.RecentTransactionItem
 import com.emcash.customerapp.ui.newPayment.NewPaymentScreens.*
+import com.emcash.customerapp.ui.newPayment.adapters.ContactsPagingSource
 import com.emcash.customerapp.ui.newPayment.adapters.TransactionHistoryPagingSource
+import com.emcash.customerapp.ui.wallet.WalletActivityPagingSource
 import com.emcash.customerapp.utils.DEFAULT_PAGE_CONFIG
 import com.emcash.customerapp.utils.ITEM_ALL_CONTACTS
 import com.emcash.customerapp.utils.ITEM_RECENT_CONTACTS
@@ -91,10 +96,11 @@ class NewPaymentViewModel(val app: Application) : AndroidViewModel(app) {
 
     }
 
+
+
     val _contactScreenItems = MediatorLiveData<ArrayList<ContactsPageItems>>()
     val contactScreenItems: LiveData<ArrayList<ContactsPageItems>> get() = _contactScreenItems
     fun getContactScreenItems(
-
     ) {
         var recentContacts: ArrayList<RecentTransactionItem>? = null
         var groupedContacts: ArrayList<GroupedContacts>? = null
@@ -118,6 +124,8 @@ class NewPaymentViewModel(val app: Application) : AndroidViewModel(app) {
                     _contactScreenItems.postValue(result)
                 }
             }
+
+
 
         }
 
@@ -237,6 +245,18 @@ class NewPaymentViewModel(val app: Application) : AndroidViewModel(app) {
             }
         }
     }
+
+
+
+    val searchQuerry = MutableLiveData<String>().default("")
+    val pagedAllContactList = Transformations.switchMap(searchQuerry){
+        Pager(PagingConfig(DEFAULT_PAGE_CONFIG)){
+            ContactsPagingSource(EmCashApiManager(app).api,it)
+        }.liveData.cachedIn(viewModelScope)
+    }
+
+    val recentContacts = paymentRepository.getRecentTransactions()
+
 
 }
 

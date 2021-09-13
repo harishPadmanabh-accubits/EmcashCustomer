@@ -10,7 +10,7 @@ import com.emcash.customerapp.model.ContactsPageItems
 import com.emcash.customerapp.model.DummyContactsRawData
 import com.emcash.customerapp.model.DummyUserData
 import com.emcash.customerapp.model.GroupedContacts
-import com.emcash.customerapp.model.contacts.ContactItem
+import com.emcash.customerapp.model.contacts.ContactsGroup
 import com.emcash.customerapp.model.transactions.RecentTransactionItem
 import com.emcash.customerapp.ui.home.adapter.RecentTransactionsAdapter
 import com.emcash.customerapp.utils.ITEM_ALL_CONTACTS
@@ -96,6 +96,6 @@ class ContactsScreenAdapter(var contactsPageItems: ArrayList<ContactsPageItems>,
 interface ContactsListener{
     fun onContactSelected(contact:DummyContactsRawData?,recentContact:DummyUserData?)
     fun onSelectedFromRecentContacts(contact:RecentTransactionItem)
-    fun onSelectedFromAllContacts(contact: ContactItem)
+    fun onSelectedFromAllContacts(contact: ContactsGroup.ContactInfo)
 
 }
