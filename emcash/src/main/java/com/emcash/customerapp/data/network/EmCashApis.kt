@@ -4,6 +4,7 @@ import com.emcash.customerapp.model.auth.switchAccount.SwitchAccountRequest
 import com.emcash.customerapp.model.auth.switchAccount.SwitchAccountResponse
 import com.emcash.customerapp.model.auth.userExists.UserExistCheckRequest
 import com.emcash.customerapp.model.auth.userExists.UserExistCheckResponse
+import com.emcash.customerapp.model.bankCard.*
 import com.emcash.customerapp.model.contacts.AllContactsResponse
 import com.emcash.customerapp.model.contacts.ContactDetails
 import com.emcash.customerapp.model.contacts.ContactsGroupResponse
@@ -78,23 +79,23 @@ interface EmCashApis {
         @Path("user_id") userId: Int,
         @Query("page") page: Int,
         @Query("limit") limit: Int
-    ):Response<TransactionHistoryResponse>
+    ): Response<TransactionHistoryResponse>
 
     @GET("v1/customers/contacts/{user_id}/transactions")
-     fun getTransactionHistoryAsync(
+    fun getTransactionHistoryAsync(
         @Path("user_id") userId: Int,
         @Query("page") page: Int,
         @Query("limit") limit: Int
-    ):Call<TransactionHistoryResponse>
+    ): Call<TransactionHistoryResponse>
 
-     @POST("v1/customers/payments/request")
-     fun requestPayment(@Body paymentRequest: PaymentRequest):Call<PaymentResponse>
+    @POST("v1/customers/payments/request")
+    fun requestPayment(@Body paymentRequest: PaymentRequest): Call<PaymentResponse>
 
-     @POST("v1/customers/payments/reject")
-     fun rejectPayment(@Body paymentApprovalRequest: PaymentApprovalRequest):Call<PaymentApprovalResponse>
+    @POST("v1/customers/payments/reject")
+    fun rejectPayment(@Body paymentApprovalRequest: PaymentApprovalRequest): Call<PaymentApprovalResponse>
 
-     @POST("v1/customers/payments/approve")
-     fun acceptPayment(@Body paymentApprovalRequest: PaymentApprovalRequest):Call<PaymentApprovalResponse>
+    @POST("v1/customers/payments/approve")
+    fun acceptPayment(@Body paymentApprovalRequest: PaymentApprovalRequest): Call<PaymentApprovalResponse>
 
     @GET("v1/customers/transactions/main?")
     fun getTransactionHistory(
@@ -116,7 +117,7 @@ interface EmCashApis {
     @POST("v1/customers/payments/qrcode/check")
     fun getQRResult(
         @Body qrRequest: QRRequest
-    ):Call<QRResponse>
+    ): Call<QRResponse>
 
     @GET("v1/customers/transactions/wallet/group")
     suspend fun getWalletGropedTransactions(
@@ -150,6 +151,19 @@ interface EmCashApis {
     ): TransactionGroupResponse
 
 
+    @GET("v1/customers/empay/cards")
+    fun getBankCard(
+    ): Call<BankCardsListingResponse>
+
+    @POST("v1/customers/empay/payment-through-existing-card")
+    fun paymentByExistingCard(
+        @Body paymentByExisitingCardRequest: PaymentByExisitingCardRequest
+    ): Call<PaymentByExisitingCardResponse>
+
+    @POST("v1/customers/empay/payment-through-new-card")
+    fun paymentByNewCard(
+        @Body paymentByNewCardRequest: PaymentByNewCardRequest
+    ): Call<PaymentByNewCardResponse>
 
 
 }
