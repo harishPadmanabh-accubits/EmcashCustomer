@@ -8,6 +8,7 @@ import com.emcash.customerapp.data.network.ApiCallStatus
 import com.emcash.customerapp.data.network.ApiMapper
 import com.emcash.customerapp.data.network.EmCashApiManager
 import com.emcash.customerapp.extensions.awaitResponse
+import com.emcash.customerapp.model.bankCard.*
 import com.emcash.customerapp.model.profile.ProfileDetailsResponse
 import com.emcash.customerapp.model.transactions.RecentTransactionResponse
 import com.emcash.customerapp.model.wallet.topup.WalletTopupRequest
@@ -65,5 +66,47 @@ class HomeRepository(private val context: Context) {
         })
     }
 
+    fun bankCardsListing(onApiCallback: (status: Boolean, message: String?, result: BankCardsListingResponse.Data?) -> Unit){
+        api.getBankCard().awaitResponse(
+            onFailure = {
+                onApiCallback(false, it, null)
+
+            }, onSuccess = {
+                var  data=it?.data
+                data?.let {
+                    onApiCallback(true, null, data)
+
+                }
+            }
+        )
+    }
+    fun paymentByExistingCard(paymentByExisitingCardRequest: PaymentByExisitingCardRequest, onApiCallback: (status: Boolean, message: String?, result: PaymentByExisitingCardResponse?) -> Unit){
+        api.paymentByExistingCard(paymentByExisitingCardRequest).awaitResponse(
+            onFailure = {
+                onApiCallback(false, it, null)
+
+            }, onSuccess = {
+                var  data=it
+                data?.let {
+                    onApiCallback(true, null, data)
+
+                }
+            }
+        )
+    }
+    fun paymentByNewCard(paymentByNewCardRequest: PaymentByNewCardRequest, onApiCallback: (status: Boolean, message: String?, result: PaymentByNewCardResponse?) -> Unit){
+        api.paymentByNewCard(paymentByNewCardRequest).awaitResponse(
+            onFailure = {
+                onApiCallback(false, it, null)
+
+            }, onSuccess = {
+                var  data=it
+                data?.let {
+                    onApiCallback(true, null, data)
+
+                }
+            }
+        )
+    }
 
 }
