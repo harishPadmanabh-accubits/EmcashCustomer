@@ -95,6 +95,18 @@ class SyncManager(val context: Context) {
     }
     set(value) = editor.putString(KEY_REF_ID,value).apply()
 
+    var fcmToken:String
+        get()=try{
+            var token = ""
+            sharedPreferences.getString(KEY_FCM_TOKEN,"")?.let {
+                token = it
+            }
+            token
+        }catch (e:Exception){
+            ""
+        }
+        set(value) = editor.putString(KEY_FCM_TOKEN,value).apply()
+
 
 
 

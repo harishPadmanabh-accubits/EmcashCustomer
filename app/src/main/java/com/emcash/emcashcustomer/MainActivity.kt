@@ -13,6 +13,8 @@ import com.emcash.customerapp.enums.TransactionType
 import com.emcash.customerapp.extensions.hide
 import com.emcash.customerapp.extensions.show
 import com.emcash.customerapp.extensions.showShortToast
+import com.emcash.customerapp.utils.IS_FROM_DEEPLINK
+import com.emcash.customerapp.utils.KEY_DEEPLINK
 import com.emcash.customerapp.utils.KEY_TRANSACTION_TYPE
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.FirebaseApp
@@ -23,6 +25,9 @@ import java.lang.Exception
 class MainActivity : AppCompatActivity() ,EmCashListener{
 
     var token =""
+    val isFromDeeplink by lazy {
+        intent.getBooleanExtra(IS_FROM_DEEPLINK,false)
+    }
 
     companion object{
         val className = "com.emcash.emcashcustomer.MainActivity"
@@ -35,7 +40,13 @@ class MainActivity : AppCompatActivity() ,EmCashListener{
         setContentView(R.layout.activity_main)
         FirebaseApp.initializeApp(this)
         EmCashCommunicationHelper.setParentListener(this)
-
+        if(isFromDeeplink){
+            EmCashHelper(applicationContext,this).handleNotificationIntent(
+                "509842776",
+                "50464B84832A00209E3065B6146A99471EAE21613FFAB4D0742693C70978EE31",
+                "201812231321016084",intent.getStringExtra(KEY_DEEPLINK).toString()
+            )
+        }
         try {
             FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
                 if (!task.isSuccessful) {

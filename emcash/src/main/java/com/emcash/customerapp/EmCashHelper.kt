@@ -1,15 +1,9 @@
 package com.emcash.customerapp
 
-import android.app.Notification
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
-import android.graphics.Color
-import android.os.Build
-import androidx.core.app.TaskStackBuilder
+import androidx.core.net.toUri
 import com.emcash.customerapp.data.SyncManager
 import com.emcash.customerapp.data.repos.AuthRepository
 import com.emcash.customerapp.data.repos.PaymentRepository
@@ -41,6 +35,7 @@ class EmCashHelper(val appContext: Context, val listener: EmCashListener) {
 //            handleLaunchNavigation()
 //        }else{
         val request = SwitchAccountRequest(fraction, password, phoneNumber,token)
+        syncManager.fcmToken = token
         authRepository.performSwitchAccount(
             request,
             onApiCallBack = { status, response, error ->
@@ -168,6 +163,38 @@ class EmCashHelper(val appContext: Context, val listener: EmCashListener) {
 
     }
 
+    fun handleNotificationIntent(
+        phoneNumber: String,
+        password: String,
+        fraction: String,
+        deeplink:String
+    ){
+        val token = syncManager.fcmToken
+        val request = SwitchAccountRequest(fraction, password, phoneNumber,token)
+        Timber.e("Request login $request")
+        authRepository.performSwitchAccount(
+            request,
+            onApiCallBack = { status, response, error ->
+                when (status) {
+                    true -> {
+                        listener.onLoginSuccess(true)
+                        handleDeepLink(deeplink)
+                    }
+                    false -> {
+                        listener.onLoginSuccess(false)
+                        appContext.showShortToast(error)
+                    }
+                }
+            })
+
+    }
+
+    private fun handleDeepLink(deeplink: String) {
+       val notifyIntent =   DeepLinkFactory.getIntentFromDeeplink(deeplink.toUri(),appContext).also {
+           it.setFlags(FLAG_ACTIVITY_NEW_TASK)
+       }
+       appContext.startActivity(notifyIntent)
+    }
 
 
 }
@@ -175,5 +202,6 @@ class EmCashHelper(val appContext: Context, val listener: EmCashListener) {
 interface EmCashListener {
     fun onLoginSuccess(status: Boolean) {}
     fun onVerifyPin(forAction: TransactionType, sourceIfAny:Int?=null) {}
+    fun onFcmTokenError(){}
 }
 
