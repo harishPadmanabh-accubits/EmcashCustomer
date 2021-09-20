@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import com.emcash.customerapp.R
+import com.emcash.customerapp.data.SyncManager
 import com.emcash.customerapp.data.network.ApiCallStatus
 import com.emcash.customerapp.extensions.*
 import com.emcash.customerapp.model.payments.TransactionDetailsResponse
@@ -58,6 +59,8 @@ class PaymentReceiptFragment:Fragment(R.layout.payment_reciept) {
     private fun renderReceipt(details: TransactionDetailsResponse.Data) {
         fl_user_level.setlevel(details.transferUserInfo.level)
         iv_user_dp.loadImageWithPlaceHolder(details.transferUserInfo.profileImage,R.drawable.ic_profile_placeholder)
+        iv_receipient_dp.loadImageWithPlaceHolder(details.transferUserInfo.profileImage,R.drawable.ic_profile_placeholder)
+        iv_user_dp_handshake.loadImageWithPlaceHolder(SyncManager(requireContext()).profileDetails?.profileImage,R.drawable.ic_profile_placeholder)
         tv_user_name.text = details.transferUserInfo.name
         tv_user_phone.text = details.transferUserInfo.phoneNumber
         user_dp.setImage(viewModel.syncManager.profileDetails?.profileImage)
@@ -152,6 +155,7 @@ class PaymentReceiptFragment:Fragment(R.layout.payment_reciept) {
 
         }
         tv_transaction_id.text= trimID(details.id)
+        Timber.e("WalletId ${details.walletTransactionInfo?.walletId.toString()}")
         tv_wallet_id.text= trimID(details.walletTransactionInfo?.walletId.toString())
         tv_desc.text=details.description
 

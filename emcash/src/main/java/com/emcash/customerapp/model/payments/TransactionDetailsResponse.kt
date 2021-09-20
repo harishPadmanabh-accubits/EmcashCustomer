@@ -88,7 +88,7 @@ data class WalletTransactionInfo(
     @SerializedName("userId")
     val userId: Int?,
     @SerializedName("walletId")
-    val walletId: Any?,
+    val walletId: String?,
     @SerializedName("walletTransactionId")
     val walletTransactionId: Any?
 )

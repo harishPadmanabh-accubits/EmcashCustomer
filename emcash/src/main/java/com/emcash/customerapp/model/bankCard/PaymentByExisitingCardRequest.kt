@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 
 
 data class PaymentByExisitingCardRequest(
-    @SerializedName("amount")
+    @SerializedName("amountAuthorized")
     val amount: Amount,
     @SerializedName("billerId")
     val billerId: String,

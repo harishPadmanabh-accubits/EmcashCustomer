@@ -233,7 +233,7 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/iv_user_dp"
+                    android:id="@+id/iv_user_dp_handshake"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:src="@drawable/sample_round_dp" />
