@@ -62,6 +62,7 @@ class PaymentReceiptFragment:Fragment(R.layout.payment_reciept) {
         iv_receipient_dp.loadImageWithPlaceHolder(details.transferUserInfo.profileImage,R.drawable.ic_profile_placeholder)
         iv_user_dp_handshake.loadImageWithPlaceHolder(SyncManager(requireContext()).profileDetails?.profileImage,R.drawable.ic_profile_placeholder)
         tv_user_name.text = details.transferUserInfo.name
+        tv_reciepient_name.text = details.transferUserInfo.name
         tv_user_phone.text = details.transferUserInfo.phoneNumber
         user_dp.setImage(viewModel.syncManager.profileDetails?.profileImage)
         tv_value_emcash.text = details.amount.toString()
@@ -112,6 +113,7 @@ class PaymentReceiptFragment:Fragment(R.layout.payment_reciept) {
 
             if(type==1){
                 tv_payment_type.text="Transfer Failed"
+
 
             }else if(type==4){
                 tv_payment_type.text="Request Failed"

@@ -1,20 +1,16 @@
 package com.emcash.customerapp.ui.loademcash
 
 import android.app.Application
-import android.content.IntentSender
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.emcash.customerapp.data.SyncManager
 import com.emcash.customerapp.data.network.ApiCallStatus
 import com.emcash.customerapp.data.network.ApiMapper
 import com.emcash.customerapp.data.repos.HomeRepository
-import com.emcash.customerapp.data.repos.NotificationsRepository
 import com.emcash.customerapp.extensions.default
 import com.emcash.customerapp.model.bankCard.*
 import com.emcash.customerapp.model.notifications.NotificationResponse
 import com.emcash.customerapp.model.wallet.topup.WalletTopupRequest
-import timber.log.Timber
 
 class LoadEmCashViewModel(val app: Application) : AndroidViewModel(app) {
 
@@ -55,10 +51,10 @@ class LoadEmCashViewModel(val app: Application) : AndroidViewModel(app) {
         }
     }
 
-    fun paymentByExistingCard(paymentByExisitingCardRequest: PaymentByExisitingCardRequest) {
+    fun paymentByExistingCard(paymentByExistingCardRequest: PaymentByExistingCardRequest) {
         paymentByExistingCardStatus.value = ApiMapper(ApiCallStatus.LOADING, null, null)
 
-        homeRepository.paymentByExistingCard(paymentByExisitingCardRequest) { status, message, result ->
+        homeRepository.paymentByExistingCard(paymentByExistingCardRequest) { status, message, result ->
             when (status) {
                 true -> {
                     paymentByExistingCardStatus.value = ApiMapper(ApiCallStatus.SUCCESS, result, null)

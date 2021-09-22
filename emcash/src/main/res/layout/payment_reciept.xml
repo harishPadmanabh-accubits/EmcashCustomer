@@ -97,7 +97,6 @@
             android:layout_gravity="center"
             android:layout_marginTop="12dp"
             android:fontFamily="@font/biennale_regular"
-            android:text="04 Feb, 2021, 9:00 PM"
             android:textColor="@color/black"
             android:textSize="14sp" />
 

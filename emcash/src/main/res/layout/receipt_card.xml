@@ -236,7 +236,7 @@
                     android:id="@+id/iv_user_dp_handshake"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:src="@drawable/sample_round_dp" />
+                    />
 
                 <TextView
                     android:id="@+id/tv_info_you"
@@ -254,6 +254,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
+                android:layout_marginTop="12dp"
                 android:orientation="vertical"
                 app:layout_constraintBottom_toBottomOf="@+id/ll_you"
                 app:layout_constraintEnd_toStartOf="@+id/start"
@@ -262,8 +263,8 @@
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/iv_handshake"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
                     android:layout_marginTop="12dp"
                     android:background="@drawable/white_circle_bg"
                     android:padding="4dp"
@@ -306,7 +307,7 @@
                     android:id="@+id/iv_receipient_dp"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:src="@drawable/tbd_sample_dp_2" />
+                    />
 
                 <TextView
                     android:id="@+id/tv_reciepient_name"
@@ -314,7 +315,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
                     android:fontFamily="@font/biennale_semi_bold"
-                    android:text="Lynda Maria"
                     android:textColor="@color/black"
                     android:textSize="12sp" />
             </LinearLayout>
@@ -323,6 +323,7 @@
                 android:id="@+id/iv_line"
                 android:layout_width="0dp"
                 android:layout_height="1dp"
+                android:scaleType="centerCrop"
                 app:layout_constraintBottom_toBottomOf="@+id/ll_you"
                 app:layout_constraintEnd_toStartOf="@+id/ll_handshake"
                 app:layout_constraintStart_toEndOf="@+id/ll_you"

@@ -90,5 +90,5 @@ data class WalletTransactionInfo(
     @SerializedName("walletId")
     val walletId: String?,
     @SerializedName("walletTransactionId")
-    val walletTransactionId: Any?
+    val walletTransactionId: String?
 )

@@ -1,13 +1,10 @@
 package com.emcash.customerapp.utils
 
-import android.os.Build
-import androidx.annotation.RequiresApi
-import androidx.security.crypto.MasterKeys
-
 const val RC_CAMERA_PERM = 123
 const val RC_LOCATION_PERM = 124
 const val RC_SMS_PERM = 125
 const val RC_CONTACTS_PERM = 126
+const val TIME_OUT = 60
 
 /**
  * Intent Keys
@@ -31,6 +28,7 @@ const val KEY_IS_FROM_QR = "is_from_qr"
 const val KEY_QR_DATA = "data_from_qr"
 const val KEY_USER_ID_FROM_DEEPLINK = "deep_user"
 const val KEY_FCM_TOKEN="fcm"
+const val KEY_IS_FROM_EMCASH_NOTIFICATION="is_from_emcash_notification"
 
 /**
  * Screen Keys
@@ -63,4 +61,4 @@ const val TYPE_TRANSFER = "Transfer"
 const val TYPE_REQUEST = "Request"
 
 const val DEFAULT_PAGE_CONFIG = 3
-
+const val DEFAULT_LOAD_EMCASH_DESCRIPTION = "Test Topup Emcash"

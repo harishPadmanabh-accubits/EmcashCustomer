@@ -2,9 +2,7 @@ package com.emcash.customerapp.model.bankCard
 
 
 import com.google.gson.annotations.SerializedName
-
-
-data class PaymentByExisitingCardRequest(
+data class PaymentByExistingCardRequest(
     @SerializedName("amountAuthorized")
     val amount: Amount,
     @SerializedName("billerId")

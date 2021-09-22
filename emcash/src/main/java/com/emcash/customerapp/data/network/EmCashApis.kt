@@ -157,7 +157,7 @@ interface EmCashApis {
 
     @POST("v1/customers/empay/payment-through-existing-card")
     fun paymentByExistingCard(
-        @Body paymentByExisitingCardRequest: PaymentByExisitingCardRequest
+        @Body paymentByExistingCardRequest: PaymentByExistingCardRequest
     ): Call<PaymentByExisitingCardResponse>
 
     @POST("v1/customers/empay/payment-through-new-card")

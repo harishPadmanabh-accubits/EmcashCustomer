@@ -15,10 +15,6 @@ import com.emcash.customerapp.model.wallet.topup.WalletTopupRequest
 import com.emcash.customerapp.model.wallet.topup.WalletTopupResponse
 import com.emcash.customerapp.model.wallet.withdraw.WalletWithdrawRequest
 import com.emcash.customerapp.model.wallet.withdraw.WalletWithdrawResponse
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class HomeRepository(private val context: Context) {
     private val syncManager = SyncManager(context)
@@ -80,8 +76,8 @@ class HomeRepository(private val context: Context) {
             }
         )
     }
-    fun paymentByExistingCard(paymentByExisitingCardRequest: PaymentByExisitingCardRequest, onApiCallback: (status: Boolean, message: String?, result: PaymentByExisitingCardResponse?) -> Unit){
-        api.paymentByExistingCard(paymentByExisitingCardRequest).awaitResponse(
+    fun paymentByExistingCard(paymentByExistingCardRequest: PaymentByExistingCardRequest, onApiCallback: (status: Boolean, message: String?, result: PaymentByExisitingCardResponse?) -> Unit){
+        api.paymentByExistingCard(paymentByExistingCardRequest).awaitResponse(
             onFailure = {
                 onApiCallback(false, it, null)
 

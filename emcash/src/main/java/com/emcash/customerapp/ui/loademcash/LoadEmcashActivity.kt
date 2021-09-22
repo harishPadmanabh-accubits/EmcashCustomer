@@ -11,6 +11,8 @@ import com.emcash.customerapp.ui.home.HomeActivity
 import com.emcash.customerapp.ui.wallet.WalletActivity
 import com.emcash.customerapp.utils.*
 import kotlinx.android.synthetic.main.activity_load_emcash.*
+import java.math.BigDecimal
+import java.math.RoundingMode
 
 class LoadEmcashActivity : AppCompatActivity() {
 
@@ -57,7 +59,8 @@ class LoadEmcashActivity : AppCompatActivity() {
 
         if (amount > 0) {
             openActivity(TransactionActivity::class.java) {
-                this.putInt(KEY_TOPUP_AMOUNT, amount)
+                val amountDoubled = BigDecimal(amount).setScale(3, RoundingMode.HALF_UP)
+                this.putDouble(KEY_TOPUP_AMOUNT, amountDoubled.toDouble())
                 this.putString(KEY_TOPUP_DESC, desc)
             }
             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)

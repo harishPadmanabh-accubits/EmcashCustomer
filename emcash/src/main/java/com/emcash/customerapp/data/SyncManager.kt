@@ -107,6 +107,13 @@ class SyncManager(val context: Context) {
         }
         set(value) = editor.putString(KEY_FCM_TOKEN,value).apply()
 
+      var isFromEmCashNotification:Boolean
+      get() = try {
+          sharedPreferences.getBoolean(KEY_IS_FROM_EMCASH_NOTIFICATION,false)
+      }catch (e:Exception){
+          false
+      }
+    set(value) = editor.putBoolean(KEY_IS_FROM_EMCASH_NOTIFICATION,value).apply()
 
 
 
