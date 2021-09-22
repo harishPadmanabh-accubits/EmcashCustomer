@@ -6,12 +6,18 @@ import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import com.emcash.customerapp.R
 import com.emcash.customerapp.data.network.ApiCallStatus
+import com.emcash.customerapp.extensions.openActivity
 import com.emcash.customerapp.extensions.showShortToast
+import com.emcash.customerapp.ui.newPayment.NewPaymentActivity
 import com.emcash.customerapp.ui.notifiacations.adapter.NotificationAdapter
+import com.emcash.customerapp.ui.notifiacations.adapter.NotificationDetailsAdapter
+import com.emcash.customerapp.utils.KEY_BEN_ID
+import com.emcash.customerapp.utils.LAUNCH_SOURCE
 import com.emcash.customerapp.utils.LoaderDialog
+import com.emcash.customerapp.utils.SCREEN_HOME_RECENT_CONTACTS
 import kotlinx.android.synthetic.main.activity_notifiactions.*
 
-class NotificationsActivity : AppCompatActivity() {
+class NotificationsActivity : AppCompatActivity(),NotificationDetailsAdapter.NotificationItemClickListener {
 
     private val viewModel : NotificationsViewModel by viewModels()
     private val loader by lazy{LoaderDialog(this)}
@@ -34,7 +40,7 @@ class NotificationsActivity : AppCompatActivity() {
                         val notifications= it.data?.notifications
                         notifications?.let {
                             rv_notification.adapter = NotificationAdapter(
-                                groupNotification(it)
+                                groupNotification(it),this@NotificationsActivity
                             )
                         loader.hideLoader()
                         }
@@ -46,6 +52,14 @@ class NotificationsActivity : AppCompatActivity() {
                 }
             })
 
+        }
+    }
+
+    override fun onNotificationClick(benId: String) {
+        val beneficiaryId= if(benId.isNullOrEmpty()) 0 else benId.toInt()
+        openActivity(NewPaymentActivity::class.java) {
+            this.putInt(LAUNCH_SOURCE, SCREEN_HOME_RECENT_CONTACTS)
+            this.putInt(KEY_BEN_ID,beneficiaryId)
         }
     }
 }

@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Button
+import android.widget.Toast
 import androidx.core.os.bundleOf
 import com.emcash.customerapp.EmCashCommunicationHelper
 import com.emcash.customerapp.EmCashHelper
@@ -20,6 +22,7 @@ import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.FirebaseApp
 import com.google.firebase.messaging.FirebaseMessaging
 import kotlinx.android.synthetic.main.activity_main.*
+import timber.log.Timber
 import java.lang.Exception
 
 class MainActivity : AppCompatActivity() ,EmCashListener{
@@ -65,17 +68,25 @@ class MainActivity : AppCompatActivity() ,EmCashListener{
         }
 
 
+        val button:Button= findViewById(R.id.button) as Button
+        button.setOnClickListener {
+            Timber.e("HHP ENTERED LOGIN BUTTON")
+            try {
+                pb_login.show()
+                EmCashHelper(applicationContext,this).doEmCashLogin(
+                    "509842776",
+                    "50464B84832A00209E3065B6146A99471EAE21613FFAB4D0742693C70978EE31",
+                    "201812231321016084",token
+                )
+            }catch (e:Exception){
+                Timber.e("HHP ENTERED LOGIN BUTTON exc $e")
+                Toast.makeText(this, "$e", Toast.LENGTH_SHORT).show()
+            }
+        }
+
 
     }
 
-    fun onClick(view: View) {
-        pb_login.show()
-        EmCashHelper(applicationContext,EmCashCommunicationHelper.getParentListener()).doEmCashLogin(
-            "509842776",
-            "50464B84832A00209E3065B6146A99471EAE21613FFAB4D0742693C70978EE31",
-            "201812231321016084",token
-        )
-      }
 
     override fun onLoginSuccess(status: Boolean) {
         Log.e("Listening","at Parent login status $status")

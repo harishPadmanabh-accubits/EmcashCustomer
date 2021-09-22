@@ -4,14 +4,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
-import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.RecyclerView
 import com.emcash.customerapp.R
 import com.emcash.customerapp.extensions.toFormattedTime
 import com.emcash.customerapp.model.notifications.Notification
 import kotlinx.android.synthetic.main.item_notification_details.view.*
 
-class NotificationDetailsAdapter(val data: List<Notification>) :
+class NotificationDetailsAdapter(
+    val data: List<Notification>,
+   val listener: NotificationItemClickListener
+) :
     RecyclerView.Adapter<NotificationDetailsAdapter.ViewHolder>() {
     open class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
@@ -71,6 +73,13 @@ class NotificationDetailsAdapter(val data: List<Notification>) :
 //            iv_point.setColorFilter(randomColor)
 
 
+            setOnClickListener {
+                listener.onNotificationClick(data[position].contactUserId)
+            }
         }
+    }
+
+    interface NotificationItemClickListener{
+        fun onNotificationClick(benId:String)
     }
 }
