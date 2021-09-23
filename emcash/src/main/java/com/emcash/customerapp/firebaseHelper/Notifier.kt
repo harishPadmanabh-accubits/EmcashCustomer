@@ -79,15 +79,15 @@ object Notifier {
                 .setContentTitle(remoteData.title)
                 .setContentText(remoteData.message)
                 .setContentIntent(resultPendingIntent)
-                .setSmallIcon(R.drawable.intro_small_coin)
-                .setBadgeIconType(R.mipmap.ic_launcher)
+                .setSmallIcon(R.drawable.icon_notify)
+                .setBadgeIconType(R.drawable.icon_notify)
         } else {
 
             builder = Notification.Builder(context)
                 .setContentTitle(remoteData.title)
                 .setContentText(remoteData.message)
                 .setContentIntent(resultPendingIntent)
-                .setSmallIcon(R.mipmap.ic_launcher)
+                .setSmallIcon(R.drawable.icon_notify)
 
         }
         notificationManager.notify(10001, builder.build())

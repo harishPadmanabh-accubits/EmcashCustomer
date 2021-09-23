@@ -35,8 +35,8 @@ import kotlinx.coroutines.launch
 class PaymentChatFragment:Fragment(R.layout.payment_chats),PaymentHistoryItemClickListener {
 
     val viewModel : NewPaymentViewModel by activityViewModels()
-    private var isBlockedLoggedInUser: Boolean? = false
-    private var isBlockedContactUser: Boolean? = false
+    private var isBlockedLoggedInUser: Boolean = false
+    private var isBlockedContactUser: Boolean = false
     val chatAdapter by lazy {
         PaymentChatListAdapter(this)
     }
@@ -59,9 +59,6 @@ class PaymentChatFragment:Fragment(R.layout.payment_chats),PaymentHistoryItemCli
         }
 
         refresh()
-
-
-
 
         viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main){
             viewModel.getHistory().observe(viewLifecycleOwner, Observer {
@@ -115,12 +112,26 @@ class PaymentChatFragment:Fragment(R.layout.payment_chats),PaymentHistoryItemCli
             isBlockedContactUser = it.contact?.isLoggedInUserBlockedContactUser
             isBlockedLoggedInUser = it.contact.isContactUserBlockedLoggedInUser
 
+            handleblocking(isBlockedLoggedInUser,isBlockedContactUser)
+
             iv_menu.setOnClickListener {
                 showPopup(it,viewModel.beneficiaryId,beneficiary.name, beneficiary.phoneNumber,beneficiary.profileImage,beneficiary.level)
             }
 
 
         }
+    }
+
+    private fun handleblocking(blockedLoggedInUser: Boolean, blockedContactUser: Boolean) {
+        if(!blockedContactUser && !blockedLoggedInUser){
+
+            btn_request.show()
+            btn_pay.show()
+        }else{
+            btn_request.hide()
+            btn_pay.hide()
+        }
+
     }
 
     override fun onItemClick(transactionId: String) {
@@ -233,6 +244,8 @@ class PaymentChatFragment:Fragment(R.layout.payment_chats),PaymentHistoryItemCli
                         ApiCallStatus.SUCCESS->{
                             loader.hideLoader()
                             requireActivity().showShortToast("This user has been blocked.")
+                            btn_request.hide()
+                            btn_pay.hide()
                         }
                         ApiCallStatus.ERROR->{
                             loader.hideLoader()
@@ -249,6 +262,8 @@ class PaymentChatFragment:Fragment(R.layout.payment_chats),PaymentHistoryItemCli
                         ApiCallStatus.SUCCESS->{
                             loader.hideLoader()
                             requireActivity().showShortToast("This user has been unblocked.")
+                            btn_request.show()
+                            btn_pay.show()
                         }
                         ApiCallStatus.ERROR->{
                             loader.hideLoader()
