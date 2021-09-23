@@ -257,6 +257,13 @@ class NewPaymentViewModel(val app: Application) : AndroidViewModel(app) {
 
     val recentContacts = paymentRepository.getRecentTransactions()
 
+    fun blockContact(userId:Int){
+
+    }
+
+    fun unblockContact(userId:Int){
+
+    }
 
 }
 

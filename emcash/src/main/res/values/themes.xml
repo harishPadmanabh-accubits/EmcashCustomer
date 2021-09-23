@@ -15,6 +15,12 @@
         <item name="android:windowTranslucentNavigation">false</item>
     </style>
 
+    <style name="MyPopupMenu" parent="@style/Widget.AppCompat.PopupMenu">
+        <item name="android:dropDownHorizontalOffset">-4dp</item>
+        <item name="android:dropDownVerticalOffset">4dp</item>
+        <item name="android:radius">8dp</item>
+    </style>
+
 
 
 

@@ -203,5 +203,6 @@ interface EmCashListener {
     fun onLoginSuccess(status: Boolean) {}
     fun onVerifyPin(forAction: TransactionType, sourceIfAny:Int?=null) {}
     fun onFcmTokenError(){}
+    fun onLogOutEmCash(){}
 }
 

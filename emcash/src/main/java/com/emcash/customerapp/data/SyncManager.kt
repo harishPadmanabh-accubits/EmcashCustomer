@@ -116,6 +116,9 @@ class SyncManager(val context: Context) {
     set(value) = editor.putBoolean(KEY_IS_FROM_EMCASH_NOTIFICATION,value).apply()
 
 
+    fun logout(){
+        editor.clear().apply()
+    }
 
 
 }
