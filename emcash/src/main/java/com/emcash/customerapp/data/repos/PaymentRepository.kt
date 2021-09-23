@@ -6,6 +6,8 @@ import androidx.lifecycle.MutableLiveData
 import com.emcash.customerapp.data.SyncManager
 import com.emcash.customerapp.data.network.EmCashApiManager
 import com.emcash.customerapp.extensions.awaitResponse
+import com.emcash.customerapp.model.BlockedResponse
+import com.emcash.customerapp.model.UnblockedResponse
 import com.emcash.customerapp.model.contacts.Contact
 import com.emcash.customerapp.model.contacts.ContactItem
 import com.emcash.customerapp.model.payments.*
@@ -182,4 +184,41 @@ class PaymentRepository(private val context: Context) {
             onApiCallBack(false,null, it)
         })
     }
+
+    fun blockContact(
+        userId: Int,
+        onApiCallback: (status: Boolean, message: String?, result: BlockedResponse?) -> Unit
+    ) {
+        api.blockContact( userId).awaitResponse(
+            onFailure = {
+                onApiCallback(false, it, null)
+
+            }, onSuccess = {
+                var data = it
+                data.let {
+                    onApiCallback(true, null, data)
+
+                }
+            }
+        )
+    }
+
+    fun unBlockContact(
+        userId: Int,
+        onApiCallback: (status: Boolean, message: String?, result: UnblockedResponse?) -> Unit
+    ) {
+        api.unBlockContact( userId).awaitResponse(
+            onFailure = {
+                onApiCallback(false, it, null)
+
+            }, onSuccess = {
+                var data = it
+                data.let {
+                    onApiCallback(true, null, data)
+
+                }
+            }
+        )
+    }
+
 }

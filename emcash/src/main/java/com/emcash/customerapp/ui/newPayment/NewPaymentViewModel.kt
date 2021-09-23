@@ -97,7 +97,6 @@ class NewPaymentViewModel(val app: Application) : AndroidViewModel(app) {
     }
 
 
-
     val _contactScreenItems = MediatorLiveData<ArrayList<ContactsPageItems>>()
     val contactScreenItems: LiveData<ArrayList<ContactsPageItems>> get() = _contactScreenItems
     fun getContactScreenItems(
@@ -124,7 +123,6 @@ class NewPaymentViewModel(val app: Application) : AndroidViewModel(app) {
                     _contactScreenItems.postValue(result)
                 }
             }
-
 
 
         }
@@ -247,22 +245,71 @@ class NewPaymentViewModel(val app: Application) : AndroidViewModel(app) {
     }
 
 
-
     val searchQuerry = MutableLiveData<String>().default("")
-    val pagedAllContactList = Transformations.switchMap(searchQuerry){
-        Pager(PagingConfig(DEFAULT_PAGE_CONFIG)){
-            ContactsPagingSource(EmCashApiManager(app).api,it)
+    val pagedAllContactList = Transformations.switchMap(searchQuerry) {
+        Pager(PagingConfig(DEFAULT_PAGE_CONFIG)) {
+            ContactsPagingSource(EmCashApiManager(app).api, it)
         }.liveData.cachedIn(viewModelScope)
     }
 
     val recentContacts = paymentRepository.getRecentTransactions()
 
-    fun blockContact(userId:Int){
+    val _blockStatus = MutableLiveData<ApiMapper<BlockObserverModel>>()
+
+    fun blockContact(userId: Int): MutableLiveData<ApiMapper<BlockObserverModel>> {
+        _blockStatus.value = ApiMapper(ApiCallStatus.LOADING, null, null)
+        paymentRepository.blockContact(userId) { status, message, result ->
+            when (status) {
+                true -> {
+                    if (result?.status == true)
+                        _blockStatus.value = ApiMapper(
+                            ApiCallStatus.SUCCESS,
+                            BlockObserverModel(true, BlockType.BLOCK),
+                            null
+                        )
+                    else
+                        _blockStatus.value = ApiMapper(
+                            ApiCallStatus.ERROR,
+                            BlockObserverModel(false, BlockType.BLOCK),
+                            null
+                        )
+
+
+                }
+                false -> {
+                    _blockStatus.value = ApiMapper(ApiCallStatus.ERROR, null, message)
+
+                }
+            }
+        }
+        return _blockStatus
 
     }
 
-    fun unblockContact(userId:Int){
+    fun unblockContact(userId: Int): MutableLiveData<ApiMapper<BlockObserverModel>> {
+        _blockStatus.value = ApiMapper(ApiCallStatus.LOADING, null, null)
+        paymentRepository.unBlockContact(userId) { status, message, result ->
+            when (status) {
+                true -> {
+                    if (result?.status == true)
+                        _blockStatus.value = ApiMapper(
+                            ApiCallStatus.SUCCESS,
+                            BlockObserverModel(true, BlockType.UNBLOCK),
+                            null
+                        )
+                    else
+                        _blockStatus.value = ApiMapper(
+                            ApiCallStatus.ERROR,
+                            BlockObserverModel(false, BlockType.UNBLOCK),
+                            null
+                        )                }
+                false -> {
+                    _blockStatus.value = ApiMapper(ApiCallStatus.ERROR, null, message)
 
+                }
+            }
+        }
+        return _blockStatus
     }
 
 }

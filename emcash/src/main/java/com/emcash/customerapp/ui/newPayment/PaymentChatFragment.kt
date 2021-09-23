@@ -19,6 +19,7 @@ import com.emcash.customerapp.R
 import com.emcash.customerapp.data.network.ApiCallStatus
 import com.emcash.customerapp.enums.TransactionType
 import com.emcash.customerapp.extensions.*
+import com.emcash.customerapp.model.BlockType
 import com.emcash.customerapp.model.payments.TransactionGroupResponse
 import com.emcash.customerapp.model.payments.TransactionHistoryResponse
 import com.emcash.customerapp.ui.newPayment.adapters.PaymentChatListAdapter
@@ -120,7 +121,7 @@ class PaymentChatFragment:Fragment(R.layout.payment_chats),PaymentHistoryItemCli
             isBlockedLoggedInUser = it.contact.isContactUserBlockedLoggedInUser
 
             iv_menu.setOnClickListener {
-                showPopup(it,viewModel.beneficiaryId,beneficiary.name, beneficiary.phoneNumber)
+                showPopup(it,viewModel.beneficiaryId,beneficiary.name, beneficiary.phoneNumber,beneficiary.profileImage,beneficiary.level)
             }
 
 
@@ -145,7 +146,14 @@ class PaymentChatFragment:Fragment(R.layout.payment_chats),PaymentHistoryItemCli
         viewModel.gotoScreen(NewPaymentScreens.PIN,bundle)
     }
 
-    private fun showPopup(view: View, userId: Int, name: String, phoneNumber: String) {
+    private fun showPopup(
+        view: View,
+        userId: Int,
+        name: String,
+        phoneNumber: String,
+        profileImage: String,
+        level: Int
+    ) {
         var popup = PopupMenu(requireContext(), view)
         popup = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
             PopupMenu(context, view, Gravity.END, 40, R.style.MyPopupMenu)
@@ -175,7 +183,7 @@ class PaymentChatFragment:Fragment(R.layout.payment_chats),PaymentHistoryItemCli
                 }
                 R.id.block_account -> {
                     //block
-                    dialogBlockUnBlock(userId,name,phoneNumber)
+                    dialogBlockUnBlock(userId,name,phoneNumber,profileImage,level)
 
 
                 }
@@ -191,7 +199,13 @@ class PaymentChatFragment:Fragment(R.layout.payment_chats),PaymentHistoryItemCli
         popup.show()
     }
 
-    private fun dialogBlockUnBlock(userId: Int, name: String, phoneNumber: String) {
+    private fun dialogBlockUnBlock(
+        userId: Int,
+        name: String,
+        phoneNumber: String,
+        profileImage: String,
+        level: Int
+    ) {
       val  dialogBlockUnBlock = Dialog(requireActivity())
         dialogBlockUnBlock.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialogBlockUnBlock.setContentView(R.layout.block_layout)
@@ -202,6 +216,8 @@ class PaymentChatFragment:Fragment(R.layout.payment_chats),PaymentHistoryItemCli
 
         dialogBlockUnBlock.tv_name.text = name
         dialogBlockUnBlock.tv_number.text = phoneNumber
+        dialogBlockUnBlock.iv_user_dp.loadImageWithPlaceHolder(profileImage,R.drawable.ic_profile_placeholder)
+        dialogBlockUnBlock.fll_holder.setlevel(level)
 
         if (isBlockedContactUser == false) {
             dialogBlockUnBlock.tv_block.text = "Block"
@@ -216,17 +232,42 @@ class PaymentChatFragment:Fragment(R.layout.payment_chats),PaymentHistoryItemCli
         dialogBlockUnBlock.confirm_lay.setOnClickListener {
             dialogBlockUnBlock.dismiss()
             if (isBlockedContactUser == false) {
-                viewModel.blockContact(userId)
+                viewModel.blockContact(userId).observe(viewLifecycleOwner, Observer {
+                    when(it.status){
+                        ApiCallStatus.LOADING->loader.showLoader()
+                        ApiCallStatus.SUCCESS->{
+                            loader.hideLoader()
+                            requireActivity().showShortToast("This user has been blocked.")
+                        }
+                        ApiCallStatus.ERROR->{
+                            loader.hideLoader()
+                            requireActivity().showShortToast("Something Went wrong")
+
+                        }
+                    }
+                })
 
             } else {
-                viewModel.unblockContact(userId)
+                viewModel.unblockContact(userId).observe(viewLifecycleOwner, Observer {
+                    when(it.status){
+                        ApiCallStatus.LOADING->loader.showLoader()
+                        ApiCallStatus.SUCCESS->{
+                            loader.hideLoader()
+                            requireActivity().showShortToast("This user has been unblocked.")
+                        }
+                        ApiCallStatus.ERROR->{
+                            loader.hideLoader()
+                            requireActivity().showShortToast("Something Went wrong")
+
+                        }
+                    }
+                })
 
             }
 
         }
-
-
     }
+
 
 
 

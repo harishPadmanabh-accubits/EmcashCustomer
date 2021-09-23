@@ -1,5 +1,7 @@
 package com.emcash.customerapp.data.network
 
+import com.emcash.customerapp.model.BlockedResponse
+import com.emcash.customerapp.model.UnblockedResponse
 import com.emcash.customerapp.model.auth.switchAccount.SwitchAccountRequest
 import com.emcash.customerapp.model.auth.switchAccount.SwitchAccountResponse
 import com.emcash.customerapp.model.auth.userExists.UserExistCheckRequest
@@ -164,6 +166,16 @@ interface EmCashApis {
     fun paymentByNewCard(
         @Body paymentByNewCardRequest: PaymentByNewCardRequest
     ): Call<PaymentByNewCardResponse>
+
+    @POST("v1/customers/contacts/{user_id}/block")
+    fun blockContact(
+        @Path("user_id") user_id: Int
+    ): Call<BlockedResponse>
+
+    @POST("v1/customers/contacts/{user_id}/unblock")
+    fun unBlockContact(
+        @Path("user_id") user_id: Int
+    ): Call<UnblockedResponse>
 
 
 }
