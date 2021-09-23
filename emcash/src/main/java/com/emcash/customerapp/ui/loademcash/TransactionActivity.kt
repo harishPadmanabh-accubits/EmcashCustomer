@@ -85,7 +85,7 @@ class TransactionActivity : AppCompatActivity(), CardsAdapter.CardsItemClickList
             onBackPressed()
         }
 
-        tv_info_currency.text = amount.toString()
+        tv_info_currency.text = DecimalFormat("0.00").format(amount).toString()
         iv_user_dp.setImage(viewModel.syncManager.profileDetails?.profileImage)
 
         setupObservers()

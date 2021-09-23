@@ -156,6 +156,12 @@ class PaymentReceiptFragment:Fragment(R.layout.payment_reciept) {
             tv_handshake_status.visibility=View.VISIBLE
 
         }
+        if (details.isReciever) {
+            iv_payment_type.loadImageWithResId(R.drawable.ic_green_inverted_arrow)
+        }else{
+            iv_payment_type.loadImageWithResId(R.drawable.ic_send_chat)
+
+        }
         tv_transaction_id.text= trimID(details.id)
         Timber.e("WalletId ${details.walletTransactionInfo?.walletId.toString()}")
         tv_wallet_id.text= trimID(details.walletTransactionInfo?.walletId.toString())

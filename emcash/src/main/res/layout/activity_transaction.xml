@@ -83,7 +83,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:fontFamily="@font/biennale_bold"
-                    android:text="100"
                     android:textColor="@color/black"
                     android:textSize="50sp"
 
