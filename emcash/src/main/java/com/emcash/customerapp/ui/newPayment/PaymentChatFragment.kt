@@ -246,6 +246,7 @@ class PaymentChatFragment:Fragment(R.layout.payment_chats),PaymentHistoryItemCli
                             requireActivity().showShortToast("This user has been blocked.")
                             btn_request.hide()
                             btn_pay.hide()
+                            isBlockedContactUser = true
                         }
                         ApiCallStatus.ERROR->{
                             loader.hideLoader()
@@ -264,6 +265,8 @@ class PaymentChatFragment:Fragment(R.layout.payment_chats),PaymentHistoryItemCli
                             requireActivity().showShortToast("This user has been unblocked.")
                             btn_request.show()
                             btn_pay.show()
+                            isBlockedContactUser = false
+
                         }
                         ApiCallStatus.ERROR->{
                             loader.hideLoader()

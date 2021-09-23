@@ -111,12 +111,13 @@ class HomeActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks,
                 rv_recent_transactions.apply {
                     adapter = RecentTransactionsAdapter(it.transactionList, this@HomeActivity)
                 }
-                frame_recent_transactions.show()
                 iv_no_transactions.hide()
             }else{
-                frame_recent_transactions.show()
                 iv_no_transactions.show()
                 rv_recent_transactions.hide()
+                iv_no_transactions.setOnClickListener {
+                    openNewPayment()
+                }
             }
         }
     }

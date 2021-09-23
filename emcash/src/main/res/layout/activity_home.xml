@@ -262,7 +262,7 @@
                 android:id="@+id/frame_recent_transactions"
                 android:layout_width="0dp"
                 android:layout_marginTop="24dp"
-                android:visibility="gone"
+                android:visibility="visible"
                 android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/cv_balance"
@@ -274,9 +274,10 @@
 
                     <ImageView
                         android:id="@+id/iv_no_transactions"
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
                         android:elevation="2dp"
+                        android:translationX="-20dp"
                         android:src="@drawable/no_transaction"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"

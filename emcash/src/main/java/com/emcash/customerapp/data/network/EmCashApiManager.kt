@@ -5,6 +5,7 @@ import com.emcash.customerapp.BuildConfig
 import com.emcash.customerapp.data.network.interceptors.EmCashSessionAuthInterceptor
 import com.emcash.customerapp.data.network.interceptors.NetworkConnectionInterceptor
 import com.emcash.customerapp.utils.BASE_URL
+import com.emcash.customerapp.utils.STAGING_URL
 import com.emcash.customerapp.utils.TIME_OUT
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
@@ -31,7 +32,7 @@ class EmCashApiManager(context: Context) {
         
 
         val restAdapter = Retrofit.Builder()
-            .baseUrl(BASE_URL)
+            .baseUrl(STAGING_URL)
             .addConverterFactory(GsonConverterFactory.create(gson))
             .client(okHttpClient)
             .build()

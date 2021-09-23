@@ -5,241 +5,254 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.loademcash.TransactionActivity">
-
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/iv_back"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="24dp"
-        android:padding="10dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_back_arrow"
-        app:tint="@color/black" />
-
-    <TextView
-        android:id="@+id/tv_info_load"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/biennale_regular"
-        android:text="@string/load_my_safebox"
-        android:textColor="@color/black"
-        android:textSize="18dp"
-        app:layout_constraintBottom_toBottomOf="@+id/iv_back"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/iv_back" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline22"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.25" />
-
     <com.emcash.customerapp.utils.OnboardingNextButton
         android:id="@+id/btn_continue"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="24dp"
-        app:buttonText="Continue"
         android:elevation="24dp"
         android:translationZ="24dp"
+        app:buttonText="Continue"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <LinearLayout
-        android:id="@+id/ll_input"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@+id/guideline22"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline22">
-
-      <com.emcash.customerapp.utils.CoinProfileImageView
-          android:layout_width="wrap_content"
-          android:id="@+id/iv_user_dp"
-          android:layout_height="wrap_content"
-          app:coin_size="normal"/>
-
-        <TextView
-            android:id="@+id/tv_info_currency"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:fontFamily="@font/biennale_bold"
-            android:text="100"
-            android:textColor="@color/black"
-            android:textSize="50sp"
-
-            />
-    </LinearLayout>
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline23"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent=".5" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/blue_stroke_light_blue_fill_round_bg"
-        android:gravity="center"
-        android:layout_marginTop="40dp"
-        android:text="@string/empay"
-        android:paddingStart="34dp"
-        android:paddingEnd="34dp"
-        android:paddingTop="8dp"
-        android:paddingBottom="8dp"
-        android:textColor="@color/grey_unselected"
-        android:textSize="14sp"
-        android:id="@+id/tab_empay"
-        android:fontFamily="@font/biennale_book"
-        android:layout_marginEnd="12dp"
-        app:layout_constraintEnd_toStartOf="@+id/guideline23"
-        app:layout_constraintTop_toBottomOf="@+id/ll_input" />
-
-    <TextView
-        android:id="@+id/tab_bank_card"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:background="@drawable/grey_rounded_bg"
-        android:gravity="center"
-        android:paddingStart="24dp"
-        android:paddingEnd="24dp"
-        android:paddingTop="8dp"
-        android:paddingBottom="8dp"
-        android:fontFamily="@font/biennale_book"
-        android:text="Bank Card"
-        android:textColor="@color/grey_unselected"
-        android:textSize="14sp"
-        android:layout_marginStart="12dp"
-        app:layout_constraintStart_toStartOf="@+id/guideline23"
-        app:layout_constraintTop_toBottomOf="@+id/ll_input" />
-
-    <androidx.appcompat.widget.AppCompatImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/iv_empay_selected"
-        app:layout_constraintBottom_toTopOf="@+id/tab_empay"
-        app:layout_constraintEnd_toEndOf="@+id/tab_empay"
-        app:layout_constraintStart_toEndOf="@+id/tab_empay"
-        app:layout_constraintTop_toTopOf="@+id/tab_empay"
-        app:srcCompat="@drawable/ic_blue_tick_small" />
-
-
-    <androidx.appcompat.widget.AppCompatImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/iv_bank_selected"
-        android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@+id/tab_bank_card"
-        app:layout_constraintEnd_toEndOf="@+id/tab_bank_card"
-        app:layout_constraintStart_toEndOf="@+id/tab_bank_card"
-        app:layout_constraintTop_toTopOf="@+id/tab_bank_card"
-        app:srcCompat="@drawable/ic_blue_tick_small" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:visibility="gone"
-        android:id="@+id/rv_accounts"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_margin="24dp"
-        android:elevation="12dp"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        android:nestedScrollingEnabled="false"
-        app:layout_constraintBottom_toTopOf="@+id/btn_continue"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tab_empay" />
-
-
-    <LinearLayout
-        android:visibility="gone"
-        android:id="@+id/ll_bankCards"
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:layout_marginBottom="24dp"
-        android:elevation="12dp"
-        android:orientation="vertical"
-        android:overScrollMode="never"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tab_empay">
-
-        <View
-            android:id="@+id/view1"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/grey" />
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/cl_addCard"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical">
+            android:layout_height="match_parent">
 
             <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/appCompatImageView2"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:src="@drawable/ic_atm"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
+                android:id="@+id/iv_back"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="24dp"
+                android:padding="10dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_back_arrow"
+                app:tint="@color/black" />
+
+            <TextView
+                android:id="@+id/tv_info_load"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:fontFamily="@font/biennale_regular"
-                android:text="Pay with Debit/Credit Card"
+                android:text="@string/load_my_safebox"
                 android:textColor="@color/black"
-                android:textSize="12sp"
-                app:layout_constraintBottom_toBottomOf="@+id/appCompatImageView2"
-                app:layout_constraintStart_toEndOf="@+id/appCompatImageView2"
-                app:layout_constraintTop_toTopOf="@+id/appCompatImageView2" />
+                android:textSize="18dp"
+                app:layout_constraintBottom_toBottomOf="@+id/iv_back"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/iv_back" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline22"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.25" />
+
+
+            <LinearLayout
+                android:id="@+id/ll_input"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toTopOf="@+id/guideline22"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/guideline22">
+
+                <com.emcash.customerapp.utils.CoinProfileImageView
+                    android:id="@+id/iv_user_dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:coin_size="normal" />
+
+                <TextView
+                    android:id="@+id/tv_info_currency"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:fontFamily="@font/biennale_bold"
+                    android:text="100"
+                    android:textColor="@color/black"
+                    android:textSize="50sp"
+
+                    />
+            </LinearLayout>
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline23"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent=".5" />
+
+            <TextView
+                android:id="@+id/tab_empay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:layout_marginEnd="12dp"
+                android:background="@drawable/blue_stroke_light_blue_fill_round_bg"
+                android:fontFamily="@font/biennale_book"
+                android:gravity="center"
+                android:paddingStart="34dp"
+                android:paddingTop="8dp"
+                android:paddingEnd="34dp"
+                android:paddingBottom="8dp"
+                android:text="@string/empay"
+                android:textColor="@color/grey_unselected"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toStartOf="@+id/guideline23"
+                app:layout_constraintTop_toBottomOf="@+id/ll_input" />
+
+            <TextView
+                android:id="@+id/tab_bank_card"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="40dp"
+                android:background="@drawable/grey_rounded_bg"
+                android:fontFamily="@font/biennale_book"
+                android:gravity="center"
+                android:paddingStart="24dp"
+                android:paddingTop="8dp"
+                android:paddingEnd="24dp"
+                android:paddingBottom="8dp"
+                android:text="Bank Card"
+                android:textColor="@color/grey_unselected"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="@+id/guideline23"
+                app:layout_constraintTop_toBottomOf="@+id/ll_input" />
 
             <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="10dp"
-                android:layout_height="10dp"
-                android:layout_marginRight="20dp"
-                android:src="@drawable/ic_blue_arrow_right"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:id="@+id/iv_empay_selected"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toTopOf="@+id/tab_empay"
+                app:layout_constraintEnd_toEndOf="@+id/tab_empay"
+                app:layout_constraintStart_toEndOf="@+id/tab_empay"
+                app:layout_constraintTop_toTopOf="@+id/tab_empay"
+                app:srcCompat="@drawable/ic_blue_tick_small" />
+
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_bank_selected"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:layout_constraintBottom_toTopOf="@+id/tab_bank_card"
+                app:layout_constraintEnd_toEndOf="@+id/tab_bank_card"
+                app:layout_constraintStart_toEndOf="@+id/tab_bank_card"
+                app:layout_constraintTop_toTopOf="@+id/tab_bank_card"
+                app:srcCompat="@drawable/ic_blue_tick_small" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_accounts"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_margin="24dp"
+                android:elevation="12dp"
+                android:nestedScrollingEnabled="false"
+                android:visibility="gone"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintBottom_toTopOf="@+id/btn_continue"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tab_empay" />
 
+
+            <LinearLayout
+                android:id="@+id/ll_bankCards"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:layout_marginBottom="24dp"
+                android:elevation="12dp"
+                android:orientation="vertical"
+                android:overScrollMode="never"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tab_empay">
+
+                <View
+                    android:id="@+id/view1"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/grey" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/cl_addCard"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/appCompatImageView2"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:src="@drawable/ic_atm"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:fontFamily="@font/biennale_regular"
+                        android:text="Pay with Debit/Credit Card"
+                        android:textColor="@color/black"
+                        android:textSize="12sp"
+                        app:layout_constraintBottom_toBottomOf="@+id/appCompatImageView2"
+                        app:layout_constraintStart_toEndOf="@+id/appCompatImageView2"
+                        app:layout_constraintTop_toTopOf="@+id/appCompatImageView2" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="10dp"
+                        android:layout_height="10dp"
+                        android:layout_marginRight="20dp"
+                        android:src="@drawable/ic_blue_arrow_right"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <View
+                    android:id="@+id/view2"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/grey" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_bankCard"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginRight="12dp"
+                    android:layout_marginBottom="64dp"
+                    android:overScrollMode="never"
+
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:listitem="@layout/item_payment_account" />
+            </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <View
-            android:id="@+id/view2"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/grey" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_bankCard"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="12dp"
-            android:layout_marginTop="12dp"
-            android:layout_marginRight="12dp"
-            android:layout_marginBottom="24dp"
-            android:overScrollMode="never"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:listitem="@layout/item_payment_account" />
-    </LinearLayout>
-
+    </androidx.core.widget.NestedScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
