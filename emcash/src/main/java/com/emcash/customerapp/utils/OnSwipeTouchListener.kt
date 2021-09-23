@@ -13,8 +13,8 @@ internal open class OnSwipeTouchListener(c: Context?) :
         return gestureDetector.onTouchEvent(motionEvent)
     }
     private inner class GestureListener : SimpleOnGestureListener() {
-        private val SWIPE_THRESHOLD: Int = 10
-        private val SWIPE_VELOCITY_THRESHOLD: Int = 10
+        private val SWIPE_THRESHOLD: Int = 5
+        private val SWIPE_VELOCITY_THRESHOLD: Int = 5
         override fun onDown(e: MotionEvent): Boolean {
             return true
         }
