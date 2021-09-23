@@ -18,6 +18,7 @@ class SuccesDialog(
     val activity: AppCompatActivity,
     val listener: SuccessDialogListener
 ) : DialogFragment() {
+    var amount =""
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -36,6 +37,7 @@ class SuccesDialog(
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        tv_dialog_message.text = amount
         btn_okay.setOnClickListener {
            // closeAndNavigate()
            listener.onNavigate() //from listenr

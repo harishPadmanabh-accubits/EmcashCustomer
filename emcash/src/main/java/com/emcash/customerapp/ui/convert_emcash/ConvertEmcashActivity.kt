@@ -27,13 +27,19 @@ class ConvertEmcashActivity : AppCompatActivity(), SuccessDialogListener {
         et_value.requestFocus()
         et_iban.setOnEditorActionListener { textView, action, keyEvent ->
             if (action == EditorInfo.IME_ACTION_DONE) {
-                withdraw()
+                if (et_iban.text.isNullOrEmpty())
+                    showShortToast("Please enter valid IBAN")
+                else
+                    withdraw()
                 return@setOnEditorActionListener true
             }
             return@setOnEditorActionListener true
         }
         fab_done.setOnClickListener {
-            withdraw()
+            if (et_iban.text.isNullOrEmpty())
+                showShortToast("Please enter valid IBAN")
+            else
+                withdraw()
         }
 
         iv_back.setOnClickListener {
@@ -64,16 +70,16 @@ class ConvertEmcashActivity : AppCompatActivity(), SuccessDialogListener {
                     when (status) {
                         true -> {
                             loader.hideLoader()
-                            showSuccessDialog()
+                            showSuccessDialog(amount)
                         }
-                        false ->{
+                        false -> {
                             loader.hideLoader()
                             showShortToast(error)
                         }
                     }
                 }
             )
-        }else{
+        } else {
             loader.hideLoader()
             showShortToast("Invalid Amount")
         }
@@ -81,7 +87,8 @@ class ConvertEmcashActivity : AppCompatActivity(), SuccessDialogListener {
 
     }
 
-    private fun showSuccessDialog() {
+    private fun showSuccessDialog(amount: Int) {
+        dialog.amount = amount.toString().plus(" Emcash has been converted successfully")
         dialog.show(supportFragmentManager, "Success")
     }
 
