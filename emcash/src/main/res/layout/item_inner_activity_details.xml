@@ -33,7 +33,7 @@
         android:fontFamily="@font/biennale_regular"
         android:text="Loaded"
         android:textColor="@color/black"
-        android:textSize="12dp"
+        android:textSize="14dp"
         app:layout_constraintStart_toStartOf="@+id/guideline19"
         app:layout_constraintTop_toTopOf="@+id/iv_type_indicator_load_emcash" />
 
@@ -45,7 +45,7 @@
         android:fontFamily="@font/biennale_bold"
         android:text=""
         android:textColor="@color/black"
-        android:textSize="12dp"
+        android:textSize="14dp"
         app:layout_constraintBottom_toBottomOf="@+id/tv_type_indicator"
         app:layout_constraintStart_toEndOf="@+id/tv_type_indicator"
         app:layout_constraintTop_toTopOf="@+id/tv_type_indicator" />
@@ -58,7 +58,7 @@
         android:fontFamily="@font/biennale_regular"
         android:text="EmCash"
         android:textColor="@color/black"
-        android:textSize="12dp"
+        android:textSize="14dp"
         app:layout_constraintBottom_toBottomOf="@+id/tv_value_emcash"
         app:layout_constraintStart_toEndOf="@+id/tv_value_emcash"
         app:layout_constraintTop_toTopOf="@+id/tv_value_emcash" />
@@ -71,7 +71,7 @@
         android:fontFamily="@font/biennale_regular"
         android:text="09:00 PM"
         android:textColor="@color/ash"
-        android:textSize="12dp"
+        android:textSize="14dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/tv_type_indicator"
         app:layout_constraintTop_toBottomOf="@+id/tv_type_indicator" />
@@ -84,7 +84,7 @@
         android:fontFamily="@font/biennale_bold"
         android:text="+30"
         android:textColor="@color/black"
-        android:textSize="12dp"
+        android:textSize="14dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/tv_info_emcash" />
 
@@ -114,6 +114,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/biennale_regular"
             android:text="@string/balance"
+            android:textSize="14dp"
             android:textColor="@color/ash"
             tools:layout_editor_absoluteX="76dp"
             tools:layout_editor_absoluteY="184dp" />
@@ -125,6 +126,7 @@
             android:layout_marginStart="7dp"
             android:fontFamily="@font/biennale_regular"
             android:text="40"
+            android:textSize="14dp"
             android:textColor="@color/green" />
     </LinearLayout>
 

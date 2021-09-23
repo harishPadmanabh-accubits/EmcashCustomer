@@ -187,12 +187,12 @@ class HomeActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks,
 
     private fun setupViews() {
 
-        iv_menu_handle.setOnTouchListener(object : OnSwipeTouchListener(this) {
-            override fun onSwipeLeft() {
-                super.onSwipeLeft()
-                showSwitchAccountDialog()
-            }
-        })
+//        iv_menu_handle.setOnTouchListener(object : OnSwipeTouchListener(this) {
+//            override fun onSwipeLeft() {
+//                super.onSwipeLeft()
+//                showSwitchAccountDialog()
+//            }
+//        })
 
         cv_balance.setOnClickListener {
             openActivity(WalletActivity::class.java)
@@ -222,6 +222,7 @@ class HomeActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks,
         }
 
         fab_new_payment.setOnClickListener {
+            Timber.e("Clicked")
             openNewPayment()
         }
 
