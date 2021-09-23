@@ -461,7 +461,7 @@ fun <T : Any> Call<T>.awaitResponse(
         }
 
         override fun onFailure(call: Call<T>, t: Throwable) {
-            if (t is UnknownHostException || t is NoInternetException)
+            if (t is UnknownHostException || t is NoInternetException || t.message?.contains("Unable to resolve host")==true)
                 onFailure.invoke("Please Check your Internet Connection.")
             else
                 onFailure.invoke(t.message)

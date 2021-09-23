@@ -2,8 +2,13 @@ package com.emcash.customerapp.ui.home
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.Dialog
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.view.Window
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.net.toUri
@@ -31,6 +36,7 @@ import com.emcash.customerapp.ui.settings.SettingsActivity
 import com.emcash.customerapp.ui.wallet.WalletActivity
 import com.emcash.customerapp.utils.*
 import kotlinx.android.synthetic.main.activity_home.*
+import kotlinx.android.synthetic.main.layout_switch_accout.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import pub.devrel.easypermissions.AppSettingsDialog
@@ -180,6 +186,14 @@ class HomeActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks,
     }
 
     private fun setupViews() {
+
+        iv_menu_handle.setOnTouchListener(object : OnSwipeTouchListener(this) {
+            override fun onSwipeLeft() {
+                super.onSwipeLeft()
+                showSwitchAccountDialog()
+            }
+        })
+
         cv_balance.setOnClickListener {
             openActivity(WalletActivity::class.java)
             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
@@ -332,6 +346,28 @@ class HomeActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks,
     override fun onSelectedFromAllContacts(contact: ContactsGroup.ContactInfo) {
     }
 
+
+    fun showSwitchAccountDialog(){
+        val switchAccountDialog = Dialog(this)
+        switchAccountDialog.apply {
+            requestWindowFeature(Window.FEATURE_NO_TITLE)
+            setContentView(R.layout.layout_switch_accout)
+            setCancelable(true)
+            setCanceledOnTouchOutside(true)
+            window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            show()
+
+            confirm_lay.setOnClickListener {
+                finish()
+            }
+
+            cancel_lay.setOnClickListener {
+                dismiss()
+            }
+
+        }
+
+    }
 
 }
 
