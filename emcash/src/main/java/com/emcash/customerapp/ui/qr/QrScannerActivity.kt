@@ -21,6 +21,7 @@ import com.emcash.customerapp.ui.newPayment.NewPaymentViewModel
 import com.emcash.customerapp.ui.newPayment.TransferFragment
 import com.emcash.customerapp.utils.*
 import kotlinx.android.synthetic.main.activity_qr_scanner.*
+import timber.log.Timber
 
 class QrScannerActivity : AppCompatActivity() {
 
@@ -47,8 +48,8 @@ class QrScannerActivity : AppCompatActivity() {
         // Callbacks
         codeScanner.decodeCallback = DecodeCallback {
             runOnUiThread {
-                Toast.makeText(this, "Scan result: ${it.text}", Toast.LENGTH_LONG).show()
                 val refId = it.text
+                Timber.e("Scan result: ${it.text}")
                 viewModel.onQrScanResult(refId)  {
                     status, profile, error ->
                     when(status){

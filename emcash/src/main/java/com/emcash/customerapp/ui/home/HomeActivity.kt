@@ -305,7 +305,7 @@ class HomeActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks,
     }
 
     override fun onPermissionsGranted(requestCode: Int, perms: MutableList<String>) {
-        // Log.d(TAG, "onPermissionsGranted:" + requestCode + ":" + perms.size)
+        openQRScanner()
     }
 
     @SuppressLint("StringFormatMatches")
