@@ -212,12 +212,16 @@ class NewPaymentViewModel(val app: Application) : AndroidViewModel(app) {
         return _transactionDetails
     }
 
-    val transactionHistory = Pager(PagingConfig(pageSize = DEFAULT_PAGE_CONFIG)) {
-        TransactionHistoryPagingSource(
-            paymentRepository.api,
-            beneficiaryId
-        )
-    }.flow.cachedIn(viewModelScope)
+    val _refreshChat  = MutableLiveData<Boolean>()
+    val pagedHistoryItems = Transformations.switchMap(_refreshChat){
+        Pager(PagingConfig(pageSize = DEFAULT_PAGE_CONFIG)) {
+            TransactionHistoryPagingSource(
+                paymentRepository.api,
+                beneficiaryId
+            )
+        }.liveData.cachedIn(viewModelScope)
+    }
+
 
     val _history = MutableLiveData<ApiMapper<TransactionHistoryResponse.Data>>()
     fun getHistory(): LiveData<ApiMapper<TransactionHistoryResponse.Data>> {

@@ -58,19 +58,10 @@ class PaymentChatFragment:Fragment(R.layout.payment_chats),PaymentHistoryItemCli
             requireActivity().onBackPressed()
         }
 
+        refresh()
 
 
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.transactionHistory.collectLatest {
-                chatAdapter.submitData(it)
-            }
-        }
 
-        rv_history.apply {
-            setHasFixedSize(true)
-            adapter = chatAdapter
-
-        }
 
         viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main){
             viewModel.getHistory().observe(viewLifecycleOwner, Observer {
@@ -87,6 +78,10 @@ class PaymentChatFragment:Fragment(R.layout.payment_chats),PaymentHistoryItemCli
                 }
             })
         }
+
+        viewModel.pagedHistoryItems.observe(viewLifecycleOwner, Observer {
+            chatAdapter.submitData(lifecycle,it)
+        })
 
     }
 
@@ -188,7 +183,7 @@ class PaymentChatFragment:Fragment(R.layout.payment_chats),PaymentHistoryItemCli
 
                 }
                 R.id.refresh -> {
-                   // viewModel.getPaymentChat(userId)
+                   refresh()
                 }
 
             }
@@ -266,6 +261,16 @@ class PaymentChatFragment:Fragment(R.layout.payment_chats),PaymentHistoryItemCli
             }
 
         }
+    }
+
+
+    private fun refresh(){
+        rv_history.apply {
+            setHasFixedSize(true)
+            adapter = chatAdapter
+
+        }
+        viewModel._refreshChat.value = true
     }
 
 
