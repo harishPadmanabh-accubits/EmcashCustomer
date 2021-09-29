@@ -441,7 +441,8 @@ fun isLollipopOrAbove(): Boolean =
 fun <T : Any> Call<T>.awaitResponse(
     onSuccess: (T?) -> Unit = {},
     onFailure: (String?) -> Unit = {},
-    onSessionExpired:() -> Unit = {}
+    onSessionExpired:() -> Unit = {},
+    launchSource : Int =0
 ) {
 
     this.enqueue(object : Callback<T> {
@@ -451,7 +452,7 @@ fun <T : Any> Call<T>.awaitResponse(
                 onSuccess.invoke(response.body())
             } else {
                 if(response.code()==401)
-                    EmCashCommunicationHelper.getParentListener().onVerifyPin(TransactionType.VERIFY_USER)
+                    EmCashCommunicationHelper.getParentListener().onVerifyPin(TransactionType.VERIFY_USER,launchSource)
 
                 onFailure.invoke(response.message())
 
@@ -512,7 +513,7 @@ fun FrameLayout.setlevel(level:Int){
         1 -> this.setBackgroundResource(R.drawable.green_round)
         2 -> this.setBackgroundResource((R.drawable.yellow_round))
         3 -> this.setBackgroundResource(R.drawable.red_round)
-        else -> this.makeInvisible()
+        else -> this.setBackgroundResource(0)
     }
 }
 

@@ -53,7 +53,6 @@ class LoadEmCashViewModel(val app: Application) : AndroidViewModel(app) {
 
     fun paymentByExistingCard(paymentByExistingCardRequest: PaymentByExistingCardRequest) {
         paymentByExistingCardStatus.value = ApiMapper(ApiCallStatus.LOADING, null, null)
-
         homeRepository.paymentByExistingCard(paymentByExistingCardRequest) { status, message, result ->
             when (status) {
                 true -> {

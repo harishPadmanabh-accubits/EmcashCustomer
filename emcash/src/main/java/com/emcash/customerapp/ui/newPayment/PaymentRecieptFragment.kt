@@ -67,8 +67,8 @@ class PaymentReceiptFragment:Fragment(R.layout.payment_reciept) {
         user_dp.setImage(viewModel.syncManager.profileDetails?.profileImage)
         tv_value_emcash.text = details.amount.toString()
         tv_date_time.text= toFormattedDate(details.createdAt) +" "+ toFormattedTime(details.createdAt.toString())
-
         tv_handshake_date.text = toFormattedDate(details.createdAt)
+
 
         val status = details.status
         val type = details.type

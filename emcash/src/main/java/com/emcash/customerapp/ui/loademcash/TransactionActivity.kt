@@ -17,6 +17,7 @@ import com.emcash.customerapp.utils.KEY_TOPUP_AMOUNT
 import com.emcash.customerapp.utils.KEY_TOPUP_DESC
 import com.emcash.customerapp.utils.LoaderDialog
 import kotlinx.android.synthetic.main.activity_transaction.*
+import timber.log.Timber
 import java.text.DecimalFormat
 
 class TransactionActivity : AppCompatActivity(), CardsAdapter.CardsItemClickListener {
@@ -126,21 +127,27 @@ class TransactionActivity : AppCompatActivity(), CardsAdapter.CardsItemClickList
         })
 
         viewModel.paymentByExistingCardStatus.observe(this, androidx.lifecycle.Observer {
-            when (it.status) {
-                ApiCallStatus.LOADING -> {
-                    loader.showLoader()
-                }
-                ApiCallStatus.SUCCESS -> {
-                    loader.hideLoader()
-                    showShortToast("Emcash Loaded")
-                    gotoWalletScreen()
-                }
-                ApiCallStatus.ERROR -> {
-                    loader.hideLoader()
-                    showShortToast(it.errorMessage)
+           try{
 
-                }
-            }
+               when (it.status) {
+                   ApiCallStatus.LOADING -> {
+                       loader.showLoader()
+                   }
+                   ApiCallStatus.SUCCESS -> {
+                       loader.hideLoader()
+                       showShortToast("Emcash Loaded")
+                       gotoWalletScreen()
+                   }
+                   ApiCallStatus.ERROR -> {
+                       loader.hideLoader()
+                       showShortToast(it.errorMessage)
+
+                   }
+               }
+
+           }catch (e:Exception){
+               Timber.e("Exception paymentByExistingCardStatus $e")
+           }
 
         })
 

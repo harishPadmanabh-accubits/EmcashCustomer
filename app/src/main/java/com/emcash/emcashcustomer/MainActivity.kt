@@ -94,13 +94,23 @@ class MainActivity : AppCompatActivity() ,EmCashListener{
             pb_login.hide()
         else
             showShortToast("Login Failed")
+        pb_login.hide()
+
 
     }
-    override fun onVerifyPin(forAction: TransactionType, sourceIfAny: Int?) {
+    override fun onVerifyPin(forAction: TransactionType, sourceIfAny: Int) {
         startActivity(Intent(this,PinScreen::class.java).also {
             val typeBundle = bundleOf(KEY_TRANSACTION_TYPE to forAction)
             it.putExtra("KEY_TRANSACTION_TYPE",typeBundle)
             it.putExtra("SOURCE",sourceIfAny)
         })
+    }
+
+    override fun onEditProfile() {
+        openEditProfile()
+    }
+
+    private fun openEditProfile() {
+        showShortToast("Navigate to Empay Edit Profile Screen")
     }
 }

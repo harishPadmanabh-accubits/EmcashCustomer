@@ -93,6 +93,20 @@ class EmCashHelper(val appContext: Context, val listener: EmCashListener) {
 
         }
     }
+    fun onPinVerified(forAction: TransactionType,launchSource:Int) {
+        Timber.e("Type Recieved $forAction")
+        when (forAction) {
+            TransactionType.TRANSFER -> proceedToTransfer()
+            TransactionType.REQUEST -> {
+            }
+            TransactionType.ACCEPT -> proceedToAcceptPayment()
+            TransactionType.REJECT -> proceedToRejectPayment()
+            TransactionType.VERIFY_USER->{
+
+            }
+
+        }
+    }
 
     fun proceedToTransfer() {
         PaymentRepository(appContext).transferAmount { status, error ->
@@ -201,8 +215,9 @@ class EmCashHelper(val appContext: Context, val listener: EmCashListener) {
 
 interface EmCashListener {
     fun onLoginSuccess(status: Boolean) {}
-    fun onVerifyPin(forAction: TransactionType, sourceIfAny:Int?=null) {}
+    fun onVerifyPin(forAction: TransactionType, sourceIfAny:Int = 0) {}
     fun onFcmTokenError(){}
     fun onLogOutEmCash(){}
+    fun onEditProfile(){}
 }
 

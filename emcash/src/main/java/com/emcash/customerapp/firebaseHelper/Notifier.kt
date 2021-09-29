@@ -44,12 +44,6 @@ object Notifier {
 
         val notificationManager: NotificationManager =
             context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-//        val notificationIntent = Intent(context, HomeActivity::class.java).apply {
-//            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-//            putExtra(KEY_DEEPLINK, remoteData.deeplink?.toString())
-//            putExtra(KEY_TYPE, type?.toString())
-//            putExtra(IS_FROM_DEEPLINK, true)
-//        }
 
         val notificationIntent = Intent(context, Class.forName(launchClassName)).apply {
             putExtra(KEY_DEEPLINK, remoteData.deeplink?.toString())
@@ -61,6 +55,7 @@ object Notifier {
             .also {
             it.addNextIntent(notificationIntent)
         }
+
         val resultPendingIntent =
             stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT)
 

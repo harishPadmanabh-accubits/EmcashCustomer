@@ -7,9 +7,7 @@ import com.emcash.customerapp.R
 import com.emcash.customerapp.data.network.ApiCallStatus
 import com.emcash.customerapp.extensions.showShortToast
 import com.emcash.customerapp.model.bankCard.PaymentByNewCardRequest
-import com.emcash.customerapp.utils.KEY_TOPUP_AMOUNT
-import com.emcash.customerapp.utils.KEY_TOPUP_DESC
-import com.emcash.customerapp.utils.LoaderDialog
+import com.emcash.customerapp.utils.*
 import kotlinx.android.synthetic.main.activity_pay_with_new_card.*
 
 class PayWithNewCardActivity : AppCompatActivity() {
@@ -31,6 +29,11 @@ class PayWithNewCardActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_pay_with_new_card)
 
+        et_atmNumber.addTextChangedListener(BankCardNumberFormatter())
+        et_expDate.apply {
+            addTextChangedListener(BankCardExpiryDateFormatter(this))
+        }
+
         observer()
 
         cb_saveCard.setOnCheckedChangeListener { buttonView, isChecked ->
@@ -38,10 +41,10 @@ class PayWithNewCardActivity : AppCompatActivity() {
         }
 
         btn_continue.setOnClickListener {
-            var cvv = et_cvv.text.toString()
-            var expiryDate = et_expDate.text.toString()
-            var cardHolderName = et_CardHolderName.text.toString()
-            var atmNumber = et_atmNumber.text.toString()
+            val cvv = et_cvv.text.toString()
+            val expiryDate = et_expDate.text.toString()
+            val cardHolderName = et_CardHolderName.text.toString()
+            val atmNumber = et_atmNumber.text.toString()
 
 
             if (expiryDate.isEmpty() || cvv.isEmpty() || cardHolderName.isEmpty()) {

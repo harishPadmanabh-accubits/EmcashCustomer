@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
+import com.emcash.customerapp.EmCashCommunicationHelper
 import com.emcash.customerapp.R
 import com.emcash.customerapp.extensions.loadImageWithPlaceHolder
 import com.emcash.customerapp.extensions.openActivity
@@ -40,6 +41,9 @@ class SettingsActivity : AppCompatActivity() {
                 }
                 overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
 
+            }
+            R.id.iv_edit->{
+                EmCashCommunicationHelper.getParentListener().onEditProfile()
             }
         }
     }
