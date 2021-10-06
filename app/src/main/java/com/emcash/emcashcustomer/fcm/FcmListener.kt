@@ -23,8 +23,7 @@ class FcmListener : FirebaseMessagingService() {
         val title = remoteMessage.data["title"]
         val message = remoteMessage.data["message"]
         val deepLink = remoteMessage.data["deepLink"]
-        val type = remoteMessage.data["type"]
-        val rejectContent = remoteMessage.data["rejectContent"]
+
         val remoteData = RemoteData(
             title,
             message,

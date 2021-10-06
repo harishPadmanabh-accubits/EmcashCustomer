@@ -27,7 +27,6 @@ import java.lang.Exception
 
 class MainActivity : AppCompatActivity() ,EmCashListener{
 
-    var token =""
     val isFromDeeplink by lazy {
         intent.getBooleanExtra(IS_FROM_DEEPLINK,false)
     }
@@ -50,34 +49,27 @@ class MainActivity : AppCompatActivity() ,EmCashListener{
                 "201812231321016084",intent.getStringExtra(KEY_DEEPLINK).toString()
             )
         }
-        try {
-            FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
-                if (!task.isSuccessful) {
-                    Log.e("fcmError", "Fetching FCM registration token failed", task.exception)
-                    return@OnCompleteListener
-                }
-                // Get new FCM registration token
-                val fcmToken = task.result.toString()
-                token = fcmToken
-                Log.d("fcmToken", fcmToken.toString())
-            })
 
-        } catch (exception: Exception) {
-            Log.d("fcm exception", exception.toString())
-
-        }
-
-
-        val button:Button= findViewById(R.id.button) as Button
+        val button:Button= findViewById<Button>(R.id.button)
         button.setOnClickListener {
-            Timber.e("HHP ENTERED LOGIN BUTTON")
             try {
                 pb_login.show()
-                EmCashHelper(applicationContext,this).doEmCashLogin(
-                    "509842776",
-                    "50464B84832A00209E3065B6146A99471EAE21613FFAB4D0742693C70978EE31",
-                    "201812231321016084",token
-                )
+                getFcmToken { status, token, error ->
+                    when(status){
+                        true->{
+                            if (token != null) {
+                                EmCashHelper(applicationContext,this).doEmCashLogin(
+                                    "509842776",
+                                    "50464B84832A00209E3065B6146A99471EAE21613FFAB4D0742693C70978EE31",
+                                    "201812231321016084",token
+                                )
+                            }
+                        }false->{
+                        Toast.makeText(this, "$error", Toast.LENGTH_SHORT).show()
+                    }
+                    }
+                }
+
             }catch (e:Exception){
                 Timber.e("HHP ENTERED LOGIN BUTTON exc $e")
                 Toast.makeText(this, "$e", Toast.LENGTH_SHORT).show()
@@ -112,5 +104,22 @@ class MainActivity : AppCompatActivity() ,EmCashListener{
 
     private fun openEditProfile() {
         showShortToast("Navigate to Empay Edit Profile Screen")
+    }
+
+    private fun getFcmToken(onTaskCompleted:(status:Boolean,token:String?,error:String?)->Unit){
+        try {
+            FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+                if (!task.isSuccessful) {
+                    onTaskCompleted(false,null,task.exception?.message)
+                    return@OnCompleteListener
+                }
+                val fcmToken = task.result.toString()
+                onTaskCompleted(true,fcmToken,null)
+            })
+
+        }catch (e:Exception){
+            e.printStackTrace()
+            onTaskCompleted(false,null,e.message)
+        }
     }
 }

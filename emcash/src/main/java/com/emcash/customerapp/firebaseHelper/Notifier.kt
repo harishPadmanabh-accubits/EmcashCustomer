@@ -13,9 +13,7 @@ import androidx.core.app.TaskStackBuilder
 import com.emcash.customerapp.R
 import com.emcash.customerapp.model.RemoteData
 import com.emcash.customerapp.ui.home.HomeActivity
-import com.emcash.customerapp.utils.IS_FROM_DEEPLINK
-import com.emcash.customerapp.utils.KEY_DEEPLINK
-import com.emcash.customerapp.utils.KEY_TYPE
+import com.emcash.customerapp.utils.*
 import timber.log.Timber
 
 object Notifier {
@@ -38,8 +36,6 @@ object Notifier {
         context: Context,
         launchClassName:String
     ) {
-        val channelId = "com.emcash.customer.notifications"
-        val channeldesc = "Emcash customer Notification Channel"
         val builder: Notification.Builder
 
         val notificationManager: NotificationManager =
@@ -61,8 +57,8 @@ object Notifier {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val notificationChannel = NotificationChannel(
-                channelId,
-                channeldesc,
+                EMCASH_NOTIFICATION_CHANNEL_ID,
+                EMCASH_NOTIFICATION_CHANNEL_DESC,
                 NotificationManager.IMPORTANCE_HIGH
             )
             notificationChannel.enableLights(true)
@@ -70,22 +66,23 @@ object Notifier {
             notificationChannel.enableVibration(false)
             notificationManager.createNotificationChannel(notificationChannel)
 
-            builder = Notification.Builder(context, channelId)
+            builder = Notification.Builder(context, EMCASH_NOTIFICATION_CHANNEL_ID)
                 .setContentTitle(remoteData.title)
                 .setContentText(remoteData.message)
                 .setContentIntent(resultPendingIntent)
                 .setSmallIcon(R.drawable.icon_notify)
                 .setBadgeIconType(R.drawable.icon_notify)
+                .setAutoCancel(true)
         } else {
-
             builder = Notification.Builder(context)
                 .setContentTitle(remoteData.title)
                 .setContentText(remoteData.message)
                 .setContentIntent(resultPendingIntent)
                 .setSmallIcon(R.drawable.icon_notify)
-
+                .setAutoCancel(true)
         }
-        notificationManager.notify(10001, builder.build())
+        notificationManager
+            .notify(10001, builder.build())
 
     }
 

@@ -62,3 +62,6 @@ const val TYPE_REQUEST = "Request"
 
 const val DEFAULT_PAGE_CONFIG = 3
 const val DEFAULT_LOAD_EMCASH_DESCRIPTION = "Test Topup Emcash"
+
+const val EMCASH_NOTIFICATION_CHANNEL_ID:String ="com.emcash.customer.notifications"
+const val EMCASH_NOTIFICATION_CHANNEL_DESC : String = "Emcash customer Notification Channel"

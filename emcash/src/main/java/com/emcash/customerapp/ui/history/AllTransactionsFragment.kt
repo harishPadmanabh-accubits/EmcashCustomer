@@ -39,6 +39,10 @@ class AllTransactionsFragment:Fragment(R.layout.layout_all_transactions) {
         rv_all_transactions.adapter = pagedAdapter
         viewModel.scope = lifecycleScope
         observe()
+        refresh_layout.setOnRefreshListener {
+            refresh()
+            refresh_layout.isRefreshing=false
+        }
     }
 
     private fun observe() {

@@ -21,7 +21,6 @@ import com.emcash.customerapp.ui.history.adapters.HistoryPagerAdapter
 import com.emcash.customerapp.ui.history.adapters.TransactionFilter
 import com.emcash.customerapp.ui.history.adapters.TransactionHistoryAdapter
 import com.emcash.customerapp.utils.LoaderDialog
-import kotlinx.android.synthetic.main.layout_all_transactions.*
 import kotlinx.android.synthetic.main.layout_inbound_transactions.*
 import timber.log.Timber
 
@@ -40,6 +39,10 @@ class InboundTransactionsFragment:Fragment(R.layout.layout_inbound_transactions)
         if(isVisible)
             refresh()
         observe()
+        refresh_layout.setOnRefreshListener {
+            refresh()
+            refresh_layout.isRefreshing = false
+        }
 
 
 

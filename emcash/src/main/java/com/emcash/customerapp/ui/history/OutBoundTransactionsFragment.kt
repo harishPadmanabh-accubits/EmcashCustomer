@@ -38,6 +38,10 @@ class OutBoundTransactionsFragment:Fragment(R.layout.layout_outbound_transaction
         viewModel.scope = lifecycleScope
         viewModel.filter.value = HistoryFilter(mode = "2")
         observe()
+        refresh_layout.setOnRefreshListener {
+            refresh()
+            refresh_layout.isRefreshing = false
+        }
 
     }
 
