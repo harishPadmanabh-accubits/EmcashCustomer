@@ -72,4 +72,6 @@ Payment cards saved to your separate  Payments account are distinct from any Vir
     <string name="defaultChannel">Emcash</string>
     <string name="notificationDescription">Notifications for Emcash</string>
     <string name="deepLinkNotificationTitle">deepLinkNotificationTitle</string>
+    <string name="empty_transactions_date">You don\'t have any transactions in this date.</string>
+    <string name="empty_transactions">You don\'t have any transactions.</string>
 </resources>
