@@ -6,6 +6,7 @@ import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import com.emcash.customerapp.R
 import com.emcash.customerapp.data.network.ApiCallStatus
+import com.emcash.customerapp.data.network.ApiMapper
 import com.emcash.customerapp.enums.BankAccountScreenTypes
 import com.emcash.customerapp.extensions.fromJson
 import com.emcash.customerapp.extensions.openActivity
@@ -13,6 +14,7 @@ import com.emcash.customerapp.extensions.showShortToast
 import com.emcash.customerapp.model.convertEmcash.AddBankDetailsRequest
 import com.emcash.customerapp.model.convertEmcash.BankDetailsResponse
 import com.emcash.customerapp.model.convertEmcash.EditBankDetailsRequest
+import com.emcash.customerapp.model.convertEmcash.UserBankAccountResponse
 import com.emcash.customerapp.utils.KEY_EXISTING_ACCOUNT
 import com.emcash.customerapp.utils.LoaderDialog
 import kotlinx.android.synthetic.main.activity_bank_details.*
@@ -63,42 +65,28 @@ class BankDetailsActivity : AppCompatActivity() {
             if (existingAccount == null) BankAccountScreenTypes.ADD else BankAccountScreenTypes.EDIT
         when (type) {
             BankAccountScreenTypes.ADD -> {
-                viewModel.addBankAccountDetails(
-                    addBankDetailsRequest = getBankDetailsRequestFromUI(),
-                    type = type
-                )
-                    .observe(this, Observer {
-                        when (it.status) {
-                            ApiCallStatus.LOADING -> loader.showLoader()
-                            ApiCallStatus.SUCCESS -> {
-                                loader.hideLoader()
-                                gotoConvertEmCashScreen()
-                            }
-                            ApiCallStatus.ERROR -> {
-                                loader.hideLoader()
-                                showShortToast(it.errorMessage)
-                            }
-                        }
+                val addBankDetailsRequest = getBankDetailsRequestFromUI()
+                if (addBankDetailsRequest != null) {
+                    viewModel.addBankAccountDetails(
+                        addBankDetailsRequest = addBankDetailsRequest,
+                        type = type
+                    ).observe(this, Observer {
+                        handleObservedResult(it)
                     })
+                }
             }
             BankAccountScreenTypes.EDIT -> {
-                viewModel.addBankAccountDetails(
-                    editBankDetailsRequest = getBankDetailsRequestWithUUIDFromUI(),
-                    type = type
-                )
-                    .observe(this, Observer {
-                        when (it.status) {
-                            ApiCallStatus.LOADING -> loader.showLoader()
-                            ApiCallStatus.SUCCESS -> {
-                                loader.hideLoader()
-                                gotoConvertEmCashScreen()
-                            }
-                            ApiCallStatus.ERROR -> {
-                                loader.hideLoader()
-                                showShortToast(it.errorMessage)
-                            }
-                        }
-                    })
+                val editBankDetailsRequest = getBankDetailsRequestWithUUIDFromUI()
+                if (editBankDetailsRequest != null) {
+                    viewModel.addBankAccountDetails(
+                        editBankDetailsRequest = editBankDetailsRequest,
+                        type = type
+                    ).observe(this, Observer {
+                           handleObservedResult(it)
+                        })
+
+                }
+
             }
         }
 
@@ -116,7 +104,7 @@ class BankDetailsActivity : AppCompatActivity() {
         val branchName: String = et_branchName.text.toString()
         val branchCode: String = et_branchCode.text.toString()
         val swiftCode: String = et_swiftCode.text.toString()
-        if (benficiaryName.isEmpty() && ibanNumber.isEmpty() && branchName.isEmpty() && branchCode.isEmpty() && swiftCode.isEmpty()) {
+        if (benficiaryName.isEmpty() || ibanNumber.isEmpty() || branchName.isEmpty() || branchCode.isEmpty() || swiftCode.isEmpty()) {
             showShortToast("Please enter all the fields")
         } else {
             val addBankDetailsRequest = AddBankDetailsRequest(
@@ -138,7 +126,7 @@ class BankDetailsActivity : AppCompatActivity() {
         val branchName: String = et_branchName.text.toString()
         val branchCode: String = et_branchCode.text.toString()
         val swiftCode: String = et_swiftCode.text.toString()
-        if (benficiaryName.isEmpty() && ibanNumber.isEmpty() && branchName.isEmpty() && branchCode.isEmpty() && swiftCode.isEmpty()) {
+        if (benficiaryName.isEmpty() || ibanNumber.isEmpty() || branchName.isEmpty() || branchCode.isEmpty() || swiftCode.isEmpty()) {
             showShortToast("Please enter all the fields")
         } else {
             val addBankDetailsRequest = EditBankDetailsRequest(
@@ -151,6 +139,20 @@ class BankDetailsActivity : AppCompatActivity() {
             return addBankDetailsRequest
         }
         return null
+    }
+
+    private fun handleObservedResult(result: ApiMapper<UserBankAccountResponse>){
+        when (result.status) {
+            ApiCallStatus.LOADING -> loader.showLoader()
+            ApiCallStatus.SUCCESS -> {
+                loader.hideLoader()
+                gotoConvertEmCashScreen()
+            }
+            ApiCallStatus.ERROR -> {
+                loader.hideLoader()
+                showShortToast(result.errorMessage)
+            }
+        }
     }
 
 }

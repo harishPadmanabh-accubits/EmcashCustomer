@@ -85,8 +85,9 @@ class ConvertEmcashActivity : AppCompatActivity(), SuccessDialogListener {
     }
 
     private fun showBankAccount(account: BankDetailsResponse.Data) {
-        tv_iban.text = account.iBanNumber
-        tv_account_name.text = account.beneficiaryName
+        tv_iban.text = "IBAN : ${account.iBanNumber}"
+        tv_account_name.text = "Name : ${account.beneficiaryName}"
+        viewModel.iban = account.iBanNumber
         fl_show_bank_account.apply {
             show()
             setOnClickListener {
@@ -119,12 +120,11 @@ class ConvertEmcashActivity : AppCompatActivity(), SuccessDialogListener {
     fun withdraw() {
         val amount =
             if (et_value.text.toString().length > 0) et_value.text.toString().toInt() else 0
-        val iban = tv_iban.text.toString()
         if (amount > 0) {
             loader.showLoader()
             viewModel.withdraw(
                 amount,
-                iban = if (iban.isNotEmpty()) iban else "",
+                iban = if (viewModel.iban.isNotEmpty()) viewModel.iban else "",
                 onFinished = { status, error ->
                     when (status) {
                         true -> {

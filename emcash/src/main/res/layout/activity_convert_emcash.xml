@@ -73,7 +73,7 @@
 
     <TextView
         android:id="@+id/tv_equals"
-        android:layout_marginTop="34dp"
+        android:layout_marginTop="54dp"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:background="@drawable/light_blue_rounded_bg"
@@ -108,6 +108,8 @@
         android:layout_marginEnd="24dp"
         android:layout_marginTop="32dp"
         android:visibility="invisible"
+        android:background="@drawable/dark_grey_rounded"
+        android:padding="12sp"
         android:id="@+id/fl_add_bank_card"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -161,6 +163,8 @@
         android:layout_marginEnd="24dp"
         android:layout_marginTop="32dp"
         android:visibility="invisible"
+        android:background="@drawable/dark_grey_rounded"
+        android:padding="12sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_info_emcash">
 

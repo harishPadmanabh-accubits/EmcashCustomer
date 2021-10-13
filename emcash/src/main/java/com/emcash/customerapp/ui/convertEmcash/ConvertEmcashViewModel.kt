@@ -17,6 +17,7 @@ import com.emcash.customerapp.model.wallet.withdraw.WalletWithdrawRequest
 class ConvertEmcashViewModel(val app: Application) : AndroidViewModel(app) {
     val homeRepository = HomeRepository(app)
     var hasBankAccount = false
+    var iban = ""
 
 
     fun withdraw(
