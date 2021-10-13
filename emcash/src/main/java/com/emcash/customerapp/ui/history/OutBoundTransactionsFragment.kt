@@ -38,8 +38,6 @@ class OutBoundTransactionsFragment : Fragment(R.layout.layout_outbound_transacti
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Timber.e("on view created AllTransactionsFragment")
-        rv_outbound.adapter = pagedAdapter
         viewModel.scope = lifecycleScope
         viewModel.filter.value = HistoryFilter(mode = "2")
         observe()
@@ -66,7 +64,7 @@ class OutBoundTransactionsFragment : Fragment(R.layout.layout_outbound_transacti
     }
 
     fun refresh() {
-        Timber.e("Refreshed")
+        rv_outbound.adapter = pagedAdapter
         viewModel.filter.value = HistoryFilter(mode = "2")
     }
 

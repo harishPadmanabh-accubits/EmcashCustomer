@@ -27,9 +27,18 @@ class ConvertEmcashActivity : AppCompatActivity(), SuccessDialogListener {
         setupViews()
     }
 
+    override fun onResume() {
+        super.onResume()
+        et_value.apply {
+            requestFocus()
+            setSelection(0)
+        }
+
+    }
+
     private fun setupViews() {
         dialog = SuccesDialog(this, this)
-        et_value.requestFocus()
+
         getBankAccount()
 
         fab_done.setOnClickListener {
@@ -42,6 +51,8 @@ class ConvertEmcashActivity : AppCompatActivity(), SuccessDialogListener {
         iv_back.setOnClickListener {
             onBackPressed()
         }
+
+
     }
 
     private fun getBankAccount() {

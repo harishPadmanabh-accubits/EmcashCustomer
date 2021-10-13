@@ -49,12 +49,13 @@
         android:inputType="number"
         android:maxLength="5"
         android:maxLines="1"
-        android:focusedByDefault="true"
+        android:cursorVisible="false"
+        android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="50sp"
         app:layout_constraintBottom_toTopOf="@+id/emcash_input_guide"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/tv_info_emcash"
+        app:layout_constraintStart_toStartOf="@+id/tv_info_emcash"
         app:layout_constraintTop_toTopOf="@+id/emcash_input_guide" />
 
     <TextView
@@ -65,8 +66,8 @@
         android:text="@string/emcash"
         android:textColor="@color/black"
         android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="@+id/et_value"
-        app:layout_constraintStart_toStartOf="@+id/et_value"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/et_value" />
 
 

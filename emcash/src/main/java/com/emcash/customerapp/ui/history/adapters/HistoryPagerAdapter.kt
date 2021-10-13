@@ -14,11 +14,11 @@ import kotlinx.android.synthetic.main.item_transaction_item.view.*
 
 object TransactionsDiffUtil : DiffUtil.ItemCallback<TransactionGroup>() {
     override fun areItemsTheSame(oldItem: TransactionGroup, newItem: TransactionGroup): Boolean {
-        return false
+        return oldItem.date == newItem.date
     }
 
     override fun areContentsTheSame(oldItem: TransactionGroup, newItem: TransactionGroup): Boolean {
-        return false
+        return oldItem == newItem
     }
 
 }
