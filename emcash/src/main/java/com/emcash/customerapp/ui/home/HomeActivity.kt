@@ -372,8 +372,6 @@ class HomeActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks,
 
 }
 
-enum class RewardLevels {
-    LOW, MEDIUM, HIGH
-}
+
 
 //https://blog.mindorks.com/implementing-easy-permissions-in-android-android-tutorial

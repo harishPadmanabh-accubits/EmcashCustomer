@@ -70,6 +70,7 @@ class WalletActivity : AppCompatActivity() {
     }
 
     private fun configureViews() {
+
         iv_back.setOnClickListener {
             onBackPressed()
         }
@@ -100,7 +101,7 @@ class WalletActivity : AppCompatActivity() {
                         profile?.let{
                             appCompatImageView.setImage(it.profileImage)
                             tv_balance.text = it.wallet.amount.toString()
-                            tv_safe_box_id.text = profile.wallet.walletAddress
+                            tv_safe_box_id.text = "Safe Box Id : ${profile.wallet.id}"
                         }
                     }
                     ApiCallStatus.ERROR->{
