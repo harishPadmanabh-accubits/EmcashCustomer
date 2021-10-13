@@ -9,6 +9,9 @@ import com.emcash.customerapp.data.network.ApiMapper
 import com.emcash.customerapp.data.network.EmCashApiManager
 import com.emcash.customerapp.extensions.awaitResponse
 import com.emcash.customerapp.model.bankCard.*
+import com.emcash.customerapp.model.convertEmcash.AddBankDetailsRequest
+import com.emcash.customerapp.model.convertEmcash.BankDetailsResponse
+import com.emcash.customerapp.model.convertEmcash.UserBankAccountResponse
 import com.emcash.customerapp.model.profile.ProfileDetailsResponse
 import com.emcash.customerapp.model.transactions.RecentTransactionResponse
 import com.emcash.customerapp.model.wallet.topup.WalletTopupRequest
@@ -57,18 +60,18 @@ class HomeRepository(private val context: Context) {
     ) {
         api.withdrawFromWallet(withdrawRequest).awaitResponse(onSuccess = {
             onApiCallBack(true, it, null)
-        },onFailure = {
+        }, onFailure = {
             onApiCallBack(false, null, it)
         })
     }
 
-    fun bankCardsListing(onApiCallback: (status: Boolean, message: String?, result: BankCardsListingResponse.Data?) -> Unit){
+    fun bankCardsListing(onApiCallback: (status: Boolean, message: String?, result: BankCardsListingResponse.Data?) -> Unit) {
         api.getBankCard().awaitResponse(
             onFailure = {
                 onApiCallback(false, it, null)
 
             }, onSuccess = {
-                var  data=it?.data
+                var data = it?.data
                 data?.let {
                     onApiCallback(true, null, data)
 
@@ -76,12 +79,16 @@ class HomeRepository(private val context: Context) {
             }
         )
     }
-    fun paymentByExistingCard(paymentByExistingCardRequest: PaymentByExistingCardRequest, onApiCallback: (status: Boolean, message: String?, result: PaymentByExisitingCardResponse?) -> Unit){
+
+    fun paymentByExistingCard(
+        paymentByExistingCardRequest: PaymentByExistingCardRequest,
+        onApiCallback: (status: Boolean, message: String?, result: PaymentByExisitingCardResponse?) -> Unit
+    ) {
         api.paymentByExistingCard(paymentByExistingCardRequest).awaitResponse(
             onFailure = {
                 onApiCallback(false, it, null)
             }, onSuccess = {
-                var  data=it
+                var data = it
                 data?.let {
                     onApiCallback(true, null, data)
 
@@ -89,13 +96,17 @@ class HomeRepository(private val context: Context) {
             }
         )
     }
-    fun paymentByNewCard(paymentByNewCardRequest: PaymentByNewCardRequest, onApiCallback: (status: Boolean, message: String?, result: PaymentByNewCardResponse?) -> Unit){
+
+    fun paymentByNewCard(
+        paymentByNewCardRequest: PaymentByNewCardRequest,
+        onApiCallback: (status: Boolean, message: String?, result: PaymentByNewCardResponse?) -> Unit
+    ) {
         api.paymentByNewCard(paymentByNewCardRequest).awaitResponse(
             onFailure = {
                 onApiCallback(false, it, null)
 
             }, onSuccess = {
-                var  data=it
+                var data = it
                 data?.let {
                     onApiCallback(true, null, data)
 
@@ -103,5 +114,30 @@ class HomeRepository(private val context: Context) {
             }
         )
     }
+
+    fun getBankDetailsForConvertEmcash(
+        onApiCallback: (status: Boolean, message: String?, result: BankDetailsResponse?) -> Unit
+    ) {
+        api.getBankDetails().awaitResponse(
+            onFailure = {
+                onApiCallback(false, it, null)
+            }, onSuccess = { data ->
+                onApiCallback(true, null, data)
+            })
+    }
+
+    fun addBankAccount(
+        addBankDetailsRequest: AddBankDetailsRequest,
+        onApiCallback: (status: Boolean, message: String?, result: UserBankAccountResponse?) -> Unit
+    ) {
+        api.addBankDetails(addBankDetailsRequest).awaitResponse(
+            onFailure = {
+                onApiCallback(false, it, null)
+            }, onSuccess = { data ->
+                onApiCallback(true, null, data)
+            }
+        )
+    }
+
 
 }

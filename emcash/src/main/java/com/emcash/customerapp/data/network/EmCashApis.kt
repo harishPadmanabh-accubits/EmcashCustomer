@@ -10,6 +10,9 @@ import com.emcash.customerapp.model.bankCard.*
 import com.emcash.customerapp.model.contacts.AllContactsResponse
 import com.emcash.customerapp.model.contacts.ContactDetails
 import com.emcash.customerapp.model.contacts.ContactsGroupResponse
+import com.emcash.customerapp.model.convertEmcash.AddBankDetailsRequest
+import com.emcash.customerapp.model.convertEmcash.BankDetailsResponse
+import com.emcash.customerapp.model.convertEmcash.UserBankAccountResponse
 import com.emcash.customerapp.model.notifications.NotificationResponse
 import com.emcash.customerapp.model.payments.*
 import com.emcash.customerapp.model.profile.ProfileDetailsResponse
@@ -176,6 +179,23 @@ interface EmCashApis {
     fun unBlockContact(
         @Path("user_id") user_id: Int
     ): Call<UnblockedResponse>
+
+    @POST("v1/customers/bank/details")
+    fun addBankDetails(
+        @Body addBankDetailsRequest: AddBankDetailsRequest
+    ): Call<UserBankAccountResponse>
+
+
+    @PUT("v1/customers/bank/details")
+    fun editBankDetails(
+        @Body editBankDetailsRequest: AddBankDetailsRequest
+    ): Call<UserBankAccountResponse>
+
+
+    @GET("v1/customers/bank/details")
+    fun getBankDetails(
+    ): Call<BankDetailsResponse>
+
 
 
 }

@@ -29,6 +29,7 @@ const val KEY_QR_DATA = "data_from_qr"
 const val KEY_USER_ID_FROM_DEEPLINK = "deep_user"
 const val KEY_FCM_TOKEN="fcm"
 const val KEY_IS_FROM_EMCASH_NOTIFICATION="is_from_emcash_notification"
+const val KEY_EXISTING_ACCOUNT = "current_account"
 
 /**
  * Screen Keys

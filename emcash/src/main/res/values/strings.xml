@@ -74,4 +74,7 @@ Payment cards saved to your separate  Payments account are distinct from any Vir
     <string name="deepLinkNotificationTitle">deepLinkNotificationTitle</string>
     <string name="empty_transactions_date">You don\'t have any transactions in this date.</string>
     <string name="empty_transactions">You don\'t have any transactions.</string>
+    <string name="add_bank_account">Add Bank Account</string>
+    <string name="please_add_bank_account_details_to_continue">Please add bank account details to continue .</string>
+    <string name="submit">Submit</string>
 </resources>

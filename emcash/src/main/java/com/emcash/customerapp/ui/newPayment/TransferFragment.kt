@@ -35,7 +35,6 @@ class TransferFragment : Fragment(R.layout.transfer_fragment), BottomSheetListen
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        et_value.requestFocus()
         fab_transfer.setOnClickListener {
             if (fab_transfer.text.equals(TYPE_TRANSFER))
                 transfer()
@@ -53,7 +52,10 @@ class TransferFragment : Fragment(R.layout.transfer_fragment), BottomSheetListen
         getContactDetails()
 
         observe()
+
     }
+
+
 
     private fun transfer() {
         val amount =
@@ -185,7 +187,7 @@ class TransferFragment : Fragment(R.layout.transfer_fragment), BottomSheetListen
             fab_transfer.show()
         else {
             fab_transfer.hide()
-            requireActivity().showShortToast("This contact has benn blocked")
+            requireActivity().showShortToast("This contact has been blocked")
 
         }
     }
@@ -203,13 +205,13 @@ class TransferFragment : Fragment(R.layout.transfer_fragment), BottomSheetListen
 
     override fun onResume() {
         super.onResume()
-        requireActivity().showKeyboard(et_value)
+        et_value.requestFocus()
     }
 
     private fun showBottomSheet() {
         requireActivity().hideKeyboard()
         tv_info_desc.text = getString(R.string.send_token_rewards)
-        val transition: Transition = Slide(Gravity.BOTTOM);
+        val transition: Transition = Slide(Gravity.BOTTOM)
         transition.duration = 600
         transition.addTarget(fl_bottom_sheet)
         transition.addListener(object : Transition.TransitionListener {
@@ -282,11 +284,6 @@ class TransferFragment : Fragment(R.layout.transfer_fragment), BottomSheetListen
 
     }
 
-    private fun showSoftKeyboard(view: View) {
-        if (view.requestFocus()) {
-            val inputMethodManager: InputMethodManager = view.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            inputMethodManager.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT)
-        }
-    }
+
 
 }

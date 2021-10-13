@@ -1,4 +1,4 @@
-package com.emcash.customerapp.ui.notifiacations.adapter
+package com.emcash.customerapp.ui.notifications.adapter
 
 import android.view.LayoutInflater
 import android.view.View

@@ -1,7 +1,5 @@
-package com.emcash.customerapp.ui.convert_emcash
+package com.emcash.customerapp.ui.convertEmcash
 
-import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,7 +9,6 @@ import androidx.fragment.app.DialogFragment
 import com.emcash.customerapp.R
 import com.emcash.customerapp.extensions.openActivity
 import com.emcash.customerapp.ui.home.HomeActivity
-import com.emcash.customerapp.ui.wallet.WalletActivity
 import kotlinx.android.synthetic.main.layout_dialog_emcash_successful.*
 
 class SuccesDialog(

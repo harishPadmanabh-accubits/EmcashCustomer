@@ -1,4 +1,4 @@
-package com.emcash.customerapp.ui.notifiacations
+package com.emcash.customerapp.ui.notifications
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -9,8 +9,8 @@ import com.emcash.customerapp.data.network.ApiCallStatus
 import com.emcash.customerapp.extensions.openActivity
 import com.emcash.customerapp.extensions.showShortToast
 import com.emcash.customerapp.ui.newPayment.NewPaymentActivity
-import com.emcash.customerapp.ui.notifiacations.adapter.NotificationAdapter
-import com.emcash.customerapp.ui.notifiacations.adapter.NotificationDetailsAdapter
+import com.emcash.customerapp.ui.notifications.adapter.NotificationAdapter
+import com.emcash.customerapp.ui.notifications.adapter.NotificationDetailsAdapter
 import com.emcash.customerapp.utils.KEY_BEN_ID
 import com.emcash.customerapp.utils.LAUNCH_SOURCE
 import com.emcash.customerapp.utils.LoaderDialog

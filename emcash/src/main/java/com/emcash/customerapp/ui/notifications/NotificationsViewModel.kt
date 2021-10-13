@@ -1,4 +1,4 @@
-package com.emcash.customerapp.ui.notifiacations
+package com.emcash.customerapp.ui.notifications
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel

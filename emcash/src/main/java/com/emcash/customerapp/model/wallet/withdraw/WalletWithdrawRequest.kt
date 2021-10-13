@@ -7,7 +7,7 @@ data class WalletWithdrawRequest(
     @SerializedName("amount")
     val amount: Int,
     @SerializedName("iban")
-    val iban: String?,
+    val iban: String,
     @SerializedName("description")
     val description: String="",
     @SerializedName("latitude")

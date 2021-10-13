@@ -10,11 +10,10 @@ import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.emcash.customerapp.R
-import com.emcash.customerapp.data.SyncManager
 import com.emcash.customerapp.data.network.ApiCallStatus
 import com.emcash.customerapp.extensions.openActivity
 import com.emcash.customerapp.extensions.showShortToast
-import com.emcash.customerapp.ui.convert_emcash.ConvertEmcashActivity
+import com.emcash.customerapp.ui.convertEmcash.ConvertEmcashActivity
 import com.emcash.customerapp.ui.home.HomeActivity
 import com.emcash.customerapp.ui.loademcash.LoadEmcashActivity
 import com.emcash.customerapp.utils.LAUNCH_SOURCE
@@ -23,7 +22,6 @@ import com.emcash.customerapp.utils.SCREEN_WALLET
 import kotlinx.android.synthetic.main.wallet_screen_v2.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import timber.log.Timber
 

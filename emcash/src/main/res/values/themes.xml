@@ -159,5 +159,15 @@
         <item name="android:inputType">numberPassword</item>
         <item name="android:editable">false</item>
     </style>
-
+    <style name="WhiteRoundTextField" parent="Widget.AppCompat.EditText">
+        <item name="android:background">@drawable/white_rounded_radius_8dp</item>
+        <item name="android:cursorVisible">true</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="fontFamily">@font/biennale_book</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:paddingStart">20dp</item>
+        <item name="android:textAlignment">textStart</item>
+        <item name="android:editable">true</item>
+        <item name="android:inputType">textNoSuggestions</item>
+    </style>
 </resources>

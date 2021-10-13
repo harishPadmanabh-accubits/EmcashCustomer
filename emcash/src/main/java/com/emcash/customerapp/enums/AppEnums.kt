@@ -5,3 +5,6 @@ enum class TransactionType {
 enum class TransactionHistoryScreens{
     ALL,INBOUND,OUTBOUND
 }
+enum class BankAccountScreenTypes{
+    ADD,EDIT
+}
