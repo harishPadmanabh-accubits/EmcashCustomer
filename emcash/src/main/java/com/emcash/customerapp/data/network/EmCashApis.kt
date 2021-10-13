@@ -12,6 +12,7 @@ import com.emcash.customerapp.model.contacts.ContactDetails
 import com.emcash.customerapp.model.contacts.ContactsGroupResponse
 import com.emcash.customerapp.model.convertEmcash.AddBankDetailsRequest
 import com.emcash.customerapp.model.convertEmcash.BankDetailsResponse
+import com.emcash.customerapp.model.convertEmcash.EditBankDetailsRequest
 import com.emcash.customerapp.model.convertEmcash.UserBankAccountResponse
 import com.emcash.customerapp.model.notifications.NotificationResponse
 import com.emcash.customerapp.model.payments.*
@@ -188,7 +189,7 @@ interface EmCashApis {
 
     @PUT("v1/customers/bank/details")
     fun editBankDetails(
-        @Body editBankDetailsRequest: AddBankDetailsRequest
+        @Body editBankDetailsRequest: EditBankDetailsRequest
     ): Call<UserBankAccountResponse>
 
 

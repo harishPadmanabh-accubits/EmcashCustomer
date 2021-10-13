@@ -11,6 +11,7 @@ import com.emcash.customerapp.extensions.awaitResponse
 import com.emcash.customerapp.model.bankCard.*
 import com.emcash.customerapp.model.convertEmcash.AddBankDetailsRequest
 import com.emcash.customerapp.model.convertEmcash.BankDetailsResponse
+import com.emcash.customerapp.model.convertEmcash.EditBankDetailsRequest
 import com.emcash.customerapp.model.convertEmcash.UserBankAccountResponse
 import com.emcash.customerapp.model.profile.ProfileDetailsResponse
 import com.emcash.customerapp.model.transactions.RecentTransactionResponse
@@ -122,6 +123,7 @@ class HomeRepository(private val context: Context) {
             onFailure = {
                 onApiCallback(false, it, null)
             }, onSuccess = { data ->
+                syncManager.uuid = data?.data?.userBankDetailsRefeId
                 onApiCallback(true, null, data)
             })
     }
@@ -138,6 +140,22 @@ class HomeRepository(private val context: Context) {
             }
         )
     }
+
+    fun editBankAccount(
+        editBankDetailsRequest: EditBankDetailsRequest,
+        onApiCallback: (status: Boolean, message: String?, result: UserBankAccountResponse?) -> Unit
+    ){
+        api.editBankDetails(editBankDetailsRequest).awaitResponse(
+            onFailure = {
+                onApiCallback(false, it, null)
+            }, onSuccess = { data ->
+                onApiCallback(true, null, data)
+            }
+        )
+    }
+
+    fun getCurrentUUID() = syncManager.uuid
+
 
 
 }

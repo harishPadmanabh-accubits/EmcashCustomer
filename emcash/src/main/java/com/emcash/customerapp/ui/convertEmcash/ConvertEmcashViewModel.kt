@@ -7,14 +7,17 @@ import androidx.lifecycle.MutableLiveData
 import com.emcash.customerapp.data.network.ApiCallStatus
 import com.emcash.customerapp.data.network.ApiMapper
 import com.emcash.customerapp.data.repos.HomeRepository
+import com.emcash.customerapp.enums.BankAccountScreenTypes
 import com.emcash.customerapp.model.convertEmcash.AddBankDetailsRequest
 import com.emcash.customerapp.model.convertEmcash.BankDetailsResponse
+import com.emcash.customerapp.model.convertEmcash.EditBankDetailsRequest
 import com.emcash.customerapp.model.convertEmcash.UserBankAccountResponse
 import com.emcash.customerapp.model.wallet.withdraw.WalletWithdrawRequest
 
 class ConvertEmcashViewModel(val app: Application) : AndroidViewModel(app) {
     val homeRepository = HomeRepository(app)
     var hasBankAccount = false
+
 
     fun withdraw(
         amount: Int,
@@ -43,20 +46,34 @@ class ConvertEmcashViewModel(val app: Application) : AndroidViewModel(app) {
     }
 
     fun addBankAccountDetails(
-        addBankDetailsRequest: AddBankDetailsRequest?
+        addBankDetailsRequest: AddBankDetailsRequest?=null,editBankDetailsRequest: EditBankDetailsRequest?=null,type:BankAccountScreenTypes
     ): LiveData<ApiMapper<UserBankAccountResponse>> {
         val apiStatus = MutableLiveData<ApiMapper<UserBankAccountResponse>>()
-        if (addBankDetailsRequest != null) {
-            apiStatus.value = ApiMapper(ApiCallStatus.LOADING, null, null)
-            homeRepository.addBankAccount(addBankDetailsRequest) { status, message, result ->
-                when (status) {
-                    true -> apiStatus.value = ApiMapper(ApiCallStatus.SUCCESS, result, null)
-                    false -> apiStatus.value = ApiMapper(ApiCallStatus.ERROR, null, message)
+            when(type){
+                BankAccountScreenTypes.ADD->{
+                    apiStatus.value = ApiMapper(ApiCallStatus.LOADING, null, null)
+                    if (addBankDetailsRequest != null) {
+                        homeRepository.addBankAccount(addBankDetailsRequest) { status, message, result ->
+                            when (status) {
+                                true -> apiStatus.value = ApiMapper(ApiCallStatus.SUCCESS, result, null)
+                                false -> apiStatus.value = ApiMapper(ApiCallStatus.ERROR, null, message)
+                            }
+                        }
+                    }
+                }
+                BankAccountScreenTypes.EDIT->{
+                    apiStatus.value = ApiMapper(ApiCallStatus.LOADING, null, null)
+                    if (editBankDetailsRequest != null) {
+                        homeRepository.editBankAccount(editBankDetailsRequest) { status, message, result ->
+                            when (status) {
+                                true -> apiStatus.value = ApiMapper(ApiCallStatus.SUCCESS, result, null)
+                                false -> apiStatus.value = ApiMapper(ApiCallStatus.ERROR, null, message)
+                            }
+                        }
+                    }
                 }
             }
-        } else {
-            apiStatus.value = ApiMapper(ApiCallStatus.ERROR, null, "Please Fill all fields.")
-        }
+
         return apiStatus
     }
 

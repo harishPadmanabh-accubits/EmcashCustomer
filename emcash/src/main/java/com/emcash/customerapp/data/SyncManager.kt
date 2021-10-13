@@ -120,5 +120,12 @@ class SyncManager(val context: Context) {
         editor.clear().apply()
     }
 
+    var uuid:String?
+        get()=try{
+            sharedPreferences.getString(KEY_UUID,"")
+        }catch (e:Exception){
+            null
+        }
+        set(value) = editor.putString(KEY_UUID,value).apply()
 
 }
