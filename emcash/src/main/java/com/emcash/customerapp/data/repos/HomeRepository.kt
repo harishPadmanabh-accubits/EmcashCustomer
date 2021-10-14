@@ -140,6 +140,19 @@ class HomeRepository(private val context: Context) {
             }
         )
     }
+    fun payerAuthenticator(payerAuthenticatorRequest: PayerAuthenticatorRequest,onApiCallback: (status: Boolean, message: String?, result: PayerAuthenticatorResponse?) -> Unit){
+        api.payerAuthenticator(payerAuthenticatorRequest).awaitResponse(
+            onFailure = {
+                onApiCallback(false, it, null)
+
+            }, onSuccess = {
+                var  data=it
+                data?.let {
+                    onApiCallback(true, null, data)
+                }
+            }
+        )
+    }
 
     fun editBankAccount(
         editBankDetailsRequest: EditBankDetailsRequest,
@@ -155,6 +168,7 @@ class HomeRepository(private val context: Context) {
     }
 
     fun getCurrentUUID() = syncManager.uuid
+
 
 
 

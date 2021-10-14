@@ -68,3 +68,8 @@ const val DEFAULT_LOAD_EMCASH_DESCRIPTION = "Test Topup Emcash"
 
 const val EMCASH_NOTIFICATION_CHANNEL_ID:String ="com.emcash.customer.notifications"
 const val EMCASH_NOTIFICATION_CHANNEL_DESC : String = "Emcash customer Notification Channel"
+
+const val KEY_URL3D = "URL3D"
+const val KEY_TOPUP_ORDERID = "TOPUP_ORDER_ID"
+const val KEY_TOPUP_SESSIONID = "TOPUP_SESSION_ID"
+

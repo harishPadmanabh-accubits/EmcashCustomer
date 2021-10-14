@@ -198,5 +198,11 @@ interface EmCashApis {
     ): Call<BankDetailsResponse>
 
 
+    @POST("v1/customers/empay/payer-authentication")
+    fun payerAuthenticator(
+        @Body payerAuthenticatorRequest: PayerAuthenticatorRequest
+    ): Call<PayerAuthenticatorResponse>
+
+
 
 }

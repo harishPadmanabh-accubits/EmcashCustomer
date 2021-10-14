@@ -24,10 +24,21 @@ data class PaymentByNewCardResponse(
         @SerializedName("resultDescription")
         val resultDescription: String,
         @SerializedName("transactionId")
-        val transactionId: String
+        val transactionId: String,
+        @SerializedName("orderId")
+        val orderId: String,
+        @SerializedName("sessionId")
+        val sessionId: String
     ) {
 
         class PayerAuthentication(
+            @SerializedName("url3D")
+            val url3D: String,
+            @SerializedName("url3DSuccess")
+            val url3DSuccess: String,
+            @SerializedName("url3DError")
+            val url3DError: String
+
         )
     }
 }

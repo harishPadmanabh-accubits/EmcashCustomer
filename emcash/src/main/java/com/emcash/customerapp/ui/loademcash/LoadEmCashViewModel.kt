@@ -22,6 +22,7 @@ class LoadEmCashViewModel(val app: Application) : AndroidViewModel(app) {
     var bankCardsStatus = MutableLiveData<ApiMapper<BankCardsListingResponse.Data>>()
     var paymentByExistingCardStatus = MutableLiveData<ApiMapper<PaymentByExisitingCardResponse>>()
     var paymentByNewCardStatus = MutableLiveData<ApiMapper<PaymentByNewCardResponse>>()
+    var payerAuthenticatorStatus = MutableLiveData<ApiMapper<PayerAuthenticatorResponse>>()
 
     fun addEmCash(
         amount: Int,
@@ -80,6 +81,23 @@ class LoadEmCashViewModel(val app: Application) : AndroidViewModel(app) {
             }
         }
     }
+
+    fun payerAuthenticator(paymentAuthenticatorRequest: PayerAuthenticatorRequest) {
+        payerAuthenticatorStatus.value = ApiMapper(ApiCallStatus.LOADING, null, null)
+
+        homeRepository.payerAuthenticator(paymentAuthenticatorRequest) { status, message, result ->
+            when (status) {
+                true -> {
+                    payerAuthenticatorStatus.value = ApiMapper(ApiCallStatus.SUCCESS, result, null)
+                }
+                false -> {
+                    payerAuthenticatorStatus.value = ApiMapper(ApiCallStatus.ERROR, null, message)
+
+                }
+            }
+        }
+    }
+
 
 }
 
