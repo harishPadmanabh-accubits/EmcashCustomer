@@ -228,6 +228,7 @@ class HomeActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks,
 
         iv_notifications.setOnClickListener {
             openActivity(NotificationsActivity::class.java)
+            finish()
         }
 
     }
@@ -249,6 +250,7 @@ class HomeActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks,
     private fun openSettings() {
         openActivity(SettingsActivity::class.java)
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+        finish()
     }
 
     private fun openLoadEmcash() {
@@ -256,11 +258,13 @@ class HomeActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks,
             this.putInt(LAUNCH_SOURCE, SCREEN_HOME)
         }
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+        finish()
     }
 
     private fun openNewPayment() {
         openActivity(NewPaymentActivity::class.java)
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+        finish()
     }
 
     override fun onResume() {
@@ -284,6 +288,7 @@ class HomeActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks,
             openActivity(QrScannerActivity::class.java){
                 this.putInt(LAUNCH_SOURCE, SCREEN_HOME)
             }
+            finish()
         } else {
             EasyPermissions.requestPermissions(
                 this,

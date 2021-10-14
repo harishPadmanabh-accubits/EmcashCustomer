@@ -128,4 +128,13 @@ class SyncManager(val context: Context) {
         }
         set(value) = editor.putString(KEY_UUID,value).apply()
 
+    var isLogoutPending:Boolean
+    get() = try {
+        sharedPreferences.getBoolean(KEY_UUID,false)
+    }catch (e:Exception){
+        false
+    }
+    set(value) = editor.putBoolean(KEY_PENDING_LOGOUT,value).apply()
+
+
 }

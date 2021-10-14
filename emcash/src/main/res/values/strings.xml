@@ -77,4 +77,6 @@ Payment cards saved to your separate  Payments account are distinct from any Vir
     <string name="add_bank_account">Add Bank Account</string>
     <string name="please_add_bank_account_details_to_continue">Please add bank account details to continue .</string>
     <string name="submit">Submit</string>
+    <string name="log_out">Log Out</string>
+    <string name="are_you_sure_that_you_want_to_logout_from_emcash">Are you sure that you want to logout from Emcash ?</string>
 </resources>
