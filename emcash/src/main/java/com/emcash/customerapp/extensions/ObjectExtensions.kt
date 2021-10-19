@@ -40,6 +40,8 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import timber.log.Timber
+import java.math.BigDecimal
+import java.math.RoundingMode
 import java.net.UnknownHostException
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -587,4 +589,8 @@ fun String.killBackStackAndNavigate(context: Context){
 
 fun Context.logoutFromEmCash(){
     EmCashCommunicationHelper.getFallBack().killBackStackAndNavigate(this)
+}
+
+fun Int.toAmount():Double{
+   return BigDecimal(this).setScale(3, RoundingMode.HALF_UP).toDouble()
 }
