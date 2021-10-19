@@ -8,6 +8,7 @@ import com.emcash.customerapp.R
 import com.emcash.customerapp.data.network.ApiCallStatus
 import com.emcash.customerapp.extensions.openActivity
 import com.emcash.customerapp.extensions.showShortToast
+import com.emcash.customerapp.ui.home.HomeActivity
 import com.emcash.customerapp.ui.newPayment.NewPaymentActivity
 import com.emcash.customerapp.ui.notifications.adapter.NotificationAdapter
 import com.emcash.customerapp.ui.notifications.adapter.NotificationDetailsAdapter
@@ -61,5 +62,12 @@ class NotificationsActivity : AppCompatActivity(),NotificationDetailsAdapter.Not
             this.putInt(LAUNCH_SOURCE, SCREEN_HOME_RECENT_CONTACTS)
             this.putInt(KEY_BEN_ID,beneficiaryId)
         }
+        finish()
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        openActivity(HomeActivity::class.java)
+        finish()
     }
 }

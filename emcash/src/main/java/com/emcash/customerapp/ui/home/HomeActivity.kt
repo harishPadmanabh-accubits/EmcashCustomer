@@ -14,6 +14,7 @@ import androidx.core.net.toUri
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import com.emcash.customerapp.DeepLinkFactory
+import com.emcash.customerapp.EmCashCommunicationHelper
 import com.emcash.customerapp.R
 import com.emcash.customerapp.data.network.ApiCallStatus
 import com.emcash.customerapp.extensions.*
@@ -364,7 +365,8 @@ class HomeActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks,
             show()
 
             confirm_lay.setOnClickListener {
-                finish()
+                //finish()
+                applicationContext.logoutFromEmCash()
             }
 
             cancel_lay.setOnClickListener {
@@ -379,4 +381,3 @@ class HomeActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks,
 
 
 
-//https://blog.mindorks.com/implementing-easy-permissions-in-android-android-tutorial

@@ -71,7 +71,7 @@ class TermsAndConditionsActivity : AppCompatActivity() {
     }
 
     private fun configureCTAs() {
-        if(source== SCREEN_SETTINGS){
+        if(source== SCREEN_SETTINGS || viewModel.syncManager.tncStatus==TncStatus.ACCEPTED){
             btn_accept.hide()
             btn_reject.hide()
             tv_terms.movementMethod = ScrollingMovementMethod()

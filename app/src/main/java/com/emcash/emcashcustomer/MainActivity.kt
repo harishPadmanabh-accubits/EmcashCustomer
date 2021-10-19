@@ -122,4 +122,8 @@ class MainActivity : AppCompatActivity() ,EmCashListener{
             onTaskCompleted(false,null,e.message)
         }
     }
+
+    override fun onGetFallBackScreen(): String {
+        return className
+    }
 }

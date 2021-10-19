@@ -110,9 +110,6 @@ class WalletActivity : AppCompatActivity() {
                 }
             })
         }
-
-
-
     }
 
     override fun onBackPressed() {

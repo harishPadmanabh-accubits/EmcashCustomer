@@ -45,7 +45,7 @@ class SettingsActivity : AppCompatActivity() {
 
     private fun performLogout() {
         viewModel.syncManager.logout()
-        finish()
+        applicationContext.logoutFromEmCash()
     }
 
     private fun observe() {
@@ -161,8 +161,6 @@ class SettingsActivity : AppCompatActivity() {
             openActivity(HomeActivity::class.java)
             finish()
         }
-
-
     }
 }
 

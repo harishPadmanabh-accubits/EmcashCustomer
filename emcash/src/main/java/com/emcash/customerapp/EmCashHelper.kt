@@ -22,9 +22,14 @@ class EmCashHelper(val appContext: Context, val listener: EmCashListener) {
     val authRepository = AuthRepository(appContext)
 
     init {
-        EmCashCommunicationHelper.setParentListener(listener)
+        EmCashCommunicationHelper.apply {
+            setParentListener(listener)
+            setFallbackTo(getFallBackScreen())
+        }
+
     }
 
+    private fun getFallBackScreen() = listener.onGetFallBackScreen()
     fun doEmCashLogin(
         phoneNumber: String,
         password: String,
@@ -216,8 +221,9 @@ class EmCashHelper(val appContext: Context, val listener: EmCashListener) {
 interface EmCashListener {
     fun onLoginSuccess(status: Boolean) {}
     fun onVerifyPin(forAction: TransactionType, sourceIfAny:Int = 0) {}
-    fun onFcmTokenError(){}
-    fun onLogOutEmCash(){}
     fun onEditProfile(){}
+    fun onGetFallBackScreen():String{
+        return ""
+    }
 }
 

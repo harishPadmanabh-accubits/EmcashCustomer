@@ -31,6 +31,9 @@ import com.emcash.customerapp.*
 import com.emcash.customerapp.data.network.exceptions.NoInternetException
 import com.emcash.customerapp.enums.TransactionType
 import com.emcash.customerapp.utils.IMAGE_BASE_URL
+import com.emcash.customerapp.utils.IS_FROM_DEEPLINK
+import com.emcash.customerapp.utils.KEY_DEEPLINK
+import com.emcash.customerapp.utils.KEY_TYPE
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.item_inner_contact_details.view.*
 import retrofit2.Call
@@ -572,4 +575,16 @@ fun View.focusAndShowKeyboard() {
                 }
             })
     }
+}
+
+
+fun String.killBackStackAndNavigate(context: Context){
+    val newStack = Intent(context, Class.forName(this)).also {
+        it.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+    }
+    context.startActivity(newStack)
+}
+
+fun Context.logoutFromEmCash(){
+    EmCashCommunicationHelper.getFallBack().killBackStackAndNavigate(this)
 }
