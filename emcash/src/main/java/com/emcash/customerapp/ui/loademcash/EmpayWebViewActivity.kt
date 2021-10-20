@@ -81,7 +81,7 @@ class EmpayWebViewActivity : AppCompatActivity() {
                             sessionId.toString()
                         )
 
-                    viewModel.payerAuthenticator(payerAuthenticator)
+                    viewModel.authenticatePayer(payerAuthenticator)
 
                 }else if(url.toString().contains("Error")){
                     showShortToast("Payment Error")

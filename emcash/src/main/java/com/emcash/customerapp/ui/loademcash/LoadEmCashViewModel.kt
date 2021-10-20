@@ -82,10 +82,10 @@ class LoadEmCashViewModel(val app: Application) : AndroidViewModel(app) {
         }
     }
 
-    fun payerAuthenticator(paymentAuthenticatorRequest: PayerAuthenticatorRequest) {
+    fun authenticatePayer(paymentAuthenticatorRequest: PayerAuthenticatorRequest) {
         payerAuthenticatorStatus.value = ApiMapper(ApiCallStatus.LOADING, null, null)
 
-        homeRepository.payerAuthenticator(paymentAuthenticatorRequest) { status, message, result ->
+        homeRepository.authenticatePayer(paymentAuthenticatorRequest) { status, message, result ->
             when (status) {
                 true -> {
                     payerAuthenticatorStatus.value = ApiMapper(ApiCallStatus.SUCCESS, result, null)

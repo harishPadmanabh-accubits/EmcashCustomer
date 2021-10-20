@@ -199,7 +199,7 @@ interface EmCashApis {
 
 
     @POST("v1/customers/empay/payer-authentication")
-    fun payerAuthenticator(
+    fun authenticatePayer(
         @Body payerAuthenticatorRequest: PayerAuthenticatorRequest
     ): Call<PayerAuthenticatorResponse>
 
