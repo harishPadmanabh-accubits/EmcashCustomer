@@ -7,6 +7,7 @@ import androidx.activity.viewModels
 import com.emcash.customerapp.R
 import com.emcash.customerapp.extensions.openActivity
 import com.emcash.customerapp.extensions.showShortToast
+import com.emcash.customerapp.extensions.toAmount
 import com.emcash.customerapp.ui.home.HomeActivity
 import com.emcash.customerapp.ui.wallet.WalletActivity
 import com.emcash.customerapp.utils.*
@@ -56,11 +57,9 @@ class LoadEmcashActivity : AppCompatActivity() {
     private fun topupWallet() {
         val amount = if ( et_value.text.toString().length>0) et_value.text.toString().toInt() else 0
         val desc = et_description.text.toString()
-
         if (amount > 0) {
             openActivity(TransactionActivity::class.java) {
-                val amountDoubled = BigDecimal(amount).setScale(3, RoundingMode.HALF_UP)
-                this.putDouble(KEY_TOPUP_AMOUNT, amountDoubled.toDouble())
+                this.putDouble(KEY_TOPUP_AMOUNT, amount.toAmount())
                 this.putString(KEY_TOPUP_DESC, desc)
             }
             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
