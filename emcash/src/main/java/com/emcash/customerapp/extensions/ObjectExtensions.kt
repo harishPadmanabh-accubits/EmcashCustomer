@@ -22,6 +22,7 @@ import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.MutableLiveData
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
@@ -43,6 +44,7 @@ import timber.log.Timber
 import java.math.BigDecimal
 import java.math.RoundingMode
 import java.net.UnknownHostException
+import java.text.DecimalFormat
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -446,8 +448,8 @@ fun isLollipopOrAbove(): Boolean =
 fun <T : Any> Call<T>.awaitResponse(
     onSuccess: (T?) -> Unit = {},
     onFailure: (String?) -> Unit = {},
-    onSessionExpired:() -> Unit = {},
-    launchSource : Int =0
+    onSessionExpired: () -> Unit = {},
+    launchSource: Int = 0
 ) {
 
     this.enqueue(object : Callback<T> {
@@ -456,18 +458,18 @@ fun <T : Any> Call<T>.awaitResponse(
             if (response.isSuccessful) {
                 onSuccess.invoke(response.body())
             } else {
-                if(response.code()==401)
-                    EmCashCommunicationHelper.getParentListener().onVerifyPin(TransactionType.VERIFY_USER,launchSource)
+                if (response.code() == 401)
+                    EmCashCommunicationHelper.getParentListener()
+                        .onVerifyPin(TransactionType.VERIFY_USER, launchSource)
 
                 onFailure.invoke(response.message())
-
 
 
             }
         }
 
         override fun onFailure(call: Call<T>, t: Throwable) {
-            if (t is UnknownHostException || t is NoInternetException || t.message?.contains("Unable to resolve host")==true)
+            if (t is UnknownHostException || t is NoInternetException || t.message?.contains("Unable to resolve host") == true)
                 onFailure.invoke("Please Check your Internet Connection.")
             else
                 onFailure.invoke(t.message)
@@ -475,19 +477,19 @@ fun <T : Any> Call<T>.awaitResponse(
     })
 }
 
-fun Int.toRewardLevelString(context: Context):String{
-   return when(this){
-       1->context.getString(R.string.reward_high)
-       2->context.getString(R.string.reward_medium)
-       3->context.getString(R.string.reward_low)
-       else -> throw IllegalArgumentException("Invalid level constant received at toRewardLevelString()")
-   }
+fun Int.toRewardLevelString(context: Context): String {
+    return when (this) {
+        1 -> context.getString(R.string.reward_high)
+        2 -> context.getString(R.string.reward_medium)
+        3 -> context.getString(R.string.reward_low)
+        else -> throw IllegalArgumentException("Invalid level constant received at toRewardLevelString()")
+    }
 
 }
 
 fun ImageView.loadImageWithPlaceHolder(
-    url:String?,placeHolderResId:Int
-){
+    url: String?, placeHolderResId: Int
+) {
     Timber.e("Image Url ${IMAGE_BASE_URL.plus(url)}")
     Glide.with(this.context)
         .load(IMAGE_BASE_URL.plus(url))
@@ -513,7 +515,7 @@ fun toFormattedTime(dateStr: String): String? {
 
 }
 
-fun FrameLayout.setlevel(level:Int){
+fun FrameLayout.setlevel(level: Int) {
     when (level) {
         1 -> this.setBackgroundResource(R.drawable.green_round)
         2 -> this.setBackgroundResource((R.drawable.yellow_round))
@@ -553,7 +555,8 @@ fun View.focusAndShowKeyboard() {
             post {
                 // We still post the call, just in case we are being notified of the windows focus
                 // but InputMethodManager didn't get properly setup yet.
-                val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                val imm =
+                    context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                 imm.showSoftInput(this, InputMethodManager.SHOW_IMPLICIT)
             }
         }
@@ -580,17 +583,22 @@ fun View.focusAndShowKeyboard() {
 }
 
 
-fun String.killBackStackAndNavigate(context: Context){
+fun String.killBackStackAndNavigate(context: Context) {
     val newStack = Intent(context, Class.forName(this)).also {
         it.flags = Intent.FLAG_ACTIVITY_NEW_TASK
     }
     context.startActivity(newStack)
 }
 
-fun Context.logoutFromEmCash(){
+fun Context.logoutFromEmCash() {
     EmCashCommunicationHelper.getFallBack().killBackStackAndNavigate(this)
 }
 
-fun Int.toAmount():Double{
-   return BigDecimal(this).setScale(3, RoundingMode.HALF_UP).toDouble()
+fun Int.toAmount(): String {
+    return DecimalFormat("0.00").format(this)
+}
+
+fun SwipeRefreshLayout.stopIfRefreshing(){
+    if (this.isRefreshing)
+        this.isRefreshing = false
 }

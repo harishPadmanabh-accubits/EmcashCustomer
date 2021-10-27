@@ -12,8 +12,10 @@ import com.emcash.customerapp.ui.home.HomeActivity
 import com.emcash.customerapp.ui.wallet.WalletActivity
 import com.emcash.customerapp.utils.*
 import kotlinx.android.synthetic.main.activity_load_emcash.*
+import timber.log.Timber
 import java.math.BigDecimal
 import java.math.RoundingMode
+import java.text.DecimalFormat
 
 class LoadEmcashActivity : AppCompatActivity() {
 
@@ -57,9 +59,10 @@ class LoadEmcashActivity : AppCompatActivity() {
     private fun topupWallet() {
         val amount = if ( et_value.text.toString().length>0) et_value.text.toString().toInt() else 0
         val desc = et_description.text.toString()
+        Timber.e("Load emcach amt ${DecimalFormat("0.00").format(amount)}")
         if (amount > 0) {
             openActivity(TransactionActivity::class.java) {
-                this.putDouble(KEY_TOPUP_AMOUNT, amount.toAmount())
+                this.putString(KEY_TOPUP_AMOUNT, amount.toAmount())
                 this.putString(KEY_TOPUP_DESC, desc)
             }
             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)

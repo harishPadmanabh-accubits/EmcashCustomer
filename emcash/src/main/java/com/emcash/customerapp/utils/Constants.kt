@@ -64,7 +64,7 @@ const val TYPE_TRANSFER = "Transfer"
 const val TYPE_REQUEST = "Request"
 
 const val DEFAULT_PAGE_CONFIG = 3
-const val DEFAULT_LOAD_EMCASH_DESCRIPTION = "Test Topup Emcash"
+const val DEFAULT_LOAD_EMCASH_DESCRIPTION = "Topup Emcash"
 
 const val EMCASH_NOTIFICATION_CHANNEL_ID:String ="com.emcash.customer.notifications"
 const val EMCASH_NOTIFICATION_CHANNEL_DESC : String = "Emcash customer Notification Channel"
@@ -72,4 +72,5 @@ const val EMCASH_NOTIFICATION_CHANNEL_DESC : String = "Emcash customer Notificat
 const val KEY_URL3D = "URL3D"
 const val KEY_TOPUP_ORDERID = "TOPUP_ORDER_ID"
 const val KEY_TOPUP_SESSIONID = "TOPUP_SESSION_ID"
+const val TOPUP_AUTH_REQUIRED = "PAYER_AUTH_REQUIRED"
 

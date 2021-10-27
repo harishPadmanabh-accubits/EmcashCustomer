@@ -22,7 +22,7 @@ class TransactionHistoryViewModel(val app: Application) : AndroidViewModel(app) 
 
     val api = EmCashApiManager(app).api
     val filter = MutableLiveData<HistoryFilter>().default(HistoryFilter())
-    var scope: CoroutineScope? = null
+    lateinit var scope: CoroutineScope
     var currentScreen = TransactionHistoryScreens.ALL
     var isFilterByDate = false
 
@@ -80,7 +80,7 @@ class TransactionHistoryViewModel(val app: Application) : AndroidViewModel(app) 
                     filter.value?.status ?: "",
                     filter.value?.type ?: ""
                 )
-            }.liveData.cachedIn(scope ?: viewModelScope)
+            }.liveData.cachedIn(scope)
         }
 
 }

@@ -155,4 +155,8 @@ class BankDetailsActivity : AppCompatActivity() {
         }
     }
 
+    override fun onBackPressed() {
+        openActivity(ConvertEmcashActivity::class.java)
+        finish()
+    }
 }

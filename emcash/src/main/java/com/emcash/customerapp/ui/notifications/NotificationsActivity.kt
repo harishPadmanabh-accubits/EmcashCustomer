@@ -34,7 +34,7 @@ class NotificationsActivity : AppCompatActivity(),NotificationDetailsAdapter.Not
 
     private fun observe() {
         viewModel.apply {
-            getNotifications(1,50).observe(this@NotificationsActivity, Observer {
+            getNotifications(1,100).observe(this@NotificationsActivity, Observer {
                 when(it.status){
                     ApiCallStatus.LOADING->loader.showLoader()
                     ApiCallStatus.SUCCESS->{

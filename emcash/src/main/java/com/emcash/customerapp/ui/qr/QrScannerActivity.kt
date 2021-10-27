@@ -91,7 +91,13 @@ class QrScannerActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-       super.onBackPressed()
-        finish()
+        if(source == SCREEN_TRANSFER){
+            openActivity(NewPaymentActivity::class.java)
+            finish()
+        }else{
+            openActivity(HomeActivity::class.java)
+            finish()
+        }
+
     }
 }

@@ -198,7 +198,8 @@ class NewPaymentActivity : AppCompatActivity(), EasyPermissions.PermissionCallba
                     viewModel.gotoScreen(CHAT)
                 }
                 else -> {
-                    super.onBackPressed()
+                    openActivity(HomeActivity::class.java)
+                    finish()
                 }
             }
         }
@@ -255,7 +256,6 @@ class NewPaymentActivity : AppCompatActivity(), EasyPermissions.PermissionCallba
     }
 
     override fun onPermissionsGranted(requestCode: Int, perms: MutableList<String>) {
-        // Log.d(TAG, "onPermissionsGranted:" + requestCode + ":" + perms.size)
         openActivity(QrScannerActivity::class.java) {
             this.putInt(LAUNCH_SOURCE, SCREEN_TRANSFER)
         }

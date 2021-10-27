@@ -26,11 +26,11 @@ class TransactionActivity : AppCompatActivity(), CardsAdapter.CardsItemClickList
     var useExistingCard: String? = null
 
     val amount by lazy {
-        intent.getDoubleExtra(KEY_TOPUP_AMOUNT, 0.00)
+        intent.getStringExtra(KEY_TOPUP_AMOUNT) ?: "0.00"
     }
 
     val desc by lazy {
-        intent.getStringExtra(KEY_TOPUP_DESC)
+        intent.getStringExtra(KEY_TOPUP_DESC) ?: "0.00"
     }
 
     val loader by lazy {
@@ -40,6 +40,7 @@ class TransactionActivity : AppCompatActivity(), CardsAdapter.CardsItemClickList
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_transaction)
+        Timber.e("Amount in new card ${amount.toString()}  desc $desc")
 
         rv_accounts.apply {
             adapter = AccountsAdapter(dummyAccounts)
@@ -59,15 +60,15 @@ class TransactionActivity : AppCompatActivity(), CardsAdapter.CardsItemClickList
 
         cl_addCard.setOnClickListener {
             openActivity(PayWithNewCardActivity::class.java) {
-                KEY_TOPUP_AMOUNT to amount
-                KEY_TOPUP_DESC to desc
+                putString(KEY_TOPUP_AMOUNT,amount)
+                putString(KEY_TOPUP_DESC,desc)
             }
 
         }
         btn_continue.setOnClickListener {
             val customer = PaymentByExistingCardRequest.Customer("509842776", 1)
             val amountDouble =
-                PaymentByExistingCardRequest.Amount("AED", DecimalFormat("0.00").format(amount))
+                PaymentByExistingCardRequest.Amount("AED", amount)
             val paymentByExisitingCardRequest =
                 PaymentByExistingCardRequest(
                     amountDouble,
@@ -86,7 +87,7 @@ class TransactionActivity : AppCompatActivity(), CardsAdapter.CardsItemClickList
             onBackPressed()
         }
 
-        tv_info_currency.text = DecimalFormat("0.00").format(amount).toString()
+        tv_info_currency.text = amount.replace(".00","")
         iv_user_dp.setImage(viewModel.syncManager.profileDetails?.profileImage)
 
         setupObservers()
