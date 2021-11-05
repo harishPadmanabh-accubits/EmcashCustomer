@@ -82,13 +82,14 @@ class WalletActivityDetailsAdapter(val data : List<WalletActivity>):RecyclerView
 
                 }
             }
-//            if (currentItem.mode == 1) {
-//                tv_value_changed.text="+"+currentItem.transactionInfo.amount.toString()+" EmCash"
-//
-//            } else {
-//                tv_value_changed.text="-"+currentItem.transactionInfo.amount.toString()+" EmCash"
-//
-//            }
+            if (currentItem.mode == 1) {
+                tv_value_changed.text="+"+currentItem.transactionInfo.amount.toString()
+
+            } else {
+                tv_value_changed.text="-"+currentItem.transactionInfo.amount.toString()
+
+            }
+
             tv_balance.apply {
                 tv_balance.text = currentItem.balance.toString()
                 if (currentItem.mode == 1) {
