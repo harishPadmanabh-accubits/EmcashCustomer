@@ -17,7 +17,7 @@ class LoadEmCashViewModel(val app: Application) : AndroidViewModel(app) {
     val homeRepository = HomeRepository(app)
     val syncManager = SyncManager(app)
 
-    var _accountMode = MutableLiveData<AccountMode>().default(AccountMode.EMPAY)
+    var _accountMode = MutableLiveData<AccountMode>().default(AccountMode.BANK_CARD)
     var _notifications = MutableLiveData<ApiMapper<NotificationResponse.Data>>()
     var bankCardsStatus = MutableLiveData<ApiMapper<BankCardsListingResponse.Data>>()
     var paymentByExistingCardStatus = MutableLiveData<ApiMapper<PaymentByExisitingCardResponse>>()

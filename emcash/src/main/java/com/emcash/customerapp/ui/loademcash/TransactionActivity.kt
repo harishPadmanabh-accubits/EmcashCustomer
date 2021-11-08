@@ -50,12 +50,12 @@ class TransactionActivity : AppCompatActivity(), CardsAdapter.CardsItemClickList
 
         tab_empay.setOnClickListener {
             viewModel._accountMode.value = AccountMode.EMPAY
-            ll_bankCards.visibility = View.GONE
+           // ll_bankCards.visibility = View.GONE
 
         }
         tab_bank_card.setOnClickListener {
             viewModel._accountMode.value = AccountMode.BANK_CARD
-            ll_bankCards.visibility = View.VISIBLE
+            //ll_bankCards.visibility = View.VISIBLE
         }
 
         cl_addCard.setOnClickListener {
@@ -161,6 +161,9 @@ class TransactionActivity : AppCompatActivity(), CardsAdapter.CardsItemClickList
 
         tab_bank_card.setBackgroundResource(R.drawable.grey_rounded_bg)
         iv_bank_selected.hide()
+        ll_bankCards.visibility = View.GONE
+
+
 
     }
 
@@ -170,6 +173,8 @@ class TransactionActivity : AppCompatActivity(), CardsAdapter.CardsItemClickList
 
         tab_bank_card.setBackgroundResource(R.drawable.blue_stroke_light_blue_fill_round_bg)
         iv_bank_selected.show()
+        ll_bankCards.visibility = View.VISIBLE
+
     }
 
 
