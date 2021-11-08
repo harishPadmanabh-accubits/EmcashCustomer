@@ -59,7 +59,7 @@ class LoadEmcashActivity : AppCompatActivity() {
     private fun topupWallet() {
         val amount = if ( et_value.text.toString().length>0) et_value.text.toString().toInt() else 0
         val desc = et_description.text.toString()
-        Timber.e("Load emcach amt ${DecimalFormat("0.00").format(amount)}")
+        Timber.e("Load emcach amt ${amount.toAmount()}")
         if (amount > 0) {
             openActivity(TransactionActivity::class.java) {
                 this.putString(KEY_TOPUP_AMOUNT, amount.toAmount())
@@ -68,7 +68,7 @@ class LoadEmcashActivity : AppCompatActivity() {
             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
 
         } else {
-            showShortToast("Enter the amount of EmCash to be Added.")
+            showShortToast(getString(R.string.error_load_emcash_empty))
         }
 
 

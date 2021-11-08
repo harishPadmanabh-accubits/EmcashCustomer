@@ -20,10 +20,11 @@ class PayWithNewCardActivity : AppCompatActivity() {
 
     var saveAfterTransaction: Boolean = false
     val amount by lazy {
-        intent.getIntExtra(KEY_TOPUP_AMOUNT, 0)
+        intent.getStringExtra(KEY_TOPUP_AMOUNT) ?: "0.00"
     }
+
     val desc by lazy {
-        intent.getStringExtra(KEY_TOPUP_DESC) ?: DEFAULT_LOAD_EMCASH_DESCRIPTION
+        intent.getStringExtra(KEY_TOPUP_DESC) ?: " "
     }
 
     val loader by lazy {
@@ -120,7 +121,7 @@ class PayWithNewCardActivity : AppCompatActivity() {
                                     )
                                     this.putString(KEY_TOPUP_ORDERID, it.data?.data?.orderId)
                                     this.putString(KEY_TOPUP_SESSIONID, it.data?.data?.sessionId)
-                                    this.putInt(KEY_TOPUP_AMOUNT, amount)
+                                    this.putString(KEY_TOPUP_AMOUNT, amount)
                                     this.putString(KEY_TOPUP_DESC, desc)
                                 }
 

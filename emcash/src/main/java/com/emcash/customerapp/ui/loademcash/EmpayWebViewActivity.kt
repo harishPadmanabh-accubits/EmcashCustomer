@@ -21,10 +21,11 @@ class EmpayWebViewActivity : AppCompatActivity() {
 
     val viewModel: LoadEmCashViewModel by viewModels()
     val amount by lazy {
-        intent.getIntExtra(KEY_TOPUP_AMOUNT, 0)
+        intent.getStringExtra(KEY_TOPUP_AMOUNT) ?: "0.00"
     }
+
     val desc by lazy {
-        intent.getStringExtra(KEY_TOPUP_DESC)
+        intent.getStringExtra(KEY_TOPUP_DESC) ?: " "
     }
     val sessionId by lazy {
         intent.getStringExtra(KEY_TOPUP_SESSIONID)
@@ -72,7 +73,7 @@ class EmpayWebViewActivity : AppCompatActivity() {
 
                     var payerAuthenticator: PayerAuthenticatorRequest =
                         PayerAuthenticatorRequest(
-                            "999.00",
+                            amount,
                             "",
                             "411111",
                             12.00,

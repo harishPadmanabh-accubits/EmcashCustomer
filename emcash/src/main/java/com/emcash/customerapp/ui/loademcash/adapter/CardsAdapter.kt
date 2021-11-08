@@ -10,7 +10,7 @@ import kotlinx.android.synthetic.main.item_payment_account.view.*
 
 class CardsAdapter(
     val list: List<BankCardsListingResponse.Data.Card>,
-    private val clickListener: CardsItemClickListener) :
+    private val cardsItemClickListener: CardsItemClickListener) :
     RecyclerView.Adapter<CardsAdapter.ViewHolder>() {
     private var selectedId = 0
     private var defaultCardPos = -1
@@ -46,14 +46,14 @@ class CardsAdapter(
                 if (currentItem.isDefault) {
                     selectedId = currentItem.last4.toInt()
                     defaultCardPos = position
-                    clickListener.onCardClicked(currentItem)
+                    cardsItemClickListener.onCardClicked(currentItem)
 
                 }
                 ll_item_main.setOnClickListener {
                     selectedId = currentItem.last4.toInt()
                     list[defaultCardPos].isDefault = false
                     notifyDataSetChanged()
-                    clickListener.onCardClicked(currentItem)
+                    cardsItemClickListener.onCardClicked(currentItem)
 
                 }
 
@@ -63,7 +63,7 @@ class CardsAdapter(
                     selectedId = currentItem.last4.toInt()
                     list[defaultCardPos].isDefault = false
                     notifyDataSetChanged()
-                    clickListener.onCardClicked(currentItem)
+                    cardsItemClickListener.onCardClicked(currentItem)
 
                 }
 
