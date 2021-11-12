@@ -85,7 +85,7 @@ class MainActivity : AppCompatActivity() ,EmCashListener{
         if(status)
             pb_login.hide()
         else
-            showShortToast("Login Failed")
+            showShortToast("Login Failed.")
         pb_login.hide()
 
 

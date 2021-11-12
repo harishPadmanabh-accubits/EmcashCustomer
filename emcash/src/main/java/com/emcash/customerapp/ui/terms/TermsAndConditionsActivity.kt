@@ -67,6 +67,7 @@ class TermsAndConditionsActivity : AppCompatActivity() {
 
     private fun renderTerms(tnc: String?) {
         tv_terms.text = tnc
+        tv_terms.movementMethod = ScrollingMovementMethod()
         loader.dismiss()
     }
 

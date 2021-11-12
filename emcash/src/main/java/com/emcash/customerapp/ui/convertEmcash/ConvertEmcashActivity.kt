@@ -140,14 +140,14 @@ class ConvertEmcashActivity : AppCompatActivity(), SuccessDialogListener {
             )
         } else {
             loader.hideLoader()
-            showShortToast("Invalid Amount")
+            showShortToast(getString(R.string.error_empty_emcash_amount))
         }
 
 
     }
 
     private fun showSuccessDialog(amount: Int) {
-        dialog.amount = amount.toString().plus(" Emcash has been converted successfully")
+        dialog.amount = amount.toString().plus("Emcash has been converted successfully")
         dialog.show(supportFragmentManager, "Success")
     }
 

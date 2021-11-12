@@ -80,4 +80,5 @@ Payment cards saved to your separate  Payments account are distinct from any Vir
     <string name="log_out">Log Out</string>
     <string name="are_you_sure_that_you_want_to_logout_from_emcash">Are you sure that you want to logout from Emcash ?</string>
     <string name="error_load_emcash_empty">Enter the amount of EmCash to be Added.</string>
+    <string name="error_empty_emcash_amount">Please enter the amount</string>
 </resources>
