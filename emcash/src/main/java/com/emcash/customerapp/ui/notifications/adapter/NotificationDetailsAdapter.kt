@@ -35,43 +35,23 @@ class NotificationDetailsAdapter(
         holder.itemView.apply {
             tv_notification.text = data[position].message
             tv_time.text = toFormattedTime(data[position].createdAt)
-            var type = data[position].type
-            ll_notifications.setOnClickListener {
-                if (type != 5 || type != 6) {
-//                    var bundle = bundleOf(
-//                        KEY_USERID to data[position].contactUserId
-//                    )
-//
-//                    findNavController().navigate(
-//                        R.id.action_notificationsFragment_to_paymentChatHistoryFragment,
-//                        bundle
-//                    )
-
-
+            when (data[position].type) {
+                1 -> {//pending
+                    iv_point.setColorFilter(ContextCompat.getColor(context, R.color.orange))
                 }
-
+                2 -> {//success
+                    iv_point.setColorFilter(ContextCompat.getColor(context, R.color.green))
+                }
+                3 -> {//rejected
+                    iv_point.setColorFilter(ContextCompat.getColor(context, R.color.red))
+                }
+                6 -> {//registration completed
+                    iv_point.setColorFilter(ContextCompat.getColor(context, R.color.app_sky_blue));
+                }
+                5 -> {//rejected from merchant side
+                    iv_point.setColorFilter(ContextCompat.getColor(context, R.color.red));
+                }
             }
-            if (type == 1) {//pending
-                iv_point.setColorFilter(ContextCompat.getColor(context, R.color.orange));
-            } else if (type == 2) {//success
-                iv_point.setColorFilter(ContextCompat.getColor(context, R.color.green));
-            } else if (type == 3) {//rejected
-                iv_point.setColorFilter(ContextCompat.getColor(context, R.color.red));
-            } else if (type == 6) {//registration completed
-                iv_point.setColorFilter(ContextCompat.getColor(context, R.color.app_sky_blue));
-            } else if (type == 5) {//rejected from merchant side
-                iv_point.setColorFilter(ContextCompat.getColor(context, R.color.red));
-            }
-//            val colors = arrayOf(
-//                Color.parseColor("#70DDFF"),
-//                Color.parseColor("#EDB054"),
-//                Color.parseColor("#BB579F"),
-//                Color.parseColor("#16C89D"),
-//                Color.parseColor("#8D92FF")
-//            )
-//            val randomColor = colors.random()
-//            iv_point.setColorFilter(randomColor)
-
 
             setOnClickListener {
                 listener.onNotificationClick(data[position].contactUserId)
