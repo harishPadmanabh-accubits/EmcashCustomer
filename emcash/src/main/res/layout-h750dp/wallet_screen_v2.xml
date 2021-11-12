@@ -43,6 +43,7 @@
         android:scaleType="centerCrop"
         android:scaleX="1.2"
         android:scaleY="1.1"
+        android:translationY="30dp"
         android:src="@drawable/blue_curve_card"
         app:layout_constraintBottom_toTopOf="@+id/guideline15"
         app:layout_constraintEnd_toEndOf="parent"

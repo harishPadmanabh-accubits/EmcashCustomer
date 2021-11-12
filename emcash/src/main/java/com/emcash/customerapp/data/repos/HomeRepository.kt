@@ -24,14 +24,16 @@ class HomeRepository(private val context: Context) {
     private val syncManager = SyncManager(context)
     private val api = EmCashApiManager(context).api
 
-    fun getRecentTransactions(): LiveData<ApiMapper<RecentTransactionResponse.Data>> {
+    fun getRecentTransactions(onCache:(data:RecentTransactionResponse.Data)->Unit): LiveData<ApiMapper<RecentTransactionResponse.Data>> {
         val _transactions = MutableLiveData<ApiMapper<RecentTransactionResponse.Data>>()
         _transactions.value = ApiMapper(ApiCallStatus.LOADING, null, null)
         api.getRecentTransactions()
             .awaitResponse(onSuccess = { response ->
+                syncManager.recentTransactionsCache = response?.data
                 _transactions.value = ApiMapper(ApiCallStatus.SUCCESS, response?.data, null)
             }, onFailure = { error ->
                 _transactions.value = ApiMapper(ApiCallStatus.ERROR, null, error)
+                syncManager.recentTransactionsCache?.let { onCache(it) }
             })
         return _transactions
     }

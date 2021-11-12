@@ -18,8 +18,6 @@ import com.emcash.customerapp.EmCashCommunicationHelper
 import com.emcash.customerapp.R
 import com.emcash.customerapp.data.network.ApiCallStatus
 import com.emcash.customerapp.extensions.*
-import com.emcash.customerapp.model.DummyContactsRawData
-import com.emcash.customerapp.model.DummyUserData
 import com.emcash.customerapp.model.contacts.ContactsGroup
 import com.emcash.customerapp.model.profile.ProfileDetailsResponse
 import com.emcash.customerapp.model.transactions.RecentTransactionItem
@@ -38,6 +36,7 @@ import com.emcash.customerapp.utils.*
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.layout_switch_accout.*
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import pub.devrel.easypermissions.AppSettingsDialog
 import pub.devrel.easypermissions.EasyPermissions
@@ -71,19 +70,21 @@ class HomeActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks,
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        checkDataFromPendingIntent()
         setContentView(R.layout.activity_home)
         window.sharedElementEnterTransition.duration = 500
-       checkDataFromPendingIntent()
 
-        lifecycleScope.launch (Dispatchers.Main){
-           // validateCache(profileDataCache)
+        lifecycleScope.async {
+            validateCache(profileDataCache)
+        }
+
+        lifecycleScope.async{
             getProfileDetailsFromServer()
         }
-        lifecycleScope.launch (Dispatchers.Main){
+
+        lifecycleScope.async{
             getRecentTransactions()
         }
-
-
         setupViews()
     }
 
@@ -99,6 +100,9 @@ class HomeActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks,
             when(it.status){
                 ApiCallStatus.SUCCESS->{
                     renderRecentTransactions(it.data)
+                }
+                ApiCallStatus.ERROR->{
+                    renderRecentTransactions(viewModel.syncManager.recentTransactionsCache)
                 }
             }
         })
@@ -141,7 +145,6 @@ class HomeActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks,
         viewModel.profileDetails.observe(this, Observer {
             when (it.status) {
                 ApiCallStatus.SUCCESS -> {
-                    Timber.e("Observer Success")
                     val profileData = it.data
                     if (profileData != null)
                         renderProfileDetails(profileData)
@@ -151,7 +154,7 @@ class HomeActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks,
                     hideLoader()
                 }
                 ApiCallStatus.LOADING->{
-                    loader.show()
+                   // loader.show()
                 }
             }
         })
@@ -263,7 +266,9 @@ class HomeActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks,
     }
 
     private fun openNewPayment() {
-        openActivity(NewPaymentActivity::class.java)
+        openActivity(NewPaymentActivity::class.java){
+            this.putInt(LAUNCH_SOURCE, SCREEN_HOME)
+        }
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
         finish()
     }
@@ -337,11 +342,7 @@ class HomeActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks,
         }
     }
 
-    override fun onContactSelected(contact: DummyContactsRawData?, recentContact: DummyUserData?) {
-        openActivity(NewPaymentActivity::class.java) {
-            this.putInt(LAUNCH_SOURCE, SCREEN_HOME_RECENT_CONTACTS)
-        }
-    }
+
 
     override fun onSelectedFromRecentContacts(contact: RecentTransactionItem) {
         openActivity(NewPaymentActivity::class.java) {
@@ -365,8 +366,8 @@ class HomeActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks,
             show()
 
             confirm_lay.setOnClickListener {
-                //finish()
                 applicationContext.logoutFromEmCash()
+                finish()
             }
 
             cancel_lay.setOnClickListener {

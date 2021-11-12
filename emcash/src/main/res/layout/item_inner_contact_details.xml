@@ -31,7 +31,7 @@
             android:fontFamily="@font/roboto_medium"
             android:text="A"
             android:textColor="@color/white"
-            android:textSize="18sp" />
+            android:textSize="14sp" />
 
     </FrameLayout>
 

@@ -32,6 +32,7 @@ const val KEY_IS_FROM_EMCASH_NOTIFICATION="is_from_emcash_notification"
 const val KEY_EXISTING_ACCOUNT = "current_account"
 const val KEY_UUID = "uuid"
 const val KEY_PENDING_LOGOUT = "pending_logout"
+const val KEY_RECENT_TRANSACTION_CACHE = "recent_transactions_cache"
 
 /**
  * Screen Keys

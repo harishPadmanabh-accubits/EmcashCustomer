@@ -8,6 +8,8 @@ import com.emcash.customerapp.R
 import com.emcash.customerapp.extensions.*
 import com.emcash.customerapp.model.contacts.ContactsGroup
 import kotlinx.android.synthetic.main.item_inner_contact_details.view.*
+import timber.log.Timber
+import java.util.*
 
 
 class ContactDetailsAdapter(
@@ -25,9 +27,10 @@ class ContactDetailsAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentItem = contacts[position]
+        Timber.e("Contact item $currentItem")
         holder.itemView.apply {
             setLevel(this,currentItem.level)
-            setUserDp(this,currentItem.profileImage.toString())
+            setUserDp(this,currentItem.profileImage.toString(),currentItem.name)
             setDetails(this, currentItem.name, currentItem.phoneNumber)
             setOnClickListener {
                 listener.onSelectedFromAllContacts(currentItem)
@@ -44,9 +47,15 @@ class ContactDetailsAdapter(
         }
     }
 
-    private fun setUserDp(itemView: View, profileImage: String) {
+    private fun setUserDp(itemView: View, profileImage: String, name: String) {
         itemView.apply {
-            iv_user_dp.loadImageWithPlaceHolder(profileImage,R.drawable.ic_profile_placeholder)
+            Timber.e("Profile img in all contacts $profileImage")
+            iv_user_dp.loadImageWithErrorCallback(profileImage,onError = {
+                tv_user_name_letter.apply {
+                    text = name.first().toString().toUpperCase(Locale.ROOT)
+                    show()
+                }
+            })
             tv_user_name_letter.hide()
         }
     }
@@ -57,7 +66,7 @@ class ContactDetailsAdapter(
               1 -> fl_user_level.setBackgroundResource(R.drawable.green_round)
               2 -> fl_user_level.setBackgroundResource((R.drawable.yellow_round))
               3 -> fl_user_level.setBackgroundResource(R.drawable.red_round)
-              else -> fl_user_level.makeInvisible()
+              else -> fl_user_level.setBackgroundResource(0)
           }
       }
 

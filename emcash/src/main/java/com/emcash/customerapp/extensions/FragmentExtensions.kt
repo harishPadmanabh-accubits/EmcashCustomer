@@ -32,7 +32,7 @@ fun FragmentActivity.showKeyboard(view: View?) {
     try {
         val imm =
             this.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        imm.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT)
+        imm.showSoftInput(view, InputMethodManager.SHOW_FORCED)
     } catch (e: Exception) {
         Timber.e("Exc in keyboard manger $e")
         e.printStackTrace()

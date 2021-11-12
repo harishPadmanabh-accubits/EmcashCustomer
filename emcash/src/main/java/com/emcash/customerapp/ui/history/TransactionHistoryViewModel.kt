@@ -10,7 +10,6 @@ import com.emcash.customerapp.data.repos.TransactionHistoryRepository
 import com.emcash.customerapp.enums.TransactionHistoryScreens
 import com.emcash.customerapp.extensions.default
 import com.emcash.customerapp.extensions.toFormattedDate
-import com.emcash.customerapp.model.dummyTransactionHistoryData
 import com.emcash.customerapp.model.transactions.*
 import com.emcash.customerapp.ui.history.adapters.HistoryPagingSource
 import com.emcash.customerapp.utils.DEFAULT_PAGE_CONFIG

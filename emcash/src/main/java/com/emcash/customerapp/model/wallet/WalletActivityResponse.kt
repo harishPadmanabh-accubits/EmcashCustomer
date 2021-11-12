@@ -1,7 +1,6 @@
 package com.emcash.customerapp.model.wallet
 
 
-import com.emcash.customerapp.model.DummyTransactionDetalsModel
 import com.emcash.customerapp.model.profile.Wallet
 import com.google.gson.annotations.SerializedName
 

@@ -9,9 +9,7 @@ import com.emcash.customerapp.R
 import com.emcash.customerapp.extensions.hide
 import com.emcash.customerapp.extensions.show
 import com.emcash.customerapp.extensions.toFormattedTime
-import com.emcash.customerapp.model.ACTIVITY_TYPE_CONVERTED
-import com.emcash.customerapp.model.ACTIVITY_TYPE_LOADED
-import com.emcash.customerapp.model.DummyActivityDetails
+
 import com.emcash.customerapp.model.wallet.WalletActivityGroupResponse
 import com.emcash.customerapp.model.wallet.WalletActivityGroupResponse.Data.WalletActivityGroup
 import com.emcash.customerapp.model.wallet.WalletActivityGroupResponse.Data.WalletActivityGroup.WalletActivity

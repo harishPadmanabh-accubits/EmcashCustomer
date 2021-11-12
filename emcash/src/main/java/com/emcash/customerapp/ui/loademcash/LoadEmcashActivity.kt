@@ -29,13 +29,7 @@ class LoadEmcashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_load_emcash)
         et_value.requestFocus()
-        et_description.setOnEditorActionListener { textView, action, keyEvent ->
-            if (action == EditorInfo.IME_ACTION_DONE) {
-                topupWallet()
-                return@setOnEditorActionListener true
-            }
-            return@setOnEditorActionListener true
-        }
+
         fab_done.setOnClickListener {
             topupWallet()
 

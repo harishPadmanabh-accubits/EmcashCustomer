@@ -31,6 +31,7 @@ import kotlinx.android.synthetic.main.payment_chats.tv_name
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import java.util.*
 
 class PaymentChatFragment:Fragment(R.layout.payment_chats),PaymentHistoryItemClickListener {
 
@@ -103,7 +104,12 @@ class PaymentChatFragment:Fragment(R.layout.payment_chats),PaymentHistoryItemCli
             val beneficiary= it.contact
             val wallet = it.wallet
             fl_user_level.setlevel(beneficiary.level)
-            iv_user_dp.loadImageWithPlaceHolder(beneficiary.profileImage,R.drawable.ic_profile_placeholder)
+            iv_user_dp.loadImageWithErrorCallback(beneficiary.profileImage,onError = {
+                tv_user_name_letter.apply {
+                    text = beneficiary.name.first().toString().toUpperCase(Locale.ROOT)
+                    show()
+                }
+            })
             tv_name.text = beneficiary.name
             tv_contact_number.text = beneficiary.phoneNumber
             iv_user_coin_dp.setImage(viewModel.syncManager.profileDetails?.profileImage)

@@ -5,6 +5,7 @@ import androidx.paging.PagingState
 import com.emcash.customerapp.data.network.EmCashApis
 import com.emcash.customerapp.model.contacts.ContactsGroup
 import timber.log.Timber
+import java.lang.Exception
 
 class ContactsPagingSource(
     val api:EmCashApis,
@@ -20,15 +21,20 @@ class ContactsPagingSource(
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, ContactsGroup> {
         val nextPage = params.key ?: 1
-        val response = api.getGroupedContacts(nextPage,10,searchQuerry)
-        return LoadResult.Page(
-            data = response.data.contactsGroups,
-            prevKey = if (response.data.totalPages == 0) null else {
-                if (nextPage == 1) null else nextPage - 1
-            },
-            nextKey = if (response.data.totalPages == 0) null else {
-                if (nextPage == response.data.totalPages) null else response.data.page.plus(1)
-            }
-        )
+        return try {
+            val response = api.getGroupedContacts(nextPage,10,searchQuerry)
+            LoadResult.Page(
+                data = response.data.contactsGroups,
+                prevKey = if (response.data.totalPages == 0) null else {
+                    if (nextPage == 1) null else nextPage - 1
+                },
+                nextKey = if (response.data.totalPages == 0) null else {
+                    if (nextPage == response.data.totalPages) null else response.data.page.plus(1)
+                }
+            )
+        }catch (e:Exception){
+            LoadResult.Error(e)
+        }
+
     }
 }

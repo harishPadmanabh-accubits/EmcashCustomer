@@ -20,6 +20,7 @@ import com.emcash.customerapp.model.contacts.Contact
 import com.emcash.customerapp.model.contacts.ContactItem
 import com.emcash.customerapp.model.payments.*
 import com.emcash.customerapp.model.transactions.RecentTransactionItem
+import com.emcash.customerapp.model.transactions.RecentTransactionResponse
 import com.emcash.customerapp.ui.newPayment.NewPaymentScreens.*
 import com.emcash.customerapp.ui.newPayment.adapters.ContactsPagingSource
 import com.emcash.customerapp.ui.newPayment.adapters.TransactionHistoryPagingSource
@@ -55,108 +56,6 @@ class NewPaymentViewModel(val app: Application) : AndroidViewModel(app) {
 
     var _bottomSheetVisiblity = MutableLiveData<Boolean>()
     val bottomSheetVisibility: LiveData<Boolean> get() = _bottomSheetVisiblity
-
-
-    fun groupContactsByLetters(allContacts: ArrayList<ContactItem>): ArrayList<GroupedContacts> {
-        val groupedContactsList = ArrayList<GroupedContacts>()
-        val accessedLetters = ArrayList<String>()
-        val firstLetters = allContacts.also {
-            it.sortBy {
-                it.name.first()
-            }
-        }.map {
-            it.name.first()
-        } as MutableList
-
-        firstLetters.forEach {
-            it.toUpperCase()
-        }
-
-        firstLetters.distinct().forEach { letter ->
-            Timber.e("Letter $letter")
-            val contacts = ArrayList<ContactItem>()
-            val groupedContacts = allContacts.filter {
-                it.name.first().equals(letter, ignoreCase = true)
-            }
-            if (groupedContacts.isNotEmpty()) {
-                contacts.addAll(groupedContacts)
-            }
-
-            groupedContactsList.add(
-                GroupedContacts(letter.toString(), ArrayList(groupedContacts))
-            )
-
-        }
-
-        groupedContactsList.sortBy {
-            it.letter
-        }
-
-        return groupedContactsList
-
-    }
-
-
-    val _contactScreenItems = MediatorLiveData<ArrayList<ContactsPageItems>>()
-    val contactScreenItems: LiveData<ArrayList<ContactsPageItems>> get() = _contactScreenItems
-    fun getContactScreenItems(
-    ) {
-        var recentContacts: ArrayList<RecentTransactionItem>? = null
-        var groupedContacts: ArrayList<GroupedContacts>? = null
-        _contactScreenItems.addSource(paymentRepository.getRecentTransactions()) {
-            recentContacts = ArrayList(it.transactionList)
-            viewModelScope.async(Dispatchers.IO) {
-                val result = processContactScreenItems(recentContacts, groupedContacts)
-                withContext(Dispatchers.Main) {
-                    _contactScreenItems.postValue(result)
-                }
-            }
-
-        }
-
-        _contactScreenItems.addSource(paymentRepository.getAllContacts()) {
-            viewModelScope.async(Dispatchers.IO) {
-                val allContacts = ArrayList(it)
-                groupedContacts = groupContactsByLetters(allContacts)
-                val result = processContactScreenItems(recentContacts, groupedContacts)
-                withContext(Dispatchers.Main) {
-                    _contactScreenItems.postValue(result)
-                }
-            }
-
-
-        }
-
-
-    }
-
-    private fun processContactScreenItems(
-        recentContacts: ArrayList<RecentTransactionItem>?,
-        allContacts: ArrayList<GroupedContacts>?
-    ): ArrayList<ContactsPageItems> {
-        val processedContacts = ArrayList<ContactsPageItems>()
-        recentContacts?.let { contacts ->
-            if (contacts.isNotEmpty()) {
-                processedContacts.add(
-                    ContactsPageItems("Recent Contacts", ITEM_RECENT_CONTACTS).also {
-                        it.recentContactList = contacts
-                    }
-                )
-            }
-        }
-
-        allContacts?.let { contacts ->
-            if (contacts.isNotEmpty()) {
-                processedContacts.add(
-                    ContactsPageItems("All Contacts", ITEM_ALL_CONTACTS).also {
-                        it.allContactList = contacts
-                    }
-                )
-            }
-
-        }
-        return processedContacts
-    }
 
     val _contact = MutableLiveData<ApiMapper<Contact>>()
     fun getContactDetails(id: Int): LiveData<ApiMapper<Contact>> {
@@ -256,7 +155,10 @@ class NewPaymentViewModel(val app: Application) : AndroidViewModel(app) {
         }.liveData.cachedIn(viewModelScope)
     }
 
-    val recentContacts = paymentRepository.getRecentTransactions()
+    val recentContactsCache = MutableLiveData<RecentTransactionResponse.Data>()
+    val recentContacts = paymentRepository.getRecentTransactions(){
+        recentContactsCache.value = it
+    }
 
     val _blockStatus = MutableLiveData<ApiMapper<BlockObserverModel>>()
 

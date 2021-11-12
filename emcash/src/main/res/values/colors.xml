@@ -34,5 +34,6 @@
     <color name="calendar_highlighted_day_bg">#3E60E6</color>
 
     <color name="dateTimeRangePickerStateToday">#3E60E6</color>
+    <color name="ash_dark">#7D7D7D</color>
 
 </resources>

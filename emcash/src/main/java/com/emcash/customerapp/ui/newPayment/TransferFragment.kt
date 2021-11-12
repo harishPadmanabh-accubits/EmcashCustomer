@@ -24,6 +24,7 @@ import com.emcash.customerapp.utils.*
 import kotlinx.android.synthetic.main.bottom_sheet_how_it_works.*
 import kotlinx.android.synthetic.main.transfer_fragment.*
 import timber.log.Timber
+import java.util.*
 
 
 class TransferFragment : Fragment(R.layout.transfer_fragment), BottomSheetListener {
@@ -169,9 +170,14 @@ class TransferFragment : Fragment(R.layout.transfer_fragment), BottomSheetListen
     private fun renderDetails(data: Contact?) {
         data?.let {
             fl_user_level.setlevel(it.level)
-            iv_user_dp.loadImageWithPlaceHolder(
+            iv_user_dp.loadImageWithErrorCallback(
                 it.profileImage,
-                R.drawable.ic_profile_placeholder
+               onError = {
+                   tv_user_name_letter.apply {
+                       text = it.name.first().toString().toUpperCase(Locale.ROOT)
+                       show()
+                   }
+               }
             )
             tv_user_name.text = it.name
             tv_user_phone.text = it.phoneNumber
@@ -205,7 +211,14 @@ class TransferFragment : Fragment(R.layout.transfer_fragment), BottomSheetListen
 
     override fun onResume() {
         super.onResume()
+        configureValueEditText()
+
+    }
+
+    private fun configureValueEditText() {
         et_value.requestFocus()
+        requireActivity().showKeyboard(et_value)
+        et_value.alignCentre()
     }
 
     private fun showBottomSheet() {
@@ -279,9 +292,7 @@ class TransferFragment : Fragment(R.layout.transfer_fragment), BottomSheetListen
     }
 
     override fun onGotitClicked() {
-        //closeBottomSheet()
         viewModel._bottomSheetVisiblity.value = false
-
     }
 
 
