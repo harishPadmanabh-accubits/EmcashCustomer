@@ -81,6 +81,7 @@ class PrepareEmCashActivity : AppCompatActivity(),BottomSheetListener {
 
     fun animateCurve(onEnd: () -> Unit) {
         val displayMetrics = DisplayMetrics()
+
         windowManager.defaultDisplay.getMetrics(displayMetrics)
         val screenHeight = displayMetrics.heightPixels
         val screenWidth = displayMetrics.widthPixels

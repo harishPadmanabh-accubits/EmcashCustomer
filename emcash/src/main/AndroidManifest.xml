@@ -12,7 +12,8 @@
         android:label="@string/app_name"
         android:theme="@style/Theme.Emcash"
         tools:replace="android:theme">
-        <activity android:name=".ui.loademcash.EmpayWebViewActivity"></activity>
+        <activity android:name=".ui.loademcash.EmpayWebViewActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.convertEmcash.BankDetailsActivity"
             android:screenOrientation="portrait"
@@ -26,7 +27,7 @@
         <activity
             android:name=".ui.newPayment.NewPaymentActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan|stateAlwaysVisible" />
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".ui.rewards.EmscoreActivity"
             android:screenOrientation="portrait" />

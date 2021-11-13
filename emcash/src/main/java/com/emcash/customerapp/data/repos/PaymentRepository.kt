@@ -17,15 +17,17 @@ import timber.log.Timber
 class PaymentRepository(private val context: Context) {
     private val syncManager = SyncManager(context)
     val api = EmCashApiManager(context).api
-    fun getRecentTransactions(): LiveData<RecentTransactionResponse.Data> {
+    fun getRecentTransactions(onCache:(data:RecentTransactionResponse.Data)->Unit): LiveData<RecentTransactionResponse.Data> {
         val _transactions = MutableLiveData<RecentTransactionResponse.Data>()
         api.getRecentTransactions()
             .awaitResponse(onSuccess = { response ->
                 if (response != null) {
+                    syncManager.recentTransactionsCache = response.data
                     _transactions.value = response.data
                 }
             }, onFailure = { error ->
                 Timber.e("Recent Contacts api error $error")
+                syncManager.recentTransactionsCache?.let { onCache(it) }
             })
 
         return _transactions

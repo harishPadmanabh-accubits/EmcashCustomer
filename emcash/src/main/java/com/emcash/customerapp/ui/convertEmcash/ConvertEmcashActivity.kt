@@ -5,10 +5,7 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import com.emcash.customerapp.R
 import com.emcash.customerapp.data.network.ApiCallStatus
-import com.emcash.customerapp.extensions.openActivity
-import com.emcash.customerapp.extensions.show
-import com.emcash.customerapp.extensions.showShortToast
-import com.emcash.customerapp.extensions.toJson
+import com.emcash.customerapp.extensions.*
 import com.emcash.customerapp.model.convertEmcash.BankDetailsResponse
 import com.emcash.customerapp.ui.wallet.WalletActivity
 import com.emcash.customerapp.utils.KEY_EXISTING_ACCOUNT
@@ -33,12 +30,11 @@ class ConvertEmcashActivity : AppCompatActivity(), SuccessDialogListener {
             requestFocus()
             setSelection(0)
         }
-
     }
 
     private fun setupViews() {
         dialog = SuccesDialog(this, this)
-
+        et_value.alignCentre()
         getBankAccount()
 
         fab_done.setOnClickListener {
@@ -51,8 +47,6 @@ class ConvertEmcashActivity : AppCompatActivity(), SuccessDialogListener {
         iv_back.setOnClickListener {
             onBackPressed()
         }
-
-
     }
 
     private fun getBankAccount() {

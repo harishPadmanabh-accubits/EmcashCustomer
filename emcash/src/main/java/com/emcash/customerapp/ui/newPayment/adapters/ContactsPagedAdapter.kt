@@ -3,6 +3,8 @@ package com.emcash.customerapp.ui.newPayment.adapters
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -27,6 +29,11 @@ class ContactsPagedAdapter(
     class ViewHolder(itemView: View) :RecyclerView.ViewHolder(itemView)
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        if(position == itemCount-1){
+            val params = holder.itemView.layoutParams as RecyclerView.LayoutParams
+            params.bottomMargin = 100
+            holder.itemView.layoutParams = params
+        }
         val currentItem = getItem(position)
         currentItem?.let {
             holder.itemView.apply {

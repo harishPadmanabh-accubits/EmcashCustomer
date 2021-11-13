@@ -32,17 +32,13 @@ import com.emcash.customerapp.*
 import com.emcash.customerapp.data.network.exceptions.NoInternetException
 import com.emcash.customerapp.enums.TransactionType
 import com.emcash.customerapp.utils.IMAGE_BASE_URL
-import com.emcash.customerapp.utils.IS_FROM_DEEPLINK
-import com.emcash.customerapp.utils.KEY_DEEPLINK
-import com.emcash.customerapp.utils.KEY_TYPE
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.item_inner_contact_details.view.*
+import kotlinx.android.synthetic.main.transfer_fragment.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import timber.log.Timber
-import java.math.BigDecimal
-import java.math.RoundingMode
 import java.net.UnknownHostException
 import java.text.DecimalFormat
 import java.text.ParseException
@@ -486,15 +482,72 @@ fun Int.toRewardLevelString(context: Context): String {
     }
 
 }
-
-fun ImageView.loadImageWithPlaceHolder(
-    url: String?, placeHolderResId: Int
+fun ImageView.loadImageWithErrorCallback(
+    url: String?, onError: () -> Unit = {}
 ) {
+
     Timber.e("Image Url ${IMAGE_BASE_URL.plus(url)}")
     Glide.with(this.context)
         .load(IMAGE_BASE_URL.plus(url))
+        .listener(object : RequestListener<Drawable> {
+            override fun onLoadFailed(
+                e: GlideException?,
+                model: Any?,
+                target: Target<Drawable>?,
+                isFirstResource: Boolean
+            ): Boolean {
+                onError()
+                return false
+            }
+
+            override fun onResourceReady(
+                resource: Drawable?,
+                model: Any?,
+                target: Target<Drawable>?,
+                dataSource: DataSource?,
+                isFirstResource: Boolean
+            ): Boolean {
+                return false
+            }
+
+        })
+        .placeholder(R.color.ash_dark)
+        .into(this)
+
+}
+
+fun ImageView.loadImageWithPlaceHolder(
+    url: String?, placeHolderResId: Int, onError: () -> Unit = {}
+) {
+
+    Timber.e("Image Url ${IMAGE_BASE_URL.plus(url)}")
+    Glide.with(this.context)
+        .load(IMAGE_BASE_URL.plus(url))
+        .listener(object : RequestListener<Drawable> {
+            override fun onLoadFailed(
+                e: GlideException?,
+                model: Any?,
+                target: Target<Drawable>?,
+                isFirstResource: Boolean
+            ): Boolean {
+                onError()
+                return false
+            }
+
+            override fun onResourceReady(
+                resource: Drawable?,
+                model: Any?,
+                target: Target<Drawable>?,
+                dataSource: DataSource?,
+                isFirstResource: Boolean
+            ): Boolean {
+                return false
+            }
+
+        })
         .placeholder(placeHolderResId)
         .into(this)
+
 }
 
 fun toFormattedDate(dateStr: String): String {
@@ -507,7 +560,8 @@ fun toFormattedDate(dateStr: String): String {
 }
 
 fun toFormattedTime(dateStr: String): String? {
-    val sdfInput = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX", Locale.getDefault())
+    Timber.e("Datext $dateStr")
+    val sdfInput = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSS", Locale.getDefault())
     val date = sdfInput.parse(dateStr)
     val sdfOutput = SimpleDateFormat("hh:mm a")
     val formatted = sdfOutput.format(date)
@@ -585,7 +639,7 @@ fun View.focusAndShowKeyboard() {
 
 fun String.killBackStackAndNavigate(context: Context) {
     val newStack = Intent(context, Class.forName(this)).also {
-        it.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
     }
     context.startActivity(newStack)
 }
@@ -601,4 +655,13 @@ fun Int.toAmount(): String {
 fun SwipeRefreshLayout.stopIfRefreshing(){
     if (this.isRefreshing)
         this.isRefreshing = false
+}
+
+fun EditText.alignCentre(){
+    this.afterTextChanged {
+        if(it.isNotEmpty())
+            this.textAlignment = View.TEXT_ALIGNMENT_CENTER
+        else
+            this.textAlignment = View.TEXT_ALIGNMENT_TEXT_START
+    }
 }

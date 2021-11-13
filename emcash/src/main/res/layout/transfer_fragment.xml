@@ -49,6 +49,15 @@
                 android:layout_width="82dp"
                 android:layout_height="82dp"
                 android:layout_gravity="center" />
+            <TextView
+                android:id="@+id/tv_user_name_letter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:fontFamily="@font/roboto_medium"
+                android:visibility="gone"
+                android:textColor="@color/white"
+                android:textSize="22sp" />
         </FrameLayout>
 
         <androidx.constraintlayout.widget.Guideline
@@ -92,9 +101,10 @@
             android:inputType="number"
             android:maxLength="5"
             android:maxLines="1"
-            android:textAlignment="center"
+            android:textAlignment="textStart"
             android:textColor="@color/black"
             android:textSize="50sp"
+            android:imeOptions="actionNext"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/guideline29" />
@@ -115,7 +125,7 @@
             android:fontFamily="@font/biennale_regular"
             android:gravity="center"
             android:hint="@string/description"
-            android:imeOptions="actionGo"
+            android:imeOptions="actionDone"
             android:inputType="text"
             android:maxLength="20"
             android:maxLines="1"

@@ -188,8 +188,13 @@ class NewPaymentActivity : AppCompatActivity(), EasyPermissions.PermissionCallba
                     finish()
                 }
                 CHAT -> {
-                    openActivity(HomeActivity::class.java)
-                    finish()
+                    if(source == SCREEN_HOME)
+                        viewModel.gotoScreen(CONTACTS)
+                    else{
+                        openActivity(HomeActivity::class.java)
+                        finish()
+                    }
+
                 }
                 PIN -> {
                     viewModel.gotoScreen(TRANSFER)
