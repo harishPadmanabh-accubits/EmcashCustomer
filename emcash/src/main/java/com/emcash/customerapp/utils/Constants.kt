@@ -69,5 +69,7 @@ const val KEY_TOPUP_ORDERID = "TOPUP_ORDER_ID"
 const val KEY_TOPUP_SESSIONID = "TOPUP_SESSION_ID"
 const val TOPUP_AUTH_REQUIRED = "PAYER_AUTH_REQUIRED"
 
+const val PREF_NAME : String="emcash_preferences"
+
 const val ERROR_NO_INTERNET:String = "You are offline.Please Check your Internet Connection."
 

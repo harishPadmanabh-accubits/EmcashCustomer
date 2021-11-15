@@ -20,7 +20,7 @@ import java.lang.Exception
 class SyncManager(val context: Context) {
     private val sharedPreferences: SharedPreferences
     private val editor: SharedPreferences.Editor
-    private val prefName = "emcash_preferences"
+    private val prefName = PREF_NAME
 
     init {
         sharedPreferences = EncryptedSharedPreferences.create(
