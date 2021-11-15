@@ -51,12 +51,6 @@ const val KEY_DEEPLINK = "deeplink"
 const val KEY_TYPE = " notify_type"
 const val IS_FROM_DEEPLINK = "is_from_deeplink"
 
-/*
-    Contacts Page Items
- */
-const val ITEM_RECENT_CONTACTS = 1000
-const val ITEM_ALL_CONTACTS = 1001
-
 const val STAGING_URL:String = "https://emcash-api-stg.devtomaster.com/"
 const val BASE_URL: String = "https://emcash-api-dev.devtomaster.com/"
 const val IMAGE_BASE_URL: String = "https://stemcashmerchantdocstest.blob.core.windows.net"
@@ -74,4 +68,6 @@ const val KEY_URL3D = "URL3D"
 const val KEY_TOPUP_ORDERID = "TOPUP_ORDER_ID"
 const val KEY_TOPUP_SESSIONID = "TOPUP_SESSION_ID"
 const val TOPUP_AUTH_REQUIRED = "PAYER_AUTH_REQUIRED"
+
+const val ERROR_NO_INTERNET:String = "You are offline.Please Check your Internet Connection."
 

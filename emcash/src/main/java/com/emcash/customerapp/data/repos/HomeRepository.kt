@@ -21,7 +21,7 @@ import com.emcash.customerapp.model.wallet.withdraw.WalletWithdrawRequest
 import com.emcash.customerapp.model.wallet.withdraw.WalletWithdrawResponse
 
 class HomeRepository(private val context: Context) {
-    private val syncManager = SyncManager(context)
+    val syncManager = SyncManager(context)
     private val api = EmCashApiManager(context).api
 
     fun getRecentTransactions(onCache:(data:RecentTransactionResponse.Data)->Unit): LiveData<ApiMapper<RecentTransactionResponse.Data>> {
@@ -51,6 +51,7 @@ class HomeRepository(private val context: Context) {
 
     fun getProfile(onApiCallBack: (status: Boolean, response: ProfileDetailsResponse.Data?, error: String?) -> Unit) {
         api.getProfileDetails().awaitResponse(onSuccess = {
+            syncManager.profileDetails = it?.data
             onApiCallBack(true, it?.data, null)
         }, onFailure = {
             onApiCallBack(false, null, it)

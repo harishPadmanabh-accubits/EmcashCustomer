@@ -13,6 +13,7 @@ import com.emcash.customerapp.R
 import com.emcash.customerapp.data.network.ApiCallStatus
 import com.emcash.customerapp.extensions.openActivity
 import com.emcash.customerapp.extensions.showShortToast
+import com.emcash.customerapp.model.profile.ProfileDetailsResponse
 import com.emcash.customerapp.ui.convertEmcash.ConvertEmcashActivity
 import com.emcash.customerapp.ui.home.HomeActivity
 import com.emcash.customerapp.ui.loademcash.LoadEmcashActivity
@@ -21,6 +22,7 @@ import com.emcash.customerapp.utils.LoaderDialog
 import com.emcash.customerapp.utils.SCREEN_WALLET
 import kotlinx.android.synthetic.main.wallet_screen_v2.*
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -41,28 +43,12 @@ class WalletActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.wallet_screen_v2)
         configureViews()
-        pagedAdapter.addLoadStateListener {loadState ->
-            if (loadState.refresh is LoadState.Loading){
-                Timber.e("Wallet refreshing")
-            }
-            else{
-                Timber.e("Wallet state $loadState")
-                val error = when {
-                    loadState.prepend is LoadState.Error -> loadState.prepend as LoadState.Error
-                    loadState.append is LoadState.Error -> loadState.append as LoadState.Error
-                    loadState.refresh is LoadState.Error -> loadState.refresh as LoadState.Error
-                    else -> null
-                }
-                error?.let {
-                    Toast.makeText(this, it.error.message, Toast.LENGTH_LONG).show()
-                }
-            }
-        }
-        lifecycleScope.launch(Dispatchers.Main) {
+
+        lifecycleScope.async (Dispatchers.Main) {
             renderWalletDetails()
         }
 
-        lifecycleScope.launch {
+        lifecycleScope.async {
             viewModel.walletActivities.collect {
                 pagedAdapter.submitData(it)
             }
@@ -99,17 +85,28 @@ class WalletActivity : AppCompatActivity() {
                     ApiCallStatus.SUCCESS->{
                         val profile= it.data
                         profile?.let{
-                            appCompatImageView.setImage(it.profileImage)
-                            tv_balance.text = it.wallet.amount.toString()
-                            tv_safe_box_id.text = "Safe Box Id : ${profile.wallet.id}"
+                            renderProfileDetails(it)
                         }
                     }
                     ApiCallStatus.ERROR->{
+                        loadProfileDetailsFromCache()
                         showShortToast(it.errorMessage)
                     }
                 }
             })
         }
+    }
+
+    private fun loadProfileDetailsFromCache() {
+        viewModel.homeRepository.syncManager.profileDetails?.let {
+            renderProfileDetails(it)
+        }
+    }
+
+    private fun renderProfileDetails(profile: ProfileDetailsResponse.Data) {
+        appCompatImageView.setImage(profile.profileImage)
+        tv_balance.text = profile.wallet.amount.toString()
+        tv_safe_box_id.text = "Safe Box Id : ${profile.wallet.id}"
     }
 
     override fun onBackPressed() {

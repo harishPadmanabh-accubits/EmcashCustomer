@@ -35,7 +35,16 @@
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:layout_gravity="center"
-                android:src="@drawable/tbd_sample_dp_2" />
+                android:src="@color/ash_dark" />
+            <TextView
+                android:id="@+id/tv_user_name_letter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:fontFamily="@font/roboto_medium"
+                android:visibility="gone"
+                android:textColor="@color/white"
+                android:textSize="22sp" />
         </FrameLayout>
 
         <TextView

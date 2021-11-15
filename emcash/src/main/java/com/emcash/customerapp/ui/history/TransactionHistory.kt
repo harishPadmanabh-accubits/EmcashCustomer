@@ -214,8 +214,6 @@ class TransactionHistory : FragmentActivity(), DurationItemClickListener {
             when (position) {
                 0 -> tab.apply {
                     text = getString(R.string.all)
-
-
                 }
                 1 -> tab.text = getString(R.string.inbound)
                 2 -> tab.text = getString(R.string.outbound)
@@ -231,32 +229,36 @@ class TransactionHistory : FragmentActivity(), DurationItemClickListener {
     }
 
     override fun onDurationClicked(duration: FilterDurationResponse) {
-        if (duration.id == 4) {
-            ll_holder.visibility = View.VISIBLE
-            calenderView.visibility = View.VISIBLE
-            startDate = ""
-            endDate = ""
-            durationFilterCustom = 1
+        when (duration.id) {
+            4 -> {
+                ll_holder.visibility = View.VISIBLE
+                calenderView.visibility = View.VISIBLE
+                startDate = ""
+                endDate = ""
+                durationFilterCustom = 1
+            }
+            3 -> {
+                ll_holder.visibility = View.GONE
+                calenderView.visibility = View.GONE
+                startDate = getDayAgo("yyyy-MM-dd", -30).toString()
+                endDate = ""
 
-        } else if (duration.id == 3) {
-            ll_holder.visibility = View.GONE
-            calenderView.visibility = View.GONE
-            startDate = getDayAgo("yyyy-MM-dd", -30).toString()
-            endDate = ""
+                durationFilterCustom = 0
 
-            durationFilterCustom = 0
-
-        } else if (duration.id == 2) {
-            ll_holder.visibility = View.GONE
-            calenderView.visibility = View.GONE
-            startDate = getDayAgo("yyyy-MM-dd", -7).toString()
-            durationFilterCustom = 0
-        } else if (duration.id == 1) {
-            ll_holder.visibility = View.GONE
-            calenderView.visibility = View.GONE
-            endDate = ""
-            startDate = getDayAgo("yyyy-MM-dd", -2).toString()
-            durationFilterCustom = 0
+            }
+            2 -> {
+                ll_holder.visibility = View.GONE
+                calenderView.visibility = View.GONE
+                startDate = getDayAgo("yyyy-MM-dd", -7).toString()
+                durationFilterCustom = 0
+            }
+            1 -> {
+                ll_holder.visibility = View.GONE
+                calenderView.visibility = View.GONE
+                endDate = ""
+                startDate = getDayAgo("yyyy-MM-dd", -2).toString()
+                durationFilterCustom = 0
+            }
         }
 
     }
@@ -264,8 +266,9 @@ class TransactionHistory : FragmentActivity(), DurationItemClickListener {
 
 
 fun dateFormatFromCalender(dateFormat: String, dateStr: String): String {
+    Timber.e("Date in cal $dateFormat $dateStr")
     val utc = TimeZone.getTimeZone("UTC")
-    val sourceFormat = SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy")
+    val sourceFormat = SimpleDateFormat("EEE MMM dd HH:mm:ss zzzz yyyy")
     val destFormat = SimpleDateFormat(dateFormat)
     sourceFormat.timeZone = utc
     val convertedDate = sourceFormat.parse(dateStr)

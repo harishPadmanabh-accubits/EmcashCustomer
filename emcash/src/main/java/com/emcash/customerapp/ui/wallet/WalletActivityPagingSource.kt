@@ -12,6 +12,7 @@ import com.emcash.customerapp.model.wallet.WalletActivityResponse.Data
 import com.emcash.customerapp.model.wallet.WalletActivityResponse.Data.*
 import com.emcash.customerapp.model.wallet.WalletActivityUIModel
 import timber.log.Timber
+import java.lang.Exception
 
 class WalletActivityPagingSource(
     val api: EmCashApis
@@ -25,13 +26,22 @@ class WalletActivityPagingSource(
     }
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, WalletActivityGroup> {
-        val nextPage = params.key ?: 1
-        val response = api.getWalletGropedTransactions(nextPage, 8)
-        return LoadResult.Page(
-            data = response.data.walletActivities,
-            prevKey = if (nextPage == 1) null else nextPage - 1,
-            nextKey = if (nextPage == response.data.totalPages) null else response.data.page.plus(1)
-        )
+        return try {
+            val nextPage = params.key ?: 1
+            val response = api.getWalletGropedTransactions(nextPage, 8)
+            LoadResult.Page(
+                data = response.data.walletActivities,
+                prevKey = if (response.data.totalPages == 0) null else {
+                    if (nextPage == 1) null else nextPage - 1
+                },
+                nextKey = if (response.data.totalPages == 0) null else {
+                    if (nextPage == response.data.totalPages) null else response.data.page.plus(1)
+
+                }
+            )
+        } catch (e: Exception) {
+            LoadResult.Error(e)
+        }
 
     }
 }

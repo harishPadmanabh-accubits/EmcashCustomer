@@ -99,9 +99,11 @@ class HomeActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks,
         viewModel.recentTransactions.observe(this, Observer {
             when(it.status){
                 ApiCallStatus.SUCCESS->{
+                    //load from server
                     renderRecentTransactions(it.data)
                 }
                 ApiCallStatus.ERROR->{
+                    //load from cache
                     renderRecentTransactions(viewModel.syncManager.recentTransactionsCache)
                 }
             }

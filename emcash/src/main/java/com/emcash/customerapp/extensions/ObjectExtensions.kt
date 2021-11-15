@@ -31,6 +31,7 @@ import com.bumptech.glide.request.target.Target
 import com.emcash.customerapp.*
 import com.emcash.customerapp.data.network.exceptions.NoInternetException
 import com.emcash.customerapp.enums.TransactionType
+import com.emcash.customerapp.utils.ERROR_NO_INTERNET
 import com.emcash.customerapp.utils.IMAGE_BASE_URL
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.item_inner_contact_details.view.*
@@ -466,7 +467,7 @@ fun <T : Any> Call<T>.awaitResponse(
 
         override fun onFailure(call: Call<T>, t: Throwable) {
             if (t is UnknownHostException || t is NoInternetException || t.message?.contains("Unable to resolve host") == true)
-                onFailure.invoke("Please Check your Internet Connection.")
+                onFailure.invoke(ERROR_NO_INTERNET)
             else
                 onFailure.invoke(t.message)
         }
@@ -551,7 +552,7 @@ fun ImageView.loadImageWithPlaceHolder(
 }
 
 fun toFormattedDate(dateStr: String): String {
-    val sdfInput = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX", Locale.getDefault())
+    val sdfInput = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSS", Locale.getDefault())
     val date = sdfInput.parse(dateStr)
     val sdfOutput = SimpleDateFormat("dd MMM yyyy")
     sdfOutput.timeZone = TimeZone.getTimeZone("Etc/UTC")
@@ -591,7 +592,7 @@ fun trimID(string: String): String? {
 }
 
 fun getCurrentDate(): String {
-    val sdfInput = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX", Locale.getDefault())
+    val sdfInput = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSS", Locale.getDefault())
     val sdfOutput = SimpleDateFormat("dd MMM yyyy")
     sdfOutput.timeZone = TimeZone.getTimeZone("Etc/UTC")
     val formatted = sdfOutput.format(Date())
