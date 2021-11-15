@@ -43,7 +43,7 @@ class EmCashHelper(val appContext: Context, val listener: EmCashListener) {
         syncManager.fcmToken = token
         authRepository.performSwitchAccount(
             request,
-            onApiCallBack = { status, response, error ->
+            onApiCallBack = { status, _, error ->
                 when (status) {
                     true -> {
                         listener.onLoginStatusCallback(true)

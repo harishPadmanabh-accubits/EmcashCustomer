@@ -39,28 +39,16 @@ class PaymentChatListAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentItem = getItem(position)
         holder.itemView.apply {
-//            if (getCurrentDate().equals(currentItem?.date)) {
-//                tv_date.text = "Today"
-//            } else {
-//                tv_date.text = currentItem?.date
-//
-//            }
-//            rv_chat_details.apply {
-//                adapter = PaymentItemListAdapter(
-//                    ArrayList(currentItem?.transactions),listener
-//                )
-//            }
-
-            currentItem?.let {
-                if (getCurrentDate().equals(currentItem?.date)) {
+            currentItem?.let {item->
+                if (getCurrentDate().equals(item.date)) {
                     tv_date.text = "Today"
                 } else {
-                    tv_date.text = currentItem?.date
+                    tv_date.text =item.date
                 }
 
                 rv_chat_details.apply {
                     adapter = PaymentItemListAdapter(
-                       it.transactions,listener
+                        item.transactions,listener
                     )
                 }
             }

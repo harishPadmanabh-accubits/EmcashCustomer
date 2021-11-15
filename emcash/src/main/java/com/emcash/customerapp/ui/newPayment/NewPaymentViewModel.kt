@@ -26,8 +26,6 @@ import com.emcash.customerapp.ui.newPayment.adapters.ContactsPagingSource
 import com.emcash.customerapp.ui.newPayment.adapters.TransactionHistoryPagingSource
 import com.emcash.customerapp.ui.wallet.WalletActivityPagingSource
 import com.emcash.customerapp.utils.DEFAULT_PAGE_CONFIG
-import com.emcash.customerapp.utils.ITEM_ALL_CONTACTS
-import com.emcash.customerapp.utils.ITEM_RECENT_CONTACTS
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.withContext

@@ -8,6 +8,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.emcash.customerapp.R
 import com.emcash.customerapp.extensions.toFormattedTime
 import com.emcash.customerapp.model.notifications.Notification
+import com.emcash.customerapp.utils.EmCashUtils
+import com.emcash.customerapp.utils.EmCashUtils.NOTIFICATION_STATUS_COMPLETE_REGISTRATION
+import com.emcash.customerapp.utils.EmCashUtils.NOTIFICATION_STATUS_PENDING
+import com.emcash.customerapp.utils.EmCashUtils.NOTIFICATION_STATUS_REJECTED
+import com.emcash.customerapp.utils.EmCashUtils.NOTIFICATION_STATUS_REJECTED_FROM_MERCHANT
+import com.emcash.customerapp.utils.EmCashUtils.NOTIFICATION_STATUS_SUCCESS
 import kotlinx.android.synthetic.main.item_notification_details.view.*
 
 class NotificationDetailsAdapter(
@@ -36,19 +42,19 @@ class NotificationDetailsAdapter(
             tv_notification.text = data[position].message
             tv_time.text = toFormattedTime(data[position].createdAt)
             when (data[position].type) {
-                1 -> {//pending
+                NOTIFICATION_STATUS_PENDING -> {//pending
                     iv_point.setColorFilter(ContextCompat.getColor(context, R.color.orange))
                 }
-                2 -> {//success
+                NOTIFICATION_STATUS_SUCCESS -> {//success
                     iv_point.setColorFilter(ContextCompat.getColor(context, R.color.green))
                 }
-                3 -> {//rejected
+                NOTIFICATION_STATUS_REJECTED -> {//rejected
                     iv_point.setColorFilter(ContextCompat.getColor(context, R.color.red))
                 }
-                6 -> {//registration completed
+                NOTIFICATION_STATUS_COMPLETE_REGISTRATION -> {//registration completed
                     iv_point.setColorFilter(ContextCompat.getColor(context, R.color.app_sky_blue));
                 }
-                5 -> {//rejected from merchant side
+                NOTIFICATION_STATUS_REJECTED_FROM_MERCHANT -> {//rejected from merchant side
                     iv_point.setColorFilter(ContextCompat.getColor(context, R.color.red));
                 }
             }
