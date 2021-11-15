@@ -46,11 +46,11 @@ class EmCashHelper(val appContext: Context, val listener: EmCashListener) {
             onApiCallBack = { status, response, error ->
                 when (status) {
                     true -> {
-                        listener.onLoginSuccess(true)
+                        listener.onLoginStatusCallback(true)
                         handleLaunchNavigation()
                     }
                     false -> {
-                        listener.onLoginSuccess(false)
+                        listener.onLoginStatusCallback(false)
                         appContext.showShortToast(error)
                     }
                 }
@@ -196,11 +196,11 @@ class EmCashHelper(val appContext: Context, val listener: EmCashListener) {
             onApiCallBack = { status, response, error ->
                 when (status) {
                     true -> {
-                        listener.onLoginSuccess(true)
+                        listener.onLoginStatusCallback(true)
                         handleDeepLink(deeplink)
                     }
                     false -> {
-                        listener.onLoginSuccess(false)
+                        listener.onLoginStatusCallback(false)
                         appContext.showShortToast(error)
                     }
                 }
@@ -219,7 +219,7 @@ class EmCashHelper(val appContext: Context, val listener: EmCashListener) {
 }
 
 interface EmCashListener {
-    fun onLoginSuccess(status: Boolean) {}
+    fun onLoginStatusCallback(status: Boolean) {}
     fun onVerifyPin(forAction: TransactionType, sourceIfAny:Int = 0) {}
     fun onEditProfile(){}
     fun onGetFallBackScreen():String{

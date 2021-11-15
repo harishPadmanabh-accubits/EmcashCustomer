@@ -35,8 +35,6 @@ class MainActivity : AppCompatActivity() ,EmCashListener{
         val className = "com.emcash.emcashcustomer.MainActivity"
     }
 
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -71,17 +69,13 @@ class MainActivity : AppCompatActivity() ,EmCashListener{
                 }
 
             }catch (e:Exception){
-                Timber.e("HHP ENTERED LOGIN BUTTON exc $e")
                 Toast.makeText(this, "$e", Toast.LENGTH_SHORT).show()
             }
         }
-
-
     }
 
 
-    override fun onLoginSuccess(status: Boolean) {
-        Log.e("Listening","at Parent login status $status")
+    override fun onLoginStatusCallback(status: Boolean) {
         if(status)
             pb_login.hide()
         else

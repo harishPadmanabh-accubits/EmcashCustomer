@@ -276,7 +276,7 @@ class NewPaymentActivity : AppCompatActivity(), EasyPermissions.PermissionCallba
         }
     }
 
-    override fun onLoginSuccess(status: Boolean) {
+    override fun onLoginStatusCallback(status: Boolean) {
     }
 
 

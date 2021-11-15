@@ -8,3 +8,6 @@ enum class TransactionHistoryScreens{
 enum class BankAccountScreenTypes{
     ADD,EDIT
 }
+enum class CurrentAccountContext{
+    EMPAY,EMCASH
+}
