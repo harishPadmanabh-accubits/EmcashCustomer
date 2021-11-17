@@ -3,12 +3,10 @@
 
     <item
         android:id="@+id/refresh"
-        android:title="Refresh" />
+        android:title="@string/refresh" />
+
     <item
-        android:id="@+id/help_support"
-        android:title="Help &amp; Support" />
-    <item
-        android:id="@+id/block_account"
-        android:title="Block Account" />
+        android:id="@+id/handle_blocking"
+        android:title="@string/block_account" />
 
 </menu>

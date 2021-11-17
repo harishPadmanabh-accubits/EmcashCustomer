@@ -93,4 +93,11 @@ Payment cards saved to your separate  Payments account are distinct from any Vir
     <string name="payment_initiated">Payment Intiated</string>
     <string name="handshaked">Handshaked</string>
     <string name="you">You</string>
+    <string name="refresh">Refresh</string>
+    <string name="block_account">Block Account</string>
+    <string name="unblock_account">Unblock Account</string>
+    <string name="block_success">This user has been blocked.</string>
+    <string name="block">Block</string>
+    <string name="unblock_success">This user has been unblocked.</string>
+
 </resources>

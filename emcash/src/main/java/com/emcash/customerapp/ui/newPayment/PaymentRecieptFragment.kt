@@ -171,7 +171,7 @@ class PaymentReceiptFragment : Fragment(R.layout.payment_reciept) {
         } else {
             iv_handshake.apply {
                 loadImageWithResId(R.drawable.handshake)
-                // setPadding(24)
+                 setPadding(24)
             }
             tv_handshake_date.show()
             tv_handshake_status.apply {

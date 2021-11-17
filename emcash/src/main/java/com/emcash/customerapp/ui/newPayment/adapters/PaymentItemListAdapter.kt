@@ -39,11 +39,11 @@ class PaymentItemListAdapter(
         holder.itemView.apply {
 
             ll_chat_receive.setOnClickListener {
-                listener.onItemClick(transactions[position].id)
+                listener.onInfoCardClicked(transactions[position].id)
             }
 
             ll_chat_send.setOnClickListener {
-                listener.onItemClick(transactions[position].id)
+                listener.onInfoCardClicked(transactions[position].id)
             }
             bt_reject.setOnClickListener {
                 listener.onRejectPayment(transactions[position])

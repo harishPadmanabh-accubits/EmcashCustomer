@@ -28,12 +28,13 @@ import com.emcash.customerapp.ui.wallet.WalletActivityPagingSource
 import com.emcash.customerapp.utils.DEFAULT_PAGE_CONFIG
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import timber.log.Timber
 
 class NewPaymentViewModel(val app: Application) : AndroidViewModel(app) {
 
-    val paymentRepository = PaymentRepository(app)
+    private val paymentRepository = PaymentRepository(app)
     val syncManager = SyncManager(app)
 
 
@@ -109,8 +110,8 @@ class NewPaymentViewModel(val app: Application) : AndroidViewModel(app) {
         return _transactionDetails
     }
 
-    val _refreshChat  = MutableLiveData<Boolean>()
-    val pagedHistoryItems = Transformations.switchMap(_refreshChat){
+    val _refreshChat = MutableLiveData<Boolean>()
+    val pagedHistoryItems = Transformations.switchMap(_refreshChat) {
         Pager(PagingConfig(pageSize = DEFAULT_PAGE_CONFIG)) {
             TransactionHistoryPagingSource(
                 paymentRepository.api,
@@ -154,66 +155,49 @@ class NewPaymentViewModel(val app: Application) : AndroidViewModel(app) {
     }
 
     val recentContactsCache = MutableLiveData<RecentTransactionResponse.Data>()
-    val recentContacts = paymentRepository.getRecentTransactions(){
+    val recentContacts = paymentRepository.getRecentTransactions() {
         recentContactsCache.value = it
     }
 
-    val _blockStatus = MutableLiveData<ApiMapper<BlockObserverModel>>()
 
-    fun blockContact(userId: Int): MutableLiveData<ApiMapper<BlockObserverModel>> {
-        _blockStatus.value = ApiMapper(ApiCallStatus.LOADING, null, null)
+    fun blockAccount(userId: Int, onResult: (status: Boolean, error: String?) -> Unit) {
         paymentRepository.blockContact(userId) { status, message, result ->
             when (status) {
                 true -> {
                     if (result?.status == true)
-                        _blockStatus.value = ApiMapper(
-                            ApiCallStatus.SUCCESS,
-                            BlockObserverModel(true, BlockType.BLOCK),
-                            null
-                        )
+                        onResult(true, null)
                     else
-                        _blockStatus.value = ApiMapper(
-                            ApiCallStatus.ERROR,
-                            BlockObserverModel(false, BlockType.BLOCK),
-                            null
-                        )
-
-
+                        onResult(false, message)
                 }
                 false -> {
-                    _blockStatus.value = ApiMapper(ApiCallStatus.ERROR, null, message)
-
+                    onResult(false, message)
                 }
             }
         }
-        return _blockStatus
 
     }
 
-    fun unblockContact(userId: Int): MutableLiveData<ApiMapper<BlockObserverModel>> {
-        _blockStatus.value = ApiMapper(ApiCallStatus.LOADING, null, null)
+    fun blockAccountAsync(userId: Int,onResult: (status: Boolean, error: String?) -> Unit){
+        viewModelScope.launch {
+                paymentRepository.blockContactAsync(userId){status, message ->
+                    if (status != null) {
+                        onResult(status,message)
+                    }
+            }
+        }
+    }
+
+    fun unblockAccount(userId: Int, onResult: (status: Boolean, error: String?) -> Unit) {
         paymentRepository.unBlockContact(userId) { status, message, result ->
             when (status) {
                 true -> {
-                    if (result?.status == true)
-                        _blockStatus.value = ApiMapper(
-                            ApiCallStatus.SUCCESS,
-                            BlockObserverModel(true, BlockType.UNBLOCK),
-                            null
-                        )
-                    else
-                        _blockStatus.value = ApiMapper(
-                            ApiCallStatus.ERROR,
-                            BlockObserverModel(false, BlockType.UNBLOCK),
-                            null
-                        )                }
+                    result?.status?.let { onResult(it, message) }
+                }
                 false -> {
-                    _blockStatus.value = ApiMapper(ApiCallStatus.ERROR, null, message)
-
+                    onResult(false, message)
                 }
             }
         }
-        return _blockStatus
     }
 
 }
