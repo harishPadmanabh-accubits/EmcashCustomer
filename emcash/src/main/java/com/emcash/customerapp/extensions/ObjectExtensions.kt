@@ -47,6 +47,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 import java.util.regex.Pattern
 
+
 private const val TIME_STAMP_FORMAT = "EEEE, MMMM d, yyyy - hh:mm:ss a"
 private const val DATE_FORMAT = "yyyy-MM-dd"
 
@@ -551,20 +552,44 @@ fun ImageView.loadImageWithPlaceHolder(
 
 }
 
+fun String.toLocalDate():String{
+    val sdfInput = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSS")
+    sdfInput .timeZone = TimeZone.getTimeZone("UTC")
+    val date = sdfInput.parse(this)
+    val sdfOutput = SimpleDateFormat("dd MMM yyyy")
+    sdfOutput.timeZone = TimeZone.getDefault()
+    val formatted = sdfOutput.format(date)
+    return formatted
+}
+
+fun String.toLocalTime():String{
+    Timber.e("Datext $this")
+    val sdfInput = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSS")
+    sdfInput .timeZone = TimeZone.getTimeZone("UTC")
+    val date = sdfInput.parse(this)
+    val sdfOutput = SimpleDateFormat("hh:mm a")
+    sdfOutput.timeZone = TimeZone.getDefault()
+    val formatted = sdfOutput.format(date)
+    return formatted
+}
+
 fun toFormattedDate(dateStr: String): String {
-    val sdfInput = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSS", Locale.getDefault())
+    val sdfInput = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSS")
+    sdfInput .timeZone = TimeZone.getTimeZone("UTC")
     val date = sdfInput.parse(dateStr)
     val sdfOutput = SimpleDateFormat("dd MMM yyyy")
-    sdfOutput.timeZone = TimeZone.getTimeZone("Etc/UTC")
+    sdfOutput.timeZone = TimeZone.getDefault()
     val formatted = sdfOutput.format(date)
     return formatted
 }
 
 fun toFormattedTime(dateStr: String): String? {
     Timber.e("Datext $dateStr")
-    val sdfInput = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSS", Locale.getDefault())
+    val sdfInput = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSS")
+    sdfInput .timeZone = TimeZone.getTimeZone("UTC")
     val date = sdfInput.parse(dateStr)
     val sdfOutput = SimpleDateFormat("hh:mm a")
+    sdfOutput.timeZone = TimeZone.getDefault()
     val formatted = sdfOutput.format(date)
     return formatted
 

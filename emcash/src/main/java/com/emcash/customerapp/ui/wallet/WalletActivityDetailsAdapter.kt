@@ -10,12 +10,12 @@ import com.emcash.customerapp.extensions.hide
 import com.emcash.customerapp.extensions.show
 import com.emcash.customerapp.extensions.toFormattedTime
 
-import com.emcash.customerapp.model.wallet.WalletActivityGroupResponse
-import com.emcash.customerapp.model.wallet.WalletActivityGroupResponse.Data.WalletActivityGroup
 import com.emcash.customerapp.model.wallet.WalletActivityGroupResponse.Data.WalletActivityGroup.WalletActivity
-import com.emcash.customerapp.model.wallet.WalletActivityResponse
-import com.emcash.customerapp.model.wallet.WalletActivityResponse.Data
-import com.emcash.customerapp.model.wallet.WalletActivityResponse.Data.*
+import com.emcash.customerapp.utils.EmCashUtils.PAYMENT_MODE_DEBIT
+import com.emcash.customerapp.utils.EmCashUtils.PAYMENT_TYPE_REQUEST
+import com.emcash.customerapp.utils.EmCashUtils.PAYMENT_TYPE_TOPUP
+import com.emcash.customerapp.utils.EmCashUtils.PAYMENT_TYPE_TRANSFER
+import com.emcash.customerapp.utils.EmCashUtils.PAYMENT_TYPE_WITHDRAW
 import kotlinx.android.synthetic.main.item_inner_activity_details.view.*
 
 class WalletActivityDetailsAdapter(val data : List<WalletActivity>):RecyclerView.Adapter<WalletActivityDetailsAdapter.ViewHolder>() {
@@ -34,8 +34,8 @@ class WalletActivityDetailsAdapter(val data : List<WalletActivity>):RecyclerView
         holder.itemView.apply {
             tv_time.text = toFormattedTime(currentItem.updatedAt)
             val type=currentItem.transactionInfo.type
-            if(type== TYPE_TRANSFER){
-                if (currentItem.mode == MODE_CREDIT) {
+            if(type== PAYMENT_TYPE_TRANSFER){
+                if (currentItem.mode == PAYMENT_MODE_DEBIT) {
                     tv_type_indicator.text=currentItem.remitter.name
                     iv_type_indicator_load_emcash.setBackgroundResource(R.drawable.ic_inbound)
                     iv_type_indicator_load_emcash.show()
@@ -50,21 +50,21 @@ class WalletActivityDetailsAdapter(val data : List<WalletActivity>):RecyclerView
 
                 }
             }
-            else if(type==TYPE_TOPUP){
+            else if(type==PAYMENT_TYPE_TOPUP){
                 iv_type_indicator_load_emcash.setBackgroundResource(R.drawable.ic_icon_load_emcash)
                 iv_type_indicator_load_emcash.show()
                 tv_type_indicator.text="Loaded"
                 tv_value_emcash.text = currentItem.transactionInfo.amount.toString()
                 tv_value_changed.text = "+${currentItem.transactionInfo.amount}"
-            }else if(type==TYPE_WITHDRAW){
+            }else if(type==PAYMENT_TYPE_WITHDRAW){
                 iv_type_indicator_load_emcash.setBackgroundResource(R.drawable.ic_icon_convert)
                 iv_type_indicator_load_emcash.show()
                 tv_type_indicator.text="Converted"
                 tv_value_emcash.text = currentItem.transactionInfo.amount.toString()
                 tv_value_changed.text = "AED ${currentItem.transactionInfo.amount}"
                 iv_coin_image.hide()
-            }else if(type ==TYPE_REQUEST ){
-                if (currentItem.mode == MODE_CREDIT) {
+            }else if(type ==PAYMENT_TYPE_REQUEST ){
+                if (currentItem.mode == PAYMENT_MODE_DEBIT) {
                     tv_type_indicator.text=currentItem.remitter.name
                     iv_type_indicator_load_emcash.setBackgroundResource(R.drawable.ic_inbound)
                     iv_type_indicator_load_emcash.show()
@@ -80,7 +80,7 @@ class WalletActivityDetailsAdapter(val data : List<WalletActivity>):RecyclerView
 
                 }
             }
-            if (currentItem.mode == 1) {
+            if (currentItem.mode == PAYMENT_MODE_DEBIT) {
                 tv_value_changed.text="+"+currentItem.transactionInfo.amount.toString()
 
             } else {
@@ -90,26 +90,14 @@ class WalletActivityDetailsAdapter(val data : List<WalletActivity>):RecyclerView
 
             tv_balance.apply {
                 tv_balance.text = currentItem.balance.toString()
-                if (currentItem.mode == 1) {
+                if (currentItem.mode == PAYMENT_MODE_DEBIT) {
                     setTextColor(ContextCompat.getColor(context,R.color.green))
-
                 } else {
-
                     setTextColor(ContextCompat.getColor(context,R.color.red))
-
                 }
             }
 
         }
     }
 
-
-    companion object{
-        const val TYPE_TRANSFER=1
-        const val TYPE_TOPUP=2
-        const val TYPE_WITHDRAW = 3
-        const val TYPE_REQUEST=4
-        const val MODE_CREDIT=1
-        const val MODE_DEBIT=2
-    }
 }

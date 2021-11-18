@@ -203,6 +203,9 @@ interface EmCashApis {
         @Body payerAuthenticatorRequest: PayerAuthenticatorRequest
     ): Call<PayerAuthenticatorResponse>
 
-
+    @POST("v1/customers/contacts/{user_id}/block")
+    suspend fun blockContactAsync(
+        @Path("user_id") user_id: Int
+    ): BlockedResponse
 
 }

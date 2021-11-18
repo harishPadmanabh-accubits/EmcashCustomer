@@ -17,7 +17,7 @@ import timber.log.Timber
 class PaymentRepository(private val context: Context) {
     private val syncManager = SyncManager(context)
     val api = EmCashApiManager(context).api
-    fun getRecentTransactions(onCache:(data:RecentTransactionResponse.Data)->Unit): LiveData<RecentTransactionResponse.Data> {
+    fun getRecentTransactions(onCache: (data: RecentTransactionResponse.Data) -> Unit): LiveData<RecentTransactionResponse.Data> {
         val _transactions = MutableLiveData<RecentTransactionResponse.Data>()
         api.getRecentTransactions()
             .awaitResponse(onSuccess = { response ->
@@ -119,7 +119,7 @@ class PaymentRepository(private val context: Context) {
     fun requestPayment(
         paymentRequest: PaymentRequest,
         onApiCallBack: (status: Boolean, response: String?, error: String?) -> Unit
-    ){
+    ) {
         api.requestPayment(paymentRequest).awaitResponse(onSuccess = {
             if (!it?.data?.referenceId.isNullOrEmpty()) {
                 syncManager.initiatedRefId = it?.data?.referenceId
@@ -133,20 +133,20 @@ class PaymentRepository(private val context: Context) {
 
     fun acceptPayment(
         onApiCallBack: (status: Boolean, error: String?) -> Unit
-    ){
+    ) {
         val refId = syncManager.initiatedRefId
-        if(refId.isNullOrEmpty()){
-            onApiCallBack(false,"Invalid Transaction")
-        }else{
+        if (refId.isNullOrEmpty()) {
+            onApiCallBack(false, "Invalid Transaction")
+        } else {
             val request = PaymentApprovalRequest(refId)
             api.acceptPayment(request).awaitResponse(onSuccess = {
                 Timber.e("Accept Response $it")
-                if(it?.status == true)
-                    onApiCallBack(true,null)
+                if (it?.status == true)
+                    onApiCallBack(true, null)
                 else
-                    onApiCallBack(false,it?.message)
-            },onFailure = {
-                onApiCallBack(false,it)
+                    onApiCallBack(false, it?.message)
+            }, onFailure = {
+                onApiCallBack(false, it)
             })
         }
 
@@ -155,19 +155,19 @@ class PaymentRepository(private val context: Context) {
 
     fun rejectPayment(
         onApiCallBack: (status: Boolean, error: String?) -> Unit
-    ){
+    ) {
         val refId = syncManager.initiatedRefId
-        if(refId.isNullOrEmpty()){
-            onApiCallBack(false,"Invalid Transaction")
-        }else{
+        if (refId.isNullOrEmpty()) {
+            onApiCallBack(false, "Invalid Transaction")
+        } else {
             val request = PaymentApprovalRequest(refId)
             api.rejectPayment(request).awaitResponse(onSuccess = {
-                if(it?.status == true)
-                    onApiCallBack(true,null)
+                if (it?.status == true)
+                    onApiCallBack(true, null)
                 else
-                    onApiCallBack(false,it?.message)
-            },onFailure = {
-                onApiCallBack(false,it)
+                    onApiCallBack(false, it?.message)
+            }, onFailure = {
+                onApiCallBack(false, it)
             })
         }
 
@@ -175,50 +175,49 @@ class PaymentRepository(private val context: Context) {
 
     fun getQRResult(
         qrRequest: QRRequest,
-        onApiCallBack: (status: Boolean,response:QRResponse.Data?, error: String?) -> Unit
-    ){
+        onApiCallBack: (status: Boolean, response: QRResponse.Data?, error: String?) -> Unit
+    ) {
         api.getQRResult(qrRequest).awaitResponse(onSuccess = {
             val data = it?.data
             data?.let {
-                onApiCallBack(true,data,null)
+                onApiCallBack(true, data, null)
             }
-        },onFailure = {
-            onApiCallBack(false,null, it)
+        }, onFailure = {
+            onApiCallBack(false, null, it)
         })
     }
 
     fun blockContact(
         userId: Int,
-        onApiCallback: (status: Boolean, message: String?, result: BlockedResponse?) -> Unit
+        onApiCallback: (status: Boolean?, message: String?, result: BlockedResponse?) -> Unit
     ) {
-        api.blockContact( userId).awaitResponse(
+        api.blockContact(userId).awaitResponse(
             onFailure = {
                 onApiCallback(false, it, null)
-
             }, onSuccess = {
-                var data = it
-                data.let {
-                    onApiCallback(true, null, data)
-
-                }
+                onApiCallback(it?.status, it?.message, it)
             }
         )
     }
 
+    suspend fun blockContactAsync(userId: Int,onApiCallback: (status: Boolean?, message: String?) -> Unit){
+        try {
+            val response = api.blockContactAsync(userId)
+            onApiCallback(response.status,response.error)
+        }catch (e:Exception){
+            onApiCallback(false,e.localizedMessage)
+        }
+    }
+
     fun unBlockContact(
         userId: Int,
-        onApiCallback: (status: Boolean, message: String?, result: UnblockedResponse?) -> Unit
+        onApiCallback: (status: Boolean?, message: String?, result: UnblockedResponse?) -> Unit
     ) {
-        api.unBlockContact( userId).awaitResponse(
+        api.unBlockContact(userId).awaitResponse(
             onFailure = {
                 onApiCallback(false, it, null)
-
             }, onSuccess = {
-                var data = it
-                data.let {
-                    onApiCallback(true, null, data)
-
-                }
+                onApiCallback(it?.status, it?.message, it)
             }
         )
     }

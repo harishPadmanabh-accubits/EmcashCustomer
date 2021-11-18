@@ -104,7 +104,8 @@
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:elevation="4dp"
+        android:elevation="14dp"
+        app:cardElevation="14dp"
         app:cardBackgroundColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -133,7 +134,7 @@
                android:layout_height="wrap_content"
                android:layout_marginStart="16dp"
                android:layout_marginTop="20dp"
-               android:layout_marginBottom="50dp"
+               android:layout_marginBottom="30dp"
                app:coin_size="small"
                app:layout_constraintBottom_toBottomOf="parent"
                app:layout_constraintStart_toStartOf="parent"
@@ -174,30 +175,12 @@
                android:textColor="@color/app_blue"
                android:textSize="10sp"
                app:backgroundTint="@null"
+               android:foreground="?selectableItemBackground"
                app:layout_constraintEnd_toStartOf="@+id/btn_pay"
                app:layout_constraintTop_toTopOf="@+id/btn_pay" />
 
        </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
-
-<!--    <ScrollView-->
-<!--        android:layout_width="0dp"-->
-<!--        android:layout_height="0dp"-->
-<!--        android:layout_marginBottom="12dp"-->
-<!--        android:layout_marginTop="12dp"-->
-<!--        android:fillViewport="true"-->
-<!--        android:id="@+id/dummy_scroll"-->
-<!--        app:layout_constraintBottom_toTopOf="@+id/cv_footer"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@+id/fl_user_details">-->
-
-<!--        <FrameLayout-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:id="@+id/fl_chats"-->
-<!--            android:layout_height="wrap_content">-->
-<!--            <include layout="@layout/item_chat"/>-->
-<!--        </FrameLayout>-->
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_history"
