@@ -1,20 +1,19 @@
 package com.emcash.customerapp.ui.history
 
 import android.app.Application
-import androidx.lifecycle.*
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import androidx.paging.*
-import com.emcash.customerapp.data.network.ApiCallStatus
-import com.emcash.customerapp.data.network.ApiMapper
 import com.emcash.customerapp.data.network.EmCashApiManager
-import com.emcash.customerapp.data.repos.TransactionHistoryRepository
 import com.emcash.customerapp.enums.TransactionHistoryScreens
 import com.emcash.customerapp.extensions.default
-import com.emcash.customerapp.extensions.toFormattedDate
-import com.emcash.customerapp.model.transactions.*
+import com.emcash.customerapp.model.transactions.HistoryFilter
+import com.emcash.customerapp.model.transactions.TransactionHistoryGroupResponse
 import com.emcash.customerapp.ui.history.adapters.HistoryPagingSource
 import com.emcash.customerapp.utils.DEFAULT_PAGE_CONFIG
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.flow.Flow
 import timber.log.Timber
 
 class TransactionHistoryViewModel(val app: Application) : AndroidViewModel(app) {
@@ -67,10 +66,6 @@ class TransactionHistoryViewModel(val app: Application) : AndroidViewModel(app) 
     val pagedTransactions: LiveData<PagingData<TransactionHistoryGroupResponse.Data.TransactionGroup>> =
         Transformations.switchMap(filter) {
             Pager(PagingConfig(DEFAULT_PAGE_CONFIG)) {
-                val filterValue = filter.value
-                filterValue.let {
-
-                }
                 HistoryPagingSource(
                     api,
                     filter.value?.mode ?: "0",

@@ -23,7 +23,7 @@ class TransactionsTabAdapter(fa: FragmentActivity) : FragmentStateAdapter(fa) {
             2->{
                 OutBoundTransactionsFragment()
             }
-            else -> throw Exception("Illegal positon in Tab layout")
+            else -> throw Exception("Illegal position in Tab layout")
         }
     }
 

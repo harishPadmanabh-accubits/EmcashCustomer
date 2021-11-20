@@ -212,9 +212,7 @@ class TransactionHistory : FragmentActivity(), DurationItemClickListener {
             )
         TabLayoutMediator(tab_layout, viewpager_tabs) { tab, position ->
             when (position) {
-                0 -> tab.apply {
-                    text = getString(R.string.all)
-                }
+                0 -> tab.text = getString(R.string.all)
                 1 -> tab.text = getString(R.string.inbound)
                 2 -> tab.text = getString(R.string.outbound)
             }

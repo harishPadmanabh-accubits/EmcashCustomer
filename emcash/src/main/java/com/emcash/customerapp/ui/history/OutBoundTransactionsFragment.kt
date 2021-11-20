@@ -12,7 +12,6 @@ import com.emcash.customerapp.enums.TransactionHistoryScreens
 import com.emcash.customerapp.extensions.*
 import com.emcash.customerapp.model.transactions.HistoryFilter
 import com.emcash.customerapp.ui.history.adapters.HistoryPagerAdapter
-import com.emcash.customerapp.utils.LoaderDialog
 import kotlinx.android.synthetic.main.layout_outbound_transactions.*
 import kotlinx.android.synthetic.main.layout_outbound_transactions.empty_view
 import kotlinx.android.synthetic.main.layout_outbound_transactions.refresh_layout
@@ -20,8 +19,7 @@ import kotlinx.android.synthetic.main.layout_outbound_transactions.refresh_layou
 class OutBoundTransactionsFragment : Fragment(R.layout.layout_outbound_transactions) {
 
     private val viewModel: TransactionHistoryViewModel by activityViewModels()
-    private val loader by lazy { LoaderDialog(requireContext()) }
-    val pagedAdapter by lazy { HistoryPagerAdapter() }
+    private val pagedAdapter by lazy { HistoryPagerAdapter() }
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -51,7 +49,7 @@ class OutBoundTransactionsFragment : Fragment(R.layout.layout_outbound_transacti
         }
     }
 
-    fun refresh() {
+    private fun refresh() {
         rv_outbound.adapter = pagedAdapter
         viewModel.filter.value = HistoryFilter(mode = "2")
     }
@@ -62,7 +60,7 @@ class OutBoundTransactionsFragment : Fragment(R.layout.layout_outbound_transacti
         refresh()
     }
 
-    fun handleEmptyView(shouldShow: Boolean) {
+    private fun handleEmptyView(shouldShow: Boolean) {
         if (shouldShow) {
             refresh_layout.hide()
             empty_view.show()
