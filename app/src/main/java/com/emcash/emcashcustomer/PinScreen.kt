@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.animation.AnimationUtils
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
+import android.widget.Toast
 import com.emcash.customerapp.EmCashCommunicationHelper
 import com.emcash.customerapp.EmCashHelper
 import com.emcash.customerapp.EmCashListener
@@ -15,6 +16,7 @@ import com.emcash.customerapp.extensions.onDeletePressed
 import com.emcash.customerapp.extensions.showShortToast
 import com.emcash.customerapp.utils.KEY_TRANSACTION_TYPE
 import kotlinx.android.synthetic.main.activity_pin_screen.*
+import java.lang.Exception
 
 class PinScreen : AppCompatActivity() {
 
@@ -173,9 +175,14 @@ class PinScreen : AppCompatActivity() {
     }
 
     private fun onValidPin(){
-        val emCashHelper = EmCashHelper(applicationContext,EmCashCommunicationHelper.getParentListener())
-        val type = bundle?.get(KEY_TRANSACTION_TYPE) as TransactionType
-        emCashHelper.onPinVerified(type)
+        try {
+            val emCashHelper = EmCashHelper(applicationContext,EmCashCommunicationHelper.getParentListener())
+            val type = bundle?.get(KEY_TRANSACTION_TYPE) as TransactionType
+            emCashHelper.onPinVerified(type)
+        }catch (e:Exception){
+            Toast.makeText(this,e.localizedMessage,Toast.LENGTH_SHORT).show()
+        }
+
     }
 
 
