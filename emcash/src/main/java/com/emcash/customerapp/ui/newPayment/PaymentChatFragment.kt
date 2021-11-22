@@ -284,6 +284,11 @@ class PaymentChatFragment : Fragment(R.layout.payment_chats), PaymentHistoryItem
         viewModel._refreshChat.value = true
     }
 
+    override fun onDestroyView() {
+        rv_history.adapter = null
+        super.onDestroyView()
+    }
+
 
 }
 

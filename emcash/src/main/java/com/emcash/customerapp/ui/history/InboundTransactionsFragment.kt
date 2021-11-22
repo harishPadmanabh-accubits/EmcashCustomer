@@ -12,12 +12,16 @@ import com.emcash.customerapp.enums.TransactionHistoryScreens
 import com.emcash.customerapp.extensions.*
 import com.emcash.customerapp.model.transactions.HistoryFilter
 import com.emcash.customerapp.ui.history.adapters.HistoryPagerAdapter
+import kotlinx.android.synthetic.main.item_transaction_item.*
+import kotlinx.android.synthetic.main.item_transaction_item.view.*
+import kotlinx.android.synthetic.main.layout_all_transactions.*
 import kotlinx.android.synthetic.main.layout_inbound_transactions.*
 import kotlinx.android.synthetic.main.layout_inbound_transactions.empty_view
 import kotlinx.android.synthetic.main.layout_inbound_transactions.refresh_layout
 import timber.log.Timber
+import java.lang.Exception
 
-class InboundTransactionsFragment:Fragment(R.layout.layout_inbound_transactions) {
+class InboundTransactionsFragment : Fragment(R.layout.layout_inbound_transactions) {
 
     private val viewModel: TransactionHistoryViewModel by activityViewModels()
     private val pagedAdapter by lazy { HistoryPagerAdapter() }
@@ -28,7 +32,7 @@ class InboundTransactionsFragment:Fragment(R.layout.layout_inbound_transactions)
         Timber.e("on view created AllTransactionsFragment")
         viewModel.scope = viewLifecycleOwner.lifecycleScope
         rv_inbound.adapter = pagedAdapter
-        if(isVisible)
+        if (isVisible)
             refresh()
         observe()
         refresh_layout.setOnRefreshListener {
@@ -56,7 +60,7 @@ class InboundTransactionsFragment:Fragment(R.layout.layout_inbound_transactions)
     }
 
 
-    private fun refresh(){
+    private fun refresh() {
         Timber.e("Refreshed")
         viewModel.filter.value = HistoryFilter(mode = "1")
     }
@@ -81,4 +85,22 @@ class InboundTransactionsFragment:Fragment(R.layout.layout_inbound_transactions)
         }
     }
 
+    override fun onDestroyView() {
+        clearAdapterInstances()
+        super.onDestroyView()
+    }
+
+    private fun clearAdapterInstances() {
+        try {
+            val viewHolder =
+                rv_inbound.findContainingViewHolder(rv_transaction_details) as HistoryPagerAdapter.ViewHolder
+            viewHolder.itemView.rv_transaction_details?.let {
+                it.adapter = null
+            }
+            rv_inbound.adapter = null
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+    }
 }

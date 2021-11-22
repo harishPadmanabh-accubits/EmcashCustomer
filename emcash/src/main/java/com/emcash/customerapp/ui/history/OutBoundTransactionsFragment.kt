@@ -12,9 +12,12 @@ import com.emcash.customerapp.enums.TransactionHistoryScreens
 import com.emcash.customerapp.extensions.*
 import com.emcash.customerapp.model.transactions.HistoryFilter
 import com.emcash.customerapp.ui.history.adapters.HistoryPagerAdapter
+import kotlinx.android.synthetic.main.item_transaction_item.*
+import kotlinx.android.synthetic.main.item_transaction_item.view.*
 import kotlinx.android.synthetic.main.layout_outbound_transactions.*
 import kotlinx.android.synthetic.main.layout_outbound_transactions.empty_view
 import kotlinx.android.synthetic.main.layout_outbound_transactions.refresh_layout
+import java.lang.Exception
 
 class OutBoundTransactionsFragment : Fragment(R.layout.layout_outbound_transactions) {
 
@@ -74,5 +77,22 @@ class OutBoundTransactionsFragment : Fragment(R.layout.layout_outbound_transacti
         }
     }
 
+    override fun onDestroyView() {
+        clearAdapterInstances()
+        super.onDestroyView()
+    }
+
+    private fun clearAdapterInstances() {
+        try {
+            val viewHolder =
+                rv_outbound.findContainingViewHolder(rv_transaction_details) as HistoryPagerAdapter.ViewHolder
+            viewHolder.itemView.rv_transaction_details?.let {
+                it.adapter = null
+            }
+            rv_outbound.adapter = null
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
 
 }

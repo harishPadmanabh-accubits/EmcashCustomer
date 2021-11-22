@@ -14,10 +14,13 @@ import com.emcash.customerapp.extensions.show
 import com.emcash.customerapp.extensions.stopIfRefreshing
 import com.emcash.customerapp.model.transactions.HistoryFilter
 import com.emcash.customerapp.ui.history.adapters.HistoryPagerAdapter
+import kotlinx.android.synthetic.main.item_transaction_item.*
+import kotlinx.android.synthetic.main.item_transaction_item.view.*
 import kotlinx.android.synthetic.main.layout_all_transactions.*
 import timber.log.Timber
+import java.lang.Exception
 
-class AllTransactionsFragment:Fragment(R.layout.layout_all_transactions) {
+class AllTransactionsFragment : Fragment(R.layout.layout_all_transactions) {
 
     private val viewModel: TransactionHistoryViewModel by activityViewModels()
     private val pagedAdapter by lazy { HistoryPagerAdapter() }
@@ -49,7 +52,8 @@ class AllTransactionsFragment:Fragment(R.layout.layout_all_transactions) {
 
         }
     }
-    private fun refresh(){
+
+    private fun refresh() {
         Timber.e("Refreshed")
         viewModel.filter.value = HistoryFilter(mode = "0")
 
@@ -75,8 +79,24 @@ class AllTransactionsFragment:Fragment(R.layout.layout_all_transactions) {
         }
     }
 
+    override fun onDestroyView() {
+        clearAdapterInstances()
+        super.onDestroyView()
+    }
 
+    private fun clearAdapterInstances() {
+        try {
+            val viewHolder =
+                rv_all_transactions.findContainingViewHolder(rv_transaction_details) as HistoryPagerAdapter.ViewHolder
+            viewHolder.itemView.rv_transaction_details?.let {
+                it.adapter = null
+            }
+            rv_all_transactions.adapter = null
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
 
+    }
 
 
 }
