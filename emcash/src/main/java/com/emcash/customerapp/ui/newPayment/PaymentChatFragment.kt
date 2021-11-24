@@ -35,7 +35,7 @@ class PaymentChatFragment : Fragment(R.layout.payment_chats), PaymentHistoryItem
     val viewModel: NewPaymentViewModel by activityViewModels()
     private var isBlockedLoggedInUser: Boolean = false
     private var isBlockedContactUser: Boolean = false
-    val chatAdapter by lazy {
+    private val chatAdapter by lazy {
         PaymentChatListAdapter(this)
     }
 
@@ -149,16 +149,23 @@ class PaymentChatFragment : Fragment(R.layout.payment_chats), PaymentHistoryItem
     }
 
     override fun onAcceptPayment(transaction: TransactionGroupResponse.Data.TransactionGroup.Transaction) {
-        viewModel.syncManager.initiatedRefId = transaction.id
-        val bundle = bundleOf(KEY_TRANSACTION_TYPE to TransactionType.ACCEPT)
-        viewModel.gotoScreen(NewPaymentScreens.PIN, bundle)
-
+        if(isBlockedContactUser || isBlockedLoggedInUser)
+            requireActivity().showShortToast(getString(R.string.block_success))
+        else{
+            viewModel.syncManager.initiatedRefId = transaction.id
+            val bundle = bundleOf(KEY_TRANSACTION_TYPE to TransactionType.ACCEPT)
+            viewModel.gotoScreen(NewPaymentScreens.PIN, bundle)
+        }
     }
 
     override fun onRejectPayment(transaction: TransactionGroupResponse.Data.TransactionGroup.Transaction) {
-        viewModel.syncManager.initiatedRefId = transaction.id
-        val bundle = bundleOf(KEY_TRANSACTION_TYPE to TransactionType.REJECT)
-        viewModel.gotoScreen(NewPaymentScreens.PIN, bundle)
+        if(isBlockedContactUser || isBlockedLoggedInUser)
+            requireActivity().showShortToast(getString(R.string.block_success))
+        else {
+            viewModel.syncManager.initiatedRefId = transaction.id
+            val bundle = bundleOf(KEY_TRANSACTION_TYPE to TransactionType.REJECT)
+            viewModel.gotoScreen(NewPaymentScreens.PIN, bundle)
+        }
     }
 
     private fun showOptionsmenu(
