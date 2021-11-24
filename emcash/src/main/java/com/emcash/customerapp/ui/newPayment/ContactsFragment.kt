@@ -118,6 +118,10 @@ class ContactsFragment : Fragment(R.layout.layout_contacts_fragment), ContactsLi
 
     }
 
+    override fun onSelectedViewAllTransactions() {
+        TODO("Not yet implemented")
+    }
+
     override fun onDestroyView() {
         rv_contacts.adapter = null
         rv_recent_contacts.adapter = null

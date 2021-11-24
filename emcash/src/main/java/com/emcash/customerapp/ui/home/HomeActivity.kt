@@ -31,6 +31,7 @@ import com.emcash.customerapp.ui.notifications.NotificationsActivity
 import com.emcash.customerapp.ui.qr.QrScannerActivity
 import com.emcash.customerapp.ui.rewards.MyRewardsActivity
 import com.emcash.customerapp.ui.settings.SettingsActivity
+import com.emcash.customerapp.ui.viewAllTransactions.ViewAllTransactionsActivity
 import com.emcash.customerapp.ui.wallet.WalletActivity
 import com.emcash.customerapp.utils.*
 import kotlinx.android.synthetic.main.activity_home.*
@@ -62,7 +63,7 @@ class HomeActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks,
     }
 
     private val isFromDeeplink by lazy {
-        intent.getBooleanExtra(IS_FROM_DEEPLINK,false)
+        intent.getBooleanExtra(IS_FROM_DEEPLINK, false)
     }
 
     private val viewModel: HomeViewModel by viewModels()
@@ -78,31 +79,31 @@ class HomeActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks,
             validateCache(profileDataCache)
         }
 
-        lifecycleScope.async{
+        lifecycleScope.async {
             getProfileDetailsFromServer()
         }
 
-        lifecycleScope.async{
+        lifecycleScope.async {
             getRecentTransactions()
         }
         setupViews()
     }
 
     private fun checkDataFromPendingIntent() {
-        if(deeplink.isNotBlank() && isFromDeeplink){
-            val intent = DeepLinkFactory.getIntentFromDeeplink(deeplink.toUri(),this)
+        if (deeplink.isNotBlank() && isFromDeeplink) {
+            val intent = DeepLinkFactory.getIntentFromDeeplink(deeplink.toUri(), this)
             startActivity(intent)
         }
     }
 
     private fun getRecentTransactions() {
         viewModel.recentTransactions.observe(this, Observer {
-            when(it.status){
-                ApiCallStatus.SUCCESS->{
+            when (it.status) {
+                ApiCallStatus.SUCCESS -> {
                     //load from server
                     renderRecentTransactions(it.data)
                 }
-                ApiCallStatus.ERROR->{
+                ApiCallStatus.ERROR -> {
                     //load from cache
                     renderRecentTransactions(viewModel.syncManager.recentTransactionsCache)
                 }
@@ -113,12 +114,12 @@ class HomeActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks,
 
     private fun renderRecentTransactions(data: RecentTransactionResponse.Data?) {
         data?.let {
-            if(it.transactionList.isNotEmpty()){
+            if (it.transactionList.isNotEmpty()) {
                 rv_recent_transactions.apply {
                     adapter = RecentTransactionsAdapter(it.transactionList, this@HomeActivity)
                 }
                 iv_no_transactions.hide()
-            }else{
+            } else {
                 iv_no_transactions.show()
                 rv_recent_transactions.hide()
                 iv_no_transactions.setOnClickListener {
@@ -151,12 +152,12 @@ class HomeActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks,
                     if (profileData != null)
                         renderProfileDetails(profileData)
                 }
-                ApiCallStatus.ERROR ->{
+                ApiCallStatus.ERROR -> {
                     showShortToast(it.errorMessage)
                     hideLoader()
                 }
-                ApiCallStatus.LOADING->{
-                   // loader.show()
+                ApiCallStatus.LOADING -> {
+                    // loader.show()
                 }
             }
         })
@@ -179,7 +180,7 @@ class HomeActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks,
     }
 
     private fun hideLoader() {
-        if(loader.isShowing)
+        if (loader.isShowing)
             loader.dismiss()
     }
 
@@ -224,7 +225,7 @@ class HomeActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks,
         }
 
         iv_qr_scanner.setOnClickListener {
-              openQRScanner()
+            openQRScanner()
         }
 
         fab_new_payment.setOnClickListener {
@@ -268,7 +269,7 @@ class HomeActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks,
     }
 
     private fun openNewPayment() {
-        openActivity(NewPaymentActivity::class.java){
+        openActivity(NewPaymentActivity::class.java) {
             this.putInt(LAUNCH_SOURCE, SCREEN_HOME)
         }
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
@@ -293,7 +294,7 @@ class HomeActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks,
 
     fun openQRScanner() {
         if (hasCameraPermission()) {
-            openActivity(QrScannerActivity::class.java){
+            openActivity(QrScannerActivity::class.java) {
                 this.putInt(LAUNCH_SOURCE, SCREEN_HOME)
             }
             finish()
@@ -345,19 +346,23 @@ class HomeActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks,
     }
 
 
-
     override fun onSelectedFromRecentContacts(contact: RecentTransactionItem) {
         openActivity(NewPaymentActivity::class.java) {
             this.putInt(LAUNCH_SOURCE, SCREEN_HOME_RECENT_CONTACTS)
-            this.putInt(KEY_BEN_ID,contact.userId)
+            this.putInt(KEY_BEN_ID, contact.userId)
         }
     }
 
     override fun onSelectedFromAllContacts(contact: ContactsGroup.ContactInfo) {
+
+    }
+
+    override fun onSelectedViewAllTransactions() {
+        openActivity(ViewAllTransactionsActivity::class.java)
     }
 
 
-    fun showSwitchAccountDialog(){
+    fun showSwitchAccountDialog() {
         val switchAccountDialog = Dialog(this)
         switchAccountDialog.apply {
             requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -379,6 +384,8 @@ class HomeActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks,
         }
 
     }
+
+
 
 }
 

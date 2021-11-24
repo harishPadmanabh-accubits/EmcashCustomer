@@ -48,7 +48,7 @@ Payment cards saved to your separate  Payments account are distinct from any Vir
     <string name="all">All</string>
     <string name="inbound">Inbound</string>
     <string name="outbound">Outbound</string>
-    <string name="payment_recieved">Payment Recieved</string>
+    <string name="payment_recieved">Payment Received</string>
     <string name="total_rewards">Total Rewards</string>
     <string name="redeem">Redeem</string>
     <string name="send_emcash_amp_earn_rewards"><![CDATA[Send EmCash & earn Rewards]]></string>

@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.emcash.customerapp.R
+import com.emcash.customerapp.model.contacts.ContactsGroup
 import com.emcash.customerapp.model.transactions.RecentTransactionItem
 import com.emcash.customerapp.ui.newPayment.adapters.ContactsListener
 import com.emcash.customerapp.utils.SCREEN_HOME_RECENT_CONTACTS
@@ -66,7 +67,7 @@ class RecentTransactionsAdapter(val transactions : List<RecentTransactionItem>,v
                 holder.bind(transactions[position],listener)
             }
             is ViewAllViewHolder->{
-                holder.bind()
+                holder.bind(listener)
             }
         }
     }
@@ -91,8 +92,10 @@ class RecentTransactionsAdapter(val transactions : List<RecentTransactionItem>,v
 
     class ViewAllViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
 
-        fun bind(){
-
+        fun bind( listener: ContactsListener){
+            itemView.setOnClickListener {
+                listener.onSelectedViewAllTransactions()
+            }
         }
 
     }

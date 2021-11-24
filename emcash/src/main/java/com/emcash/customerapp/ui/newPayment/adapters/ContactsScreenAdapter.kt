@@ -6,5 +6,6 @@ import com.emcash.customerapp.model.transactions.RecentTransactionItem
 interface ContactsListener{
     fun onSelectedFromRecentContacts(contact: RecentTransactionItem)
     fun onSelectedFromAllContacts(contact: ContactsGroup.ContactInfo)
+    fun onSelectedViewAllTransactions()
 
 }
