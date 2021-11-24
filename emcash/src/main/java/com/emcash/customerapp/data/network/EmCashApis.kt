@@ -1,7 +1,6 @@
 package com.emcash.customerapp.data.network
 
 import com.emcash.customerapp.model.BlockedResponse
-import com.emcash.customerapp.model.RecentTransactionsResponse
 import com.emcash.customerapp.model.UnblockedResponse
 import com.emcash.customerapp.model.auth.switchAccount.SwitchAccountRequest
 import com.emcash.customerapp.model.auth.switchAccount.SwitchAccountResponse
@@ -211,10 +210,10 @@ interface EmCashApis {
 
 
     @GET("v1/customers/transactions/recent")
-    suspend fun pagingAllTransaction(
+    suspend fun getAllTransactedUsers(
         @Query("page") page: Int,
         @Query("limit") limit: Int
-    ): Response<RecentTransactionsResponse>
+    ): RecentTransactionResponse
 
 
 

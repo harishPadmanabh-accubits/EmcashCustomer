@@ -16,14 +16,17 @@ import com.emcash.customerapp.R
 import com.emcash.customerapp.enums.TransactionType
 import com.emcash.customerapp.extensions.fromJson
 import com.emcash.customerapp.extensions.openActivity
+import com.emcash.customerapp.extensions.showShortToast
 import com.emcash.customerapp.model.payments.QRResponse
 import com.emcash.customerapp.ui.home.HomeActivity
 import com.emcash.customerapp.ui.newPayment.NewPaymentScreens.*
 import com.emcash.customerapp.ui.qr.QrScannerActivity
+import com.emcash.customerapp.ui.viewAllTransactions.ViewAllTransactionsActivity
 import com.emcash.customerapp.utils.*
 import pub.devrel.easypermissions.AppSettingsDialog
 import pub.devrel.easypermissions.EasyPermissions
 import timber.log.Timber
+import java.lang.Exception
 
 @Suppress("WHEN_ENUM_CAN_BE_NULL_IN_JAVA")
 class NewPaymentActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks,
@@ -35,7 +38,7 @@ class NewPaymentActivity : AppCompatActivity(), EasyPermissions.PermissionCallba
         intent.getIntExtra(LAUNCH_SOURCE, SCREEN_TRANSFER)
     }
 
-    val destination by lazy {
+    private val destination by lazy {
         intent.getIntExtra(LAUNCH_DESTINATION, 0)
     }
 
@@ -47,7 +50,7 @@ class NewPaymentActivity : AppCompatActivity(), EasyPermissions.PermissionCallba
         intent.getStringExtra(KEY_QR_DATA)?.fromJson(QRResponse.Data::class.java)
     }
 
-    val benId by lazy {
+    private val benId by lazy {
         intent.getIntExtra(KEY_BEN_ID, 0)
     }
 
@@ -97,31 +100,24 @@ class NewPaymentActivity : AppCompatActivity(), EasyPermissions.PermissionCallba
                     TRANSFER -> openTransferScreen(screenConfig.bundle)
                     CHAT -> openPaymentChatScreen(screenConfig.bundle)
                     RECEIPT -> openPaymentReceipt(screenConfig.bundle)
-                    PIN -> {
-                        val type = screenConfig.bundle?.get(KEY_TRANSACTION_TYPE) as TransactionType
-                        Timber.e("listener ${EmCashCommunicationHelper.getParentListener()} type $type")
-                        EmCashCommunicationHelper.getParentListener()?.onVerifyPin(type)
-                    }
+                    PIN -> openPinScreen(screenConfig.bundle)
                     SCAN -> openQRScanner(screenConfig.bundle)
                 }
             })
         }
     }
 
-    private fun openPinScreen() {
-        supportFragmentManager.commit {
-            addToBackStack("Pin Screen")
-            this.setCustomAnimations(
-                android.R.anim.fade_in,
-                android.R.anim.fade_out,
-                android.R.anim.fade_in,
-                android.R.anim.fade_out
-            )
-            replace<EmcashPinFragment>(R.id.container, "")
+    private fun openPinScreen(bundle: Bundle?) {
+        try {
+            val type =bundle?.get(KEY_TRANSACTION_TYPE) as TransactionType
+            EmCashCommunicationHelper.getParentListener().onVerifyPin(type)
+        }catch (e:Exception){
+            e.printStackTrace()
+            showShortToast(getString(R.string.internal_error))
         }
     }
 
-    fun openTransferScreen(bundle: Bundle?) {
+    private fun openTransferScreen(bundle: Bundle?) {
         supportFragmentManager.commit {
             addToBackStack("Transfer Screen")
             this.setCustomAnimations(
@@ -135,9 +131,8 @@ class NewPaymentActivity : AppCompatActivity(), EasyPermissions.PermissionCallba
         }
     }
 
-    fun openContactsScreen(bundle: Bundle?) {
+    private fun openContactsScreen(bundle: Bundle?) {
         supportFragmentManager.commit {
-            // addToBackStack("Contacts Screen")
             this.setCustomAnimations(
                 android.R.anim.fade_in,
                 android.R.anim.fade_out,
@@ -149,7 +144,7 @@ class NewPaymentActivity : AppCompatActivity(), EasyPermissions.PermissionCallba
     }
 
 
-    fun openPaymentChatScreen(bundle: Bundle?) {
+    private fun openPaymentChatScreen(bundle: Bundle?) {
         supportFragmentManager.commit {
             addToBackStack("Chat Screen")
             this.setCustomAnimations(
@@ -162,7 +157,7 @@ class NewPaymentActivity : AppCompatActivity(), EasyPermissions.PermissionCallba
         }
     }
 
-    fun openPaymentReceipt(bundle: Bundle?) {
+    private fun openPaymentReceipt(bundle: Bundle?) {
         supportFragmentManager.commit {
             addToBackStack("Receipt Screen")
             this.setCustomAnimations(
@@ -188,11 +183,16 @@ class NewPaymentActivity : AppCompatActivity(), EasyPermissions.PermissionCallba
                     finish()
                 }
                 CHAT -> {
-                    if(source == SCREEN_HOME)
-                        viewModel.gotoScreen(CONTACTS)
-                    else{
-                        openActivity(HomeActivity::class.java)
-                        finish()
+                    when (source) {
+                        SCREEN_HOME -> viewModel.gotoScreen(CONTACTS)
+                        SCREEN_VIEW_ALL -> {
+                            openActivity(ViewAllTransactionsActivity::class.java)
+                            finish()
+                        }
+                        else -> {
+                            openActivity(HomeActivity::class.java)
+                            finish()
+                        }
                     }
 
                 }
@@ -218,7 +218,7 @@ class NewPaymentActivity : AppCompatActivity(), EasyPermissions.PermissionCallba
         return EasyPermissions.hasPermissions(this, Manifest.permission.READ_CONTACTS)
     }
 
-    fun openQRScanner(bundle: Bundle?) {
+    private fun openQRScanner(bundle: Bundle?) {
         if (hasCameraPermission()) {
             openActivity(QrScannerActivity::class.java) {
                 this.putInt(LAUNCH_SOURCE, SCREEN_TRANSFER)

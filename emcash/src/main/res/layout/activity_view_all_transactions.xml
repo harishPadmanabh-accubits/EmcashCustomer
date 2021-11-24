@@ -33,6 +33,9 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_all_transactions"
         android:layout_width="0dp"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:spanCount="5"
+        android:orientation="vertical"
         android:layout_height="wrap_content"
         android:layout_marginTop="36dp"
         app:layout_constraintBottom_toBottomOf="parent"

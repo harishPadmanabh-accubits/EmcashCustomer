@@ -359,6 +359,7 @@ class HomeActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks,
 
     override fun onSelectedViewAllTransactions() {
         openActivity(ViewAllTransactionsActivity::class.java)
+        finish()
     }
 
 

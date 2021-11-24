@@ -9,7 +9,6 @@ import android.os.Build
 import androidx.lifecycle.MutableLiveData
 import com.emcash.customerapp.BuildConfig
 import com.emcash.customerapp.EmCashListener
-import com.google.firebase.crashlytics.FirebaseCrashlytics
 import timber.log.Timber
 
 class BaseApp:Application(),EmCashListener {

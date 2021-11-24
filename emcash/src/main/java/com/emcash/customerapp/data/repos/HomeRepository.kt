@@ -3,6 +3,10 @@ package com.emcash.customerapp.data.repos
 import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.cachedIn
 import com.emcash.customerapp.data.SyncManager
 import com.emcash.customerapp.data.network.ApiCallStatus
 import com.emcash.customerapp.data.network.ApiMapper
@@ -19,6 +23,8 @@ import com.emcash.customerapp.model.wallet.topup.WalletTopupRequest
 import com.emcash.customerapp.model.wallet.topup.WalletTopupResponse
 import com.emcash.customerapp.model.wallet.withdraw.WalletWithdrawRequest
 import com.emcash.customerapp.model.wallet.withdraw.WalletWithdrawResponse
+import com.emcash.customerapp.ui.viewAllTransactions.pagingSource.ViewAllTransactionPagingSource
+import kotlinx.coroutines.CoroutineScope
 
 class HomeRepository(private val context: Context) {
     val syncManager = SyncManager(context)
@@ -168,6 +174,14 @@ class HomeRepository(private val context: Context) {
     }
 
     fun getCurrentUUID() = syncManager.uuid
+
+    fun getAllTransactedUsers(scope: CoroutineScope) =Pager(PagingConfig(1)){
+        ViewAllTransactionPagingSource(api)
+    }.flow.cachedIn(scope)
+
+
+
+
 
 
 

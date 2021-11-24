@@ -99,5 +99,6 @@ Payment cards saved to your separate  Payments account are distinct from any Vir
     <string name="block_success">This user has been blocked.</string>
     <string name="block">Block</string>
     <string name="unblock_success">This user has been unblocked.</string>
+    <string name="internal_error">Something went wrong.Please try again later.</string>
 
 </resources>
