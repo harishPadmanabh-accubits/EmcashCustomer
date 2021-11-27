@@ -54,6 +54,10 @@ class NewPaymentActivity : AppCompatActivity(), EasyPermissions.PermissionCallba
         intent.getIntExtra(KEY_BEN_ID, 0)
     }
 
+    val isFromPinCancel by lazy {
+        intent.getBooleanExtra(KEY_IS_FROM_CANCEL_PIN, false)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_new_payment)
@@ -81,6 +85,8 @@ class NewPaymentActivity : AppCompatActivity(), EasyPermissions.PermissionCallba
                             )
                             viewModel.gotoScreen(TRANSFER, contactBundle)
                         }
+                    }else{
+                        viewModel.gotoScreen(TRANSFER)
                     }
                 }
                 SCREEN_CHAT -> {
@@ -200,6 +206,7 @@ class NewPaymentActivity : AppCompatActivity(), EasyPermissions.PermissionCallba
                     viewModel.gotoScreen(TRANSFER)
                 }
                 TRANSFER -> {
+                    viewModel.clearTransferScreenCache()
                     viewModel.gotoScreen(CHAT)
                 }
                 else -> {

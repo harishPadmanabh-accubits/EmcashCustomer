@@ -33,6 +33,8 @@ const val KEY_EXISTING_ACCOUNT = "current_account"
 const val KEY_UUID = "uuid"
 const val KEY_PENDING_LOGOUT = "pending_logout"
 const val KEY_RECENT_TRANSACTION_CACHE = "recent_transactions_cache"
+const val KEY_TRANSFER_SCREEN_CACHE = "transfer_screen_cache"
+const val KEY_IS_FROM_CANCEL_PIN="pin_onback_press"
 
 /**
  * Screen Keys
@@ -47,6 +49,7 @@ const val SCREEN_RECEIPT = 206
 const val SCREEN_CHAT = 207
 const val SCREEN_CONTACTS = 208
 const val SCREEN_VIEW_ALL = 209
+const val PIN_CANCEL=210
 
 const val KEY_DEEPLINK = "deeplink"
 const val KEY_TYPE = " notify_type"

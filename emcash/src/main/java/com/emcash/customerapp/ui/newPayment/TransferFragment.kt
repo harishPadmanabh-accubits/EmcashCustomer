@@ -1,15 +1,12 @@
 package com.emcash.customerapp.ui.newPayment
 
 import android.animation.ObjectAnimator
-import android.content.Context
 import android.os.Bundle
 import android.transition.Slide
 import android.transition.Transition
 import android.transition.TransitionManager
 import android.view.Gravity
 import android.view.View
-import android.view.inputmethod.InputMethodManager
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -19,6 +16,7 @@ import com.emcash.customerapp.data.network.ApiCallStatus
 import com.emcash.customerapp.enums.TransactionType
 import com.emcash.customerapp.extensions.*
 import com.emcash.customerapp.model.contacts.Contact
+import com.emcash.customerapp.model.transactions.TransferScreenUIModel
 import com.emcash.customerapp.ui.prepare.BottomSheetListener
 import com.emcash.customerapp.utils.*
 import kotlinx.android.synthetic.main.bottom_sheet_how_it_works.*
@@ -50,18 +48,53 @@ class TransferFragment : Fragment(R.layout.transfer_fragment), BottomSheetListen
             viewModel._bottomSheetVisiblity.value = true
         }
 
-        getContactDetails()
-
+        checkForCache()
+        renderTransferScreenData()
         observe()
 
     }
 
+    private fun renderTransferScreenData() {
+        contactBundle?.let {
+            val contact = it[KEY_SELECTED_CONTACT].toString().toInt() ?: 0
+            val type = it[KEY_TRANSACTION_TYPE].toString()
+            setupFab(type)
+            Timber.e("Contact id in transfer screen $contact type $type")
+            userId = contact
+            viewModel.beneficiaryId = userId
+            getContactDetails(userId){
+                renderDetails(it)
+            }
+        }
+    }
+
+    private fun checkForCache() {
+        viewModel.getTransferScreenCache()?.let { cache->
+            renderDetailsFromCache(cache)
+        }
+    }
+
+    private fun renderDetailsFromCache(transferScreenCache: TransferScreenUIModel) {
+        userId=transferScreenCache.userId
+        viewModel.beneficiaryId = userId
+        getContactDetails(userId){
+            renderDetails(it)
+            et_value.setText(transferScreenCache.amount.toString())
+            et_description.setText(transferScreenCache.desc)
+        }
+
+    }
 
 
     private fun transfer() {
         val amount =
             if (et_value.text.toString().isNotEmpty()) et_value.text.toString().toInt() else 0
         if (amount > 0) {
+            viewModel.cacheTransferScreenData(
+                amount,
+                userId,
+                et_description.text.toString()
+            )
             viewModel.initPayment(
                 amount,
                 userId,
@@ -114,52 +147,50 @@ class TransferFragment : Fragment(R.layout.transfer_fragment), BottomSheetListen
 
     }
 
-    private fun getContactDetails() {
-        contactBundle?.let {
-            val contact = it[KEY_SELECTED_CONTACT].toString().toInt() ?: 0
-            val type = it[KEY_TRANSACTION_TYPE].toString()
-            setupFab(type)
-            Timber.e("Contact id in transfer screen $contact type $type")
-            userId = contact
-            viewModel.beneficiaryId = userId
-            viewModel.getContactDetails(contact).observe(viewLifecycleOwner, Observer {
-                when (it.status) {
-                    ApiCallStatus.SUCCESS -> {
-                        loader.hideLoader()
-                        renderDetails(it.data)
-                        val activity = requireActivity() as NewPaymentActivity
-                        if (activity.isFromQR) {
-                            val profileDataFromQR = activity.qrDataProfile
-                            profileDataFromQR?.let {
-                                renderTransactionDetails(it.amount.toString(), it.description)
-                            }
-                        }
 
+    private fun getContactDetails(userID:Int, onResult: (contact:Contact) -> Unit){
+        viewModel.getContactDetails(userID).observe(viewLifecycleOwner, Observer {
+            when (it.status) {
+                ApiCallStatus.SUCCESS -> {
+                    loader.hideLoader()
+                    //renderDetails(it.data)
+                    val contact = it.data
+                    contact?.let {contactDetails->
+                        onResult(contactDetails)
                     }
-                    ApiCallStatus.ERROR -> {
-                        loader.hideLoader()
-                        requireActivity().showShortToast(it.errorMessage)
+                    val activity = requireActivity() as NewPaymentActivity
+                    if (activity.isFromQR) {
+                        val profileDataFromQR = activity.qrDataProfile
+                        profileDataFromQR?.let {
+                            renderTransactionDetails(it.amount.toString(), it.description)
+                        }
                     }
-                    ApiCallStatus.LOADING -> {
-                        loader.showLoader()
-                    }
+
                 }
-            })
-        }
+                ApiCallStatus.ERROR -> {
+                    loader.hideLoader()
+                    requireActivity().showShortToast(it.errorMessage)
+                }
+                ApiCallStatus.LOADING -> {
+                    loader.showLoader()
+                }
+            }
+        })
+
     }
 
     private fun setupFab(type: String) {
         fab_transfer.text = type
     }
 
-    private fun renderTransactionDetails(amount: String, desc: String){
+    private fun renderTransactionDetails(amount: String, desc: String) {
         et_value.apply {
             setText(amount)
 
             isEnabled = false
         }
         et_description.apply {
-            if(desc.isNotEmpty()){
+            if (desc.isNotEmpty()) {
                 setText(desc)
                 isEnabled = false
             }
@@ -172,12 +203,12 @@ class TransferFragment : Fragment(R.layout.transfer_fragment), BottomSheetListen
             fl_user_level.setlevel(it.level)
             iv_user_dp.loadImageWithErrorCallback(
                 it.profileImage,
-               onError = {
-                   tv_user_name_letter.apply {
-                       text = it.name.first().toString().toUpperCase(Locale.ROOT)
-                       show()
-                   }
-               }
+                onError = {
+                    tv_user_name_letter.apply {
+                        text = it.name.first().toString().toUpperCase(Locale.ROOT)
+                        show()
+                    }
+                }
             )
             tv_user_name.text = it.name
             tv_user_phone.text = it.phoneNumber
@@ -294,7 +325,6 @@ class TransferFragment : Fragment(R.layout.transfer_fragment), BottomSheetListen
     override fun onGotitClicked() {
         viewModel._bottomSheetVisiblity.value = false
     }
-
 
 
 }

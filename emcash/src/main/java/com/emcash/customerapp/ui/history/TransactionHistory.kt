@@ -8,6 +8,7 @@ import androidx.fragment.app.FragmentActivity
 import com.emcash.customerapp.R
 import com.emcash.customerapp.extensions.openActivity
 import com.emcash.customerapp.extensions.showShortToast
+import com.emcash.customerapp.extensions.toMillis
 import com.emcash.customerapp.model.transactions.FilterDurationResponse
 import com.emcash.customerapp.ui.history.adapters.DurationAdapter
 import com.emcash.customerapp.ui.history.adapters.DurationItemClickListener
@@ -51,15 +52,12 @@ class TransactionHistory : FragmentActivity(), DurationItemClickListener {
 
             }
         }
-
-
-        durationData()
-
+        configureFilterDurations()
 
         ll_holder.visibility = View.GONE
         calenderView.visibility = View.GONE
 
-        configureCalendarView()
+       configureCalendarView()
 
 
 
@@ -87,18 +85,20 @@ class TransactionHistory : FragmentActivity(), DurationItemClickListener {
             } else if (durationFilterCustom == 1) {
                 listDates = calenderView.selectedDates as java.util.ArrayList<Date>
 
-                if (listDates.size <= 1) {
-                    showShortToast("Select a Dates")
-                } else {
-                    startDate = listDates[0].toString()
-                    endDate = listDates[listDates.size - 1].toString()
-                    dateArray.add(0, dateFormatFromCalender("yyyy-MM-dd", startDate))
-                    dateArray.add(1, dateFormatFromCalender("yyyy-MM-dd", endDate))
+                if(isFutureDateSelected(listDates)){
+                    showShortToast(getString(R.string.error_future_date_selected))
+                }else{
+                    if (listDates.size <= 1) {
+                        showShortToast(getString(R.string.error_select_start_end_date))
+                    } else {
+                        startDate = listDates[0].toString()
+                        endDate = listDates[listDates.size - 1].toString()
+                        dateArray.add(0, dateFormatFromCalender("yyyy-MM-dd", startDate))
+                        dateArray.add(1, dateFormatFromCalender("yyyy-MM-dd", endDate))
 
-                    viewModel.sendDate(dateArray)
-                    fl_holder.visibility = View.GONE
-
-
+                        viewModel.sendDate(dateArray)
+                        fl_holder.visibility = View.GONE
+                    }
                 }
 
             }
@@ -148,6 +148,15 @@ class TransactionHistory : FragmentActivity(), DurationItemClickListener {
 
     }
 
+    private fun isFutureDateSelected(listDates: java.util.ArrayList<Date>): Boolean {
+        listDates.forEach { date->
+            val currentDate = Calendar.getInstance().time
+            Timber.e("currentDate.before(date) $currentDate $date ${currentDate.before(date)}")
+            if(currentDate.before(date)) return true
+        }
+        return false
+    }
+
     private fun configureCalendarView() {
 
         val timeZone = TimeZone.getDefault()
@@ -192,7 +201,7 @@ class TransactionHistory : FragmentActivity(), DurationItemClickListener {
         ll_duration.visibility = View.VISIBLE
     }
 
-    private fun durationData() {
+    private fun configureFilterDurations() {
         val durations = ArrayList<FilterDurationResponse>()
         durations.add(FilterDurationResponse(1, "2 Days"))
         durations.add(FilterDurationResponse(2, "1 Week"))

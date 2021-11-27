@@ -100,5 +100,8 @@ Payment cards saved to your separate  Payments account are distinct from any Vir
     <string name="block">Block</string>
     <string name="unblock_success">This user has been unblocked.</string>
     <string name="internal_error">Something went wrong.Please try again later.</string>
+    <string name="error_transfer">Transfer Failed.Try again after some time.</string>
+    <string name="error_future_date_selected">Please avoid dates from future.</string>
+    <string name="error_select_start_end_date">Select start date and end date</string>
 
 </resources>

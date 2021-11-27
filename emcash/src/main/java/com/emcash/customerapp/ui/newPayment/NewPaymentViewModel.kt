@@ -11,26 +11,18 @@ import com.emcash.customerapp.data.SyncManager
 import com.emcash.customerapp.data.network.ApiCallStatus
 import com.emcash.customerapp.data.network.ApiMapper
 import com.emcash.customerapp.data.network.EmCashApiManager
-import com.emcash.customerapp.data.network.EmCashApis
-import com.emcash.customerapp.data.repos.HomeRepository
 import com.emcash.customerapp.data.repos.PaymentRepository
 import com.emcash.customerapp.extensions.default
 import com.emcash.customerapp.model.*
 import com.emcash.customerapp.model.contacts.Contact
-import com.emcash.customerapp.model.contacts.ContactItem
 import com.emcash.customerapp.model.payments.*
-import com.emcash.customerapp.model.transactions.RecentTransactionItem
 import com.emcash.customerapp.model.transactions.RecentTransactionResponse
+import com.emcash.customerapp.model.transactions.TransferScreenUIModel
 import com.emcash.customerapp.ui.newPayment.NewPaymentScreens.*
 import com.emcash.customerapp.ui.newPayment.adapters.ContactsPagingSource
 import com.emcash.customerapp.ui.newPayment.adapters.TransactionHistoryPagingSource
-import com.emcash.customerapp.ui.wallet.WalletActivityPagingSource
 import com.emcash.customerapp.utils.DEFAULT_PAGE_CONFIG
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import timber.log.Timber
 
 class NewPaymentViewModel(val app: Application) : AndroidViewModel(app) {
 
@@ -199,6 +191,26 @@ class NewPaymentViewModel(val app: Application) : AndroidViewModel(app) {
             }
         }
     }
+
+    fun cacheTransferScreenData(amount: Int, userId: Int, desc: String) {
+        viewModelScope.launch {
+            val transferScreenUIModel=TransferScreenUIModel(
+                userId = userId,
+                amount = amount,
+                desc = desc
+            )
+            syncManager.transferScreenCache = transferScreenUIModel
+        }
+    }
+
+    fun getTransferScreenCache() = syncManager.transferScreenCache
+
+    fun clearTransferScreenCache() {
+        viewModelScope.launch {
+            syncManager.transferScreenCache=null
+        }
+    }
+
 
 }
 

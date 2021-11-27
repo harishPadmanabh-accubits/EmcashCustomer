@@ -112,11 +112,23 @@ class EmCashHelper(val appContext: Context, val listener: EmCashListener) {
 
         }
     }
+    
+    fun onPinInputCancelled(){
+        val intent = Intent(appContext, NewPaymentActivity::class.java).also {
+            it.setFlags(FLAG_ACTIVITY_NEW_TASK)
+            it.putExtra(LAUNCH_SOURCE, PIN_CANCEL)
+            it.putExtra(LAUNCH_DESTINATION, SCREEN_TRANSFER)
+            it.putExtra(KEY_IS_FROM_CANCEL_PIN,true)
+        }
+
+        appContext.startActivity(intent)
+    }
 
     fun proceedToTransfer() {
         PaymentRepository(appContext).transferAmount { status, error ->
             when (status) {
                 true -> {
+                    syncManager.transferScreenCache=null
                     val intent = Intent(appContext, NewPaymentActivity::class.java).also {
                         it.setFlags(FLAG_ACTIVITY_NEW_TASK)
                     }
@@ -128,7 +140,7 @@ class EmCashHelper(val appContext: Context, val listener: EmCashListener) {
                     val intent = Intent(appContext, HomeActivity::class.java).also {
                         it.setFlags(FLAG_ACTIVITY_NEW_TASK)
                     }
-                    appContext.showShortToast("Transfer Failed.Try again after some time.")
+                    appContext.showShortToast(appContext.getString(R.string.error_transfer))
                     appContext.startActivity(intent)
                 }
             }

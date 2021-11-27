@@ -185,6 +185,15 @@ class PinScreen : AppCompatActivity() {
 
     }
 
+    override fun onBackPressed() {
+        try {
+            val emCashHelper = EmCashHelper(applicationContext,EmCashCommunicationHelper.getParentListener())
+            emCashHelper.onPinInputCancelled()
+        }catch (e:Exception){
+            Toast.makeText(this,e.localizedMessage,Toast.LENGTH_SHORT).show()
+        }
+    }
+
 
 
 

@@ -8,12 +8,11 @@ import com.emcash.customerapp.extensions.FromJson
 import com.emcash.customerapp.extensions.fromJson
 import com.emcash.customerapp.extensions.toJson
 import com.emcash.customerapp.model.auth.switchAccount.SwitchAccountResponse
-import com.emcash.customerapp.model.payments.PaymentRequest
 import com.emcash.customerapp.model.profile.ProfileDetailsResponse
 import com.emcash.customerapp.model.transactions.RecentTransactionResponse
+import com.emcash.customerapp.model.transactions.TransferScreenUIModel
 import com.emcash.customerapp.ui.terms.TncStatus
 import com.emcash.customerapp.utils.*
-import timber.log.Timber
 import java.lang.Exception
 
 
@@ -149,6 +148,19 @@ class SyncManager(val context: Context) {
             null
         }
     set(value) = editor.putString(KEY_RECENT_TRANSACTION_CACHE, value?.toJson()).apply()
+
+    var transferScreenCache:TransferScreenUIModel?
+        get() = try {
+            val transferScreenData = sharedPreferences.getString(KEY_TRANSFER_SCREEN_CACHE, "")
+            if (transferScreenData != null && transferScreenData.isNotEmpty())
+                transferScreenData.fromJson(TransferScreenUIModel::class.java)
+            else
+                null
+        } catch (e: Exception) {
+            null
+        }
+        set(value) = editor.putString(KEY_TRANSFER_SCREEN_CACHE, value?.toJson()).apply()
+
 
 
 }
