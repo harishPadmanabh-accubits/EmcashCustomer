@@ -1,21 +1,14 @@
 package com.emcash.customerapp.ui.newPayment
 
-import android.animation.ObjectAnimator
 import android.os.Bundle
-import android.util.DisplayMetrics
 import android.view.View
-import android.view.animation.Animation
-import android.view.animation.TranslateAnimation
-import androidx.core.animation.addListener
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.paging.LoadState
-import androidx.recyclerview.widget.RecyclerView
 import com.emcash.customerapp.R
 import com.emcash.customerapp.extensions.afterTextChanged
-import com.emcash.customerapp.extensions.hide
 import com.emcash.customerapp.extensions.showShortToast
 import com.emcash.customerapp.model.contacts.ContactsGroup
 import com.emcash.customerapp.model.transactions.RecentTransactionItem
@@ -95,7 +88,7 @@ class ContactsFragment : Fragment(R.layout.layout_contacts_fragment), ContactsLi
 
     private fun listenForQuerry() {
         et_search.afterTextChanged { query ->
-            viewModel.searchQuerry.value = query
+            viewModel.searchQuery.value = query
         }
 
     }

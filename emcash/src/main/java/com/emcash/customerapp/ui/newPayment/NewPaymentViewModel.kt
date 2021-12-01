@@ -23,6 +23,7 @@ import com.emcash.customerapp.ui.newPayment.adapters.ContactsPagingSource
 import com.emcash.customerapp.ui.newPayment.adapters.TransactionHistoryPagingSource
 import com.emcash.customerapp.utils.DEFAULT_PAGE_CONFIG
 import kotlinx.coroutines.launch
+@Suppress("PropertyName")
 
 class NewPaymentViewModel(val app: Application) : AndroidViewModel(app) {
 
@@ -30,7 +31,7 @@ class NewPaymentViewModel(val app: Application) : AndroidViewModel(app) {
     val syncManager = SyncManager(app)
 
 
-    var _screenConfig = MutableLiveData<ScreenConfig>().default(ScreenConfig(CONTACTS))
+    private var _screenConfig = MutableLiveData<ScreenConfig>().default(ScreenConfig(CONTACTS))
     val screenConfig: LiveData<ScreenConfig> get() = _screenConfig
 
     val validPin = "0000"
@@ -45,10 +46,10 @@ class NewPaymentViewModel(val app: Application) : AndroidViewModel(app) {
     }
 
 
-    var _bottomSheetVisiblity = MutableLiveData<Boolean>()
-    val bottomSheetVisibility: LiveData<Boolean> get() = _bottomSheetVisiblity
+    var _bottomSheetVisibility = MutableLiveData<Boolean>()
+    val bottomSheetVisibility: LiveData<Boolean> get() = _bottomSheetVisibility
 
-    val _contact = MutableLiveData<ApiMapper<Contact>>()
+    private val _contact = MutableLiveData<ApiMapper<Contact>>()
     fun getContactDetails(id: Int): LiveData<ApiMapper<Contact>> {
         _contact.value = ApiMapper(ApiCallStatus.LOADING, null, null)
         paymentRepository.getContactDetails(id, onApiCallBack = { status, response, error ->
@@ -90,7 +91,7 @@ class NewPaymentViewModel(val app: Application) : AndroidViewModel(app) {
         })
     }
 
-    val _transactionDetails = MutableLiveData<ApiMapper<TransactionDetailsResponse.Data>>()
+    private val _transactionDetails = MutableLiveData<ApiMapper<TransactionDetailsResponse.Data>>()
     fun getTransactionDetails(refId: String): LiveData<ApiMapper<TransactionDetailsResponse.Data>> {
         _transactionDetails.value = ApiMapper(ApiCallStatus.LOADING, null, null)
         paymentRepository.getTransactionDetails(refId, onApiCallBack = { status, response, error ->
@@ -113,7 +114,7 @@ class NewPaymentViewModel(val app: Application) : AndroidViewModel(app) {
     }
 
 
-    val _history = MutableLiveData<ApiMapper<TransactionHistoryResponse.Data>>()
+    private val _history = MutableLiveData<ApiMapper<TransactionHistoryResponse.Data>>()
     fun getHistory(): LiveData<ApiMapper<TransactionHistoryResponse.Data>> {
         _history.value = ApiMapper(ApiCallStatus.LOADING, null, null)
         paymentRepository.getTransactions(beneficiaryId) { status, response, error ->
@@ -139,34 +140,16 @@ class NewPaymentViewModel(val app: Application) : AndroidViewModel(app) {
     }
 
 
-    val searchQuerry = MutableLiveData<String>().default("")
-    val pagedAllContactList = Transformations.switchMap(searchQuerry) {
+    val searchQuery = MutableLiveData<String>().default("")
+    val pagedAllContactList = Transformations.switchMap(searchQuery) {
         Pager(PagingConfig(DEFAULT_PAGE_CONFIG)) {
             ContactsPagingSource(EmCashApiManager(app).api, it)
         }.liveData.cachedIn(viewModelScope)
     }
 
     val recentContactsCache = MutableLiveData<RecentTransactionResponse.Data>()
-    val recentContacts = paymentRepository.getRecentTransactions() {
+    val recentContacts = paymentRepository.getRecentTransactions {
         recentContactsCache.value = it
-    }
-
-
-    fun blockAccount(userId: Int, onResult: (status: Boolean, error: String?) -> Unit) {
-        paymentRepository.blockContact(userId) { status, message, result ->
-            when (status) {
-                true -> {
-                    if (result?.status == true)
-                        onResult(true, null)
-                    else
-                        onResult(false, message)
-                }
-                false -> {
-                    onResult(false, message)
-                }
-            }
-        }
-
     }
 
     fun blockAccountAsync(userId: Int,onResult: (status: Boolean, error: String?) -> Unit){

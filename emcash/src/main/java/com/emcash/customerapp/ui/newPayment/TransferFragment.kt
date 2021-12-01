@@ -45,7 +45,7 @@ class TransferFragment : Fragment(R.layout.transfer_fragment), BottomSheetListen
         }
 
         ll_info.setOnClickListener {
-            viewModel._bottomSheetVisiblity.value = true
+            viewModel._bottomSheetVisibility.value = true
         }
 
         checkForCache()
@@ -323,7 +323,7 @@ class TransferFragment : Fragment(R.layout.transfer_fragment), BottomSheetListen
     }
 
     override fun onGotitClicked() {
-        viewModel._bottomSheetVisiblity.value = false
+        viewModel._bottomSheetVisibility.value = false
     }
 
 

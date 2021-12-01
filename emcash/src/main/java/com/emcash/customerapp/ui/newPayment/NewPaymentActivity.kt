@@ -177,8 +177,8 @@ class NewPaymentActivity : AppCompatActivity(), EasyPermissions.PermissionCallba
     }
 
     override fun onBackPressed() {
-        if (viewModel._bottomSheetVisiblity.value == true)
-            viewModel._bottomSheetVisiblity.value = false
+        if (viewModel._bottomSheetVisibility.value == true)
+            viewModel._bottomSheetVisibility.value = false
         else {
             when (viewModel.screenConfig.value?.screen) {
                 RECEIPT -> {
