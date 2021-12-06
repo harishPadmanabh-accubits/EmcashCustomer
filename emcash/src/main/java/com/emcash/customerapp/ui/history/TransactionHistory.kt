@@ -41,7 +41,7 @@ class TransactionHistory : FragmentActivity(), DurationItemClickListener {
         setupTabs()
         iv_back.setOnClickListener {
             onBackPressed()
-        }
+        } 
         iv_filter.setOnClickListener {
             if (fl_holder.isVisible) {
                 fl_holder.visibility = View.GONE

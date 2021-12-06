@@ -23,6 +23,7 @@ import com.emcash.customerapp.extensions.obtainViewModel
 import com.emcash.customerapp.extensions.openActivity
 import com.emcash.customerapp.extensions.show
 import com.emcash.customerapp.model.profile.ProfileDetailsResponse
+import com.emcash.customerapp.ui.home.HomeActivity
 import com.emcash.customerapp.ui.terms.TermsAndConditionsActivity
 import kotlinx.android.synthetic.main.activity_prepare_em_cash.*
 import kotlinx.android.synthetic.main.bottom_sheet_how_it_works.*
@@ -179,11 +180,6 @@ class PrepareEmCashActivity : AppCompatActivity(),BottomSheetListener {
     override fun onBackPressed() {
         if (viewModel._bottomSheetVisiblity.value == true)
             viewModel._bottomSheetVisiblity.value = false
-        else
-        {
-            openActivity(TermsAndConditionsActivity::class.java)
-            finish()
-        }
     }
 
     fun showTint() {
