@@ -5,6 +5,8 @@ import com.emcash.customerapp.data.SyncManager
 import com.emcash.customerapp.data.network.EmCashApiManager
 import com.emcash.customerapp.extensions.awaitResponse
 import com.emcash.customerapp.model.notifications.NotificationResponse
+import timber.log.Timber
+import java.lang.Exception
 
 class NotificationsRepository(private val context: Context) {
     private val syncManager = SyncManager(context)
@@ -21,6 +23,15 @@ class NotificationsRepository(private val context: Context) {
         },onFailure = {
             onApiCallback(false, it, null)
         })
+    }
+
+    suspend fun onNotificationClick(id:String){
+        try {
+            api.onNotificationItemClick(id)
+        }catch (e:Exception){
+            e.printStackTrace()
+            Timber.e("onNotificationClickExc $e")
+        }
     }
 
 }

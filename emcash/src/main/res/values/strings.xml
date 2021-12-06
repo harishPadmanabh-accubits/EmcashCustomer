@@ -107,5 +107,6 @@ Payment cards saved to your separate  Payments account are distinct from any Vir
     <string name="one_week">1 Week</string>
     <string name="one_month">1 Month</string>
     <string name="custom">Custom</string>
+    <string name="empty_notifications">You have no new notifications</string>
 
 </resources>

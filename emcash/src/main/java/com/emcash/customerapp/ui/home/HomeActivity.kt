@@ -14,7 +14,6 @@ import androidx.core.net.toUri
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import com.emcash.customerapp.DeepLinkFactory
-import com.emcash.customerapp.EmCashCommunicationHelper
 import com.emcash.customerapp.R
 import com.emcash.customerapp.data.network.ApiCallStatus
 import com.emcash.customerapp.extensions.*
@@ -23,7 +22,7 @@ import com.emcash.customerapp.model.profile.ProfileDetailsResponse
 import com.emcash.customerapp.model.transactions.RecentTransactionItem
 import com.emcash.customerapp.model.transactions.RecentTransactionResponse
 import com.emcash.customerapp.ui.history.TransactionHistory
-import com.emcash.customerapp.ui.home.adapter.RecentTransactionsAdapter
+import com.emcash.customerapp.ui.home.adapter.RecentTransactionAdapterV2
 import com.emcash.customerapp.ui.loademcash.LoadEmcashActivity
 import com.emcash.customerapp.ui.newPayment.NewPaymentActivity
 import com.emcash.customerapp.ui.newPayment.adapters.ContactsListener
@@ -36,9 +35,7 @@ import com.emcash.customerapp.ui.wallet.WalletActivity
 import com.emcash.customerapp.utils.*
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.layout_switch_accout.*
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
 import pub.devrel.easypermissions.AppSettingsDialog
 import pub.devrel.easypermissions.EasyPermissions
 import timber.log.Timber
@@ -68,12 +65,20 @@ class HomeActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks,
 
     private val viewModel: HomeViewModel by viewModels()
 
+    private val recentTransactionsAdapter by lazy {
+        RecentTransactionAdapterV2(this)
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         checkDataFromPendingIntent()
         setContentView(R.layout.activity_home)
         window.sharedElementEnterTransition.duration = 500
+        setupViews()
+        lifecycleScope.async {
+            renderRecentTransactions(viewModel.syncManager.recentTransactionsCache)
+        }
 
         lifecycleScope.async {
             validateCache(profileDataCache)
@@ -86,7 +91,6 @@ class HomeActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks,
         lifecycleScope.async {
             getRecentTransactions()
         }
-        setupViews()
     }
 
     private fun checkDataFromPendingIntent() {
@@ -115,9 +119,7 @@ class HomeActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks,
     private fun renderRecentTransactions(data: RecentTransactionResponse.Data?) {
         data?.let {
             if (it.transactionList.isNotEmpty()) {
-                rv_recent_transactions.apply {
-                    adapter = RecentTransactionsAdapter(it.transactionList, this@HomeActivity)
-                }
+                recentTransactionsAdapter.submitList(it.transactionList)
                 iv_no_transactions.hide()
             } else {
                 iv_no_transactions.show()
@@ -156,9 +158,7 @@ class HomeActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks,
                     showShortToast(it.errorMessage)
                     hideLoader()
                 }
-                ApiCallStatus.LOADING -> {
-                    // loader.show()
-                }
+
             }
         })
     }
@@ -237,6 +237,7 @@ class HomeActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks,
             openActivity(NotificationsActivity::class.java)
             finish()
         }
+        rv_recent_transactions.adapter = recentTransactionsAdapter
 
     }
 

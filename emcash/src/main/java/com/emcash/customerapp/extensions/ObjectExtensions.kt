@@ -562,15 +562,14 @@ fun String.toLocalDate():String{
     return formatted
 }
 
-fun String.toLocalTime():String{
+fun String.toLocalTime(): String {
     Timber.e("Datext $this")
     val sdfInput = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSS")
-    sdfInput .timeZone = TimeZone.getTimeZone("UTC")
+    sdfInput.timeZone = TimeZone.getTimeZone("UTC")
     val date = sdfInput.parse(this)
     val sdfOutput = SimpleDateFormat("hh:mm a")
     sdfOutput.timeZone = TimeZone.getDefault()
-    val formatted = sdfOutput.format(date)
-    return formatted
+    return sdfOutput.format(date)
 }
 
 fun toFormattedDate(dateStr: String): String {
