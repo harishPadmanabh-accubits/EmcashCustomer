@@ -50,6 +50,10 @@ const val SCREEN_CHAT = 207
 const val SCREEN_CONTACTS = 208
 const val SCREEN_VIEW_ALL = 209
 const val PIN_CANCEL=210
+const val SCREEN_NOTIFICATIONS=211
+
+const val TYPE_USER = 1000
+const val  TYPE_VIEW_ALL=1001
 
 const val KEY_DEEPLINK = "deeplink"
 const val KEY_TYPE = " notify_type"

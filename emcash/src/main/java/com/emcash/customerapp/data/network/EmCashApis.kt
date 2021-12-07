@@ -14,6 +14,7 @@ import com.emcash.customerapp.model.convertEmcash.AddBankDetailsRequest
 import com.emcash.customerapp.model.convertEmcash.BankDetailsResponse
 import com.emcash.customerapp.model.convertEmcash.EditBankDetailsRequest
 import com.emcash.customerapp.model.convertEmcash.UserBankAccountResponse
+import com.emcash.customerapp.model.notifications.NotificationClickResponse
 import com.emcash.customerapp.model.notifications.NotificationResponse
 import com.emcash.customerapp.model.payments.*
 import com.emcash.customerapp.model.profile.ProfileDetailsResponse
@@ -214,6 +215,11 @@ interface EmCashApis {
         @Query("page") page: Int,
         @Query("limit") limit: Int
     ): RecentTransactionResponse
+
+    @GET("v1/customers/notification/{id}")
+    suspend fun onNotificationItemClick(
+        @Path("id") id:String
+    ):NotificationClickResponse
 
 
 

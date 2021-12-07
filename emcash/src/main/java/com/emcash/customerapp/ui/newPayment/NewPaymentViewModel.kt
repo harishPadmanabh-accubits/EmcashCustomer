@@ -147,10 +147,10 @@ class NewPaymentViewModel(val app: Application) : AndroidViewModel(app) {
         }.liveData.cachedIn(viewModelScope)
     }
 
-    val recentContactsCache = MutableLiveData<RecentTransactionResponse.Data>()
     val recentContacts = paymentRepository.getRecentTransactions {
-        recentContactsCache.value = it
     }
+
+    val recentContactsCache = syncManager.recentTransactionsCache
 
     fun blockAccountAsync(userId: Int,onResult: (status: Boolean, error: String?) -> Unit){
         viewModelScope.launch {

@@ -20,6 +20,7 @@ import com.emcash.customerapp.extensions.showShortToast
 import com.emcash.customerapp.model.payments.QRResponse
 import com.emcash.customerapp.ui.home.HomeActivity
 import com.emcash.customerapp.ui.newPayment.NewPaymentScreens.*
+import com.emcash.customerapp.ui.notifications.NotificationsActivity
 import com.emcash.customerapp.ui.qr.QrScannerActivity
 import com.emcash.customerapp.ui.viewAllTransactions.ViewAllTransactionsActivity
 import com.emcash.customerapp.utils.*
@@ -193,6 +194,10 @@ class NewPaymentActivity : AppCompatActivity(), EasyPermissions.PermissionCallba
                         SCREEN_HOME -> viewModel.gotoScreen(CONTACTS)
                         SCREEN_VIEW_ALL -> {
                             openActivity(ViewAllTransactionsActivity::class.java)
+                            finish()
+                        }
+                        SCREEN_NOTIFICATIONS->{
+                            openActivity(NotificationsActivity::class.java)
                             finish()
                         }
                         else -> {

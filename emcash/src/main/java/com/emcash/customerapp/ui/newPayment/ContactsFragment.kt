@@ -13,12 +13,11 @@ import com.emcash.customerapp.extensions.showShortToast
 import com.emcash.customerapp.model.contacts.ContactsGroup
 import com.emcash.customerapp.model.transactions.RecentTransactionItem
 import com.emcash.customerapp.model.transactions.RecentTransactionResponse
-import com.emcash.customerapp.ui.home.adapter.RecentTransactionsAdapter
+import com.emcash.customerapp.ui.home.adapter.RecentTransactionAdapterV2
 import com.emcash.customerapp.ui.newPayment.adapters.ContactsListener
 import com.emcash.customerapp.ui.newPayment.adapters.ContactsPagedAdapter
 import com.emcash.customerapp.utils.KEY_SELECTED_CONTACT
 import com.emcash.customerapp.utils.SCREEN_CONTACTS
-import kotlinx.android.synthetic.main.activity_prepare_em_cash.*
 import kotlinx.android.synthetic.main.layout_contacts_fragment.*
 import kotlinx.android.synthetic.main.row_contacts.*
 import kotlinx.android.synthetic.main.row_recent_contacts.*
@@ -30,6 +29,10 @@ class ContactsFragment : Fragment(R.layout.layout_contacts_fragment), ContactsLi
     private val allContactsAdapter by lazy {
         ContactsPagedAdapter(this)
     }
+    private val recentTransactionsAdapter by lazy{
+        RecentTransactionAdapterV2(this)
+    }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -56,14 +59,12 @@ class ContactsFragment : Fragment(R.layout.layout_contacts_fragment), ContactsLi
 
     private fun observe() {
         viewModel.apply {
+            if (recentContactsCache != null) {
+                setupRecentTransactions(recentContactsCache)
+            }
             recentContacts.observe(viewLifecycleOwner, Observer {
                 setupRecentTransactions(it)
             })
-
-            recentContactsCache.observe(viewLifecycleOwner, Observer {
-                setupRecentTransactions(it)
-            })
-
             try {
                 pagedAllContactList.observe(viewLifecycleOwner, Observer {
                     allContactsAdapter.submitData(lifecycle, it)
@@ -77,13 +78,10 @@ class ContactsFragment : Fragment(R.layout.layout_contacts_fragment), ContactsLi
     }
 
     private fun setupRecentTransactions(recentTransactions: RecentTransactionResponse.Data) {
-        val adapter = RecentTransactionsAdapter(
-            recentTransactions.transactionList.toList(),
-            this@ContactsFragment
-        ).also {
+        rv_recent_contacts.adapter = recentTransactionsAdapter.also {
             it.source = SCREEN_CONTACTS
         }
-        rv_recent_contacts.adapter = adapter
+        recentTransactionsAdapter.submitList(recentTransactions.transactionList)
     }
 
     private fun listenForQuerry() {

@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.emcash.customerapp.data.network.ApiCallStatus
 import com.emcash.customerapp.data.network.ApiMapper
 import com.emcash.customerapp.data.repos.NotificationsRepository
@@ -11,6 +12,7 @@ import com.emcash.customerapp.extensions.toFormattedDate
 import com.emcash.customerapp.model.notifications.Notification
 import com.emcash.customerapp.model.notifications.NotificationResponse
 import com.emcash.customerapp.model.notifications.NotificationUiModel
+import kotlinx.coroutines.launch
 import timber.log.Timber
 
 class NotificationsViewModel(app:Application):AndroidViewModel(app) {
@@ -67,6 +69,14 @@ class NotificationsViewModel(app:Application):AndroidViewModel(app) {
         }
         return NotificationActivityList //pass this to adapter
     }
+
+    fun onNotificationClick(id:String){
+        viewModelScope.launch {
+            repository.onNotificationClick(id)
+        }
+    }
+
+
 
 
 }
