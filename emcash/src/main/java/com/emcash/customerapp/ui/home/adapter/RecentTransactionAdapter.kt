@@ -28,21 +28,14 @@ class RecentTransactionDiffUtils : DiffUtil.ItemCallback<RecentTransactionItem>(
 
 }
 
-class RecentTransactionAdapterV2(private val listener: ContactsListener) :
+class RecentTransactionAdapter(private val listener: ContactsListener) :
     ListAdapter<RecentTransactionItem, RecyclerView.ViewHolder>(RecentTransactionDiffUtils()) {
-    private var shouldShowViewAll = itemCount >= 9
     var source = SCREEN_HOME_RECENT_CONTACTS
     override fun getItemViewType(position: Int): Int {
-        return if (shouldShowViewAll) {
-            if (position == itemCount)
+        return if (position == 9)
                 TYPE_VIEW_ALL
             else
                 TYPE_USER
-
-        } else {
-            TYPE_USER
-        }
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {

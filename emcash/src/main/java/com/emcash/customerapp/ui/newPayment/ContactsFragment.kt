@@ -13,7 +13,7 @@ import com.emcash.customerapp.extensions.showShortToast
 import com.emcash.customerapp.model.contacts.ContactsGroup
 import com.emcash.customerapp.model.transactions.RecentTransactionItem
 import com.emcash.customerapp.model.transactions.RecentTransactionResponse
-import com.emcash.customerapp.ui.home.adapter.RecentTransactionAdapterV2
+import com.emcash.customerapp.ui.home.adapter.RecentTransactionAdapter
 import com.emcash.customerapp.ui.newPayment.adapters.ContactsListener
 import com.emcash.customerapp.ui.newPayment.adapters.ContactsPagedAdapter
 import com.emcash.customerapp.utils.KEY_SELECTED_CONTACT
@@ -30,7 +30,7 @@ class ContactsFragment : Fragment(R.layout.layout_contacts_fragment), ContactsLi
         ContactsPagedAdapter(this)
     }
     private val recentTransactionsAdapter by lazy{
-        RecentTransactionAdapterV2(this)
+        RecentTransactionAdapter(this)
     }
 
 
@@ -63,7 +63,7 @@ class ContactsFragment : Fragment(R.layout.layout_contacts_fragment), ContactsLi
                 setupRecentTransactions(recentContactsCache)
             }
             recentContacts.observe(viewLifecycleOwner, Observer {
-                setupRecentTransactions(it)
+                setupRecentTransactions(it.transactionList)
             })
             try {
                 pagedAllContactList.observe(viewLifecycleOwner, Observer {
@@ -77,11 +77,11 @@ class ContactsFragment : Fragment(R.layout.layout_contacts_fragment), ContactsLi
 
     }
 
-    private fun setupRecentTransactions(recentTransactions: RecentTransactionResponse.Data) {
+    private fun setupRecentTransactions(recentTransactions: List<RecentTransactionItem>) {
         rv_recent_contacts.adapter = recentTransactionsAdapter.also {
             it.source = SCREEN_CONTACTS
         }
-        recentTransactionsAdapter.submitList(recentTransactions.transactionList)
+        recentTransactionsAdapter.submitList(recentTransactions)
     }
 
     private fun listenForQuerry() {

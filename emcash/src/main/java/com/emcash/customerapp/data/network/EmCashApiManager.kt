@@ -32,7 +32,7 @@ class EmCashApiManager(context: Context) {
         
 
         val restAdapter = Retrofit.Builder()
-            .baseUrl(BASE_URL)
+            .baseUrl(STAGING_URL)
             .addConverterFactory(GsonConverterFactory.create(gson))
             .client(okHttpClient)
             .build()

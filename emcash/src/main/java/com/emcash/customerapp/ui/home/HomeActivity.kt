@@ -20,10 +20,9 @@ import com.emcash.customerapp.extensions.*
 import com.emcash.customerapp.model.contacts.ContactsGroup
 import com.emcash.customerapp.model.profile.ProfileDetailsResponse
 import com.emcash.customerapp.model.transactions.RecentTransactionItem
-import com.emcash.customerapp.model.transactions.RecentTransactionResponse
 import com.emcash.customerapp.ui.history.TransactionHistory
-import com.emcash.customerapp.ui.home.adapter.RecentTransactionAdapterV2
-import com.emcash.customerapp.ui.loademcash.LoadEmcashActivity
+import com.emcash.customerapp.ui.home.adapter.RecentTransactionAdapter
+import com.emcash.customerapp.ui.loadEmcash.LoadEmcashActivity
 import com.emcash.customerapp.ui.newPayment.NewPaymentActivity
 import com.emcash.customerapp.ui.newPayment.adapters.ContactsListener
 import com.emcash.customerapp.ui.notifications.NotificationsActivity
@@ -35,28 +34,23 @@ import com.emcash.customerapp.ui.wallet.WalletActivity
 import com.emcash.customerapp.utils.*
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.layout_switch_accout.*
-import kotlinx.coroutines.async
 import pub.devrel.easypermissions.AppSettingsDialog
 import pub.devrel.easypermissions.EasyPermissions
 import timber.log.Timber
 
+import androidx.core.util.Pair
+import android.view.View
+import androidx.core.app.ActivityOptionsCompat
+
+
 class HomeActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks,
     EasyPermissions.RationaleCallbacks, ContactsListener {
-
-    private val profileDataCache by lazy {
-        intent.getStringExtra(KEY_PROFILE_DATA_CACHE)
-    }
-
     private val loader by lazy {
         LoaderDialog(this)
     }
 
     private val deeplink by lazy {
         intent.getStringExtra(KEY_DEEPLINK).toString()
-    }
-
-    private val type by lazy {
-        intent.getStringExtra(KEY_TYPE)
     }
 
     private val isFromDeeplink by lazy {
@@ -66,7 +60,7 @@ class HomeActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks,
     private val viewModel: HomeViewModel by viewModels()
 
     private val recentTransactionsAdapter by lazy {
-        RecentTransactionAdapterV2(this)
+        RecentTransactionAdapter(this)
     }
 
 
@@ -76,21 +70,14 @@ class HomeActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks,
         setContentView(R.layout.activity_home)
         window.sharedElementEnterTransition.duration = 500
         setupViews()
-        lifecycleScope.async {
-            renderRecentTransactions(viewModel.syncManager.recentTransactionsCache)
+        lifecycleScope.launchWhenResumed {
+            validateCache()
         }
 
-        lifecycleScope.async {
-            validateCache(profileDataCache)
-        }
-
-        lifecycleScope.async {
+        lifecycleScope.launchWhenResumed {
             getProfileDetailsFromServer()
         }
 
-        lifecycleScope.async {
-            getRecentTransactions()
-        }
     }
 
     private fun checkDataFromPendingIntent() {
@@ -100,50 +87,26 @@ class HomeActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks,
         }
     }
 
-    private fun getRecentTransactions() {
-        viewModel.recentTransactions.observe(this, Observer {
-            when (it.status) {
-                ApiCallStatus.SUCCESS -> {
-                    //load from server
-                    renderRecentTransactions(it.data)
-                }
-                ApiCallStatus.ERROR -> {
-                    //load from cache
-                    renderRecentTransactions(viewModel.syncManager.recentTransactionsCache)
-                }
+
+    private fun renderRecentTransactions(data: List<RecentTransactionItem>) {
+        if (data.isNotEmpty()) {
+            Timber.e("RecentTransSize ${data.size}")
+            recentTransactionsAdapter.submitList(data)
+            iv_no_transactions.hide()
+        } else {
+            iv_no_transactions.show()
+            rv_recent_transactions.hide()
+            iv_no_transactions.setOnClickListener {
+                openNewPayment()
             }
-        })
+        }
 
     }
 
-    private fun renderRecentTransactions(data: RecentTransactionResponse.Data?) {
-        data?.let {
-            if (it.transactionList.isNotEmpty()) {
-                recentTransactionsAdapter.submitList(it.transactionList)
-                iv_no_transactions.hide()
-            } else {
-                iv_no_transactions.show()
-                rv_recent_transactions.hide()
-                iv_no_transactions.setOnClickListener {
-                    openNewPayment()
-                }
-            }
-        }
-    }
-
-    private fun validateCache(profileDataCache: String?) {
-        if (!profileDataCache.isNullOrEmpty()) {    //from intent
-            Timber.e("profile intent ")
-            val profileDetails = profileDataCache.fromJson(ProfileDetailsResponse.Data::class.java)
-            renderProfileDetails(profileDetails)
-        } else {                //get from cache - if null - get from server
-            val profileCache = viewModel.syncManager.profileDetails
-            if (profileCache != null)
-                renderProfileDetails(profileCache)
-            else
-                getProfileDetailsFromServer()
-        }
-
+    private fun validateCache() {
+        val profileCache = viewModel.syncManager.profileDetails
+        if (profileCache != null)
+            renderProfileDetails(profileCache)
     }
 
     private fun getProfileDetailsFromServer() {
@@ -151,8 +114,9 @@ class HomeActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks,
             when (it.status) {
                 ApiCallStatus.SUCCESS -> {
                     val profileData = it.data
-                    if (profileData != null)
+                    if (profileData != null) {
                         renderProfileDetails(profileData)
+                    }
                 }
                 ApiCallStatus.ERROR -> {
                     showShortToast(it.errorMessage)
@@ -166,17 +130,27 @@ class HomeActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks,
     private fun renderProfileDetails(profileDetails: ProfileDetailsResponse.Data) {
         tv_score_count.text = profileDetails.customer.score.toString()
         tv_level.text = profileDetails.customer.rewardLevel.toRewardLevelString(this)
-        iv_user_image.loadImageWithPlaceHolder(
-            profileDetails.profileImage,
-            R.drawable.ic_profile_placeholder
-        )
+        iv_user_image.loadImageWithErrorCallback(profileDetails.profileImage, onError = {
+            tv_user_name_letter.text = profileDetails.name.first().toString()
+        })
         coinProfileImageView.setImage(profileDetails.profileImage)
         tv_tv_balance.text = profileDetails.wallet.amount.toString()
         setLevelShower(profileDetails.customer.rewardLevel)
+        setNotificationBadge(profileDetails.notificationCount)
+        renderRecentTransactions(profileDetails.recentTransactions)
         hideLoader()
         cl_root.show()
 
 
+    }
+
+    private fun setNotificationBadge(notificationCount: Int) {
+        if (notificationCount > 0) {
+            tv_notification_count.text = notificationCount.toNotificationCount()
+            cv_notification_count.show()
+        } else {
+            cv_notification_count.hide()
+        }
     }
 
     private fun hideLoader() {
@@ -193,6 +167,7 @@ class HomeActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks,
     }
 
     private fun setupViews() {
+        rv_recent_transactions.adapter = recentTransactionsAdapter
 
         iv_menu_handle.setOnTouchListener(object : OnSwipeTouchListener(this) {
             override fun onSwipeLeft() {
@@ -201,12 +176,17 @@ class HomeActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks,
             }
         })
 
-        cv_balance.setOnClickListener {
-            openActivity(WalletActivity::class.java)
-            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
-            finish()
+        if (hasInternet()) {
+            configureNavigation()
+        } else {
+            showShortToast(getString(R.string.internet_required))
         }
+    }
 
+    private fun configureNavigation() {
+        cv_balance.setOnClickListener {
+            openWalletScreen()
+        }
 
         tv_load_emcash.setOnClickListener {
             openLoadEmcash()
@@ -229,7 +209,6 @@ class HomeActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks,
         }
 
         fab_new_payment.setOnClickListener {
-            Timber.e("Clicked")
             openNewPayment()
         }
 
@@ -237,8 +216,15 @@ class HomeActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks,
             openActivity(NotificationsActivity::class.java)
             finish()
         }
-        rv_recent_transactions.adapter = recentTransactionsAdapter
+    }
 
+    private fun openWalletScreen() {
+        openActivity(WalletActivity::class.java)
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+//            val options = ActivityOptions.makeSceneTransitionAnimation(this)
+//            val intent = Intent(this, WalletActivity::class.java)
+//            startActivity(intent, options.toBundle())
+        finish()
     }
 
     private fun openRewards() {
@@ -256,9 +242,14 @@ class HomeActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks,
     }
 
     private fun openSettings() {
-        openActivity(SettingsActivity::class.java)
-        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
-        finish()
+        val intent = Intent(this, SettingsActivity::class.java)
+        val sharedDp = Pair.create<View?, String>(iv_user_image as View?, "dp")
+        val sharedName = Pair.create<View?, String>(tv_user_name_letter as View?, "name")
+        val options = ActivityOptionsCompat.makeSceneTransitionAnimation(this, sharedDp, sharedName)
+        startActivity(intent, options.toBundle())
+//        openActivity(SettingsActivity::class.java)
+//        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+//        finish()
     }
 
     private fun openLoadEmcash() {
@@ -386,7 +377,6 @@ class HomeActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks,
         }
 
     }
-
 
 
 }

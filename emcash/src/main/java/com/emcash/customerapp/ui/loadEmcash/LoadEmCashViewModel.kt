@@ -1,4 +1,4 @@
-package com.emcash.customerapp.ui.loademcash
+package com.emcash.customerapp.ui.loadEmcash
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
@@ -9,43 +9,27 @@ import com.emcash.customerapp.data.network.ApiMapper
 import com.emcash.customerapp.data.repos.HomeRepository
 import com.emcash.customerapp.extensions.default
 import com.emcash.customerapp.model.bankCard.*
-import com.emcash.customerapp.model.notifications.NotificationResponse
-import com.emcash.customerapp.model.wallet.topup.WalletTopupRequest
 
 class LoadEmCashViewModel(val app: Application) : AndroidViewModel(app) {
 
-    val homeRepository = HomeRepository(app)
+    private val homeRepository = HomeRepository(app)
     val syncManager = SyncManager(app)
 
     var _accountMode = MutableLiveData<AccountMode>().default(AccountMode.BANK_CARD)
-    var _notifications = MutableLiveData<ApiMapper<NotificationResponse.Data>>()
-    var bankCardsStatus = MutableLiveData<ApiMapper<BankCardsListingResponse.Data>>()
+    var bankCards = MutableLiveData<ApiMapper<BankCardsListingResponse.Data>>()
     var paymentByExistingCardStatus = MutableLiveData<ApiMapper<PaymentByExisitingCardResponse>>()
     var paymentByNewCardStatus = MutableLiveData<ApiMapper<PaymentByNewCardResponse>>()
     var payerAuthenticatorStatus = MutableLiveData<ApiMapper<PayerAuthenticatorResponse>>()
 
-    fun addEmCash(
-        amount: Int,
-        desc: String,
-        onFinished: (status: Boolean, error: String?) -> Unit
-    ) {
-        val topupRequest = WalletTopupRequest(amount, desc)
-        homeRepository.topupWallet(topupRequest) { status, response, error ->
-            onFinished(status, error)
-
-        }
-    }
-
-    fun bankCardListing() {
-        bankCardsStatus.value = ApiMapper(ApiCallStatus.LOADING, null, null)
-
-        homeRepository.bankCardsListing() { status, message, result ->
+    fun getBankCards() {
+        bankCards.value = ApiMapper(ApiCallStatus.LOADING, null, null)
+        homeRepository.bankCardsListing { status, message, result ->
             when (status) {
                 true -> {
-                    bankCardsStatus.value = ApiMapper(ApiCallStatus.SUCCESS, result, null)
+                    bankCards.value = ApiMapper(ApiCallStatus.SUCCESS, result, null)
                 }
                 false -> {
-                    bankCardsStatus.value = ApiMapper(ApiCallStatus.ERROR, null, message)
+                    bankCards.value = ApiMapper(ApiCallStatus.ERROR, null, message)
 
                 }
             }
@@ -68,7 +52,6 @@ class LoadEmCashViewModel(val app: Application) : AndroidViewModel(app) {
     }
     fun paymentByNewCard(paymentByNewCardRequest: PaymentByNewCardRequest) {
         paymentByNewCardStatus.value = ApiMapper(ApiCallStatus.LOADING, null, null)
-
         homeRepository.paymentByNewCard(paymentByNewCardRequest) { status, message, result ->
             when (status) {
                 true -> {

@@ -43,8 +43,23 @@
             android:id="@+id/iv_user_image"
             android:layout_width="86dp"
             android:layout_height="86dp"
+            android:src="@color/ash_dark"
+            android:transitionName="dp"
             android:layout_gravity="center"
              />
+        <TextView
+            android:id="@+id/tv_user_name_letter"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fontFamily="@font/biennale_semi_bold"
+            android:textColor="@color/white"
+            android:textSize="28sp"
+            android:transitionName="name"
+            android:textAllCaps="true"
+            android:maxLines="1"
+            android:maxLength="1"
+            android:gravity="center"
+            tools:text="A" />
 
     </FrameLayout>
 

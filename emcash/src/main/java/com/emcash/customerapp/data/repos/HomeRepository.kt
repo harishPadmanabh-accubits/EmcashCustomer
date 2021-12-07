@@ -18,6 +18,7 @@ import com.emcash.customerapp.model.convertEmcash.BankDetailsResponse
 import com.emcash.customerapp.model.convertEmcash.EditBankDetailsRequest
 import com.emcash.customerapp.model.convertEmcash.UserBankAccountResponse
 import com.emcash.customerapp.model.profile.ProfileDetailsResponse
+import com.emcash.customerapp.model.transactions.RecentTransactionItem
 import com.emcash.customerapp.model.transactions.RecentTransactionResponse
 import com.emcash.customerapp.model.wallet.topup.WalletTopupRequest
 import com.emcash.customerapp.model.wallet.topup.WalletTopupResponse
@@ -30,19 +31,6 @@ class HomeRepository(private val context: Context) {
     val syncManager = SyncManager(context)
     private val api = EmCashApiManager(context).api
 
-    fun getRecentTransactions(onCache:(data:RecentTransactionResponse.Data)->Unit): LiveData<ApiMapper<RecentTransactionResponse.Data>> {
-        val _transactions = MutableLiveData<ApiMapper<RecentTransactionResponse.Data>>()
-        _transactions.value = ApiMapper(ApiCallStatus.LOADING, null, null)
-        api.getRecentTransactions()
-            .awaitResponse(onSuccess = { response ->
-                syncManager.recentTransactionsCache = response?.data
-                _transactions.value = ApiMapper(ApiCallStatus.SUCCESS, response?.data, null)
-            }, onFailure = { error ->
-                _transactions.value = ApiMapper(ApiCallStatus.ERROR, null, error)
-                syncManager.recentTransactionsCache?.let { onCache(it) }
-            })
-        return _transactions
-    }
 
     fun topupWallet(
         topupRequest: WalletTopupRequest,
@@ -56,9 +44,13 @@ class HomeRepository(private val context: Context) {
     }
 
     fun getProfile(onApiCallBack: (status: Boolean, response: ProfileDetailsResponse.Data?, error: String?) -> Unit) {
-        api.getProfileDetails().awaitResponse(onSuccess = {
-            syncManager.profileDetails = it?.data
-            onApiCallBack(true, it?.data, null)
+        api.getProfileDetails().awaitResponse(onSuccess = {response->
+            response?.let {
+                syncManager.profileDetails = it.data
+                syncManager.recentTransactionsCache = it.data.recentTransactions
+                onApiCallBack(true, it.data, null)
+            }
+
         }, onFailure = {
             onApiCallBack(false, null, it)
         })
@@ -114,12 +106,9 @@ class HomeRepository(private val context: Context) {
         api.paymentByNewCard(paymentByNewCardRequest).awaitResponse(
             onFailure = {
                 onApiCallback(false, it, null)
-
-            }, onSuccess = {
-                var data = it
+            }, onSuccess = {data->
                 data?.let {
                     onApiCallback(true, null, data)
-
                 }
             }
         )
@@ -149,13 +138,17 @@ class HomeRepository(private val context: Context) {
             }
         )
     }
-    fun authenticatePayer(payerAuthenticatorRequest: PayerAuthenticatorRequest, onApiCallback: (status: Boolean, message: String?, result: PayerAuthenticatorResponse?) -> Unit){
+
+    fun authenticatePayer(
+        payerAuthenticatorRequest: PayerAuthenticatorRequest,
+        onApiCallback: (status: Boolean, message: String?, result: PayerAuthenticatorResponse?) -> Unit
+    ) {
         api.authenticatePayer(payerAuthenticatorRequest).awaitResponse(
             onFailure = {
                 onApiCallback(false, it, null)
             }, onSuccess = {
 
-                    onApiCallback(true, null, it)
+                onApiCallback(true, null, it)
             }
         )
     }
@@ -163,7 +156,7 @@ class HomeRepository(private val context: Context) {
     fun editBankAccount(
         editBankDetailsRequest: EditBankDetailsRequest,
         onApiCallback: (status: Boolean, message: String?, result: UserBankAccountResponse?) -> Unit
-    ){
+    ) {
         api.editBankDetails(editBankDetailsRequest).awaitResponse(
             onFailure = {
                 onApiCallback(false, it, null)
@@ -175,15 +168,9 @@ class HomeRepository(private val context: Context) {
 
     fun getCurrentUUID() = syncManager.uuid
 
-    fun getAllTransactedUsers(scope: CoroutineScope) =Pager(PagingConfig(1)){
+    fun getAllTransactedUsers(scope: CoroutineScope) = Pager(PagingConfig(1)) {
         ViewAllTransactionPagingSource(api)
     }.flow.cachedIn(scope)
-
-
-
-
-
-
 
 
 }

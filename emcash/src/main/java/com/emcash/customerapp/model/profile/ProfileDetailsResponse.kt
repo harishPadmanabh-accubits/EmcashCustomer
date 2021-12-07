@@ -1,6 +1,7 @@
 package com.emcash.customerapp.model.profile
 
 
+import com.emcash.customerapp.model.transactions.RecentTransactionItem
 import com.google.gson.annotations.SerializedName
 
 data class ProfileDetailsResponse(
@@ -23,7 +24,7 @@ data class ProfileDetailsResponse(
         @SerializedName("email")
         val email: String,
         @SerializedName("fcmToken")
-        val fcmToken: Any?,
+        val fcmToken: String?,
         @SerializedName("guid")
         val guid: String,
         @SerializedName("id")
@@ -49,7 +50,11 @@ data class ProfileDetailsResponse(
         @SerializedName("wallet")
         val wallet: Wallet,
         @SerializedName("zipCode")
-        val zipCode: Any?
+        val zipCode: Any?,
+        @SerializedName("notificationCount")
+        val notificationCount:Int,
+        @SerializedName("recentTransactions")
+        val recentTransactions: List<RecentTransactionItem>
     )
 }
 

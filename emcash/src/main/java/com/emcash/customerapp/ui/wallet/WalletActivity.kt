@@ -1,12 +1,11 @@
 package com.emcash.customerapp.ui.wallet
 
+import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
-import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.emcash.customerapp.R
@@ -16,7 +15,7 @@ import com.emcash.customerapp.extensions.showShortToast
 import com.emcash.customerapp.model.profile.ProfileDetailsResponse
 import com.emcash.customerapp.ui.convertEmcash.ConvertEmcashActivity
 import com.emcash.customerapp.ui.home.HomeActivity
-import com.emcash.customerapp.ui.loademcash.LoadEmcashActivity
+import com.emcash.customerapp.ui.loadEmcash.LoadEmcashActivity
 import com.emcash.customerapp.utils.LAUNCH_SOURCE
 import com.emcash.customerapp.utils.LoaderDialog
 import com.emcash.customerapp.utils.SCREEN_WALLET
@@ -24,8 +23,6 @@ import kotlinx.android.synthetic.main.wallet_screen_v2.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
-import timber.log.Timber
 
 class WalletActivity : AppCompatActivity() {
 
@@ -103,10 +100,13 @@ class WalletActivity : AppCompatActivity() {
         }
     }
 
+    @SuppressLint("SetTextI18n")
     private fun renderProfileDetails(profile: ProfileDetailsResponse.Data) {
         appCompatImageView.setImage(profile.profileImage)
         tv_balance.text = profile.wallet.amount.toString()
-        tv_safe_box_id.text = "Safe Box Id : ${profile.wallet.id}"
+        val safeboxId = profile.wallet.id
+        if(safeboxId.isNotBlank())
+        tv_safe_box_id.text = "SafeBox ID : ${safeboxId.split("-").first()}"
     }
 
     override fun onBackPressed() {

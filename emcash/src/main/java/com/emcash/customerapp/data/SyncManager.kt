@@ -9,6 +9,7 @@ import com.emcash.customerapp.extensions.fromJson
 import com.emcash.customerapp.extensions.toJson
 import com.emcash.customerapp.model.auth.switchAccount.SwitchAccountResponse
 import com.emcash.customerapp.model.profile.ProfileDetailsResponse
+import com.emcash.customerapp.model.transactions.RecentTransactionItem
 import com.emcash.customerapp.model.transactions.RecentTransactionResponse
 import com.emcash.customerapp.model.transactions.TransferScreenUIModel
 import com.emcash.customerapp.ui.terms.TncStatus
@@ -137,15 +138,15 @@ class SyncManager(val context: Context) {
         }
         set(value) = editor.putBoolean(KEY_PENDING_LOGOUT, value).apply()
 
-    var recentTransactionsCache: RecentTransactionResponse.Data?
+    var recentTransactionsCache:List<RecentTransactionItem>
         get() = try {
             val recentTransactions = sharedPreferences.getString(KEY_RECENT_TRANSACTION_CACHE, "")
             if (recentTransactions != null && recentTransactions.isNotEmpty())
-                recentTransactions.fromJson(RecentTransactionResponse.Data::class.java)
+                recentTransactions.fromJson(Array<RecentTransactionItem>::class.java).toList()
             else
-                null
+                emptyList<RecentTransactionItem>()
         } catch (e: Exception) {
-            null
+            emptyList<RecentTransactionItem>()
         }
     set(value) = editor.putString(KEY_RECENT_TRANSACTION_CACHE, value?.toJson()).apply()
 

@@ -27,7 +27,9 @@ class SettingsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
-        iv_user_image.loadImageWithPlaceHolder(viewModel.profile?.profileImage,R.drawable.ic_profile_placeholder)
+        iv_user_image.loadImageWithErrorCallback(viewModel.profile?.profileImage,onError = {
+            tv_user_name_letter.text = viewModel.profile?.name?.first().toString()
+        })
         fl_user_dp.setlevel(viewModel.profile?.level ?: 0)
         tv_user_name.text = viewModel.profile?.name
         observe()
@@ -49,8 +51,8 @@ class SettingsActivity : AppCompatActivity() {
     }
 
     private fun observe() {
-        viewModel.logoutBottomSheetVisibility.observe(this, Observer {
-            when(it){
+        viewModel.logoutBottomSheetVisibility.observe(this, Observer {logoutBottomSheetVisibility->
+            when(logoutBottomSheetVisibility){
                 true->showLogoutBottomSheet()
                 false->hideLogoutBottomSheet()
             }

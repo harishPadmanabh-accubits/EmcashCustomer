@@ -9,9 +9,9 @@ import androidx.fragment.app.DialogFragment
 import com.emcash.customerapp.R
 import com.emcash.customerapp.extensions.openActivity
 import com.emcash.customerapp.ui.home.HomeActivity
-import kotlinx.android.synthetic.main.layout_dialog_emcash_successful.*
+import kotlinx.android.synthetic.main.card_convert_emcash_success.*
 
-class SuccesDialog(
+class SuccessDialog(
     val activity: AppCompatActivity,
     val listener: SuccessDialogListener
 ) : DialogFragment() {
@@ -21,13 +21,13 @@ class SuccesDialog(
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.dialog_success, container, false)
+        return inflater.inflate(R.layout.card_convert_emcash_success, container, false)
     }
 
     override fun onStart() {
         super.onStart()
-        val width = (resources.displayMetrics.widthPixels * 0.95).toInt()
-        val height = (resources.displayMetrics.heightPixels * 0.6).toInt()
+        val width = (resources.displayMetrics.widthPixels * 0.85).toInt()
+        val height = (resources.displayMetrics.heightPixels * 0.4).toInt()
         dialog!!.window?.setLayout(width, height)
         dialog!!.setCancelable(false)
     }
@@ -36,19 +36,10 @@ class SuccesDialog(
         super.onViewCreated(view, savedInstanceState)
         tv_dialog_message.text = amount
         btn_okay.setOnClickListener {
-           // closeAndNavigate()
-           listener.onNavigate() //from listenr
-
+           listener.onNavigate()
         }
 
     }
-
-    fun closeAndNavigate() {
-        activity.openActivity(HomeActivity::class.java)
-        activity.finish()
-    }
-
-
 
 }
 

@@ -3,13 +3,25 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Accubits/emcash/emcash/src/main/res/layout/activity_home.xml" value="0.4" />
+        <entry key="..\:/Accubits/emcash/emcash/src/main/res/drawable/badge_drawable.xml" value="0.22708333333333333" />
+        <entry key="..\:/Accubits/emcash/emcash/src/main/res/drawable/ic_success.xml" value="0.2515625" />
+        <entry key="..\:/Accubits/emcash/emcash/src/main/res/layout-h600dp/wallet_screen_v2.xml" value="0.2898148148148148" />
+        <entry key="..\:/Accubits/emcash/emcash/src/main/res/layout-h750dp/wallet_screen_v2.xml" value="0.176" />
+        <entry key="..\:/Accubits/emcash/emcash/src/main/res/layout/activity_bank_details.xml" value="0.31927083333333334" />
+        <entry key="..\:/Accubits/emcash/emcash/src/main/res/layout/activity_convert_emcash.xml" value="0.264" />
+        <entry key="..\:/Accubits/emcash/emcash/src/main/res/layout/activity_home.xml" value="0.4435600578871201" />
+        <entry key="..\:/Accubits/emcash/emcash/src/main/res/layout/activity_load_emcash.xml" value="0.155078125" />
         <entry key="..\:/Accubits/emcash/emcash/src/main/res/layout/activity_notifiactions.xml" value="0.4" />
         <entry key="..\:/Accubits/emcash/emcash/src/main/res/layout/activity_settings.xml" value="0.20677083333333332" />
+        <entry key="..\:/Accubits/emcash/emcash/src/main/res/layout/activity_transaction.xml" value="0.155078125" />
+        <entry key="..\:/Accubits/emcash/emcash/src/main/res/layout/card_convert_emcash_success.xml" value="0.264" />
+        <entry key="..\:/Accubits/emcash/emcash/src/main/res/layout/dialog_success.xml" value="0.2" />
+        <entry key="..\:/Accubits/emcash/emcash/src/main/res/layout/item_inner_activity_details.xml" value="0.31927083333333334" />
         <entry key="..\:/Accubits/emcash/emcash/src/main/res/layout/item_recent_payment.xml" value="0.20677083333333332" />
         <entry key="..\:/Accubits/emcash/emcash/src/main/res/layout/item_view_all.xml" value="0.8800000000000001" />
         <entry key="..\:/Accubits/emcash/emcash/src/main/res/layout/lay_duration_filter.xml" value="0.20677083333333332" />
         <entry key="..\:/Accubits/emcash/emcash/src/main/res/layout/transfer_fragment.xml" value="0.20677083333333332" />
+        <entry key="..\:/Accubits/emcash/emcash/src/main/res/layout/wallet_screen_v2.xml" value="0.176" />
       </map>
     </option>
   </component>
