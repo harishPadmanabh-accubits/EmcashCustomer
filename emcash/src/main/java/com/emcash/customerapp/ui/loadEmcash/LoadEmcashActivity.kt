@@ -1,9 +1,7 @@
-package com.emcash.customerapp.ui.loademcash
+package com.emcash.customerapp.ui.loadEmcash
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.inputmethod.EditorInfo
-import androidx.activity.viewModels
 import com.emcash.customerapp.R
 import com.emcash.customerapp.extensions.openActivity
 import com.emcash.customerapp.extensions.showShortToast
@@ -13,9 +11,6 @@ import com.emcash.customerapp.ui.wallet.WalletActivity
 import com.emcash.customerapp.utils.*
 import kotlinx.android.synthetic.main.activity_load_emcash.*
 import timber.log.Timber
-import java.math.BigDecimal
-import java.math.RoundingMode
-import java.text.DecimalFormat
 
 class LoadEmcashActivity : AppCompatActivity() {
 
@@ -23,15 +18,13 @@ class LoadEmcashActivity : AppCompatActivity() {
         intent.getIntExtra(LAUNCH_SOURCE, SCREEN_HOME)
     }
 
-    private val viewModel: LoadEmCashViewModel by viewModels()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_load_emcash)
         et_value.requestFocus()
 
         fab_done.setOnClickListener {
-            topupWallet()
+            topUpWallet()
 
         }
 
@@ -50,8 +43,8 @@ class LoadEmcashActivity : AppCompatActivity() {
         }
     }
 
-    private fun topupWallet() {
-        val amount = if ( et_value.text.toString().length>0) et_value.text.toString().toInt() else 0
+    private fun topUpWallet() {
+        val amount = if (et_value.text.toString().isNotEmpty()) et_value.text.toString().toInt() else 0
         val desc = et_description.text.toString()
         Timber.e("Load emcach amt ${amount.toAmount()}")
         if (amount > 0) {

@@ -26,7 +26,7 @@ object EmCashUtils {
     const val PAYMENT_TYPE_TOPUP=2
     const val PAYMENT_TYPE_WITHDRAW = 3
 
-    const val PAYMENT_MODE_DEBIT=1
-    const val PAYMENT_MODE_CREDIT=2
+    const val PAYMENT_MODE_DEBIT=2
+    const val PAYMENT_MODE_CREDIT=1
 
 }

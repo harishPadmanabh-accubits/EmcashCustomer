@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.loademcash.LoadEmcashActivity">
+    tools:context=".ui.loadEmcash.LoadEmcashActivity">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -122,6 +122,7 @@
                 android:gravity="center"
                 android:paddingStart="32dp"
                 android:paddingTop="12dp"
+                android:textSize="14sp"
                 android:paddingEnd="32dp"
                 android:paddingBottom="12dp"
                 android:text="1 AED = 1 EmCash"

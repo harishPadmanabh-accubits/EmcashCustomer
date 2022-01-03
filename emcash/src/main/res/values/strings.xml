@@ -79,8 +79,8 @@ Payment cards saved to your separate  Payments account are distinct from any Vir
     <string name="submit">Submit</string>
     <string name="log_out">Log Out</string>
     <string name="are_you_sure_that_you_want_to_logout_from_emcash">Are you sure that you want to logout from Emcash ?</string>
-    <string name="error_load_emcash_empty">Enter the amount of EmCash to be Added.</string>
-    <string name="error_empty_emcash_amount">Please enter the amount</string>
+    <string name="error_load_emcash_empty">Enter a valid amount of EmCash to be Added.</string>
+    <string name="error_empty_emcash_amount">Enter a valid amount of EmCash to be Added.</string>
     <string name="payment_sent">Payment Sent</string>
     <string name="payment_success">Payment Success</string>
     <string name="request_success">Request Success</string>
@@ -108,5 +108,17 @@ Payment cards saved to your separate  Payments account are distinct from any Vir
     <string name="one_month">1 Month</string>
     <string name="custom">Custom</string>
     <string name="empty_notifications">You have no new notifications</string>
+    <string name="my_reward_level">My Reward Level</string>
+    <string name="my_safe_box">My SafeBox</string>
+    <string name="internet_required">Internet Connection Required.</string>
+    <string name="emcash_converted">EmCash has been converted successfully</string>
+    <string name="continue_info">Continue</string>
+    <string name="emcash_load_success">EmCash loaded successfully</string>
+    <string name="invalid_amount">Please enter a valid amount</string>
+    <string name="enter_all_field">Please enter all fields</string>
+    <string name="add_bank_details">Add Bank Details</string>
+    <string name="please_add_your_bank_details">Please add your bank details</string>
+    <string name="edit_bank_details">Edit Bank Details</string>
+    <string name="edit_bank_details_Desc">Edit your bank account details</string>
 
 </resources>

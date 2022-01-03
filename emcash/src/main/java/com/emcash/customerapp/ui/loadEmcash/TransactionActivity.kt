@@ -1,4 +1,4 @@
-package com.emcash.customerapp.ui.loademcash
+package com.emcash.customerapp.ui.loadEmcash
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -10,7 +10,6 @@ import com.emcash.customerapp.data.network.ApiCallStatus
 import com.emcash.customerapp.extensions.*
 import com.emcash.customerapp.model.bankCard.BankCardsListingResponse
 import com.emcash.customerapp.model.bankCard.PaymentByExistingCardRequest
-import com.emcash.customerapp.model.dummyAccounts
 import com.emcash.customerapp.ui.wallet.WalletActivity
 import com.emcash.customerapp.utils.DEFAULT_LOAD_EMCASH_DESCRIPTION
 import com.emcash.customerapp.utils.KEY_TOPUP_AMOUNT
@@ -18,7 +17,6 @@ import com.emcash.customerapp.utils.KEY_TOPUP_DESC
 import com.emcash.customerapp.utils.LoaderDialog
 import kotlinx.android.synthetic.main.activity_transaction.*
 import timber.log.Timber
-import java.text.DecimalFormat
 
 class TransactionActivity : AppCompatActivity(), CardsAdapter.CardsItemClickListener {
 
@@ -40,22 +38,18 @@ class TransactionActivity : AppCompatActivity(), CardsAdapter.CardsItemClickList
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_transaction)
-        Timber.e("Amount in new card ${amount.toString()}  desc $desc")
+        viewModel.getBankCards()
+        setupViews()
+        setupObservers()
+    }
 
-        rv_accounts.apply {
-            adapter = AccountsAdapter(dummyAccounts)
-        }
-
-        viewModel.bankCardListing()
+    private fun setupViews() {
 
         tab_empay.setOnClickListener {
             viewModel._accountMode.value = AccountMode.EMPAY
-           // ll_bankCards.visibility = View.GONE
-
         }
         tab_bank_card.setOnClickListener {
             viewModel._accountMode.value = AccountMode.BANK_CARD
-            //ll_bankCards.visibility = View.VISIBLE
         }
 
         cl_addCard.setOnClickListener {
@@ -63,8 +57,8 @@ class TransactionActivity : AppCompatActivity(), CardsAdapter.CardsItemClickList
                 putString(KEY_TOPUP_AMOUNT,amount)
                 putString(KEY_TOPUP_DESC,desc)
             }
-
         }
+
         btn_continue.setOnClickListener {
             val customer = PaymentByExistingCardRequest.Customer("509842776", 1)
             val amountDouble =
@@ -80,7 +74,6 @@ class TransactionActivity : AppCompatActivity(), CardsAdapter.CardsItemClickList
                 )
 
             viewModel.paymentByExistingCard(paymentByExisitingCardRequest)
-
         }
 
         iv_back.setOnClickListener {
@@ -89,8 +82,6 @@ class TransactionActivity : AppCompatActivity(), CardsAdapter.CardsItemClickList
 
         tv_info_currency.text = amount.replace(".00","")
         iv_user_dp.setImage(viewModel.syncManager.profileDetails?.profileImage)
-
-        setupObservers()
     }
 
     private fun setupObservers() {
@@ -100,7 +91,7 @@ class TransactionActivity : AppCompatActivity(), CardsAdapter.CardsItemClickList
                 AccountMode.BANK_CARD -> selectBankTab()
             }
         })
-        viewModel.bankCardsStatus.observe(this, androidx.lifecycle.Observer {
+        viewModel.bankCards.observe(this, androidx.lifecycle.Observer {
             when (it.status) {
                 ApiCallStatus.LOADING -> {
                     loader.showLoader()
@@ -109,9 +100,9 @@ class TransactionActivity : AppCompatActivity(), CardsAdapter.CardsItemClickList
                     loader.hideLoader()
 
                     rv_bankCard.apply {
-                        adapter = it.data?.let { it1 ->
+                        adapter = it.data?.let { data ->
                             CardsAdapter(
-                                it1.cards,
+                                data.cards,
                                 this@TransactionActivity
                             )
                         }
@@ -136,7 +127,7 @@ class TransactionActivity : AppCompatActivity(), CardsAdapter.CardsItemClickList
                    }
                    ApiCallStatus.SUCCESS -> {
                        loader.hideLoader()
-                       showShortToast("Emcash Loaded")
+                       showShortToast(getString(R.string.emcash_load_success))
                        gotoWalletScreen()
                    }
                    ApiCallStatus.ERROR -> {

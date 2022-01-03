@@ -1,4 +1,4 @@
-package com.emcash.customerapp.ui.loademcash
+package com.emcash.customerapp.ui.loadEmcash
 
 import android.graphics.Bitmap
 import androidx.appcompat.app.AppCompatActivity

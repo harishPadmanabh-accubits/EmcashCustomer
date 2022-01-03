@@ -10,6 +10,7 @@ import androidx.paging.cachedIn
 import com.emcash.customerapp.data.SyncManager
 import com.emcash.customerapp.data.repos.AuthRepository
 import com.emcash.customerapp.data.repos.HomeRepository
+import com.emcash.customerapp.model.transactions.RecentTransactionItem
 import com.emcash.customerapp.model.transactions.RecentTransactionResponse
 import com.emcash.customerapp.model.wallet.topup.WalletTopupRequest
 import com.emcash.customerapp.ui.viewAllTransactions.pagingSource.ViewAllTransactionPagingSource
@@ -22,11 +23,6 @@ class HomeViewModel(app:Application):AndroidViewModel(app) {
     val homeRepository = HomeRepository(app)
 
     val profileDetails = authRepository.getProfileDetails()
-
-    val recentTransactionsCache = MutableLiveData<RecentTransactionResponse.Data>()
-    val recentTransactions = homeRepository.getRecentTransactions(){
-        recentTransactionsCache.value = it
-    }
 
     val allTransactedUsers = homeRepository.getAllTransactedUsers(viewModelScope)
 

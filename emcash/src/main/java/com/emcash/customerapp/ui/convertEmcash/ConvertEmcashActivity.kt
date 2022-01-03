@@ -3,6 +3,7 @@ package com.emcash.customerapp.ui.convertEmcash
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.emcash.customerapp.R
 import com.emcash.customerapp.data.network.ApiCallStatus
 import com.emcash.customerapp.extensions.*
@@ -14,7 +15,7 @@ import kotlinx.android.synthetic.main.activity_convert_emcash.*
 
 class ConvertEmcashActivity : AppCompatActivity(), SuccessDialogListener {
 
-    private lateinit var dialog: SuccesDialog
+    private lateinit var dialog: SuccessDialog
     private val viewModel: ConvertEmcashViewModel by viewModels()
     private val loader by lazy { LoaderDialog(this) }
 
@@ -33,9 +34,11 @@ class ConvertEmcashActivity : AppCompatActivity(), SuccessDialogListener {
     }
 
     private fun setupViews() {
-        dialog = SuccesDialog(this, this)
+        dialog = SuccessDialog(this, this)
         et_value.alignCentre()
-        getBankAccount()
+        lifecycleScope.launchWhenResumed {
+            getBankAccount()
+        }
 
         fab_done.setOnClickListener {
             if (viewModel.hasBankAccount)
@@ -141,7 +144,7 @@ class ConvertEmcashActivity : AppCompatActivity(), SuccessDialogListener {
     }
 
     private fun showSuccessDialog(amount: Int) {
-        dialog.amount = amount.toString().plus("Emcash has been converted successfully")
+        dialog.amount = amount.toString().plus(" ").plus(getString(R.string.emcash_converted))
         dialog.show(supportFragmentManager, "Success")
     }
 

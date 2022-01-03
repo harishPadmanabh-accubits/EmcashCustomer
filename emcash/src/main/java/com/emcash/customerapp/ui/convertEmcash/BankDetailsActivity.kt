@@ -21,7 +21,6 @@ import kotlinx.android.synthetic.main.activity_bank_details.*
 import java.lang.Exception
 
 class BankDetailsActivity : AppCompatActivity() {
-    private lateinit var dialog: SuccesDialog
     private val viewModel: ConvertEmcashViewModel by viewModels()
     private val loader by lazy { LoaderDialog(this) }
     private val existingAccount by lazy {
@@ -57,6 +56,8 @@ class BankDetailsActivity : AppCompatActivity() {
             et_branchName.setText(it.branchName)
             et_branchCode.setText(it.branchCode)
             et_swiftCode.setText(it.swiftCode)
+            tv_heading.text = getString(R.string.edit_bank_details)
+            tv_description.text = getString(R.string.edit_bank_details_Desc)
         }
     }
 
@@ -82,8 +83,8 @@ class BankDetailsActivity : AppCompatActivity() {
                         editBankDetailsRequest = editBankDetailsRequest,
                         type = type
                     ).observe(this, Observer {
-                           handleObservedResult(it)
-                        })
+                        handleObservedResult(it)
+                    })
 
                 }
 
@@ -98,24 +99,21 @@ class BankDetailsActivity : AppCompatActivity() {
     }
 
     private fun getBankDetailsRequestFromUI(): AddBankDetailsRequest? {
-        val benficiaryName: String = et_benficiaryName.text.toString()
+        val beneficiaryName: String = et_benficiaryName.text.toString()
         val nickName: String = et_nickName.text.toString()
         val ibanNumber: String = et_ibanNumber.text.toString()
         val branchName: String = et_branchName.text.toString()
         val branchCode: String = et_branchCode.text.toString()
         val swiftCode: String = et_swiftCode.text.toString()
-        if (benficiaryName.isEmpty() || ibanNumber.isEmpty() || branchName.isEmpty() || branchCode.isEmpty() || swiftCode.isEmpty()) {
+        if (beneficiaryName.isEmpty() || ibanNumber.isEmpty() || branchName.isEmpty() || branchCode.isEmpty() || swiftCode.isEmpty())
             showShortToast("Please enter all the fields")
-        } else {
-            val addBankDetailsRequest = AddBankDetailsRequest(
-                benficiaryName,
-                branchName,
-                ibanNumber,
-                nickName,
-                swiftCode, branchCode
-            )
-            return addBankDetailsRequest
-        }
+        else return AddBankDetailsRequest(
+            beneficiaryName,
+            branchName,
+            ibanNumber,
+            nickName,
+            swiftCode, branchCode
+        )
         return null
     }
 
@@ -129,19 +127,20 @@ class BankDetailsActivity : AppCompatActivity() {
         if (benficiaryName.isEmpty() || ibanNumber.isEmpty() || branchName.isEmpty() || branchCode.isEmpty() || swiftCode.isEmpty()) {
             showShortToast("Please enter all the fields")
         } else {
-            val addBankDetailsRequest = EditBankDetailsRequest(
+            return EditBankDetailsRequest(
                 benficiaryName,
                 branchName,
                 ibanNumber,
                 nickName,
-                swiftCode, branchCode, viewModel.homeRepository.getCurrentUUID()
+                swiftCode,
+                branchCode,
+                viewModel.homeRepository.getCurrentUUID()
             )
-            return addBankDetailsRequest
         }
         return null
     }
 
-    private fun handleObservedResult(result: ApiMapper<UserBankAccountResponse>){
+    private fun handleObservedResult(result: ApiMapper<UserBankAccountResponse>) {
         when (result.status) {
             ApiCallStatus.LOADING -> loader.showLoader()
             ApiCallStatus.SUCCESS -> {
@@ -156,7 +155,6 @@ class BankDetailsActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        openActivity(ConvertEmcashActivity::class.java)
-        finish()
+       gotoConvertEmCashScreen()
     }
 }

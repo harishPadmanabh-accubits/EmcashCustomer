@@ -84,27 +84,72 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/ic_qr_scanner" />
 
-            <com.google.android.material.imageview.ShapeableImageView
+            <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/iv_user_image"
                 android:layout_width="34dp"
                 android:layout_height="34dp"
                 android:layout_marginEnd="20dp"
-                android:src="@drawable/sample_round_dp"
-                android:transitionName="shop_image_transition"
+                android:src="@color/ash_dark"
+                android:transitionName="dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/iv_qr_scanner"
-                app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.RoundImageStyle" />
+                 />
+
+            <TextView
+                android:id="@+id/tv_user_name_letter"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:fontFamily="@font/biennale_semi_bold"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:textAllCaps="true"
+                android:maxLines="1"
+                android:maxLength="1"
+                android:transitionName="name"
+                android:gravity="center"
+                app:layout_constraintBottom_toBottomOf="@+id/iv_user_image"
+                app:layout_constraintEnd_toEndOf="@+id/iv_user_image"
+                app:layout_constraintStart_toStartOf="@+id/iv_user_image"
+                app:layout_constraintTop_toTopOf="@+id/iv_user_image"
+                tools:text="A" />
 
             <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_notifications"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="20dp"
                 android:padding="12dp"
-                android:id="@+id/iv_notifications"
                 app:layout_constraintBottom_toBottomOf="@+id/iv_user_image"
-                app:layout_constraintEnd_toStartOf="@+id/iv_user_image"
+                app:layout_constraintEnd_toStartOf="@+id/guideline33"
+                app:layout_constraintStart_toStartOf="@+id/guideline33"
                 app:layout_constraintTop_toTopOf="@+id/iv_user_image"
                 app:srcCompat="@drawable/ic_bell" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cv_notification_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="visible"
+                android:translationY="-10dp"
+                app:cardBackgroundColor="@color/red"
+                app:cardCornerRadius="5dp"
+                app:layout_constraintBottom_toBottomOf="@+id/iv_notifications"
+                app:layout_constraintStart_toStartOf="@+id/guideline33"
+                app:layout_constraintTop_toTopOf="@+id/iv_notifications">
+
+                <TextView
+                    android:id="@+id/tv_notification_count"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:fontFamily="@font/biennale_light"
+                    android:gravity="center"
+                    android:paddingStart="4dp"
+                    android:paddingTop="2dp"
+                    android:paddingEnd="4dp"
+                    android:paddingBottom="2dp"
+                    android:textColor="@color/white"
+                    android:textSize="12sp"
+                    tools:text="999+" />
+            </com.google.android.material.card.MaterialCardView>
 
             <TextView
                 android:id="@+id/tv_score_count"
@@ -112,11 +157,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="40dp"
                 android:fontFamily="@font/biennale_bold"
-                android:text="657+"
                 android:textColor="@color/black"
                 android:textSize="24dp"
                 app:layout_constraintStart_toStartOf="@+id/iv_qr_scanner"
-                app:layout_constraintTop_toBottomOf="@+id/iv_qr_scanner" />
+                app:layout_constraintTop_toBottomOf="@+id/iv_qr_scanner"
+                tools:text="657+" />
 
             <TextView
                 android:id="@+id/tv_info_my_emscore"
@@ -146,11 +191,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
                 android:fontFamily="@font/biennale_bold"
-                android:text="Medium"
                 android:textColor="@color/black"
-                android:textSize="24dp"
+                android:textSize="24sp"
                 app:layout_constraintEnd_toStartOf="@+id/iv_level_shower"
-                app:layout_constraintTop_toTopOf="@+id/tv_score_count" />
+                app:layout_constraintTop_toTopOf="@+id/tv_score_count"
+                tools:text="Medium" />
 
             <TextView
                 android:id="@+id/tv_info_level"
@@ -159,7 +204,7 @@
                 android:layout_marginTop="12dp"
                 android:alpha=".5"
                 android:fontFamily="@font/roboto"
-                android:text="My Reward Level"
+                android:text="@string/my_reward_level"
                 android:textColor="@color/black"
                 android:textFontWeight="700"
                 android:textSize="14sp"
@@ -188,14 +233,13 @@
                         android:id="@+id/iv_curve"
                         android:layout_width="0dp"
                         android:layout_height="0dp"
-                        android:layout_marginTop="12dp"
-                        android:alpha=".4"
+                        android:alpha=".3"
                         android:elevation="1dp"
-                        android:translationY="20dp"
-                        android:src="@drawable/blue_curve_card"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/wave"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="@+id/guideline8"
+                        app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <androidx.constraintlayout.widget.Guideline
@@ -208,12 +252,12 @@
                     <com.emcash.customerapp.utils.CoinProfileImageView
                         android:id="@+id/coinProfileImageView"
                         android:layout_width="wrap_content"
-                        app:coin_size="small"
-                        android:transitionName="coin_image"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="24dp"
                         android:layout_marginTop="30dp"
                         android:layout_marginBottom="30dp"
+                        android:transitionName="coin_image"
+                        app:coin_size="small"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -236,12 +280,12 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="12dp"
                         android:fontFamily="@font/biennale_bold"
-                        android:text="35"
                         android:textColor="@color/white"
                         android:textSize="26sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="@+id/tv_tv_info_balance"
-                        app:layout_constraintTop_toBottomOf="@+id/tv_tv_info_balance" />
+                        app:layout_constraintTop_toBottomOf="@+id/tv_tv_info_balance"
+                        tools:text="35" />
 
                     <TextView
                         android:id="@+id/tv_load_emcash"
@@ -261,9 +305,9 @@
             <FrameLayout
                 android:id="@+id/frame_recent_transactions"
                 android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
                 android:visibility="visible"
-                android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/cv_balance"
                 app:layout_constraintTop_toBottomOf="@+id/cv_balance">
@@ -277,12 +321,12 @@
                         android:layout_width="match_parent"
                         android:layout_height="200dp"
                         android:elevation="2dp"
-                        android:visibility="invisible"
-                        android:translationX="-20dp"
                         android:src="@drawable/no_transaction"
+                        android:translationX="-20dp"
+                        android:visibility="invisible"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/tv_info_recent_transactions" />
 
                     <TextView
@@ -332,9 +376,9 @@
                 android:layout_marginStart="12dp"
                 android:fontFamily="@font/roboto_medium"
                 android:text="@string/my_rewards"
-                android:visibility="gone"
                 android:textColor="@color/black"
                 android:textSize="14sp"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="@+id/iv_rewards_icon"
                 app:layout_constraintStart_toEndOf="@+id/iv_rewards_icon"
                 app:layout_constraintTop_toTopOf="@+id/iv_rewards_icon" />
@@ -358,14 +402,21 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
-                android:padding="12dp"
                 android:fontFamily="@font/roboto_medium"
+                android:padding="12dp"
                 android:text="@string/my_transaction_history"
                 android:textColor="@color/black"
                 android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="@+id/iv_history_icon"
                 app:layout_constraintStart_toEndOf="@+id/iv_history_icon"
                 app:layout_constraintTop_toTopOf="@+id/iv_history_icon" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline33"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent=".77" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>

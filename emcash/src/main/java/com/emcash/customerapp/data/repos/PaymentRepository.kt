@@ -11,39 +11,33 @@ import com.emcash.customerapp.model.UnblockedResponse
 import com.emcash.customerapp.model.contacts.Contact
 import com.emcash.customerapp.model.contacts.ContactItem
 import com.emcash.customerapp.model.payments.*
+import com.emcash.customerapp.model.transactions.RecentTransactionItem
 import com.emcash.customerapp.model.transactions.RecentTransactionResponse
 import timber.log.Timber
 
 class PaymentRepository(private val context: Context) {
     private val syncManager = SyncManager(context)
     val api = EmCashApiManager(context).api
-    fun getRecentTransactions(onCache: (data: RecentTransactionResponse.Data) -> Unit): LiveData<RecentTransactionResponse.Data> {
+    fun getRecentTransactions(onCache: (data: List<RecentTransactionItem>) -> Unit): LiveData<RecentTransactionResponse.Data> {
         val _transactions = MutableLiveData<RecentTransactionResponse.Data>()
         api.getRecentTransactions()
             .awaitResponse(onSuccess = { response ->
                 if (response != null) {
-                    syncManager.recentTransactionsCache = response.data
+                    val recentTransactions = response.data.transactionList
+                    if (recentTransactions.isNotEmpty())
+                        syncManager.recentTransactionsCache = recentTransactions
                     _transactions.value = response.data
                 }
             }, onFailure = { error ->
                 Timber.e("Recent Contacts api error $error")
-                syncManager.recentTransactionsCache?.let { onCache(it) }
+                syncManager.recentTransactionsCache?.let {
+                    onCache(it)
+                }
             })
 
         return _transactions
     }
 
-    fun getAllContacts(): LiveData<List<ContactItem>> {
-        val _contacts = MutableLiveData<List<ContactItem>>()
-        api.getAllContacts("", 1, 50).awaitResponse(onSuccess = {
-            if (it != null) {
-                _contacts.value = it.data.contactList
-            }
-        }, onFailure = {
-            Timber.e("All Contacts api error $it")
-        })
-        return _contacts
-    }
 
     fun getContactDetails(
         id: Int,
@@ -200,12 +194,15 @@ class PaymentRepository(private val context: Context) {
         )
     }
 
-    suspend fun blockContactAsync(userId: Int,onApiCallback: (status: Boolean?, message: String?) -> Unit){
+    suspend fun blockContactAsync(
+        userId: Int,
+        onApiCallback: (status: Boolean?, message: String?) -> Unit
+    ) {
         try {
             val response = api.blockContactAsync(userId)
-            onApiCallback(response.status,response.error)
-        }catch (e:Exception){
-            onApiCallback(false,e.localizedMessage)
+            onApiCallback(response.status, response.error)
+        } catch (e: Exception) {
+            onApiCallback(false, e.localizedMessage)
         }
     }
 

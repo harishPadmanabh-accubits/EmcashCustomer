@@ -13,6 +13,8 @@
         <item name="android:windowLightStatusBar">true</item>
         <item name="android:windowTranslucentStatus">false</item>
         <item name="android:windowTranslucentNavigation">false</item>
+        <item name="android:windowContentTransitions">true</item>
+
     </style>
 
     <style name="DropDown" parent="@style/Widget.AppCompat.PopupMenu">

@@ -4,6 +4,8 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.drawable.Drawable
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import android.os.Build
 import android.os.Bundle
 import android.text.Editable
@@ -484,6 +486,7 @@ fun Int.toRewardLevelString(context: Context): String {
     }
 
 }
+
 fun ImageView.loadImageWithErrorCallback(
     url: String?, onError: () -> Unit = {}
 ) {
@@ -552,9 +555,9 @@ fun ImageView.loadImageWithPlaceHolder(
 
 }
 
-fun String.toLocalDate():String{
+fun String.toLocalDate(): String {
     val sdfInput = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSS")
-    sdfInput .timeZone = TimeZone.getTimeZone("UTC")
+    sdfInput.timeZone = TimeZone.getTimeZone("UTC")
     val date = sdfInput.parse(this)
     val sdfOutput = SimpleDateFormat("dd MMM yyyy")
     sdfOutput.timeZone = TimeZone.getDefault()
@@ -563,7 +566,6 @@ fun String.toLocalDate():String{
 }
 
 fun String.toLocalTime(): String {
-    Timber.e("Datext $this")
     val sdfInput = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSS")
     sdfInput.timeZone = TimeZone.getTimeZone("UTC")
     val date = sdfInput.parse(this)
@@ -574,7 +576,7 @@ fun String.toLocalTime(): String {
 
 fun toFormattedDate(dateStr: String): String {
     val sdfInput = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSS")
-    sdfInput .timeZone = TimeZone.getTimeZone("UTC")
+    sdfInput.timeZone = TimeZone.getTimeZone("UTC")
     val date = sdfInput.parse(dateStr)
     val sdfOutput = SimpleDateFormat("dd MMM yyyy")
     sdfOutput.timeZone = TimeZone.getDefault()
@@ -585,7 +587,7 @@ fun toFormattedDate(dateStr: String): String {
 fun toFormattedTime(dateStr: String): String? {
     Timber.e("Datext $dateStr")
     val sdfInput = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSS")
-    sdfInput .timeZone = TimeZone.getTimeZone("UTC")
+    sdfInput.timeZone = TimeZone.getTimeZone("UTC")
     val date = sdfInput.parse(dateStr)
     val sdfOutput = SimpleDateFormat("hh:mm a")
     sdfOutput.timeZone = TimeZone.getDefault()
@@ -677,16 +679,34 @@ fun Int.toAmount(): String {
     return DecimalFormat("0.00").format(this)
 }
 
-fun SwipeRefreshLayout.stopIfRefreshing(){
+fun SwipeRefreshLayout.stopIfRefreshing() {
     if (this.isRefreshing)
         this.isRefreshing = false
 }
 
-fun EditText.alignCentre(){
+fun EditText.alignCentre() {
     this.afterTextChanged {
-        if(it.isNotEmpty())
+        if (it.isNotEmpty())
             this.textAlignment = View.TEXT_ALIGNMENT_CENTER
         else
             this.textAlignment = View.TEXT_ALIGNMENT_TEXT_START
+    }
+}
+
+fun Int.toNotificationCount(): String = if (this >= 1000) "999+" else this.toString()
+
+fun Context.hasInternet():Boolean {
+    val connectivityManager = this.getSystemService(
+        Context.CONNECTIVITY_SERVICE
+    ) as ConnectivityManager
+
+    val activeNetwork = connectivityManager.activeNetwork ?: return false
+    val capabilities = connectivityManager.getNetworkCapabilities(activeNetwork) ?: return false
+    return when{
+        capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> true
+        capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
+        capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) -> true
+        else -> false
+
     }
 }

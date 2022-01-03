@@ -1,9 +1,8 @@
-package com.emcash.customerapp.ui.loademcash
+package com.emcash.customerapp.ui.loadEmcash
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
-import androidx.core.os.bundleOf
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.emcash.customerapp.R
 import com.emcash.customerapp.data.network.ApiCallStatus
@@ -16,53 +15,57 @@ import kotlinx.android.synthetic.main.activity_pay_with_new_card.*
 import timber.log.Timber
 
 class PayWithNewCardActivity : AppCompatActivity() {
-    val viewModel: LoadEmCashViewModel by viewModels()
+    private val viewModel: LoadEmCashViewModel by viewModels()
+    private var saveAfterTransaction: Boolean = false
 
-    var saveAfterTransaction: Boolean = false
-    val amount by lazy {
+    private val amount by lazy {
         intent.getStringExtra(KEY_TOPUP_AMOUNT) ?: "0.00"
     }
 
-    val desc by lazy {
+    private val desc by lazy {
         intent.getStringExtra(KEY_TOPUP_DESC) ?: " "
     }
 
-    val loader by lazy {
+    private val loader by lazy {
         LoaderDialog(this)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_pay_with_new_card)
-        Timber.e("Amount in new card ${amount.toString()}  desc $desc")
+        Timber.e("Amount in new card $amount  desc $desc")
+        setupViews()
+        observe()
+    }
 
-        et_atmNumber.addTextChangedListener(BankCardNumberFormatter())
-        et_expDate.apply {
-            addTextChangedListener(BankCardExpiryDateFormatter(this))
+    private fun setupViews() {
+        iv_back.setOnClickListener {
+            onBackPressed()
         }
-
-        observer()
-
-        cb_saveCard.setOnCheckedChangeListener { buttonView, isChecked ->
-            saveAfterTransaction = true
-        }
-
         btn_continue.setOnClickListener {
             val cvv = et_cvv.text.toString()
             val expiryDate = et_expDate.text.toString().replace("/", "")
             val cardHolderName = et_CardHolderName.text.toString()
             val atmNumber = et_atmNumber.text.toString().filter { !it.isWhitespace() }
-
-
-            if (expiryDate.isEmpty() || cvv.isEmpty() || cardHolderName.isEmpty()) {
-                showShortToast("Please enter all fields")
-            } else {
+            if (expiryDate.isEmpty() || cvv.isEmpty() || cardHolderName.isEmpty())
+                showShortToast(getString(R.string.enter_all_field))
+            else if (amount.toDouble() < 0.00)
+                showShortToast(getString(R.string.invalid_amount))
+            else
                 payWithNewCard(cvv, expiryDate, cardHolderName, atmNumber)
-            }
-
-
         }
+        cb_saveCard.setOnCheckedChangeListener { _, isChecked ->
+            saveAfterTransaction = isChecked
+        }
+        et_atmNumber.addTextChangedListener(BankCardNumberFormatter())
+        et_expDate.apply {
+            addTextChangedListener(BankCardExpiryDateFormatter(this))
+        }
+    }
 
+    override fun onResume() {
+        super.onResume()
+        et_atmNumber.requestFocus()
     }
 
     private fun payWithNewCard(
@@ -75,7 +78,7 @@ class PayWithNewCardActivity : AppCompatActivity() {
         val customerId = "509842776"
         val customer = PaymentByNewCardRequest.Customer(customerId, 1)
         val amountAuthorized =
-            PaymentByNewCardRequest.AmountAuthorized("AED", "999.00")
+            PaymentByNewCardRequest.AmountAuthorized("AED", amount)
         val card = PaymentByNewCardRequest.Card(
             cvv,
             "manual",
@@ -84,7 +87,7 @@ class PayWithNewCardActivity : AppCompatActivity() {
             atmNumber, saveAfterTransaction
         )
 
-        var paymentByNewCardRequest =
+        val paymentByNewCardRequest =
             PaymentByNewCardRequest(
                 amountAuthorized,
                 billerId,
@@ -102,7 +105,7 @@ class PayWithNewCardActivity : AppCompatActivity() {
 
     }
 
-    private fun observer() {
+    private fun observe() {
         viewModel.apply {
             paymentByNewCardStatus.observe(
                 this@PayWithNewCardActivity,
@@ -126,8 +129,8 @@ class PayWithNewCardActivity : AppCompatActivity() {
                                 }
 
                             } else {
-                                showShortToast("Emcash loaded")
-                                openActivity(WalletActivity::class.java)
+                                showShortToast(getString(R.string.emcash_load_success))
+                                gotoWalletScreen()
                             }
                         }
                         ApiCallStatus.ERROR -> {
@@ -138,6 +141,19 @@ class PayWithNewCardActivity : AppCompatActivity() {
                     }
 
                 })
+        }
+    }
+
+    private fun gotoWalletScreen() {
+        openActivity(WalletActivity::class.java)
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+        finish()
+    }
+
+    override fun onBackPressed() {
+        openActivity(TransactionActivity::class.java) {
+            this.putString(KEY_TOPUP_AMOUNT, amount)
+            this.putString(KEY_TOPUP_DESC, desc)
         }
     }
 

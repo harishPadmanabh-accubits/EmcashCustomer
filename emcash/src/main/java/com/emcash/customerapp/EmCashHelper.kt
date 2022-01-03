@@ -1,5 +1,6 @@
 package com.emcash.customerapp
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
@@ -17,9 +18,10 @@ import com.emcash.customerapp.ui.terms.TncStatus
 import com.emcash.customerapp.utils.*
 import timber.log.Timber
 
+
 class EmCashHelper(val appContext: Context, val listener: EmCashListener) {
     val syncManager = SyncManager(appContext)
-    val authRepository = AuthRepository(appContext)
+    private val authRepository = AuthRepository(appContext)
 
     init {
         EmCashCommunicationHelper.apply {
@@ -39,7 +41,7 @@ class EmCashHelper(val appContext: Context, val listener: EmCashListener) {
 //        if(syncManager.sessionId!=null){
 //            handleLaunchNavigation()
 //        }else{
-        val request = SwitchAccountRequest(fraction, password, phoneNumber,token)
+        val request = SwitchAccountRequest(fraction, password, phoneNumber, token)
         syncManager.fcmToken = token
         authRepository.performSwitchAccount(
             request,
@@ -92,13 +94,13 @@ class EmCashHelper(val appContext: Context, val listener: EmCashListener) {
             }
             TransactionType.ACCEPT -> proceedToAcceptPayment()
             TransactionType.REJECT -> proceedToRejectPayment()
-            TransactionType.VERIFY_USER->{
+            TransactionType.VERIFY_USER -> {
 
             }
 
         }
     }
-    fun onPinVerified(forAction: TransactionType,launchSource:Int) {
+    fun onPinVerified(forAction: TransactionType, launchSource: Int) {
         Timber.e("Type Recieved $forAction")
         when (forAction) {
             TransactionType.TRANSFER -> proceedToTransfer()
@@ -106,7 +108,7 @@ class EmCashHelper(val appContext: Context, val listener: EmCashListener) {
             }
             TransactionType.ACCEPT -> proceedToAcceptPayment()
             TransactionType.REJECT -> proceedToRejectPayment()
-            TransactionType.VERIFY_USER->{
+            TransactionType.VERIFY_USER -> {
 
             }
 
@@ -118,7 +120,7 @@ class EmCashHelper(val appContext: Context, val listener: EmCashListener) {
             it.setFlags(FLAG_ACTIVITY_NEW_TASK)
             it.putExtra(LAUNCH_SOURCE, PIN_CANCEL)
             it.putExtra(LAUNCH_DESTINATION, SCREEN_TRANSFER)
-            it.putExtra(KEY_IS_FROM_CANCEL_PIN,true)
+            it.putExtra(KEY_IS_FROM_CANCEL_PIN, true)
         }
 
         appContext.startActivity(intent)
@@ -128,7 +130,7 @@ class EmCashHelper(val appContext: Context, val listener: EmCashListener) {
         PaymentRepository(appContext).transferAmount { status, error ->
             when (status) {
                 true -> {
-                    syncManager.transferScreenCache=null
+                    syncManager.transferScreenCache = null
                     val intent = Intent(appContext, NewPaymentActivity::class.java).also {
                         it.setFlags(FLAG_ACTIVITY_NEW_TASK)
                     }
@@ -198,10 +200,10 @@ class EmCashHelper(val appContext: Context, val listener: EmCashListener) {
         phoneNumber: String,
         password: String,
         fraction: String,
-        deeplink:String
+        deeplink: String
     ){
         val token = syncManager.fcmToken
-        val request = SwitchAccountRequest(fraction, password, phoneNumber,token)
+        val request = SwitchAccountRequest(fraction, password, phoneNumber, token)
         Timber.e("Request login $request")
         authRepository.performSwitchAccount(
             request,
@@ -221,10 +223,18 @@ class EmCashHelper(val appContext: Context, val listener: EmCashListener) {
     }
 
     private fun handleDeepLink(deeplink: String) {
-       val notifyIntent =   DeepLinkFactory.getIntentFromDeeplink(deeplink.toUri(),appContext).also {
+       val notifyIntent =   DeepLinkFactory.getIntentFromDeeplink(deeplink.toUri(), appContext).also {
            it.setFlags(FLAG_ACTIVITY_NEW_TASK)
        }
        appContext.startActivity(notifyIntent)
+    }
+
+    private fun logout(){
+        syncManager.logout()
+        val intent = Intent(appContext, Class.forName(getFallBackScreen())).also {
+            it.setFlags(FLAG_ACTIVITY_NEW_TASK)
+        }
+
     }
 
 
@@ -232,7 +242,7 @@ class EmCashHelper(val appContext: Context, val listener: EmCashListener) {
 
 interface EmCashListener {
     fun onLoginStatusCallback(status: Boolean) {}
-    fun onVerifyPin(forAction: TransactionType, sourceIfAny:Int = 0) {}
+    fun onVerifyPin(forAction: TransactionType, sourceIfAny: Int = 0) {}
     fun onEditProfile(){}
     fun onGetFallBackScreen():String{
         return ""
