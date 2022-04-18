@@ -96,6 +96,7 @@ class EmCashHelper(val appContext: Context, val listener: EmCashListener) {
             TransactionType.REJECT -> proceedToRejectPayment()
             TransactionType.VERIFY_USER -> {
 
+
             }
 
         }
@@ -109,6 +110,7 @@ class EmCashHelper(val appContext: Context, val listener: EmCashListener) {
             TransactionType.ACCEPT -> proceedToAcceptPayment()
             TransactionType.REJECT -> proceedToRejectPayment()
             TransactionType.VERIFY_USER -> {
+                logout()
 
             }
 
@@ -234,6 +236,7 @@ class EmCashHelper(val appContext: Context, val listener: EmCashListener) {
         val intent = Intent(appContext, Class.forName(getFallBackScreen())).also {
             it.setFlags(FLAG_ACTIVITY_NEW_TASK)
         }
+        appContext.startActivity(intent)
 
     }
 

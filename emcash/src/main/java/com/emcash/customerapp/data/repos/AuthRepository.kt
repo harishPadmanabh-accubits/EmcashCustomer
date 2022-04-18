@@ -36,6 +36,7 @@ class AuthRepository(val context: Context) {
             switchData.value = ApiMapper(ApiCallStatus.ERROR, null, error)
             onApiCallBack(false, null, error)
         })
+
         return switchData
     }
 

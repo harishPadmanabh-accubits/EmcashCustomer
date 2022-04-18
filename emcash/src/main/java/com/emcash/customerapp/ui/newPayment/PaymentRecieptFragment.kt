@@ -154,7 +154,7 @@ class PaymentReceiptFragment : Fragment(R.layout.payment_reciept) {
             }
         )
         tv_sender_name.text = details.transferUserInfo.name
-        tv_handshake_date.text = details.createdAt.toLocalDate()
+        tv_handshake_date.text = details.createdAt.toLocalDate().plus(",").plus(details.createdAt.toLocalTime())
         if (!details.handShakingStatus) {
             if (status == PAYMENT_REJECTED) {
                 iv_handshake.loadImageWithResId(R.drawable.ic_handshake_rejected)

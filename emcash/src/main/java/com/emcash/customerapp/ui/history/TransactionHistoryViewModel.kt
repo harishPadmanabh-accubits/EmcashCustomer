@@ -23,17 +23,20 @@ class TransactionHistoryViewModel(val app: Application) : AndroidViewModel(app) 
     lateinit var scope: CoroutineScope
     var currentScreen = TransactionHistoryScreens.ALL
     var isFilterByDate = false
+    var isFromFilter = false
 
     fun sendStatus(s_status: String) {
         isFilterByDate = false
-        when (currentScreen) {
-            TransactionHistoryScreens.ALL -> filter.value =
-                HistoryFilter(status = s_status, mode = "0")
-            TransactionHistoryScreens.INBOUND -> filter.value =
-                HistoryFilter(status = s_status, mode = "1")
-            TransactionHistoryScreens.OUTBOUND -> filter.value =
-                HistoryFilter(status = s_status, mode = "2")
-        }
+        filter.value =
+            HistoryFilter(status = s_status)
+//        when (currentScreen) {
+//            TransactionHistoryScreens.ALL -> filter.value =
+//                HistoryFilter(status = s_status, mode = "0")
+//            TransactionHistoryScreens.INBOUND -> filter.value =
+//                HistoryFilter(status = s_status, mode = "1")
+//            TransactionHistoryScreens.OUTBOUND -> filter.value =
+//                HistoryFilter(status = s_status, mode = "2")
+//        }
 
     }
 
@@ -76,5 +79,35 @@ class TransactionHistoryViewModel(val app: Application) : AndroidViewModel(app) 
                 )
             }.liveData.cachedIn(scope)
         }
+
+    val inboundTransactions: LiveData<PagingData<TransactionHistoryGroupResponse.Data.TransactionGroup>> =
+        Transformations.switchMap(filter) {
+            Pager(PagingConfig(DEFAULT_PAGE_CONFIG)) {
+                HistoryPagingSource(
+                    api,
+                    filter.value?.mode ?: "1",
+                    filter.value?.startDate ?: "",
+                    filter.value?.endDate ?: "",
+                    filter.value?.status ?: "",
+                    filter.value?.type ?: ""
+                )
+            }.liveData.cachedIn(scope)
+        }
+
+    val outboundTransactions: LiveData<PagingData<TransactionHistoryGroupResponse.Data.TransactionGroup>> =
+        Transformations.switchMap(filter) {
+            Pager(PagingConfig(DEFAULT_PAGE_CONFIG)) {
+                HistoryPagingSource(
+                    api,
+                    filter.value?.mode ?: "2",
+                    filter.value?.startDate ?: "",
+                    filter.value?.endDate ?: "",
+                    filter.value?.status ?: "",
+                    filter.value?.type ?: ""
+                )
+            }.liveData.cachedIn(scope)
+        }
+
+
 
 }

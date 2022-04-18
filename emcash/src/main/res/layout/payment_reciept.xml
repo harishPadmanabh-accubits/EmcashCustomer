@@ -29,14 +29,14 @@
             android:layout_width="94dp"
             android:layout_height="94dp"
             android:layout_gravity="center"
-            android:background="@drawable/red_round">
+            tools:background="@drawable/red_round">
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/iv_user_dp"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:layout_gravity="center"
-                android:src="@color/ash_dark" />
+                tools:src="@color/ash_dark" />
             <TextView
                 android:id="@+id/tv_user_name_letter"
                 android:layout_width="wrap_content"

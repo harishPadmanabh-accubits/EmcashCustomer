@@ -51,6 +51,7 @@ class TransactionHistory : FragmentActivity(), DurationItemClickListener {
 
 
             }
+
         }
         configureFilterDurations()
 
@@ -75,11 +76,11 @@ class TransactionHistory : FragmentActivity(), DurationItemClickListener {
                 if (isFutureDateSelected(listDates)) {
                     showShortToast(getString(R.string.error_future_date_selected))
                 } else {
-                    if (listDates.size <= 1) {
+                    if (listDates.size < 1) {
                         showShortToast(getString(R.string.error_select_start_end_date))
                     } else {
                         startDate = listDates[0].toString()
-                        endDate = listDates[listDates.size - 1].toString()
+                        endDate =  if(listDates.size==1)  listDates[0].toString() else  listDates[0].toString()
                         dateArray.add(0, dateFormatFromCalender("yyyy-MM-dd", startDate))
                         dateArray.add(1, dateFormatFromCalender("yyyy-MM-dd", endDate))
 
@@ -104,36 +105,53 @@ class TransactionHistory : FragmentActivity(), DurationItemClickListener {
             rb_emcashSent.setOnClickListener {
                 viewpager_tabs.currentItem = 2
                 fl_holder.visibility = View.GONE
+                rg_type.clearCheck()
 
             }
             rb_emcashrecieved.setOnClickListener {
                 viewpager_tabs.currentItem = 1
                 fl_holder.visibility = View.GONE
+                rg_type.clearCheck()
 
             }
             rb_rejected.setOnClickListener {
+                viewModel.isFromFilter = true
+                viewpager_tabs.currentItem = 0
                 viewModel.sendStatus("4")
                 fl_holder.visibility = View.GONE
+                rg_type.clearCheck()
+
 
             }
             rb_failed.setOnClickListener {
+                viewModel.isFromFilter = true
+                viewpager_tabs.currentItem = 0
                 viewModel.sendStatus("3")
                 fl_holder.visibility = View.GONE
+                rg_type.clearCheck()
+
 
             }
             rb_pending.setOnClickListener {
+                viewModel.isFromFilter = true
+                viewpager_tabs.currentItem = 0
                 viewModel.sendStatus("2")
                 fl_holder.visibility = View.GONE
+                rg_type.clearCheck()
+
 
             }
             rb_success.setOnClickListener {
                 viewModel.sendStatus("1")
                 fl_holder.visibility = View.GONE
+                rg_type.clearCheck()
 
 
             }
             rb_date.setOnClickListener {
                 showDurations()
+                rg_type.clearCheck()
+
             }
 
         }

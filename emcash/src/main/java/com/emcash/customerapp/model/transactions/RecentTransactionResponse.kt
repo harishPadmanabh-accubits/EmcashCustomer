@@ -37,7 +37,7 @@ data class RecentTransactionItem(
     @SerializedName("ppp")
     val level: Int,
     @SerializedName("profileImage")
-    val profileImage: String,
+    val profileImage: String?,
     @SerializedName("roleId")
     val roleId: Int,
     @SerializedName("userId")

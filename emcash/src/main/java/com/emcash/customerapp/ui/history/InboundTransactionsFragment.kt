@@ -11,10 +11,10 @@ import com.emcash.customerapp.R
 import com.emcash.customerapp.enums.TransactionHistoryScreens
 import com.emcash.customerapp.extensions.*
 import com.emcash.customerapp.model.transactions.HistoryFilter
-import com.emcash.customerapp.ui.history.adapters.HistoryPagerAdapter
+import com.emcash.customerapp.ui.history.adapters.AllHistoryPagerAdapter
+import com.emcash.customerapp.ui.history.adapters.InboundHistoryPagerAdapter
 import kotlinx.android.synthetic.main.item_transaction_item.*
 import kotlinx.android.synthetic.main.item_transaction_item.view.*
-import kotlinx.android.synthetic.main.layout_all_transactions.*
 import kotlinx.android.synthetic.main.layout_inbound_transactions.*
 import kotlinx.android.synthetic.main.layout_inbound_transactions.empty_view
 import kotlinx.android.synthetic.main.layout_inbound_transactions.refresh_layout
@@ -24,7 +24,7 @@ import java.lang.Exception
 class InboundTransactionsFragment : Fragment(R.layout.layout_inbound_transactions) {
 
     private val viewModel: TransactionHistoryViewModel by activityViewModels()
-    private val pagedAdapter by lazy { HistoryPagerAdapter() }
+    private val pagedAdapter by lazy { InboundHistoryPagerAdapter() }
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -55,6 +55,7 @@ class InboundTransactionsFragment : Fragment(R.layout.layout_inbound_transaction
             pagedTransactions.observe(viewLifecycleOwner, Observer {
                 pagedAdapter.submitData(lifecycle, it)
             })
+            rv_inbound.scrollToPosition(0)
             refresh_layout.stopIfRefreshing()
         }
     }
@@ -93,7 +94,7 @@ class InboundTransactionsFragment : Fragment(R.layout.layout_inbound_transaction
     private fun clearAdapterInstances() {
         try {
             val viewHolder =
-                rv_inbound.findContainingViewHolder(rv_transaction_details) as HistoryPagerAdapter.ViewHolder
+                rv_inbound.findContainingViewHolder(rv_transaction_details) as AllHistoryPagerAdapter.ViewHolder
             viewHolder.itemView.rv_transaction_details?.let {
                 it.adapter = null
             }

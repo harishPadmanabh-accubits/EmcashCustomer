@@ -11,3 +11,7 @@ enum class BankAccountScreenTypes{
 enum class CurrentAccountContext{
     EMPAY,EMCASH
 }
+
+enum class TransactionHistoryFilters{
+    SENT,RECEIVED,SUCCESS,PENDING,REJECTED,FAILED,DATE
+}

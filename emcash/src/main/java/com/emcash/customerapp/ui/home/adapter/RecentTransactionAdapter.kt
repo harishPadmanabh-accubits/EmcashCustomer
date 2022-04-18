@@ -68,10 +68,10 @@ class RecentTransactionAdapter(private val listener: ContactsListener) :
             val firstname = user.name.split(" ")
             itemView.level_image.setProfileName(firstname[0])
             itemView.level_image.setLevel(user.level)
-            if (user.profileImage !== null) {
-                itemView.level_image.setProfileImage(user.profileImage)
-            } else {
+            if (user.profileImage.isNullOrEmpty()) {
                 itemView.level_image.setFirstLetter(user.name)
+            } else {
+                itemView.level_image.setProfileImage(user.profileImage)
             }
             itemView.setOnClickListener {
                 listener.onSelectedFromRecentContacts(user)
