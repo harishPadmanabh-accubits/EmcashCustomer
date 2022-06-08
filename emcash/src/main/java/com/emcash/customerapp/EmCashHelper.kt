@@ -34,14 +34,14 @@ class EmCashHelper(val appContext: Context, val listener: EmCashListener) {
     private fun getFallBackScreen() = listener.onGetFallBackScreen()
     fun doEmCashLogin(
         phoneNumber: String,
-        password: String,
-        fraction: String,
+//        password: String,
+//        fraction: String,
         token: String
     ) {
 //        if(syncManager.sessionId!=null){
 //            handleLaunchNavigation()
 //        }else{
-        val request = SwitchAccountRequest(fraction, password, phoneNumber, token)
+        val request = SwitchAccountRequest( phoneNumber, token)
         syncManager.fcmToken = token
         authRepository.performSwitchAccount(
             request,
@@ -199,28 +199,32 @@ class EmCashHelper(val appContext: Context, val listener: EmCashListener) {
     }
 
     fun handleNotificationIntent(
-        phoneNumber: String,
-        password: String,
-        fraction: String,
         deeplink: String
     ){
         val token = syncManager.fcmToken
-        val request = SwitchAccountRequest(fraction, password, phoneNumber, token)
-        Timber.e("Request login $request")
-        authRepository.performSwitchAccount(
-            request,
-            onApiCallBack = { status, response, error ->
-                when (status) {
-                    true -> {
-                        listener.onLoginStatusCallback(true)
-                        handleDeepLink(deeplink)
+        val phone = syncManager.switchAccountData?.phoneNumber
+        if(phone.isNullOrEmpty() || token .isNullOrEmpty()){
+            appContext.showShortToast("Cant login to emcash")
+        }else{
+
+            val request = SwitchAccountRequest(phone, token)
+
+            Timber.e("Request login $request")
+            authRepository.performSwitchAccount(
+                request,
+                onApiCallBack = { status, response, error ->
+                    when (status) {
+                        true -> {
+                            listener.onLoginStatusCallback(true)
+                            handleDeepLink(deeplink)
+                        }
+                        false -> {
+                            listener.onLoginStatusCallback(false)
+                            appContext.showShortToast(error)
+                        }
                     }
-                    false -> {
-                        listener.onLoginStatusCallback(false)
-                        appContext.showShortToast(error)
-                    }
-                }
-            })
+                })
+        }
 
     }
 

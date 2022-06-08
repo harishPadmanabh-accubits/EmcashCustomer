@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Button
+import android.widget.EditText
 import android.widget.Toast
 import androidx.core.os.bundleOf
 import com.emcash.customerapp.EmCashCommunicationHelper
@@ -42,35 +43,44 @@ class MainActivity : AppCompatActivity() ,EmCashListener{
         EmCashCommunicationHelper.setParentListener(this)
         if(isFromDeeplink){
             EmCashHelper(applicationContext,this).handleNotificationIntent(
-                "509842776",
-                "50464B84832A00209E3065B6146A99471EAE21613FFAB4D0742693C70978EE31",
-                "201812231321016084",intent.getStringExtra(KEY_DEEPLINK).toString()
+              //  "509842776",
+             //   "50464B84832A00209E3065B6146A99471EAE21613FFAB4D0742693C70978EE31",
+             //   "201812231321016084",
+                intent.getStringExtra(KEY_DEEPLINK).toString()
             )
         }
 
         val button:Button= findViewById<Button>(R.id.button)
+        val phone : EditText = findViewById(R.id.editTextPhone)
         button.setOnClickListener {
-            try {
-                pb_login.show()
-                getFcmToken { status, token, error ->
-                    when(status){
-                        true->{
-                            if (token != null) {
-                                EmCashHelper(applicationContext,this).doEmCashLogin(
-                                    "509842776",
-                                    "50464B84832A00209E3065B6146A99471EAE21613FFAB4D0742693C70978EE31",
-                                    "201812231321016084",token
-                                )
-                            }
-                        }false->{
-                        Toast.makeText(this, "$error", Toast.LENGTH_SHORT).show()
+            val phoneNUmber = phone.text.toString()
+            if(phoneNUmber.isNullOrEmpty()){
+                Toast.makeText(this, "Please enter phone number", Toast.LENGTH_SHORT).show()
+            }else{
+                try {
+                    pb_login.show()
+                    getFcmToken { status, token, error ->
+                        when(status){
+                            true->{
+                                if (token != null) {
+                                    EmCashHelper(applicationContext,this).doEmCashLogin(
+                                        phoneNUmber,
+                                        //  "50464B84832A00209E3065B6146A99471EAE21613FFAB4D0742693C70978EE31",
+                                        //   "201812231321016084",
+                                        token
+                                    )
+                                }
+                            }false->{
+                            Toast.makeText(this, "$error", Toast.LENGTH_SHORT).show()
+                        }
+                        }
                     }
-                    }
-                }
 
-            }catch (e:Exception){
-                Toast.makeText(this, "$e", Toast.LENGTH_SHORT).show()
+                }catch (e:Exception){
+                    Toast.makeText(this, "$e", Toast.LENGTH_SHORT).show()
+                }
             }
+
         }
     }
 

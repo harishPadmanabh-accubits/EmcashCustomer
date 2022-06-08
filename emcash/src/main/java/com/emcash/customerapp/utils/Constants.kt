@@ -59,6 +59,7 @@ const val KEY_DEEPLINK = "deeplink"
 const val KEY_TYPE = " notify_type"
 const val IS_FROM_DEEPLINK = "is_from_deeplink"
 
+const val RELEASE_URL:String ="https://api.test.empay.ae/emcash/backend/"
 const val STAGING_URL:String = "https://emcash-api-stg.devtomaster.com/"
 const val BASE_URL: String = "https://emcash-api-dev.devtomaster.com/"
 const val IMAGE_BASE_URL: String = "https://stemcashmerchantdocstest.blob.core.windows.net"
