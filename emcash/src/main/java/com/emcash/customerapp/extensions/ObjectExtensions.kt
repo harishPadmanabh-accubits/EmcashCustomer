@@ -33,6 +33,7 @@ import com.bumptech.glide.request.target.Target
 import com.emcash.customerapp.*
 import com.emcash.customerapp.data.network.exceptions.NoInternetException
 import com.emcash.customerapp.enums.TransactionType
+import com.emcash.customerapp.model.BaseResponse
 import com.emcash.customerapp.utils.ERROR_NO_INTERNET
 import com.emcash.customerapp.utils.IMAGE_BASE_URL
 import com.google.gson.Gson
@@ -458,16 +459,29 @@ fun <T : Any> Call<T>.awaitResponse(
             if (response.isSuccessful) {
                 onSuccess.invoke(response.body())
             } else {
-                if (response.code() == 401)
-                    EmCashCommunicationHelper.getParentListener()
-                        .onVerifyPin(TransactionType.VERIFY_USER, launchSource)
+                when {
+                    response.code() == 401 -> {
+                        EmCashCommunicationHelper.getParentListener()
+                            .onVerifyPin(TransactionType.VERIFY_USER, launchSource)
+                        invokeError(response)
 
-                onFailure.invoke(response.message())
-
-
+                    }
+                    response.code() != 401 -> {
+                        invokeError(response)
+                    }
+                }
             }
         }
 
+        fun invokeError(response: Response<T>){
+            val gson = Gson()
+            val (error, message, status) = gson.fromJson(
+                response.errorBody()?.charStream(),
+                BaseResponse::class.java
+            ).also {
+                onFailure.invoke(it.message)
+            }
+        }
         override fun onFailure(call: Call<T>, t: Throwable) {
             if (t is UnknownHostException || t is NoInternetException || t.message?.contains("Unable to resolve host") == true)
                 onFailure.invoke(ERROR_NO_INTERNET)
