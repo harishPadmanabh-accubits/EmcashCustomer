@@ -60,20 +60,24 @@ class TransactionActivity : AppCompatActivity(), CardsAdapter.CardsItemClickList
         }
 
         btn_continue.setOnClickListener {
-            val customer = PaymentByExistingCardRequest.Customer("509842776", 1)
+
+            val phoneNumber = viewModel.syncManager.switchAccountData?.phoneNumber
+            val customer = phoneNumber?.let { _phone -> PaymentByExistingCardRequest.Customer(_phone, 1) }
             val amountDouble =
                 PaymentByExistingCardRequest.Amount("AED", amount)
             val paymentByExisitingCardRequest =
-                PaymentByExistingCardRequest(
-                    amountDouble,
-                    "12001",
-                    null,
-                    customer,
-                    if (desc.isNullOrEmpty()) DEFAULT_LOAD_EMCASH_DESCRIPTION else desc,
-                    useExistingCard.toString(), "07", 12.00, true, 12.00, true
-                )
+                customer?.let { _customer ->
+                    PaymentByExistingCardRequest(
+                        amountDouble,
+                        "12001",
+                        null,
+                        _customer,
+                        if (desc.isNullOrEmpty()) DEFAULT_LOAD_EMCASH_DESCRIPTION else desc,
+                        useExistingCard.toString(), "07", 12.00, true, 12.00, true
+                    )
+                }
 
-            viewModel.paymentByExistingCard(paymentByExisitingCardRequest)
+            paymentByExisitingCardRequest?.let { it1 -> viewModel.paymentByExistingCard(it1) }
         }
 
         iv_back.setOnClickListener {
@@ -119,27 +123,27 @@ class TransactionActivity : AppCompatActivity(), CardsAdapter.CardsItemClickList
         })
 
         viewModel.paymentByExistingCardStatus.observe(this, androidx.lifecycle.Observer {
-           try{
+            try{
 
-               when (it.status) {
-                   ApiCallStatus.LOADING -> {
-                       loader.showLoader()
-                   }
-                   ApiCallStatus.SUCCESS -> {
-                       loader.hideLoader()
-                       showShortToast(getString(R.string.emcash_load_success))
-                       gotoWalletScreen()
-                   }
-                   ApiCallStatus.ERROR -> {
-                       loader.hideLoader()
-                       showShortToast(it.errorMessage)
+                when (it.status) {
+                    ApiCallStatus.LOADING -> {
+                        loader.showLoader()
+                    }
+                    ApiCallStatus.SUCCESS -> {
+                        loader.hideLoader()
+                        showShortToast(getString(R.string.emcash_load_success))
+                        gotoWalletScreen()
+                    }
+                    ApiCallStatus.ERROR -> {
+                        loader.hideLoader()
+                        showShortToast(it.errorMessage)
 
-                   }
-               }
+                    }
+                }
 
-           }catch (e:Exception){
-               Timber.e("Exception paymentByExistingCardStatus $e")
-           }
+            }catch (e:Exception){
+                Timber.e("Exception paymentByExistingCardStatus $e")
+            }
 
         })
 

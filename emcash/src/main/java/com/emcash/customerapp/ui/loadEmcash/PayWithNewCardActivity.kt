@@ -75,8 +75,8 @@ class PayWithNewCardActivity : AppCompatActivity() {
         atmNumber: String
     ) {
         val billerId = "12001"
-        val customerId = "509842776"
-        val customer = PaymentByNewCardRequest.Customer(customerId, 1)
+        val customerId = viewModel.syncManager.switchAccountData?.phoneNumber
+        val customer = customerId?.let { PaymentByNewCardRequest.Customer(it, 1) }
         val amountAuthorized =
             PaymentByNewCardRequest.AmountAuthorized("AED", amount)
         val card = PaymentByNewCardRequest.Card(
@@ -88,20 +88,22 @@ class PayWithNewCardActivity : AppCompatActivity() {
         )
 
         val paymentByNewCardRequest =
-            PaymentByNewCardRequest(
-                amountAuthorized,
-                billerId,
-                card,
-                customer,
-                desc,
-                null,
-                "411111",
-                12.00,
-                true,
-                12.00,
-                false
-            )
-        viewModel.paymentByNewCard(paymentByNewCardRequest)
+            customer?.let {
+                PaymentByNewCardRequest(
+                    amountAuthorized,
+                    billerId,
+                    card,
+                    it,
+                    desc,
+                    null,
+                    "411111",
+                    12.00,
+                    true,
+                    12.00,
+                    false
+                )
+            }
+        paymentByNewCardRequest?.let { viewModel.paymentByNewCard(it) }
 
     }
 
