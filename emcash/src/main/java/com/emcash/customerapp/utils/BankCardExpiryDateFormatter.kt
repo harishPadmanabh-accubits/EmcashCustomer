@@ -16,7 +16,10 @@ class BankCardExpiryDateFormatter(
             editText.setText(p0.toString() + "/")
             editText.setSelection(p0.lastIndex.plus(2))
         } else if (start == 3 && start-removed == 2 && p0?.contains('/') == true) {
-            editText.setText(p0.toString().replace("/", ""))
+            /* commenting this as QA reported not to remove "/"
+             * on back pressed
+             * */
+//            editText.setText(p0.toString().replace("/", ""))
             editText.setSelection(p0.lastIndex)
 
         }
